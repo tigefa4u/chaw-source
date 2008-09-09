@@ -45,4 +45,8 @@
 	Router::connect('/wiki/add', array('controller' => 'wiki', 'action' => 'add'));
 
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
+	Router::connect('/browser/tree/*', array('controller' => 'browser', 'action' => 'tree'));
+	
+	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
+	
 ?>
