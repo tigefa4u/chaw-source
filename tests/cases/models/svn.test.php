@@ -26,7 +26,7 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function getTests() {
-		return array_merge(array('start', 'startCase'), array('testCheckout'), array('end', 'endCase'));
+		return array_merge(array('start', 'startCase'), array('testCreate', 'testCommit'), array('end', 'endCase'));
 	}
 
 	function testSvnInstance() {

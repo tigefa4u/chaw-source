@@ -21,8 +21,12 @@ class Svn extends Object {
  * @return void
  *
  **/
-	function create($project, $repo) {
+	function create($project, $repo = null) {
 		extract($this->__config);
+		
+		if $repo === null) {
+			$repo = $this->repo;
+		}
 
 		if (is_dir(dirname($repo))) {
 			if (!is_dir($repo)) {
@@ -33,11 +37,11 @@ class Svn extends Object {
 
 				$this->repo = $repo;
 
-				$this->workingCopy = TMP . $project;
+				$this->workingCopy = $tmp . $project;
 
 				if (!is_dir($this->workingCopy . '/branches')) {
 					$file = 'file://' . rtrim($repo, '/') . '/' . $project;
-					$result = $this->sub('import', array(TMP . 'svn/project', $file, '--message "Initial project import"'));
+					$result = $this->sub('import', array($tmp . 'svn/project', $file, '--message "Initial project import"'));
 					$result = $this->sub('checkout', array($file, $this->workingCopy));
 				}
 			}
