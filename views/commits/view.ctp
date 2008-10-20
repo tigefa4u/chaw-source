@@ -1,5 +1,6 @@
 <?php
-$html->css('highlight/idea', null, false);
+$html->css('highlight/idea', null, null, false);
+
 $javascript->link('highlight', false);
 
 $script = '

@@ -35,9 +35,10 @@ class Commit extends AppModel {
 			if (!empty($this->data['Commit']['revision'])) {
 
 				$changed = null;
-
-				foreach (unserialize($this->data['Commit']['changes']) as $change) {
-					$changed .= " * {$change}\n";
+				if (!empty($this->data['Commit']['changes'])) {
+					foreach (unserialize($this->data['Commit']['changes']) as $change) {
+						$changed .= " * {$change}\n";
+					}
 				}
 				extract($this->data['Commit']);
 
