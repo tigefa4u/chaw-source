@@ -1,0 +1,17 @@
+#!/bin/sh
+
+REPOS="$1"
+TXN="$2"
+export TERM="xterm"
+export PATH="<?php echo env('PATH'); ?>"
+
+# Make sure that the log message contains some text.
+svnlook log -t "$TXN" "$REPOS" | \
+   grep "[a-zA-Z0-9]" > /dev/null || exit 1
+
+
+cd <?php echo APP; ?>
+cake pre_commit authorize <?php echo $project; ?> $REPOS $TXN
+
+# All checks passed, so allow the commit.
+exit 0

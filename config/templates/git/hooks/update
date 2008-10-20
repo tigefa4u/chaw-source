@@ -1,0 +1,13 @@
+#!/bin/sh
+refname="$1"
+oldrev="$2"
+newrev="$3"
+
+export TERM="xterm"
+export PATH="<?php echo env('PATH'); ?>"
+
+cd <?php echo APP; ?>
+
+cake update authorize <?php echo $project; ?> $refname $oldrev $newrev
+
+exit $?

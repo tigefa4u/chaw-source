@@ -17,7 +17,7 @@ class SvnTest extends CakeTestCase {
 
 		$this->Svn->repo = TMP . 'svn/repo';
 
-		$this->Svn->workingCopy = TMP . 'demo';
+		$this->Svn->working = TMP . 'svn/working';
 	}
 
 	function end() {
@@ -26,7 +26,7 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function getTests() {
-		return array_merge(array('start', 'startCase'), array('testCreate', 'testCommit'), array('end', 'endCase'));
+		return array_merge(array('start', 'startCase'), array('testCreate', 'testRead', 'testFind'), array('end', 'endCase'));
 	}
 
 	function testSvnInstance() {
@@ -34,21 +34,28 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function testCreate() {
-		$this->Svn->create('demo', TMP . 'svn/repo');
+		$this->Svn->create('demo');
+		
+		$this->assertTrue(file_exists($this->Svn->repo));
 	}
 
+	function testHook() {
+		$this->Svn->hook('post-commit');
+
+		$this->assertTrue(file_exists($this->Svn->repo . DS . 'hooks' . DS . 'post-commit'));
+	}
+	
+	function testFind() {
+		pr($this->Svn->findByRevision(1));
+	}
+	
 	function testRead() {
-		$this->Svn->repo = TMP . 'svn/repo';
-
-		$this->Svn->workingCopy = TMP . 'demo';
-
-		pr($this->Svn->info('/branches'));
+		pr($this->Svn->info());
 
 		pr($this->Svn->look('author', $this->Svn->repo));
 	}
 
 	function testCommit() {
-		$this->Svn->workingCopy = TMP . 'demo';
 		$File = new File($this->Svn->workingCopy . '/branches/demo_1.0.x.x/index.php', true);
 		$File->write("this is a new php file with plain text");
 		pr($this->Svn->sub('add', array(dirname($File->pwd()))));
@@ -57,10 +64,7 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function testTree() {
-		$this->Svn->repo = TMP . 'svn/repo';
-		$this->Svn->repo = 'https://svn.cakephp.org/repo/branches';
-		$this->Svn->workingCopy = TMP . 'demo';
-
+		//$this->Svn->repo = 'https://svn.cakephp.org/repo/branches';
 		pr($this->Svn->look('tree', $this->Svn->workingCopy));
 	}
 

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+REPOS="$1"
+REV="$2"
+export TERM="xterm"
+export PATH="<?php echo env('PATH'); ?>"
+
+cd <?php echo APP; ?>
+
+cake post_commit commit <?php echo $project; ?> $REPOS $REV

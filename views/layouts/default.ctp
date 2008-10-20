@@ -28,39 +28,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>
-		<?php __('CakePHP: the rapid development php framework:'); ?>
-		<?php echo $title_for_layout;?>
+		<?php echo Configure::read('Project.name') .' : ' . $title_for_layout;?>
 	</title>
 	<?php
 		echo $html->charset();
 		echo $html->meta('icon');
 
-		echo $html->css('creampuff');
+		echo $html->css(array('generic', 'chaw'));
+		//echo $html->css('highlight/idea');
 		
-		echo $javascript->link('MeatballSocietyCreoleV0.4');
+
+		echo $javascript->link('jquery-1.2.6.min');
+
+		echo $javascript->link('gshowdown');
+
+		//echo $javascript->link('smartarea');
+
+		//echo $javascript->link('MeatballSocietyCreoleV0.4');
+
+		//echo $javascript->link(array('wiky', 'wiky.lang', 'wiky.math'));
 
 		echo $scripts_for_layout;
+
 	?>
-	<script>
-		var text = $("description").innerHtml;
-		toXHTML('=== this is a an h3');
-	</script>
 </head>
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $html->link(__('CakePHP: the rapid development php framework', true), 'http://cakephp.org');?></h1>
+
+			<h1><?php echo $html->link(Configure::read('Project.name'), '/');?></h1>
+
+			<div id="navigation">
+				<ul>
+					<li><?php echo $html->link('Wiki', array('controller' => 'wiki', 'action' => 'index'));?></li>
+					<li><?php echo $html->link('Timeline', array('controller' => 'timeline', 'action' => 'index'));?></li>
+					<li><?php echo $html->link('Tickets', array('controller' => 'tickets', 'action' => 'index'));?></li>
+					<li><?php echo $html->link('Source', array('controller' => 'browser', 'action' => 'index'));?></li>
+					<li><?php echo $html->link('Versions', array('controller' => 'versions', 'action' => 'index'));?></li>
+					<li><?php echo $html->link('Admin', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'));?></li>
+				</ul>
+			</div>
+
 		</div>
+
 		<div id="content">
 			<?php
-				if ($session->check('Message.flash')):
-						$session->flash();
-				endif;
-			?>
+				echo $this->element('current_user');
 
-			<?php echo $content_for_layout;?>
+				$session->flash();
+			?>
+			<div id="page-content">
+				<?php
+					echo $content_for_layout;
+				?>
+			</div>
 
 		</div>
+
 		<div id="footer">
 			<?php echo $html->link(
 							$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),

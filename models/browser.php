@@ -1,61 +1,81 @@
 <?php
-class Browser extends AppModel {
+class Browser extends Object {
 
-	var $name = 'Browser';
-
-	var $useTable = false;
-
-	/* relative path to files */
-	var $path = null;
+	/* path to files */
+	var $config = array('path' => null, 'type' => null, 'working' => null);
 
 	function read($path = null) {
 		$data = null;
-		if (!class_exists('Folder')) {
-			uses('Folder');
-		}
 
-		$Git = ClassRegistry::init('Git');
-		$Git->repo = '/htdocs/scm/creampuff.git';
-		$Git->workingCopy = TMP . 'git';
-
-		if ($Git->pull('master')) {
-			$this->path = $Git->workingCopy;
-		}
-
-		if ($this->path == null) {
+		if ($this->config['working'] == null) {
 			return false;
 		}
 
+		$this->config['working'] = Folder::slashTerm($this->config['working']);
+
 		$wwwPath = join('/', explode(DS, $path)) . '/';
 
-		$Folder = new Folder($this->path . DS . $path);
-		list($dirs, $files) = $Folder->read(true, array('.', '..', '.svn'));
+		$Folder = new Folder($this->config['working'] . $path);
+
+		list($dirs, $files) = $Folder->read(true, array('.svn'));
 
 		$dir = $file = array();
+
+		$path = $Folder->slashTerm($Folder->pwd());
+		
+		$Repo = ClassRegistry::init($this->config['type']);
+
+		$Repo->config(array(
+			'repo' => $this->config['path'],
+			'working' => $this->config['working']
+		));
+	
+		if ($path === $this->config['working']) {
+			$Repo->update();
+		}
 
 		$count = count($dirs);
 		for ($i = 0; $i < $count; $i++) {
 			$dir[$i]['name'] = $dirs[$i];
 			$dir[$i]['path'] = $wwwPath . $dirs[$i];
 			$dir[$i]['md5'] = null;
-			$dir[$i]['size'] = $this->__size($Folder->pwd() . DS . $dirs[$i]);
+			$dir[$i]['size'] = $this->__size($path . $dirs[$i]);
 			$dir[$i]['icon'] = '/icons/dir.gif';
-
+			$dir[$i]['info'] = $Repo->pathInfo($path . $dirs[$i]);
 		}
 
 		$count = count($files);
 		for ($i = 0; $i < $count; $i++) {
 			$file[$i]['name'] = $files[$i];
-			$file[$i]['size'] = $this->__size($Folder->pwd() . DS . $files[$i]);
+			$file[$i]['size'] = $this->__size($path . $files[$i]);
 			$file[$i]['icon'] = $this->__icon($files[$i]);
 			$file[$i]['path'] = $wwwPath . $files[$i];
 			$file[$i]['md5'] = md5($Folder->pwd() . $files[$i]);
+			$file[$i]['info'] = $Repo->pathInfo($path . $files[$i]);
 		}
 
 		return array('Folder' => $dir, 'File' => $file);
 	}
 
-	function __size($file = null, $ext = 'Byte', $size = '0') {
+	function __gitInfo($name) {
+		$Git = ClassRegistry::init('Git');
+
+		$Git->config(array(
+			'repo' => $this->config['path'],
+			'working' => $this->config['working']
+		));
+
+		$path = str_replace($this->config['working'], '', $name);
+
+		return $Git->pathInfo($path);
+	}
+
+	function __svnInfo($name) {
+		$Svn = ClassRegistry::init('Svn');
+		return $Svn->pathInfo($name);
+	}
+
+	function __size($file = null, $ext = 'B', $size = '0') {
 		$size_ext = array('','K','M','G','T');
 
 		if (!file_exists($file)) {

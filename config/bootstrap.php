@@ -43,4 +43,9 @@
  *
  */
 //EOF
+
+Configure::write('Content', array(
+	'git' => APP . 'content' . DS . 'git' . DS,
+	'svn' => APP . 'content' . DS . 'svn' . DS ,
+));
 ?>

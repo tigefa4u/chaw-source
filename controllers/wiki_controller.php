@@ -3,15 +3,25 @@ class WikiController extends AppController {
 
 	var $name = 'Wiki';
 
-	function index($slug = null) {
-		if(count($this->passedArgs) > 1) {
-			$slug = join('/', $this->passedArgs);
+	function index() {
+
+		$slug = $this->__slug();
+
+		if ($slug === null) {
+			$slug = 'home';
 		}
 
-		$this->pageTitle = Inflector::humanize(Inflector::slug($slug));
+		$this->pageTitle = Inflector::humanize($slug);
 
-		if ($wiki = $this->Wiki->findBySlug($slug)) {
+		$wiki = $this->Wiki->find(array(
+			'Wiki.slug' => $slug,
+			'Wiki.project_id' => $this->Project->id,
+			'Wiki.active' => 1
+		));
+
+		if (!empty($wiki)) {
 			$this->set('wiki', $wiki);
+			$this->render('view');
 		} else {
 			$this->data['Wiki']['slug'] = $slug;
 			$this->render('add');
@@ -19,16 +29,41 @@ class WikiController extends AppController {
 	}
 
 	function add() {
+
+		$slug = $this->__slug();
+
+		$this->pageTitle = Inflector::humanize($slug);
+
 		if (!empty($this->data)) {
-			$this->Wiki->create();
+			$this->Wiki->create(array(
+				'project_id' => $this->Project->id,
+				'last_changed_by' => $this->Auth->user('id')
+			));
 			if ($data = $this->Wiki->save($this->data)) {
-				$this->Session->setFlash('Wiki Page created');
-				$this->set('wiki', $data);
-				$this->render('view');
+				$this->Session->setFlash($data['Wiki']['slug'] . ' saved');
+				$this->redirect(array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['slug']));
 			} else {
-				$this->Session->setFlash('Wiki Page broken');
+				$this->Session->setFlash($data['Wiki']['slug'] . ' NOT saved');
 			}
 		}
+
+		if (empty($this->data)) {
+
+			$this->data = $this->Wiki->find(array(
+				'Wiki.slug' => $slug,
+				'Wiki.project_id' => $this->Project->id,
+				'Wiki.active' => 1
+			));
+		}
+	}
+
+	function __slug() {
+		$slug = null;
+		if(count($this->passedArgs) >= 1) {
+			$slug = Inflector::slug(join('/', $this->passedArgs));
+		}
+
+		return $slug;
 	}
 }
 ?>

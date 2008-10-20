@@ -1,62 +1,173 @@
 <?php
 class Svn extends Object {
 
-	var $name = 'Svn';
-
-	var $useTable = false;
-
-	var $__config = array('svn' => '/usr/bin/svn', 'tmp' => TMP, 'username' => '', 'password' => '');
+	var $__config = array('svn' => 'svn', 'repo' => null, 'working' => null, 'username' => '', 'password' => '');
 
 	var $debug = array();
 
-	var $workingCopy = null;
+	var $response = array();
 
 	var $repo = null;
+
+	var $working = null;
+
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function config($config = array()) {
+		$this->__config = array_merge($this->__config, $config);
+
+		if (!empty($this->__config['repo'])) {
+			$this->repo = $this->__config['repo'];
+		}
+
+		if (!empty($this->__config['working'])) {
+			$this->working = $this->__config['working'];
+		}
+	}
 /**
  * Create a new repo; initialize the branches, tags, trunk; checkout a working copy to TMP
  *
  * @param string $project name of the project
- * @param string $repo path to the new repository
- * @example $this->Svn->create('demo', TMP . 'svn/repo');
+ * @param array $options repo, working
+ * @example $this->Svn->create('demo', array('repo' => TMP . 'svn/repo', 'working' => APP . 'working'));
  * @return void
  *
  **/
-	function create($project, $repo = null) {
-		extract($this->__config);
-		
-		if $repo === null) {
+	function create($project, $options = array()) {
+		extract(array_merge($this->__config, $options));
+
+		if ($repo === null) {
 			$repo = $this->repo;
 		}
 
-		if (is_dir(dirname($repo))) {
-			if (!is_dir($repo)) {
-				$result = $this->admin('create', $repo);
-			}
-
-			if (is_dir($repo)) {
-
-				$this->repo = $repo;
-
-				$this->workingCopy = $tmp . $project;
-
-				if (!is_dir($this->workingCopy . '/branches')) {
-					$file = 'file://' . rtrim($repo, '/') . '/' . $project;
-					$result = $this->sub('import', array($tmp . 'svn/project', $file, '--message "Initial project import"'));
-					$result = $this->sub('checkout', array($file, $this->workingCopy));
-				}
-			}
+		if ($working === null) {
+			$working = $this->working;
 		}
+
+		$repo = Folder::slashTerm($repo);
+		$working = Folder::slashTerm($working);
+
+		if (!is_dir($repo)) {
+			$SvnRepo = new Folder($repo, true, 0777);
+		}
+
+		if (!is_dir($repo . $project)) {
+			$this->admin('create', $repo . $project);
+		}
+
+		if (is_dir($repo . $project)) {
+
+			$this->config(array(
+				'repo' => $repo . $project,
+				'working' => $working . $project
+			));
+		}
+
+		if (!is_dir($this->working . '/branches')) {
+			$file = 'file://' . $repo . $project;
+			$this->sub('import', array(CONFIGS . 'templates' . DS . 'svn' .DS . 'project', $file, '--message "Initial project import"'));
+			$this->sub('checkout', array($file, $this->working));
+		}
+
+		return !empty($this->response);
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function update($path = null) {
+		if ($path === null) {
+			$path = $this->working;
+		}
+		return $this->sub('update', array($path));
+	}
+
+/**
+ * Get the info about a directory or file
+ *
+ * @param string $path path inside of working with preceeding /
+ * @example $this->Svn->info('/branches');
+ * @return void
+ *
+ **/
+	function commit($revision) {
+		$author = $this->look('author', array('-r', $revision));
+		$commit_date = $this->look('date', array('-r', $revision));
+		$message = $this->look('log', array('-r', $revision));
+		$changed = $this->look('changed', array('-r', $revision));
+		$diff = $this->look('diff', array('-r', $revision));
+
+		/*
+		$previous = ($revision > 1) ? $revision - 1 : 1;
+		$diff = $this->sub('diff', array('-r', "{$previous}:{$revision}));
+		*/
+		// Parse the date nicely
+		// FIXME: messy
+		// TODO: use a nice reg exp
+		$bits = explode(" ", $commit_date);
+		$commit_date = $bits[0] . ' ' . $bits[1];
+
+		// Put each file that has been changed into an array
+		$temp = array();
+		$temp = explode("\n", $changed);
+		// Make the codes more readable
+		// A  => Item Added
+		// D  => Item Deleted
+		// U  => Item Contents Updated
+		// _U => Item Properties Updated
+		// UU => Item Contents and Properties Updated
+
+		foreach ($temp as $tmp) {
+			if (empty($tmp)) {
+				continue;
+			}
+			$bits = explode(" ", $tmp);
+
+			$action = @$bits[0];
+			$file = $bits[sizeof($bits)-1];
+
+			switch ($action) {
+				case 'A':
+					$action = 'Added';
+					break;
+				case 'D':
+					$action = 'Deleted';
+					break;
+				case 'U':
+					$action = 'Updated';
+					break;
+				case '_U':
+					$action = 'Updated';
+					break;
+				case 'UU':
+					$action = 'Updated';
+					break;
+			}
+
+			$changes[] = $action . ' ' . $file;
+
+		}
+
+		$data['Svn'] = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
+
+		return $data;
 	}
 /**
  * Get the info about a directory or file
  *
- * @param string $path path inside of workingCopy with preceeding /
+ * @param string $path path inside of working with preceeding /
  * @example $this->Svn->info('/branches');
  * @return void
  *
  **/
 	function info($path = null) {
-		return $this->sub('info', array($this->workingCopy . $path));
+		return $this->sub('info', array($this->working . $path));
 	}
 /**
  * Run svnadmin, Besides providing the ability to create Subversion repositories,
@@ -73,9 +184,8 @@ class Svn extends Object {
 		if (is_string($params)) {
 			$params = array($params);
 		}
-		$c = $this->debug[] = trim("{$svn}admin {$command} " . join(' ', $params) . ' ' . $this->__creds());
-		umask(0);
-		return shell_exec($c);
+		$c = trim("{$svn}admin {$command} " . join(' ', $params) . ' ' . $this->__creds());
+		return $this->execute($c);
 	}
 /**
  * Run svnlook, is a command-line utility for examining different aspects of a Subversion repository.
@@ -92,9 +202,8 @@ class Svn extends Object {
 		if (is_string($params)) {
 			$params = array($params);
 		}
-		$c = $this->debug[] = trim("{$svn}look {$command} " . join(' ', $params) . ' ' . $this->__creds());
-		umask(0);
-		return shell_exec($c);
+		$c = trim("{$svn}look {$command} {$this->repo} " . join(' ', $params) . ' ' . $this->__creds());
+		return $this->execute($c);
 	}
 /**
  * Run svn subcommands
@@ -110,9 +219,82 @@ class Svn extends Object {
 		if (is_string($params)) {
 			$params = array($params);
 		}
-		$c = $this->debug[] = trim("{$svn} {$command} " . join(' ', $params) . ' ' . $this->__creds());
+		$c = trim("{$svn} {$command} " . join(' ', $params) . ' ' . $this->__creds());
+		return $this->execute($c);
+	}
+
+/**
+ * Creates an SVN hook
+ *
+ * @param string $name values (post-commit, post-lock, post-revprop-change, post-unlock, pre-commit, pre-lock, pre-revprop-change, pre-unlock, start-commit)
+ * @param string $data location of the repository
+ * @return void
+ *
+ **/
+	function hook($name, $data = null, $options = array()) {
+		extract(array_merge($this->__config, $options));
+
+		if ($repo === null) {
+			$repo = $this->repo;
+		}
+
+		$repo = Folder::slashTerm($repo);
+
+		$Hook = new File($repo . 'hooks' . DS . $name, true, 0777);
+
+		chmod($Hook->pwd(), 0777);
+
+		if (!is_string($data) || $data === null) {
+			extract($data);
+			if (file_exists(CONFIGS . 'templates' . DS . 'svn' . DS . 'hooks' . DS . $name)) {
+				ob_start();
+				include(CONFIGS . 'templates' . DS . 'svn' . DS . 'hooks' . DS . $name);
+				$data = ob_get_clean();
+			}
+		}
+
+		if (empty($data)) {
+			return false;
+		}
+
+		if ($Hook->append($data)) {
+			return true;
+		}
+
+		return false;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function pathInfo($path) {
+		$data = $this->sub('log', array($path));
+
+		$lines = explode("\n", $data);
+		$info = (!empty($lines[3])) ? explode("|", $lines[1]) : array();
+
+		$result['revision'] = (!empty($info[0])) ? trim($info[0], 'r') : null;
+		$result['author'] = (!empty($info[1])) ? trim($info[1]) : null;
+		$result['date'] = (!empty($info[2])) ? trim($info[2]) : null;
+		$result['message'] = (!empty($lines[3])) ? trim($lines[3]) : null;
+
+		return $result;
+	}
+/**
+ * Execute any command
+ *
+ * @param string $command
+ * @return void
+ *
+ **/
+	function execute($command) {
+		$this->debug[] = $command;
 		umask(0);
-		return shell_exec($c);
+		$response = shell_exec($command);
+		$this->response = array_merge($this->response, (array)$response);
+		return $response;
 	}
 /**
  * Get the config credentials

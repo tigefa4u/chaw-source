@@ -1,0 +1,1 @@
+<?php echo $html->link('Permissions', array('controller' => 'permissions', 'action'=>'add')); ?>

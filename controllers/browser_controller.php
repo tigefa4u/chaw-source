@@ -8,29 +8,30 @@ class BrowserController extends AppController {
 		$path = join(DS, $args);
 
 		$current = null;
-		
+
 		if ($args > 0) {
 			$current = array_pop($args);
 		}
 
+		$this->Browser->config = $this->Project->config['repo'];
 		$data = $this->Browser->read($path);
 
 		$this->set(compact('data', 'args', 'current'));
 	}
-	
+
 	function tree($branch = 'HEAD') {
 		$Git = ClassRegistry::init('Git');
-		$Git->repo = '/htdocs/scm/creampuff.git';
+		$Git->repo = '/htdocs/scm/chaw.git';
 		$Git->workingCopy = TMP . 'git';
-		
+
 		//pr($Git->tree($branch));
-		
-		//pr($Git->sub('cat-file', array('-t 0ed8662ea6402467a50a6e515042485227c2dd0c')));
-		
+
+		pr($Git->sub('cat-file', array('-t 0ed8662ea6402467a50a6e515042485227c2dd0c')));
+
 		pr($Git->info($branch));
-		
+
 		pr($Git->debug);
-		
+
 		die();
 	}
 }

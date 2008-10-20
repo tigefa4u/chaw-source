@@ -38,5 +38,12 @@
  * @subpackage	cake.cake
  */
 class AppHelper extends Helper {
+
+	function url($url = null, $full = false) {
+		if (is_array($url) && !empty($this->params['project'])) {
+			$url = array_merge(array('project' => $this->params['project']), $url);
+		}
+		return Router::url($url, $full);
+	}
 }
 ?>

@@ -1,50 +1,57 @@
-<div class="page">
-	<h2>
-		<?php echo $html->link('..', array('action' => 'index'))?>
-		<?php
-			$path = '/';
-			foreach ((array)$args as $part):
-				echo '/' . $html->link($part, array($path . $part));
-			endforeach;
+<div class="browser index">
 
-			echo '/' . $current;
-		?>
-	</h2>
+<h2>
+	<?php echo $html->link(Configure::read('Project.url'), array('action' => 'index'))?>
+	<?php
+		$path = '/';
+		foreach ((array)$args as $part):
+			$path .= $part . ' / ';
+			echo '/ ' . $html->link($part, array($path));
+		endforeach;
+		echo ' / ' . $current;
+	?>
+</h2>
 
-<table class="downloads">
+<table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><?php __('Name');?></th>
-		<th><?php __('MD5');?></th>
 		<th><?php __('Size');?></th>
+		<th><?php __('Revision');?></th>
+		<th><?php __('Author');?></th>
+		<th><?php __('Message');?></th>
 	</tr>
 <?php
 	$i = 0;
-	foreach ($data['Folder'] as $download):
+	foreach ((array)$data['Folder'] as $item):
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="zebra"';
 		}
 ?>
 		<tr<?php echo $class?>>
-			<td><?php echo $html->link($download['name'], array($download['path']), array('class' => 'dir'));?></td>
-			<td>&nbsp</td>
-			<td><?php echo $download['size']['num'];?> <?php echo $download['size']['ext'];?></td>
+			<td><?php echo $html->link($item['name'], array($item['path']));?></td>
+			<td><?php echo $item['size']['num'];?> <?php echo $item['size']['ext'];?></td>
+			<td><?php echo $item['info']['revision'];?></td>
+			<td><?php echo $item['info']['author'];?></td>
+			<td><?php echo $item['info']['message'];?></td>
 		</tr>
 <?php
 	endforeach;
 ?>
 
 <?php
-	foreach ($data['File'] as $download):
+	foreach ((array)$data['File'] as $item):
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="zebra"';
 		}
 ?>
 		<tr<?php echo $class?>>
-			<td><?php echo $html->link($download['name'], $download['path']);?></td>
-			<td><?php echo $download['md5'];?></td>
-			<td><?php echo $download['size']['num'];?> <?php echo $download['size']['ext'];?></td>
+			<td><?php echo $html->link($item['name'], array($item['path']));?></td>
+			<td><?php echo $item['size']['num'];?> <?php echo $item['size']['ext'];?></td>
+			<td><?php echo $item['info']['revision'];?></td>
+			<td><?php echo $item['info']['author'];?></td>
+			<td><?php echo $item['info']['message'];?></td>
 		</tr>
 <?php
 	endforeach;
