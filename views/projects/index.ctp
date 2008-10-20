@@ -6,7 +6,7 @@
 		<h3 class="name">
 			<?php 
 				echo $html->link($project['Project']['name'], array(
-					'admin' => false,
+					'admin' => false, 'project' => $project['Project']['url'],
 					'controller' => 'wiki', 'action' => 'index', 
 				));?>
 		</h3>

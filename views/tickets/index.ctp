@@ -10,7 +10,7 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('title');?></th>
-	<?php if (!empty($ticket['Version']['title'])):?>
+	<?php if (!empty($tickets[0]['Version']['title'])):?>
 		<th><?php echo $paginator->sort('version_id');?></th>
 	<?php endif;?>
 	<th><?php echo $paginator->sort('type');?></th>
