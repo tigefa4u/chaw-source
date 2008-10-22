@@ -3,7 +3,7 @@
 		<span class="gravatar">
 			<?php
 				$gravatar = "http://www.gravatar.com/avatar/" . md5($CurrentUser->email). "?"
-				 . "size=22";
+				 	. "size=22";
 				echo "<img src=\"{$gravatar}\" />";
 			?>
 		</span>
@@ -13,8 +13,7 @@
 	<?php else:?>
 		<span class="login">
 			<?php echo $html->link('Login', array('controller' => 'users', 'action' => 'login')); ?>
-		</span>
-		<span class="register">
+			or
 			<?php echo $html->link('Register', array('controller' => 'users', 'action' => 'add')); ?>
 		</span>
 	<?php endif;?>

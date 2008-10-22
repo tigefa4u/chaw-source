@@ -13,17 +13,13 @@ $javascript->codeBlock($script, array('inline' => false));
 <h2>Timeline</h2>
 
 <div class="timeline index">
-	<?php foreach ((array)$timeline as $event):?>
-
-		<div class="timeline">
-
-			<p class="summary">
-				<?php echo $event['Timeline']['summary'];?>
-			</p>
-
-		</div>
-
-	<?php endforeach;?>
+	
+		<?php 
+			foreach ((array)$timeline as $event):
+				$type = $event['Timeline']['model'];
+				echo $this->element('timeline/' . strtolower($type), array('data' => $event[$type]));
+			endforeach;
+		?>
 
 	<?php
 		echo $paginator->prev();

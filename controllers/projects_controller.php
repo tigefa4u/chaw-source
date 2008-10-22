@@ -28,8 +28,11 @@ class ProjectsController extends AppController {
 		if (!empty($this->data)) {
 			$this->Project->create();
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Setup was stored');
-				return;
+				$this->Session->setFlash('Project was created');
+				pr($this->Project->messages);
+				//$this->redirect(array('action' => 'view', $data['Project']['url']));
+			} else {
+				$this->Session->setFlash('Project was NOT created');
 			}
 		}
 
@@ -50,7 +53,9 @@ class ProjectsController extends AppController {
 
 		if (!empty($this->data)) {
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Setup was stored');
+				$this->Session->setFlash('Project was updated');
+			} else {
+				$this->Session->setFlash('Project was NOT updated');
 			}
 		}
 

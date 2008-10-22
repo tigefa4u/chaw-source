@@ -25,31 +25,13 @@ class Commit extends AppModel {
 	function afterSave($created) {
 
 		if ($created) {
-
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Commit']['project_id'],
-				'model' => 'Wiki',
+				'model' => 'Commit',
 				'foreign_key' => $this->id,
 			));
 
-			if (!empty($this->data['Commit']['revision'])) {
-
-				$changed = null;
-				if (!empty($this->data['Commit']['changes'])) {
-					foreach (unserialize($this->data['Commit']['changes']) as $change) {
-						$changed .= " * {$change}\n";
-					}
-				}
-				extract($this->data['Commit']);
-
-				ob_start();
-				include(CONFIGS . 'templates' . DS . 'commit_summary.ctp');
-				$timeline['Timeline']['summary'] = ob_get_clean();
-
-			}
-
 			$this->Timeline->create($timeline);
-
 			$this->Timeline->save();
 		}
 	}

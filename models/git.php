@@ -1,5 +1,7 @@
 <?php
 class Git extends Object {
+	
+	var $useTable = false;
 
 	var $__config = array('git' => 'git', 'tmp' => TMP, 'username' => '', 'password' => '');
 

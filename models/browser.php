@@ -1,5 +1,7 @@
 <?php
 class Browser extends Object {
+	
+	var $useTable = false;
 
 	/* path to files */
 	var $config = array('path' => null, 'type' => null, 'working' => null);

@@ -36,7 +36,7 @@
 
 		echo $html->css(array('generic', 'chaw'));
 		//echo $html->css('highlight/idea');
-		
+
 
 		echo $javascript->link('jquery-1.2.6.min');
 

@@ -37,23 +37,16 @@ class Wiki extends AppModel {
 
 	function afterSave($created) {
 
-		$this->User->id = $this->data['Wiki']['last_changed_by'];
-		$username = $this->User->field('username');
+		if ($created) {
+			$timeline = array('Timeline' => array(
+				'project_id' => $this->data['Wiki']['project_id'],
+				'model' => 'Wiki',
+				'foreign_key' => $this->id,
+			));
 
-		$summary = "###Wiki: [wiki:" . $this->data['Wiki']['slug'] . "]"
-			. "\n\n__Author:__ " . $username
-			. "\n\n__Date:__ " . $this->data['Wiki']['created'];
-
-		$timeline = array('Timeline' => array(
-			'project_id' => $this->data['Wiki']['project_id'],
-			'model' => 'Wiki',
-			'foreign_key' => $this->id,
-			'summary' => $summary,
-		));
-
-		$this->Timeline->create($timeline);
-
-		$this->Timeline->save();
+			$this->Timeline->create($timeline);
+			$this->Timeline->save();
+		}
 	}
 
 }

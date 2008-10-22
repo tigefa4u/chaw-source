@@ -1,3 +1,6 @@
+<?php
+	$session->flash('auth');
+?>
 <div class="users login form">
 <?php echo $form->create(array('action' => 'login'));?>
 	<fieldset>

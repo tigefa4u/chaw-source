@@ -12,6 +12,8 @@ class Project extends AppModel {
 
 	var $repoTypes = array('Git', 'Svn');
 
+	var $messages = array('response' => null, 'debug' => null);
+
 	var $hasMany = array('Permission');
 
 	function initialize($params) {
@@ -51,7 +53,7 @@ class Project extends AppModel {
 				'repo_type' => 'git',
 				'private' => 0,
 				'groups' => 'user, docs team, developer, admin',
-				'ticket_types' => 'bug, enhancement',
+				'ticket_types' => 'rfc, bug, enhancement',
 				'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
 				'ticket_priorities' => 'low, normal, high',
 				'active' => 1
@@ -111,19 +113,18 @@ class Project extends AppModel {
 				$Repo->hook($hook, array('project' => $this->id));
 			}
 
-			if ($hook === 'post-commit') {
-				$Repo->execute("env - {$Repo->repo}/hooks/{$hook} {$Repo->repo} 1");
-			}
+			if ($created) {
+				if ($hook === 'post-commit') {
+					$Repo->execute("env - {$Repo->repo}/hooks/{$hook} {$Repo->repo} 1");
+				}
 
-			if ($hook === 'post-receive') {
-				$Repo->execute("env - {$Repo->repo}/hooks/{$hook} refs/heads/master");
+				if ($hook === 'post-receive') {
+					$Repo->execute("env - {$Repo->repo}/hooks/{$hook} refs/heads/master");
+				}
 			}
 		}
 
-		pr($Repo->response);
-		pr($Repo->debug);
-
-		return;
+		$this->messages = array('repsonse' => $Repo->response, 'debug' => $Repo->debug);
 	}
 
 	function isUnique($data, $options = array()) {
