@@ -3,7 +3,18 @@
 </h4>
 <div class="markdown">
 	<br />
-	[link](http://url.com/)
+	tickets: #1234
+	<br />
+	commits: [1234]
+	<br />
+	<br />
+	```<code>inline code</code>```
+	<br />
+	<pre>preformatted: <br/>4 spaces or tab</pre>
+	<br />
+	# header 1
+	<br />
+	## header 2
 	<br />
 	<br />
 	<em>*italic*</em>
@@ -15,17 +26,13 @@
 	<strong>__bold__</strong>
 	<br />
 	<br />
-	# header 1
-	<br />
-	## header 2
-	<br />
-	<br />
 	- unordered list 1
 	<br />
 	1. ordered list 2
 	<br />
 	<br />
-	```<code>inline code</code>```
-	<br/>
-	<pre>preformatted: <br/>4 spaces or tab</pre>
+	[link](http://url.com/)
+	<br />
+	<br />
+	ohloh widgets: [ohloh:project/widget_name]
 </div>

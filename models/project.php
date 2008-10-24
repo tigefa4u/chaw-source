@@ -1,4 +1,21 @@
 <?php
+/**
+ * Short description
+ *
+ * Long description
+ *
+ *
+ * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
+ * Licensed under The MIT License
+ * Redistributions of files must retain the copyright notice.
+ *
+ * @copyright		Copyright 2008, Garrett J. Woodworth
+ * @package			chaw
+ * @subpackage		chaw.models
+ * @since			Chaw 0.1
+ * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ *
+ */
 class Project extends AppModel {
 
 	var $name = 'Project';
@@ -17,14 +34,13 @@ class Project extends AppModel {
 	var $hasMany = array('Permission');
 
 	function initialize($params) {
-
-		$duration = null;
+		$duration = '+99 days';
 		if (Configure::read() > 1) {
 			$duration = '+15 seconds';
 		}
 
 		Cache::set(array('prefix' => 'config_', 'duration' => $duration));
-
+	
 		if (!empty($params['project'])) {
 			$key = $params['project'];
 			$project = Cache::read($key);

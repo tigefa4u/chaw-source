@@ -1,12 +1,20 @@
 <?php
 /**
- * Short description for class.
+ * Short description
  *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
+ * Long description
  *
- * @package		cake
- * @subpackage	cake.app
+ *
+ * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
+ * Licensed under The MIT License
+ * Redistributions of files must retain the copyright notice.
+ *
+ * @copyright		Copyright 2008, Garrett J. Woodworth
+ * @package			chaw
+ * @subpackage		chaw
+ * @since			Chaw 0.1
+ * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ *
  */
 class AppController extends Controller {
 
@@ -19,7 +27,7 @@ class AppController extends Controller {
 	var $uses = array('Project');
 
 	function beforeFilter() {
-
+		
 		if ($this->Project->initialize($this->params) === false && $this->here !== $this->base . '/install' && empty($this->data['Project'])) {
 			$this->redirect(array('admin' => false, 'project' => null, 'controller' => 'install'));
 		}

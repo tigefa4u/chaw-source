@@ -1,41 +1,20 @@
 <?php
-/* SVN FILE: $Id: app_helper.php 6296 2008-01-01 22:18:17Z phpnut $ */
 /**
- * Short description for file.
+ * Short description
  *
- * This file is application-wide helper file. You can put all
- * application-wide helper-related methods here.
+ * Long description
  *
- * PHP versions 4 and 5
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
- * Copyright 2005-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
- *
+ * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
  * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
+ * Redistributions of files must retain the copyright notice.
  *
- * @filesource
- * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link				http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package			cake
- * @subpackage		cake.cake
- * @since			CakePHP(tm) v 0.2.9
- * @version			$Revision: 6296 $
- * @modifiedby		$LastChangedBy: phpnut $
- * @lastmodified	$Date: 2008-01-01 14:18:17 -0800 (Tue, 01 Jan 2008) $
+ * @copyright		Copyright 2008, Garrett J. Woodworth
+ * @package			chaw
+ * @subpackage		chaw
+ * @since			Chaw 0.1
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
- */
-/**
- * This is a placeholder class.
- * Create the same file in app/app_helper.php
  *
- * Add your application-wide methods in the class below, your helpers
- * will inherit them.
- *
- * @package		cake
- * @subpackage	cake.cake
  */
 class AppHelper extends Helper {
 

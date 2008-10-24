@@ -439,14 +439,22 @@ var _DoSpecialRules = function(text) {
 			function(wholeMatch, m0, m1, m2) {
 				return (m0 + "<a href=\"" + base + "commits/view/" + m2 + "\">" + m1 + "</a>");
 			});
-	
+
 	// get wiki pages
 	//  [wiki:Slug]
 	//
 	text = text.replace(/(^|[^\w])(\[wiki:(.+?)\])+/gm,
 			function(wholeMatch, m0, m1, m2) {
 				return (m0 + "<a href=\"" + base + "wiki/" + m2 + "\">" + m2 + "</a>");
-			});	
+			});
+
+	// get ohloh widgets
+	//  [ohloh:project/widget_name]
+	//
+	text = text.replace(/(^|[^\w])(\[ohloh:(.+?)\/(.+?)\])+/gm,
+			function(wholeMatch, m0, m1, m2, m3) {
+				return (m0 + "<iframe frameborder=\"0\" height=\"100\" src=\"http://www.ohloh.net/projects/" + m2 + "/widgets/" + m3 + "\">" + m2 + "</iframe>");
+			});
 
 	return text;
 }
@@ -1016,8 +1024,8 @@ var _DoItalicsAndBold = function(text) {
 	text = text.replace(/(\*\*|__)(?=\S)([^\r]*?\S[*_]*)\1/g,
 		"<strong>$2</strong>");
 
-	text = text.replace(/(\*|_)(?=\S)([^\r]*?\S)\1/g,
-		"<em>$2</em>");
+	text = text.replace(/[^\S](_)(?=\S)([^\r]*?\S)\1/g,
+		" <em>$2</em>");
 
 	return text;
 }
