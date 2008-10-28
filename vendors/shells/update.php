@@ -53,29 +53,20 @@ class UpdateShell extends Shell {
 
 		$username = $info[0];
 
+		/*
+		Not using this right now, just usis the permissions.ini
 		$user_id = $this->Permission->User->field('id', array('User.username' => $username));
-
-
 		$this->Permission->recursive = -1;
 		$permissions = $this->Permission->find('all', array(
 			'conditions' => array('Permission.user_id' => $user_id, 'Permission.project_id' => $this->Project->id)
 		));
+		*/
 
-		$path = $project .':/' . $refname;
-
-		$allowed = $this->Permission->check($project .':', array(
+		$allowed = $this->Permission->check($refname, array(
 			'user' => $username,
 			'group' => @$permissions['Permission']['group'],
-		));
-
-		if ($allowed === true) {
-			return 0;
-		}
-
-		$allowed = $this->Permission->check($path, array(
-			'user' => $username,
-			'group' => @$permissions['Permission']['group'],
-			'access' => 'w'
+			'access' => 'w',
+			'default' => false
 		));
 
 		if ($allowed === true) {

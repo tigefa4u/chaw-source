@@ -34,13 +34,15 @@ class Project extends AppModel {
 	var $hasMany = array('Permission');
 
 	function initialize($params) {
+		$this->recursive = -1;
+
 		$duration = '+99 days';
 		if (Configure::read() > 1) {
 			$duration = '+15 seconds';
 		}
 
 		Cache::set(array('prefix' => 'config_', 'duration' => $duration));
-	
+
 		if (!empty($params['project'])) {
 			$key = $params['project'];
 			$project = Cache::read($key);
@@ -140,7 +142,10 @@ class Project extends AppModel {
 			}
 		}
 
-		$this->messages = array('repsonse' => $Repo->response, 'debug' => $Repo->debug);
+		$this->messages = array('response' => $Repo->response, 'debug' => $Repo->debug);
+
+		$this->Permission->create(array('user_id' => $this->data['Project']['user_id']));
+		$this->Permission->save();
 	}
 
 	function isUnique($data, $options = array()) {
@@ -151,7 +156,7 @@ class Project extends AppModel {
 			return true;
 		}
 		if (!empty($data['url'])) {
-			if ($this->findByName($data['url'])) {
+			if ($this->findByUrl($data['url'])) {
 				return false;
 			}
 			return true;

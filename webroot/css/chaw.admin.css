@@ -10,6 +10,7 @@
 	width: 20%;
 	margin-top: 30px;
 	margin-left: 20px;
+	overflow: hidden;
 }
 
 #admin-navigation ul {
@@ -32,12 +33,13 @@
 	background: #f4f4f4;
 	border-bottom: 1px solid #e2e2e2;
 	border-left: 1px solid #e2e2e2;
-	border-right: 1px solid #e2e2e2;
 }
 
 #admin-navigation li a:hover, #admin-navigation li a.on {
-	display: block;
 	text-decoration: none;
 	background: #fff;
 	border-left: 1px solid #fff;
+}
+.actions {
+	margin-top: 20px;
 }

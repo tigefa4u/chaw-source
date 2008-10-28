@@ -66,7 +66,7 @@
 					<li><?php echo $html->link('Source', array('controller' => 'browser', 'action' => 'index'));?></li>
 					<li><?php echo $html->link('Versions', array('controller' => 'versions', 'action' => 'index'));?></li>
 					<li><?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index'));?></li>
-					<li><?php echo $html->link('Admin', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'));?></li>
+					<li><?php echo $admin->link('Admin', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'));?></li>
 				</ul>
 			</div>
 

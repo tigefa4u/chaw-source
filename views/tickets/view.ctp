@@ -2,9 +2,9 @@
 $script = '
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
-	$("#Preview").html(converter.makeHtml(jQuery.trim($("#Preview").text())));
+	//$("#Preview").html(jQuery.trim($("#Preview").text()));
 	$("#TicketDescription").bind("keyup", function() {
-		$("#Preview").html(converter.makeHtml($(this).val()));
+		$("#Preview").html(jQuery.trim($(this).val()));
 	});
 	$(".modify").click(function() {
 		$("#modify").show();
@@ -32,7 +32,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	</h3>
 
 	<div id="Preview" class="description">
-		<?php echo $ticket['Ticket']['description']; ?>
+		<?php echo $html->clean($ticket['Ticket']['description']); ?>
 	</div>
 
 	<div class="ticket edit">

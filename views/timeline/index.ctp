@@ -10,21 +10,19 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 
-<h2>Timeline</h2>
-
 <div class="timeline index">
-	
-		<?php 
-			foreach ((array)$timeline as $event):
-				$type = $event['Timeline']['model'];
-				echo $this->element('timeline/' . strtolower($type), array('data' => $event[$type]));
-			endforeach;
-		?>
-
+<h2>Timeline</h2>
+	<?php
+		foreach ((array)$timeline as $event):
+			$type = $event['Timeline']['model'];
+			echo $this->element('timeline/' . strtolower($type), array('data' => $event[$type]));
+		endforeach;
+	?>
+</div>
+<div class="paging">
 	<?php
 		echo $paginator->prev();
 		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
 		echo $paginator->next();
 	?>
-
 </div>

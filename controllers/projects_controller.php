@@ -22,14 +22,24 @@ class ProjectsController extends AppController {
 
 	function index() {
 		$this->Project->recursive = 0;
+
+		if ($this->params['isAdmin'] === false) {
+			$this->paginate = array(
+				'conditions' => array('Project.private' => 0)
+			);
+		}
+
 		$this->set('projects', $this->paginate());
 	}
 
 	function view($url  = null) {
 		if (!empty($this->params['project'])) {
-			$url = $this->params['project'];
+			$project['Project'] = $this->Project->config;
+		} else {
+			$project = $this->Project->findByUrl($url);
 		}
-		$this->set('project', $this->Project->findByUrl($url));
+
+		$this->set('project', $project);
 	}
 
 	function admin_index() {
@@ -43,7 +53,7 @@ class ProjectsController extends AppController {
 		$this->pageTitle = 'Project Setup';
 
 		if (!empty($this->data)) {
-			$this->Project->create();
+			$this->Project->create(array('user_id' => $this->Auth->user('id')));
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was created');
 				pr($this->Project->messages);
@@ -55,7 +65,7 @@ class ProjectsController extends AppController {
 
 		$this->data = array_merge((array)$this->data, array('Project' => $this->Project->config));
 		if (!empty($this->data['Project']['id'])) {
-			unset($this->data['Project']['id']);
+			unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
 		}
 
 		$this->set('repoTypes', $this->Project->repoTypes());
@@ -76,11 +86,7 @@ class ProjectsController extends AppController {
 			}
 		}
 
-		if (!$id) {
-			$id = $this->Project->id;
-		}
-
-		$this->data = $this->Project->read(null, $id);
+		$this->data = $this->Project->read();
 
 		$this->set('repoTypes', $this->Project->repoTypes());
 

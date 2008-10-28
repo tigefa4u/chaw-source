@@ -18,19 +18,20 @@
  */
 class AppController extends Controller {
 
-	var $components = array('Auth');
+	var $components = array('Auth', 'Access');
 
 	var $helpers = array(
-		'Html', 'Form', 'Javascript'
+		'Html', 'Form', 'Javascript', 'Admin'
 	);
 
 	var $uses = array('Project');
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function beforeFilter() {
-		
-		if ($this->Project->initialize($this->params) === false && $this->here !== $this->base . '/install' && empty($this->data['Project'])) {
-			$this->redirect(array('admin' => false, 'project' => null, 'controller' => 'install'));
-		}
 
 		if (!empty($this->params['project']) && $this->Project->id == 1) {
 			unset($this->params['project']);
@@ -40,38 +41,27 @@ class AppController extends Controller {
 			$this->params['action'] = $this->action = 'login';
 		}
 
-		if ($this->here === $this->base . '/install' || $this->here === $this->base . '/admin/projects/add') {
-			$this->Auth->allow($this->action);
-		}
-
 		$this->Auth->loginAction = array('admin' => false, 'controller' => 'users', 'action' => 'login');
-		$this->Auth->allow('index', 'view');
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function beforeRender() {
 		if (!empty($this->params['admin'])) {
 			$this->layout = 'admin';
 		}
-
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
+		$this->set('CurrentProject', Set::map($this->Project->config));
 	}
-
-	function appErrorTwo($method, $messages) {
-		pr($this->params);
-		pr($method);
-		if (($method == 'missingAction' || $method == 'missingController') && $this->here !== $this->base . '/admin/install') {
-			pr($method);
-			pr($messages);
-			//$this->redirect(array('controller' => 'wiki', 'action' => $messages[0]['url'], $this->passedArgs));
-		} else {
-			$this->layout = 'error';
-			$this->set($messages[0]);
-			echo $this->render('/errors/' . Inflector::underscore($method));
-			$this->_stop();
-		}
-	}
-
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function redirect($url = array(), $status = null, $exit = true) {
 		if (is_array($url) && !empty($this->params['project'])) {
 			$url = array_merge(array('project' => $this->params['project']), $url);

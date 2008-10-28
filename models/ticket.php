@@ -67,15 +67,15 @@ class Ticket extends AppModel {
 					}
 				}
 			}
-
-			$data = array('Comment' => array(
-				'ticket_id' => $this->id,
-				'project_id' => $this->data['Ticket']['project_id'],
-				'user_id' => $this->data['Ticket']['user_id'],
-				'body' => join("\n", $changes) ."\n\n" . $comment
-			));
-
-			if (!empty($data['Comment']['body'])) {
+			
+			if (!empty($changes) && !empty($comment)) {
+				$data = array('Comment' => array(
+					'ticket_id' => $this->id,
+					'project_id' => $this->data['Ticket']['project_id'],
+					'user_id' => $this->data['Ticket']['user_id'],
+					'body' => join("\n", $changes) ."\n\n" . $comment
+				));
+		
 				$this->Comment->create($data);
 				$this->Comment->save();
 			}
