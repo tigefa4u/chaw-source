@@ -122,13 +122,15 @@ class Project extends AppModel {
 		$Repo->create($project, array('remote' => 'git@thechaw.com'));
 
 		$hooks = array(
-			'Git' => array('update', 'post-receive'),
+			'Git' => array('post-receive'),
 			'Svn' => array('pre-commit', 'post-commit')
 		);
 
+		$chaw = APP . 'content' . DS;
+
 		foreach ($hooks[$repoType] as $hook) {
 			if (!file_exists("{$Repo->repo}/hooks/{$hook}")) {
-				$Repo->hook($hook, array('project' => $this->id));
+				$Repo->hook($hook, array('project' => $this->id, 'chaw' => $chaw));
 			}
 
 			if ($created) {
@@ -144,8 +146,31 @@ class Project extends AppModel {
 
 		$this->messages = array('response' => $Repo->response, 'debug' => $Repo->debug);
 
-		$this->Permission->create(array('user_id' => $this->data['Project']['user_id']));
-		$this->Permission->save();
+		if (!empty($this->data['Project']['user_id'])) {
+			$this->Permission->create(array('user_id' => $this->data['Project']['user_id']));
+			$this->Permission->save();
+		}
+
+		$this->createShell();
+	}
+
+	function createShell($data = array()) {
+
+		$path = CONFIGS . 'templates' . DS;
+
+		if (file_exists($path . 'chaw')) {
+			$chaw = APP . 'content' . DS;
+			$console = array_pop(Configure::corePaths('cake')) . 'console' . DS;
+			ob_start();
+			include($path . 'chaw');
+			$data = ob_get_clean();
+
+			$File = new File($chaw . 'chaw', true, 0777);
+			chmod($File->pwd(), 0777);
+			return $File->write($data);
+		}
+
+		return false;
 	}
 
 	function isUnique($data, $options = array()) {

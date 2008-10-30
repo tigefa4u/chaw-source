@@ -17,7 +17,7 @@
  *
  */
 class Git extends Object {
-	
+
 	var $useTable = false;
 
 	var $__config = array('git' => 'git', 'tmp' => TMP, 'username' => '', 'password' => '');
@@ -78,7 +78,7 @@ class Git extends Object {
 		}
 
 		if (is_dir($repo . $project . '.git') && !file_exists($repo . $project . '.git' . DS . 'config')) {
-			$this->call($repo . $project . '.git', "--bare init");
+			$this->call("--bare init", array('path' => $repo . $project . '.git'));
 		}
 
 		$this->config(array(
@@ -98,8 +98,8 @@ class Git extends Object {
 
 		$this->sub("remote add origin {$remote}:{$project}.git");
 		$this->execute("cd {$this->working} && touch .gitignore");
-		$this->call($this->working, "add .");
-		$this->call($this->working, "commit", array("-m", '"Initial Project commit"'));
+		$this->call("add .");
+		$this->call("commit", array("-m", '"Initial Project commit"'));
 		$this->sub("--bare update-server-info");
 		$this->push();
 		$this->update();
@@ -117,7 +117,7 @@ class Git extends Object {
  *
  **/
 	function push($branch1 = 'origin', $branch2 = 'master') {
-		return $this->call($this->working, "push", array($branch1, $branch2));
+		return $this->call("push", array($branch1, $branch2));
 	}
 /**
  * undocumented function
@@ -126,7 +126,7 @@ class Git extends Object {
  *
  **/
 	function update($branch = 'master') {
- 		return $this->call($this->working, 'pull', array($this->repo, $branch));
+ 		return $this->call('pull', array($this->repo, $branch));
 	}
 /**
  * undocumented function
@@ -146,7 +146,7 @@ class Git extends Object {
 		}
 
 		if (is_dir($this->working)) {
-			$this->call($this->working, 'checkout', array($branch));
+			$this->call('checkout', array($branch));
 			$this->update($branch);
 			return $this->response;
 		}
@@ -297,7 +297,7 @@ class Git extends Object {
  *
  **/
 	function pathInfo($path = null) {
-		$info = $this->call($this->working, 'log', array("--pretty=medium", '-1', '--', $path));
+		$info = $this->call('log', array("--pretty=medium", '-1', '--', $path));
 		$info = explode("\n", $info);
 
 		$result['revision'] = (!empty($info[0])) ? trim(array_shift($info), 'commit ') : null;
@@ -314,8 +314,16 @@ class Git extends Object {
  * @return void
  *
  **/
-	function call($path, $command, $options = array(), $return = false) {
+	function call($command, $options = array(), $return = false) {
 		extract($this->__config);
+		$options = array_map('escapeshellcmd', (array)$options);
+
+		$path = $this->working;
+		if (!empty($options['path'])) {
+			$path = $options['path'];
+			unset($options['path']);
+		}
+
 		$c = trim("cd {$path} && {$git} {$command} " . join(' ', (array)$options));
 		if ($return === true) {
 			return $c;
@@ -330,6 +338,8 @@ class Git extends Object {
  **/
 	function run($command, $options = array(), $return = false) {
 		extract($this->__config);
+		$options = array_map('escapeshellcmd', $options);
+
 		$c = trim("GIT_DIR={$this->repo} {$git} {$command} " . join(' ', (array)$options));
 		if ($return === true) {
 			return $c;
@@ -344,6 +354,8 @@ class Git extends Object {
  **/
 	function sub($command, $options = array(), $return = false) {
 		extract($this->__config);
+		$options = array_map('escapeshellcmd', (array)$options);
+
 		$c = trim("GIT_DIR={$this->repo} {$git} {$command} " . join(' ', (array)$options));
 		if ($return === true) {
 			return $c;

@@ -36,12 +36,12 @@ class User extends AppModel {
 			$this->Permission->save($data);
 		}
 	}
-	
+
 	function afterSave($created) {
 		if (!empty($this->data['User']['ssh_key'])) {
 			$path = Configure::read('Content.git') . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
 			$File = new File($path);
-			$data = trim($this->data['User']['ssh_key']) . "\n";
+			$data = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user ' . $this->data['User']['username'] . '",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ' . trim($this->data['User']['ssh_key']) . "\n";
 			$File->append($data);
 		}
 	}

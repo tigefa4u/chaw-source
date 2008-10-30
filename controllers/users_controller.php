@@ -58,6 +58,7 @@ class UsersController extends AppController {
 
 	function edit() {
 		if (!empty($this->data) && $this->data['User']['id'] == $this->Auth->user('id')) {
+			$this->data['User']['username'] = $this->Auth->user('username');
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash('User updated');
 			} else {

@@ -68,7 +68,7 @@ class PostReceiveShell extends Shell {
 			}
 		}
 
-		return true;
+		return;
 	}
 
 }
