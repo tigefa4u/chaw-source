@@ -60,17 +60,43 @@ class UsersController extends AppController {
 		}
 	}
 
-	function edit() {
-		if (!empty($this->data) && ($this->params['isAdmin'] || $this->data['User']['id'] == $this->Auth->user('id'))) {
-			$this->data['User']['username'] = $this->Auth->user('username');
-			if ($this->User->save($this->data)) {
+	function account() {
+		$id = $this->Auth->user('id');
+		if (!$id) {
+			$this->redirect(array('action' => 'login'));
+		}
+		$this->edit($id);
+	}
+
+	function edit($id = null) {
+		if (!$id && !empty($this->passedArgs[0])) {
+			$id = $this->passedArgs[0];
+		}
+
+		$isGet = false;
+		if (empty($this->data)) {
+			$isGet = true;
+			$this->data = $this->User->read(null, $id);
+		}
+
+		$isAllowed = ($this->params['isAdmin'] || $this->data['User']['id'] == $this->Auth->user('id'));
+
+		if (!$isAllowed) {
+			$this->render('view');
+			return;
+		}
+
+		if ($isGet === false) {
+			$data = $this->data;
+			unset($data['User']['username']);
+			if ($this->User->save($data)) {
 				$this->Session->setFlash('User updated');
 			} else {
 				$this->Session->setFlash('User NOT updated');
 			}
 		}
 
-		$this->data = $this->User->read(null, $this->Auth->user('id'));
+		$this->render('edit');
 	}
 
 

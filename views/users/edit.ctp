@@ -4,6 +4,8 @@
  		<legend><?php __('Update Info');?></legend>
 	<?php
 		echo $form->input('id');
+		echo $form->hidden('username');
+		echo $form->input('username', array('disabled' => true));
 		echo $form->input('email');
 		echo $form->input('ssh_key');
 	?>

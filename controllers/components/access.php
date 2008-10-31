@@ -57,10 +57,11 @@ class AccessComponent extends Object {
 			}
 		} else {
 			$this->isAllowed = (
-				$controller->action === 'login' ||
-				$controller->Auth->allowedActions == array('*') ||
-				in_array($controller->action, $controller->Auth->allowedActions) ||
-				$controller->Project->Permission->check($controller->params['controller'], array('access' => 'r', 'default' => true))
+				in_array($controller->name, array('Users', 'Projects')) ||
+				(
+					empty($controller->Project->config['private']) &&
+					$controller->Project->Permission->check($controller->params['controller'], array('access' => 'r', 'default' => true))
+				)
 			);
 
 			if ($this->isAllowed) {
@@ -76,7 +77,7 @@ class AccessComponent extends Object {
  *
  **/
 	function startup(&$controller) {
-		if (empty($controller->Project->Repo) || (!$controller->Auth->user() && $this->isAllowed)) {
+		if (empty($controller->Project->Repo)) {
 			return false;
 		}
 
@@ -84,6 +85,10 @@ class AccessComponent extends Object {
 		if ($isOwner) {
 			$controller->Auth->allow($controller->action);
 			$controller->params['isAdmin'] = $this->isAllowed = true;
+			return true;
+		}
+
+		if ($this->isAllowed) {
 			return true;
 		}
 
