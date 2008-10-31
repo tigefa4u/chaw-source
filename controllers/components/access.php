@@ -24,15 +24,17 @@ class AccessComponent extends Object {
  *
  **/
 	function initialize(&$controller) {
-		if ($controller->Project->initialize($controller->params) === false) {
-			if ($controller->params['url']['url'] === 'install' || $controller->params['url']['url'] === 'admin/projects/add') {
-				$controller->Auth->allow($this->action);
+		if(empty($controller->Project)) {
+			$controller->Auth->allow($controller->action);
+		}
+		if (!empty($controller->Project) && $controller->Project->initialize($controller->params) === false) {
+			if (in_array($controller->params['url']['url'], array('install', 'admin/projects/add', 'pages/home'))) {
+				$controller->Auth->allow($controller->action);
 			} else {
-				$controller->Session->setFlash('Create the first project');
-				$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'install'));
+				$controller->Session->setFlash('Chaw needs to be installated');
+				$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
 			}
 		}
-
 	}
 /**
  * undocumented function

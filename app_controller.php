@@ -54,7 +54,7 @@ class AppController extends Controller {
 			$this->layout = 'admin';
 		}
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
-		$this->set('CurrentProject', Set::map($this->Project->config));
+		$this->set('CurrentProject', Set::map(Configure::read('Project')));
 	}
 /**
  * undocumented function

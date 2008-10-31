@@ -68,6 +68,7 @@ class Project extends AppModel {
 				}
 			}
 		} else {
+			/*
 			$key = Configure::read('App.dir');
 			$project = Cache::read($key);
 			if (empty($project)) {
@@ -76,8 +77,12 @@ class Project extends AppModel {
 					Cache::write($key, $project);
 				}
 			}
+			*/
 		}
-		if (!empty($this->data)) {
+		if (!empty($this->data['Project'])) {
+			if (empty($project)) {
+				$project = array('Project' => array());
+			}
 			$project['Project'] = array_merge($project['Project'], $this->data['Project']);
 		}
 
