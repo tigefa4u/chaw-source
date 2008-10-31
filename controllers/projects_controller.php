@@ -89,7 +89,9 @@ class ProjectsController extends AppController {
 		$this->data = $this->Project->read();
 
 		$this->set('repoTypes', $this->Project->repoTypes());
-
+		
+		$this->set('messages', $this->Project->messages);
+		
 		$this->render('edit');
 	}
 }

@@ -39,9 +39,8 @@ class WikiController extends AppController {
 		if (!empty($wiki)) {
 			$this->set('wiki', $wiki);
 			$this->render('view');
-		} else {
-			$this->data['Wiki']['slug'] = $slug;
-			$this->render('add');
+		} else if ($this->Auth) {
+			$this->redirect(array_merge(array('action' => 'add'), $this->passedArgs));
 		}
 	}
 
