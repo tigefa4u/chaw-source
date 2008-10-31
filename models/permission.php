@@ -34,13 +34,17 @@ class Permission extends AppModel {
 	function saveFile($data = array()) {
 		$this->set($data);
 		$File = $this->__getFile();
-		if (!$File->exists()) {
+		$File->create();
+
+		if (!$File->exists() || !$File->writable()) {
 			return false;
 		}
 
+		$config = $this->config();
+
 		if (empty($this->data['Permission']['fine_grained'])) {
-			$repo = 'svn';
-			if ($this->__config['repo']['type'] == 'git') {
+			$repo = $config['url'] . ':/';
+			if ($config['repo']['type'] == 'git') {
 				$repo = 'refs/heads/master';
 			}
 			if (empty($this->data['Permission']['user_id'])) {
@@ -49,9 +53,8 @@ class Permission extends AppModel {
 
 			$this->User->id = $this->data['Permission']['user_id'];
 			$username = $this->User->field('username');
-
 			ob_start();
-			include(CONFIGS . 'templates' . DS . $this->__config['repo']['type'] . DS . 'permissions.ini');
+			include(CONFIGS . 'templates' . DS . $config['repo']['type'] . DS . 'permissions.ini');
 			$this->data['Permission']['fine_grained'] = ob_get_clean();
 		}
 
@@ -89,6 +92,10 @@ class Permission extends AppModel {
 		if ($project === null) {
 			$config = $this->config();
 			$project = $config['url'];
+		}
+
+		if (empty($rules[$project])) {
+			return $default;
 		}
 
 		foreach ((array)$rules[$project] as $rule => $perms) {
@@ -166,7 +173,9 @@ class Permission extends AppModel {
 			if (!empty($this->__rules[1])) {
 				$parent = $this->__rules[1];
 			} else {
-				$parent = $this->__rules[1] = $this->toArray($this->file(true));
+				if ($file = $this->file(true)) {
+					$parent = $this->__rules[1] = $this->toArray($file);
+				}
 			}
 		}
 
@@ -201,7 +210,6 @@ class Permission extends AppModel {
 		foreach ($lines as $line) {
 			$data = trim($line);
 			$first = substr($data, 0, 1);
-
 			if ($first != ';' && $data != '') {
 				if ($first == '[' && substr($data, -1, 1) == ']') {
 					$project = $config['url'];
@@ -209,7 +217,7 @@ class Permission extends AppModel {
 					if (strpos($section, ':') !== false) {
 						list($project, $section) = explode(':', $section);
 					}
-				} else {
+				} else if (!empty($project) && !empty($section)) {
 					$delimiter = strpos($data, '=');
 
 					if ($delimiter > 0) {
@@ -243,6 +251,11 @@ class Permission extends AppModel {
  **/
 	function file($root = false) {
 		$File = $this->__getFile($root);
+		if (!$File->exists() || !$File->readable()) {
+			if (!$File->create()) {
+				return false;
+			}
+		}
 		return $File->read();
 	}
 /**
@@ -258,7 +271,7 @@ class Permission extends AppModel {
 		if ($config['id'] == 1 || $root === true) {
 			$path = Configure::read("Content.{$repoType}") . 'repo' . DS;
 		}
-		$File = new File($path . 'permissions.ini', true, 0777);
+		$File = new File($path . 'permissions.ini');
 		return $File;
 	}
 }

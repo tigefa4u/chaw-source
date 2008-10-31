@@ -1,17 +1,24 @@
 <div class="projects index">
-<?php foreach ((array)$projects as $project):?>
+<?php foreach ((array)$projects as $project):
+		
+		$url = false;
+		if ($project['Project']['id'] != 1) {
+			$url = $project['Project']['url'];
+		}
+?>
 
 	<div class="project">
 
 		<h3 class="name">
 			<?php
 				echo $html->link($project['Project']['name'], array(
-					'admin' => false, 'project' => $project['Project']['url'],
+					'admin' => false, 'project' => $url,
 					'controller' => 'wiki', 'action' => 'index',
 				));?>
 			<em>
 				<?php
-					echo $admin->link('admin', array('project' => $project['Project']['url'],
+				
+					echo $admin->link('admin', array('project' => $url,
 						'admin' => true, 'controller' => 'dashboard'
 					));?>
 			</em>

@@ -3,7 +3,7 @@
 REPOS="$1"
 TXN="$2"
 export TERM="xterm"
-export PATH="<?php echo env('PATH'); ?>"
+export PATH="<?php echo env('PATH'); ?>:<?php echo $chaw; ?>"
 
 # Make sure that the log message contains some text.
 svnlook log -t "$TXN" "$REPOS" | \
@@ -11,7 +11,8 @@ svnlook log -t "$TXN" "$REPOS" | \
 
 
 cd <?php echo APP; ?>
-cake pre_commit authorize <?php echo $project; ?> $REPOS $TXN
 
-# All checks passed, so allow the commit.
-exit 0
+chaw pre_commit authorize <?php echo $project; ?> $REPOS $TXN
+
+
+exit $?

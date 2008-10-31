@@ -3,8 +3,8 @@
 REPOS="$1"
 REV="$2"
 export TERM="xterm"
-export PATH="<?php echo env('PATH'); ?>"
+export PATH="<?php echo env('PATH'); ?>:<?php echo $chaw; ?>"
 
 cd <?php echo APP; ?>
 
-cake post_commit commit <?php echo $project; ?> $REPOS $REV
+chaw post_commit commit <?php echo $project; ?> $REPOS $REV

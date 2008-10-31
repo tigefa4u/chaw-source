@@ -17,7 +17,7 @@
  *
  */
 class Svn extends Object {
-	
+
 	var $useTable = false;
 
 	var $__config = array('svn' => 'svn', 'repo' => null, 'working' => null, 'username' => '', 'password' => '');
@@ -46,6 +46,7 @@ class Svn extends Object {
 		if (!empty($this->__config['working'])) {
 			$this->working = $this->__config['working'];
 		}
+		return $this->__config;
 	}
 /**
  * Create a new repo; initialize the branches, tags, trunk; checkout a working copy to TMP
@@ -57,42 +58,32 @@ class Svn extends Object {
  *
  **/
 	function create($project, $options = array()) {
-		extract(array_merge($this->__config, $options));
+		extract($this->config($options));
 
-		if ($repo === null) {
-			$repo = $this->repo;
+		$repo = rtrim($repo, DS);
+		$working = rtrim($working, DS);
+
+		if (!is_dir(dirname($repo))) {
+			$SvnRepo = new Folder(dirname($repo), true, 0777);
 		}
-
-		if ($working === null) {
-			$working = $this->working;
+		if (!is_dir(dirname($working))) {
+			$SvnWorking = new Folder(dirname($working), true, 0777);
 		}
-
-		$repo = Folder::slashTerm($repo);
-		$working = Folder::slashTerm($working);
 
 		if (!is_dir($repo)) {
-			$SvnRepo = new Folder($repo, true, 0777);
+			$this->admin('create', $repo);
 		}
 
-		if (!is_dir($repo . $project)) {
-			$this->admin('create', $repo . $project);
-		}
-
-		if (is_dir($repo . $project)) {
-
-			$this->config(array(
-				'repo' => $repo . $project,
-				'working' => $working . $project
-			));
-		}
-
-		if (!is_dir($this->working . '/branches')) {
-			$file = 'file://' . $repo . $project;
+		if (!is_dir($working . '/branches')) {
+			$file = 'file://' . $repo;
 			$this->sub('import', array(CONFIGS . 'templates' . DS . 'svn' .DS . 'project', $file, '--message "Initial project import"'));
-			$this->sub('checkout', array($file, $this->working));
+			$this->sub('checkout', array($file, $working));
 		}
-
-		return !empty($this->response);
+		
+		if (is_dir($repo) && is_dir($working . '/branches')) {
+			return true;
+		}
+		return false;
 	}
 /**
  * undocumented function

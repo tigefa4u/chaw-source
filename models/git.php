@@ -45,6 +45,7 @@ class Git extends Object {
 		if (!empty($this->__config['working'])) {
 			$this->working = $this->__config['working'];
 		}
+		return $this->__config;
 	}
 /**
  * undocumented function
@@ -53,40 +54,27 @@ class Git extends Object {
  *
  **/
 	function create($project, $options = array()) {
-		extract(array_merge($this->__config, $options));
+		extract($this->config($options));
 
-		if ($repo === null) {
-			$repo = $this->repo;
+		$repo = rtrim($repo, DS);
+		$working = rtrim($working, DS);
+
+		if (!is_dir(dirname($repo))) {
+			$GitRepo = new Folder(dirname($repo), true, 0777);
 		}
-
-		if ($working === null) {
-			$working = $this->working;
+		if (!is_dir(dirname($working))) {
+			$GitWorking = new Folder(dirname($working), true, 0777);
 		}
-
-		$repo = Folder::slashTerm($repo);
-		$working = Folder::slashTerm($working);
 
 		if (!is_dir($repo)) {
-			$GitRepo = new Folder($repo, true, 0777);
+			$Project = new Folder($repo, true, 0777);
 		}
+
+		if (is_dir($repo) && !file_exists($repo . DS . 'config')) {
+			$this->call("--bare init", array('path' => $repo));
+		}
+
 		if (!is_dir($working)) {
-			$GitWorking = new Folder($working, true, 0777);
-		}
-
-		if (!is_dir($repo . $project . '.git')) {
-			$Project = new Folder($repo . $project . '.git', true, 0777);
-		}
-
-		if (is_dir($repo . $project . '.git') && !file_exists($repo . $project . '.git' . DS . 'config')) {
-			$this->call("--bare init", array('path' => $repo . $project . '.git'));
-		}
-
-		$this->config(array(
-			'repo' => $repo . $project . '.git',
-			'working' => $working . $project
-		));
-
-		if (!is_dir($working . $project)) {
 			$this->pull();
 		}
 
@@ -97,14 +85,14 @@ class Git extends Object {
 		}
 
 		$this->sub("remote add origin {$remote}:{$project}.git");
-		$this->execute("cd {$this->working} && touch .gitignore");
+		$this->execute("cd {$working} && touch .gitignore");
 		$this->call("add .");
 		$this->call("commit", array("-m", '"Initial Project commit"'));
 		$this->sub("--bare update-server-info");
 		$this->push();
 		$this->update();
 
-		if (is_dir($this->repo) && is_dir($this->working)) {
+		if (is_dir($repo) && is_dir($working)) {
 			return true;
 		}
 

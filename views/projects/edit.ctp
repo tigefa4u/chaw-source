@@ -1,10 +1,22 @@
+<?php
+	foreach((array)$messages as $type => $messages) {
+		if (!empty($messages)) {
+			echo $html->tag('h3', $type);
+			$list = null;
+			foreach ((array)$messages as $message) {
+				$list .= $html->tag('li', $message);
+			}
+			echo $html->tag('ul', $list);
+		}
+	}
+?>
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action));?>
 	<fieldset>
  		<legend><?php echo $this->pageTitle; ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->hidden('repo_type');
+		echo $form->input('repo_type', array('disabled' => true));
 		echo $form->input('name', array('disabled' => true));
 		echo $form->hidden('url');
 		echo $form->input('groups');

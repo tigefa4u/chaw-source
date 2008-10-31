@@ -32,10 +32,17 @@ class GitShellShell extends Shell {
  **/
 	function main() {
 		if (empty($this->params['user'])) {
-			return false;
+			$this->err('User not found.');
+			return 1;
+		}
+		
+		$command = $this->args[0];
+		
+		if (!isset($this->actionMap[$command])) {
+			$this->err('Command not found.');
+			return 1;
 		}
 
-		$command = $this->args[0];
 		$project = rtrim(trim($this->args[1], "'"), '.git');
 
 		$this->Project->initialize(compact('project'));

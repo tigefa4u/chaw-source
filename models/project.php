@@ -20,6 +20,12 @@ class Project extends AppModel {
 
 	var $name = 'Project';
 
+	var $Repo;
+
+	var $repoTypes = array('Git', 'Svn');
+
+	var $messages = array('response' => null, 'debug' => null);
+
 	var $validate = array(
 		'name' => array(
 			'required' => array('rule' => 'notEmpty'),
@@ -27,14 +33,23 @@ class Project extends AppModel {
 		)
 	);
 
-	var $repoTypes = array('Git', 'Svn');
-
-	var $messages = array('response' => null, 'debug' => null);
-
 	var $hasMany = array('Permission');
 
-	function initialize($params) {
+
+	function initialize($params = array()) {
 		$this->recursive = -1;
+		$this->config = array(
+			'id' => null,
+			'name' => Inflector::humanize(Configure::read('App.dir')),
+			'url' => null,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'active' => 1
+		);
 
 		$duration = '+99 days';
 		if (Configure::read() > 1) {
@@ -62,33 +77,24 @@ class Project extends AppModel {
 				}
 			}
 		}
+		if (!empty($this->data)) {
+			$project['Project'] = array_merge($project['Project'], $this->data['Project']);
+		}
 
 		if (empty($project)) {
-			$this->config = array(
-				'id' => null,
-				'name' => Inflector::humanize(Configure::read('App.dir')),
-				'url' => null,
-				'repo_type' => 'git',
-				'private' => 0,
-				'groups' => 'user, docs team, developer, admin',
-				'ticket_types' => 'rfc, bug, enhancement',
-				'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-				'ticket_priorities' => 'low, normal, high',
-				'active' => 1
-			);
 			Configure::write('Project', $this->config);
 			return false;
 		}
 
-		$this->config = $project['Project'];
+		$this->config = array_merge($this->config, $project['Project']);
 
 		$repoType = strtolower($this->config['repo_type']);
 		$path = Configure::read("Content.{$repoType}");
 
 		$this->config['repo'] = array(
-			'path' => $path . 'repo' . DS . $key,
+			'path' => $path . 'repo' . DS . $this->config['url'],
 			'type' => $repoType,
-			'working' => $path . 'working' . DS . $key,
+			'working' => $path . 'working' . DS . $this->config['url'],
 		);
 
 		if ($repoType == 'git') {
@@ -97,6 +103,14 @@ class Project extends AppModel {
 
 		$this->id = $this->config['id'];
 		Configure::write('Project', $this->config);
+
+		$this->Repo = ClassRegistry::init(ucwords($repoType));
+
+		$this->Repo->config(array(
+			'repo' => $this->config['repo']['path'],
+			'working' => $this->config['repo']['working']
+		));
+
 		return true;
 	}
 
@@ -104,51 +118,51 @@ class Project extends AppModel {
 		if (!empty($this->data['Project']['name'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
+
+		if ($this->initialize() === false) {
+			return false;
+		}
+
+		if ($this->Repo->create($this->config['url'], array('remote' => 'git@thechaw.com')) !== true) {
+			$this->invalidate('repo_type');
+			return false;
+		}
+
 		return true;
 	}
 
 	function afterSave($created) {
-
-		$project = $this->data['Project']['url'];
-		$repoType = ucwords($this->data['Project']['repo_type']);
-
-		$Repo = ClassRegistry::init($repoType);
-
-		$key = strtolower($repoType);
-		$path = Configure::read("Content.{$key}");
-
-		$Repo->config(array('repo' => $path . 'repo', 'working' => $path . 'working'));
-
-		$Repo->create($project, array('remote' => 'git@thechaw.com'));
-
 		$hooks = array(
 			'Git' => array('post-receive'),
 			'Svn' => array('pre-commit', 'post-commit')
 		);
 
+		$project = $this->data['Project']['url'];
 		$chaw = APP . 'content' . DS;
 
-		foreach ($hooks[$repoType] as $hook) {
-			if (!file_exists("{$Repo->repo}/hooks/{$hook}")) {
-				$Repo->hook($hook, array('project' => $this->id, 'chaw' => $chaw));
+		foreach ($hooks[$this->config['repo_type']] as $hook) {
+			if (!file_exists("{$this->Repo->repo}/hooks/{$hook}")) {
+				$this->Repo->hook($hook, array('project' => $project, 'chaw' => $chaw));
 			}
 
 			if ($created) {
 				if ($hook === 'post-commit') {
-					$Repo->execute("env - {$Repo->repo}/hooks/{$hook} {$Repo->repo} 1");
+					$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} {$this->Repo->repo} 1");
 				}
 
 				if ($hook === 'post-receive') {
-					$Repo->execute("env - {$Repo->repo}/hooks/{$hook} refs/heads/master");
+					$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} refs/heads/master");
 				}
 			}
 		}
 
-		$this->messages = array('response' => $Repo->response, 'debug' => $Repo->debug);
+		$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
 		if (!empty($this->data['Project']['user_id'])) {
 			$this->Permission->create(array('user_id' => $this->data['Project']['user_id']));
 			$this->Permission->save();
+		} else {
+			$this->Permission->saveFile($this->config);
 		}
 
 		$this->createShell();
