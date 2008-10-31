@@ -32,15 +32,13 @@ class AccessComponent extends Object {
 			$controller->Auth->allow($controller->action);
 			return;
 		}
+
 		if ($controller->Project->initialize($controller->params) === false) {
 			$register =  Router::url(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'add'));
-			if (in_array($controller->params['url']['url'], array('install', 'admin/projects/add', 'pages/home', 'users/logout', 'users/add'))) {
+			if (in_array($controller->params['url']['url'], array('install', 'admin/projects/add', 'pages/home', 'users/login', 'users/logout', 'users/add'))) {
 				$controller->Auth->allow($controller->action);
 			} else if ($controller->params['url']['url'] != 'users/login') {
-				if (!$controller->Auth->user()) {
-					$controller->Session->setFlash("Chaw needs to be installed. Please Login or <a href='{$register}'>Register</a>");
-					$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'));
-				} else if (empty($controller->params['project'])) {
+				if (empty($controller->params['project'])) {
 					$controller->Session->setFlash('Chaw needs to be installed');
 					$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
 				} else {
@@ -56,11 +54,15 @@ class AccessComponent extends Object {
 				}
 			}
 		} else {
+			$default = true;
+			if (!empty($controller->Project->config['private'])) {
+				$default = false;
+			}
 			$this->isAllowed = (
-				in_array($controller->name, array('Users', 'Projects')) ||
+				in_array($controller->params['url']['url'], array('users/add', 'projects')) ||
+				in_array($controller->action, $controller->Auth->allowedActions) ||
 				(
-					empty($controller->Project->config['private']) &&
-					$controller->Project->Permission->check($controller->params['controller'], array('access' => 'r', 'default' => true))
+					$controller->Project->Permission->check($controller->params['controller'], array('access' => 'r', 'default' => $default))
 				)
 			);
 
