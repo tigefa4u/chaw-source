@@ -22,7 +22,14 @@ class User extends AppModel {
 
 	var $displayField = 'username';
 
-	var $validate = array();
+	var $validate = array(
+		'username' => array(
+			'required' => array('rule' => 'alphanumeric'),
+			'unique' => array('rule' => 'isUnique')
+		),
+		'email' => array('email'),
+		'password' => array('alphanumeric')
+	);
 
 	var $hasMany = array('Permission');
 
@@ -45,6 +52,20 @@ class User extends AppModel {
 				. escapeshellarg(str_replace(array("\n", "\r", "\t"), array("", "", ""), trim($this->data['User']['ssh_key']))) . "\n";
 			$File->append($data);
 		}
+		if (!empty($this->data['User']['project_id'])) {
+			$this->Permission->create(array('user_id' => $this->id, 'project_id' => $this->data['User']['project_id']));
+			$this->Permission->save();
+		}
 	}
+
+	function isUnique($data, $options = array()) {
+		if (!empty($data['username'])) {
+			if ($this->findByUsername($data['username'])) {
+				return false;
+			}
+			return true;
+		}
+	}
+
 }
 ?>

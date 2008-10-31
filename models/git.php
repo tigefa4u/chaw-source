@@ -160,17 +160,18 @@ class Git extends Object {
 
 		*/
 		//$info = $this->sub('log', array("-p", "-1", "--pretty=format:%H::%an::%ai::%s", "--full-diff", "--unified", array_pop(explode("/", $refname))));
-
+		$data = null;
 		$info = $this->sub('show', array($newrev, "--pretty=format:%H::%an::%ai::%s"));
+		if (isset($info[0])) {
+			list($revision, $author, $commit_date, $message) = explode('::', $info[0]);
+			unset($info[0]);
 
-		list($revision, $author, $commit_date, $message) = explode('::', $info[0]);
-		unset($info[0]);
+			$changes = array();
 
-		$changes = array();
+			$diff = join("\n", $info);
 
-		$diff = join("\n", $info);
-
-		$data['Git'] = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
+			$data['Git'] = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
+		}
 		return $data;
 	}
 /**

@@ -34,7 +34,11 @@ class UsersController extends AppController {
 		if ($id = $this->Auth->user('id')) {
 			$this->User->id = $id;
 			$this->User->save(array('last_login' => date('Y-m-d H:m:s')));
-			$this->redirect($this->Auth->redirect());
+			if (strpos($this->Auth->redirect(), 'user/add') !== false) {
+				$this->redirect($this->Auth->redirect());
+			} else {
+				$this->redirect('/');
+			}
 		}
 	}
 
@@ -57,7 +61,7 @@ class UsersController extends AppController {
 	}
 
 	function edit() {
-		if (!empty($this->data) && $this->data['User']['id'] == $this->Auth->user('id')) {
+		if (!empty($this->data) && ($this->params['isAdmin'] || $this->data['User']['id'] == $this->Auth->user('id'))) {
 			$this->data['User']['username'] = $this->Auth->user('username');
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash('User updated');
@@ -74,7 +78,7 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
-	
+
 	function admin_add() {
 		$this->add();
 		$this->render('add');

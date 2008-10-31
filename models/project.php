@@ -68,7 +68,6 @@ class Project extends AppModel {
 				}
 			}
 		} else {
-			/*
 			$key = Configure::read('App.dir');
 			$project = Cache::read($key);
 			if (empty($project)) {
@@ -77,7 +76,6 @@ class Project extends AppModel {
 					Cache::write($key, $project);
 				}
 			}
-			*/
 		}
 		if (!empty($this->data['Project'])) {
 			if (empty($project)) {
@@ -86,7 +84,7 @@ class Project extends AppModel {
 			$project['Project'] = array_merge($project['Project'], $this->data['Project']);
 		}
 
-		if (empty($project)) {
+		if (empty($project['Project'])) {
 			Configure::write('Project', $this->config);
 			return false;
 		}
@@ -164,8 +162,9 @@ class Project extends AppModel {
 		$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
 		if (!empty($this->data['Project']['user_id'])) {
-			$this->Permission->create(array('user_id' => $this->data['Project']['user_id']));
+			$this->Permission->create(array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']));
 			$this->Permission->save();
+			$this->Permission->saveFile($this->config);
 		} else {
 			$this->Permission->saveFile($this->config);
 		}

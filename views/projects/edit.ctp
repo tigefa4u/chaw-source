@@ -1,14 +1,5 @@
 <?php
-	foreach((array)$messages as $type => $messages) {
-		if (!empty($messages)) {
-			echo $html->tag('h3', $type);
-			$list = null;
-			foreach ((array)$messages as $message) {
-				$list .= $html->tag('li', $message);
-			}
-			echo $html->tag('ul', $list);
-		}
-	}
+	echo $admin->messages($messages);
 ?>
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action));?>

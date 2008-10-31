@@ -20,4 +20,17 @@ Configure::write('Content', array(
 	'git' => APP . 'content' . DS . 'git' . DS,
 	'svn' => APP . 'content' . DS . 'svn' . DS ,
 ));
+
+Configure::write('Project', array(
+	'id' => null,
+	'name' => Inflector::humanize(Configure::read('App.dir')),
+	'url' => null,
+	'repo_type' => 'Git',
+	'private' => 0,
+	'groups' => 'user, docs team, developer, admin',
+	'ticket_types' => 'rfc, bug, enhancement',
+	'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+	'ticket_priorities' => 'low, normal, high',
+	'active' => 1
+));
 ?>

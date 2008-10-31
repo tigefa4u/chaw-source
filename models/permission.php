@@ -86,7 +86,7 @@ class Permission extends AppModel {
 		$rules = $this->rules($project);
 
 		if (empty($rules)) {
-			return true;
+			return $default;
 		}
 
 		if ($project === null) {
@@ -115,8 +115,13 @@ class Permission extends AppModel {
 					$check .= $perms[$user];
 				}
 
-				if ($check && strpos($check, $access) !== false) {
-					return true;
+				if (is_string($access)) {
+					$access = array($access);
+				}
+				foreach ($access as $perm) {
+					if ($check && strpos($check, $perm) !== false) {
+						return true;
+					}
 				}
 			}
 		}

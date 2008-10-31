@@ -27,9 +27,8 @@ class PostReceiveShell extends Shell {
 	}
 
 	function commit() {
-		$this->Project->id = $this->args[0];
-		$project = $this->Project->field('url');
 
+		$project = $this->args[0];
 		$refname = @$this->args[1];
 		$oldrev = @$this->args[2];
 		$newrev = @$this->args[3];

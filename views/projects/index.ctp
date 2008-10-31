@@ -1,6 +1,11 @@
+<?php
+	if (empty($projects)) {
+		echo $html->tag('h2', 'There are no projects available');
+	}
+?>
 <div class="projects index">
 <?php foreach ((array)$projects as $project):
-		
+
 		$url = false;
 		if ($project['Project']['id'] != 1) {
 			$url = $project['Project']['url'];

@@ -56,7 +56,6 @@ class ProjectsController extends AppController {
 			$this->Project->create(array('user_id' => $this->Auth->user('id')));
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was created');
-				pr($this->Project->messages);
 				//$this->redirect(array('action' => 'view', $data['Project']['url']));
 			} else {
 				$this->Session->setFlash('Project was NOT created');
@@ -69,6 +68,8 @@ class ProjectsController extends AppController {
 		}
 
 		$this->set('repoTypes', $this->Project->repoTypes());
+
+		$this->set('messages', $this->Project->messages);
 
 		$this->render('add');
 	}
@@ -89,9 +90,9 @@ class ProjectsController extends AppController {
 		$this->data = $this->Project->read();
 
 		$this->set('repoTypes', $this->Project->repoTypes());
-		
+
 		$this->set('messages', $this->Project->messages);
-		
+
 		$this->render('edit');
 	}
 }

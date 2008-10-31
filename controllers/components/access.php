@@ -17,6 +17,8 @@
  *
  */
 class AccessComponent extends Object {
+
+	var $isAllowed = false;
 /**
  * undocumented function
  *
@@ -24,15 +26,46 @@ class AccessComponent extends Object {
  *
  **/
 	function initialize(&$controller) {
+		$controller->params['isAdmin'] = false;
+
 		if(empty($controller->Project)) {
 			$controller->Auth->allow($controller->action);
+			return;
 		}
-		if (!empty($controller->Project) && $controller->Project->initialize($controller->params) === false) {
-			if (in_array($controller->params['url']['url'], array('install', 'admin/projects/add', 'pages/home'))) {
+		if ($controller->Project->initialize($controller->params) === false) {
+			$register =  Router::url(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'add'));
+			if (in_array($controller->params['url']['url'], array('install', 'admin/projects/add', 'pages/home', 'users/logout', 'users/add'))) {
 				$controller->Auth->allow($controller->action);
-			} else {
-				$controller->Session->setFlash('Chaw needs to be installated');
-				$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
+			} else if ($controller->params['url']['url'] != 'users/login') {
+				if (!$controller->Auth->user()) {
+					$controller->Session->setFlash("Chaw needs to be installed. Please Login or <a href='{$register}'>Register</a>");
+					$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'));
+				} else if (empty($controller->params['project'])) {
+					$controller->Session->setFlash('Chaw needs to be installed');
+					$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
+				} else {
+					$controller->redirect('/');
+				}
+			}
+			if (!$controller->Auth->user()) {
+				if ($controller->params['url']['url'] != 'users/add') {
+					$controller->Session->setFlash("Chaw needs to be installed. Please Login or <a href='{$register}'>Register</a>");
+				} else {
+					$login =  Router::url(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'));
+					$controller->Session->setFlash("Chaw needs to be installed. Please <a href='{$login}'>Login</a> or Register");
+				}
+			}
+		} else {
+			$this->isAllowed = (
+				$controller->action === 'login' ||
+				$controller->Auth->allowedActions == array('*') ||
+				in_array($controller->action, $controller->Auth->allowedActions) ||
+				$controller->Project->Permission->check($controller->params['controller'], array('access' => 'r', 'default' => true))
+			);
+
+			if ($this->isAllowed) {
+				$controller->Auth->allow($controller->action);
+				return true;
 			}
 		}
 	}
@@ -43,39 +76,53 @@ class AccessComponent extends Object {
  *
  **/
 	function startup(&$controller) {
-		if (!$controller->Auth->user()) {
+		if (empty($controller->Project->Repo) || (!$controller->Auth->user() && $this->isAllowed)) {
 			return false;
 		}
 
-		$controller->params['isAdmin'] = false;
+		$isOwner = ($controller->Auth->user('id') == $controller->Project->config['user_id']);
+		if ($isOwner) {
+			$controller->Auth->allow($controller->action);
+			$controller->params['isAdmin'] = $this->isAllowed = true;
+			return true;
+		}
 
-		$allowed = $controller->Project->Permission->check('admin', array('user' => $controller->Auth->user('username'), 'access' => 'rw'));
+		$crud = $access = 'r';
+		if (!empty($controller->Auth->actionMap[$controller->params['action']])) {
+			$crud = $controller->Auth->actionMap[$controller->params['action']][0];
+		}
+		if (in_array($crud, array('c', 'u', 'd'))) {
+			$crud = 'w';
+		}
 
-		if ($allowed === false && !empty($controller->Project->config['private']) && $controller->name !== 'Projects') {
+		$options = array(
+			'user' => $controller->Auth->user('username'),
+			'access' => array($access, $crud),
+			'default' => false
+		);
+
+		$allowed = $controller->Project->Permission->check('admin', $options);
+
+		if ($allowed === false && !empty($controller->Project->config['private'])) {
 			if ($controller->params['url']['url'] !== '/') {
-				$controller->Session->setFlash('You are not authorized to access that location');
+				$controller->Session->setFlash('Select a Project');
 			}
-			$controller->redirect(array('controller' => 'projects'));
+			if ($controller->params['url']['url'] != 'projects') {
+				$controller->redirect(array('admin' => false, 'controller' => 'projects'));
+			}
 		} else if ($allowed === true) {
 			$controller->params['isAdmin'] = true;
 			return true;
 		}
 
+		$options = array(
+			'user' => $controller->Auth->user('username'),
+			'access' => array($access, $crud),
+			'default' => true
+		);
 
-		$access = 'r';
-		if (!empty($controller->Auth->actionMap[$controller->params['action']])) {
-			$access = $controller->Auth->actionMap[$controller->params['action']][0];
-		}
+		$allowed = $controller->Project->Permission->check($controller->params['controller'], $options);
 
-		$allowed = $controller->Project->Permission->check($controller->params['controller'], array('user' => $controller->Auth->user('username'), 'access' => $access));
-		if ($allowed === true) {
-			return true;
-		}
-		if (in_array($access, array('c', 'u', 'd'))) {
-			$access = 'w';
-		}
-
-		$allowed = $controller->Project->Permission->check($controller->params['controller'], array('user' => $controller->Auth->user('username'), 'access' => $access));
 		if ($allowed === true) {
 			return true;
 		}
