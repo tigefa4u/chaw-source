@@ -13,11 +13,10 @@
 			<?php
 				echo $html->link($project['Project']['name'], array(
 					'admin' => false, 'project' => $url,
-					'controller' => 'wiki', 'action' => 'index',
+					'controller' => 'projects', 'action' => 'view',
 				));?>
 			<em>
 				<?php
-				
 					echo $admin->link('admin', array('project' => $url,
 						'admin' => true, 'controller' => 'dashboard'
 					));?>

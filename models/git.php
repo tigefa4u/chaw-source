@@ -60,14 +60,14 @@ class Git extends Object {
 		$working = rtrim($working, DS);
 
 		if (!is_dir(dirname($repo))) {
-			$GitRepo = new Folder(dirname($repo), true, 0777);
+			$GitRepo = new Folder(dirname($repo), true, 0775);
 		}
 		if (!is_dir(dirname($working))) {
-			$GitWorking = new Folder(dirname($working), true, 0777);
+			$GitWorking = new Folder(dirname($working), true, 0775);
 		}
 
 		if (!is_dir($repo)) {
-			$Project = new Folder($repo, true, 0777);
+			$Project = new Folder($repo, true, 0775);
 		}
 
 		if (is_dir($repo) && !file_exists($repo . DS . 'config')) {
@@ -130,7 +130,7 @@ class Git extends Object {
 
 		if (!is_dir($this->working)) {
 			$this->run('clone', array_merge($params, array($this->repo, $this->working)));
-			chmod($this->working, 0777);
+			chmod($this->working, 0775);
 		}
 
 		if (is_dir($this->working)) {
@@ -255,9 +255,9 @@ class Git extends Object {
 
 		$repo = Folder::slashTerm($repo);
 
-		$Hook = new File($repo . 'hooks' . DS . $name, true, 0777);
+		$Hook = new File($repo . 'hooks' . DS . $name, true, 0775);
 
-		chmod($Hook->pwd(), 0777);
+		chmod($Hook->pwd(), 0775);
 
 		if (!is_string($data) || $data === null) {
 			extract($data);

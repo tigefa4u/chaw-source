@@ -80,7 +80,7 @@ class Permission extends AppModel {
  *
  **/
 	function check($path, $options = array()) {
-		$defaults = array('access' => 'w', 'user' => null, 'group' => null, 'project' => null, 'default' => true);
+		$defaults = array('access' => 'w', 'user' => null, 'group' => null, 'project' => null, 'default' => false);
 		extract(array_merge($defaults, $options));
 
 		$rules = $this->rules($project);
@@ -99,7 +99,7 @@ class Permission extends AppModel {
 		}
 
 		foreach ((array)$rules[$project] as $rule => $perms) {
-			if ($rule === $path) {
+			if (ltrim($rule, '/') == ltrim($path, '/')) {
 
 				$check = null;
 
@@ -118,7 +118,6 @@ class Permission extends AppModel {
 				if ($check && strpos($check, $access) !== false) {
 					return true;
 				}
-				return false;
 			}
 		}
 		return $default;

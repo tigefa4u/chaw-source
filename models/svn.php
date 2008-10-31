@@ -64,10 +64,10 @@ class Svn extends Object {
 		$working = rtrim($working, DS);
 
 		if (!is_dir(dirname($repo))) {
-			$SvnRepo = new Folder(dirname($repo), true, 0777);
+			$SvnRepo = new Folder(dirname($repo), true, 0775);
 		}
 		if (!is_dir(dirname($working))) {
-			$SvnWorking = new Folder(dirname($working), true, 0777);
+			$SvnWorking = new Folder(dirname($working), true, 0775);
 		}
 
 		if (!is_dir($repo)) {
@@ -250,9 +250,9 @@ class Svn extends Object {
 
 		$repo = Folder::slashTerm($repo);
 
-		$Hook = new File($repo . 'hooks' . DS . $name, true, 0777);
+		$Hook = new File($repo . 'hooks' . DS . $name, true, 0775);
 
-		chmod($Hook->pwd(), 0777);
+		chmod($Hook->pwd(), 0775);
 
 		if (!is_string($data) || $data === null) {
 			extract($data);

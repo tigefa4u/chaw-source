@@ -74,5 +74,14 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
+	
+	function admin_add() {
+		$this->add();
+		$this->render('add');
+	}
+	function admin_edit() {
+		$this->edit();
+		$this->render('edit');
+	}
 }
 ?>
