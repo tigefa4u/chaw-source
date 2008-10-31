@@ -56,7 +56,7 @@
 	<div id="container">
 		<div id="header">
 
-			<h1><?php echo $html->link(Configure::read('Project.name'), '/');?></h1>
+			<h1><?php echo $html->link(Configure::read('Project.name'), array('controller' => 'wiki', 'action' => 'index'));?></h1>
 
 			<div id="navigation">
 				<ul>
