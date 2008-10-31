@@ -1,5 +1,21 @@
 <h2>Welcome to Chaw Installation</h2>
+<p>
+	If everything below is green then:
+</p>
 <?php
+if (empty($CurrentUser->username)) :
+	echo $html->tag('p', $html->link('Register for an account', array('controller' => 'users', 'action' => 'add')));
+else:
+	echo $html->tag('p', $html->link('Register for an account', array('controller' => 'users', 'action' => 'add')));
+endif;
+?>
+
+<p>
+	Otherwise, follow the instructions below
+</p>
+
+<?php
+
 if (Configure::read() > 0):
 	Debugger::checkSessionKey();
 endif;

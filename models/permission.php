@@ -225,7 +225,7 @@ class Permission extends AppModel {
 					$delimiter = strpos($data, '=');
 
 					if ($delimiter > 0) {
-						$key = strtolower(trim(substr($data, 0, $delimiter)));
+						$key = trim(substr($data, 0, $delimiter));
 						$value = trim(substr($data, $delimiter + 1));
 
 						if (substr($value, 0, 1) == '"' && substr($value, -1) == '"') {
@@ -240,7 +240,7 @@ class Permission extends AppModel {
 						if (!isset($section)) {
 							$section = '';
 						}
-						$result[$project][$section][strtolower($data)] = '';
+						$result[$project][$section][$data] = '';
 					}
 				}
 			}
