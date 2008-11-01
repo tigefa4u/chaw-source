@@ -36,7 +36,7 @@ class GitShellShell extends Shell {
 			return 1;
 		}
 		
-		$command = $this->args[0];
+		$command = @$this->args[0];
 		
 		if (!isset($this->actionMap[$command])) {
 			$this->err('Command not found.');
