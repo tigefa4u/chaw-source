@@ -17,7 +17,7 @@
 			<?php
 				echo $html->link($project['Project']['name'], array(
 					'admin' => false, 'project' => $url,
-					'controller' => 'projects', 'action' => 'view',
+					'controller' => 'wiki', 'action' => 'index',
 				));?>
 
 		</h3>
@@ -25,6 +25,11 @@
 		<?php if (!empty($this->params['isAdmin'])): ?>
 			<p>
 				<?php
+					echo $html->link('view', array(
+						'admin' => false, 'project' => $url,
+						'controller' => 'projects', 'action' => 'view',
+					));
+					echo ' | ';
 					echo $html->link('edit', array('project' => $url,
 						'admin' => true, 'controller' => 'projects', 'action' => 'edit'
 					));

@@ -146,7 +146,8 @@ table {
 }
 
 .page-navigation {
-	padding-top: 6px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .left {

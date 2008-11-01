@@ -93,7 +93,7 @@ class Permission extends AppModel {
  *
  **/
 	function check($path, $options = array()) {
-		$defaults = array('access' => 'w', 'user' => null, 'group' => null, 'project' => null, 'default' => false);
+		$defaults = array('user' => null, 'group' => null, 'project' => null, 'default' => false);
 		extract(array_merge($defaults, $options));
 
 		$rules = $this->rules($project);
@@ -107,7 +107,7 @@ class Permission extends AppModel {
 			$project = $config['url'];
 		}
 
-		if (empty($rules[$project])) {
+		if (empty($rules[$project]) || empty($access)) {
 			return $default;
 		}
 
@@ -131,6 +131,7 @@ class Permission extends AppModel {
 				if (is_string($access)) {
 					$access = array($access);
 				}
+
 				foreach ($access as $perm) {
 					if ($check && strpos($check, $perm) !== false) {
 						return true;

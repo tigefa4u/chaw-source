@@ -19,6 +19,8 @@
 class AccessComponent extends Object {
 
 	var $isAllowed = false;
+
+	var $isPublic = true;
 /**
  * undocumented function
  *
@@ -76,11 +78,17 @@ class AccessComponent extends Object {
 				$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
 			}
 		} else {
-			$this->isAllowed = (
-				in_array($controller->params['url']['url'], array('users/add', 'projects')) ||
-				in_array($controller->action, $controller->Auth->allowedActions)
-			);
 
+			if ($this->check($controller) === false) {
+				if ($controller->Auth->user()) {
+					$controller->Session->setFlash('You are not authorized to access that location');
+					$controller->redirect($controller->referer());
+				}
+				if ($this->isAllowed && $this->isPublic === false) {
+					$controller->Session->setFlash('Select a Project');
+					$controller->redirect(array('controller' => 'projects'));
+				}
+			}
 			if ($this->isAllowed) {
 				$controller->Auth->allow($controller->action);
 				return true;
@@ -93,20 +101,16 @@ class AccessComponent extends Object {
  * @return void
  *
  **/
-	function startup(&$controller) {
-		if (empty($controller->Project->Repo)) {
-			return false;
-		}
+	function check(&$controller) {
 
 		$isOwner = ($controller->Auth->user('id') == $controller->Project->config['user_id']);
 		if ($isOwner) {
-			$controller->Auth->allow($controller->action);
 			$controller->params['isAdmin'] = $this->isAllowed = true;
 			return true;
 		}
 
-		if ($this->isAllowed) {
-			return true;
+		if (!empty($controller->Project->config['private'])) {
+			$this->isPublic = false;
 		}
 
 		$crud = $access = 'r';
@@ -115,6 +119,15 @@ class AccessComponent extends Object {
 		}
 		if (in_array($crud, array('c', 'u', 'd'))) {
 			$access = 'w';
+		}
+
+		$this->isAllowed = (
+			in_array($controller->params['url']['url'], array('users/add', 'projects')) ||
+			in_array($controller->action, $controller->Auth->allowedActions)
+		);
+
+		if ($this->isAllowed) {
+			return true;
 		}
 
 		$admin = array(
@@ -126,33 +139,22 @@ class AccessComponent extends Object {
 		$allowed = $controller->Project->Permission->check('admin', $admin);
 
 		if ($allowed === true) {
-			$controller->params['isAdmin'] = true;
+			$controller->params['isAdmin'] = $this->isAllowed = true;
 			return true;
-		}
-
-		$default = true;
-		if (!empty($controller->Project->config['private'])) {
-			$default = false;
 		}
 
 		$user = array(
 			'user' => $controller->Auth->user('username'),
 			'access' => array($access, $crud),
-			'default' => $default
+			'default' => $this->isPublic
 		);
 
 		$allowed = $controller->Project->Permission->check($controller->params['controller'], $user);
 
 		if ($allowed === true) {
-			return true;
+			return $this->isAllowed = true;
 		}
 
-		if (!empty($controller->Project->config['private'])) {
-			$controller->Session->setFlash('Select a Project');
-			$controller->redirect(array('admin' => false, 'controller' => 'projects'));
-		}
-
-		$controller->Session->setFlash('You are not authorized to access that location');
-		$controller->redirect($controller->referer());
+		return false;
 	}
 }
