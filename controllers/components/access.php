@@ -113,16 +113,16 @@ class AccessComponent extends Object {
 			return true;
 		}
 
-		if ($this->isAllowed) {
-			return true;
-		}
-
 		$crud = $access = 'r';
 		if (!empty($controller->Auth->actionMap[$controller->params['action']])) {
 			$crud = $controller->Auth->actionMap[$controller->params['action']][0];
 		}
 		if (in_array($crud, array('c', 'u', 'd'))) {
-			$crud = 'w';
+			$access = 'w';
+		}
+
+		if ($this->isAllowed && $access == 'r') {
+			return true;
 		}
 
 		$options = array(

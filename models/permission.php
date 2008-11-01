@@ -136,6 +136,7 @@ class Permission extends AppModel {
 						return true;
 					}
 				}
+				return false;
 			}
 		}
 		return $default;
