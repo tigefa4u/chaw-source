@@ -18,7 +18,7 @@
  */
 class PostCommitShell extends Shell {
 
-	var $uses = array('Project', 'Commit', 'Svn');
+	var $uses = array('Project', 'Commit');
 
 	function _welcome() {}
 
@@ -30,18 +30,16 @@ class PostCommitShell extends Shell {
 
 		$project = $this->args[0];
 
-		$path = Configure::read('Content.svn');
-
-		$this->Svn->config(array(
-			'repo' => $path .'repo' . DS . $project,
-			'working' => $path .'working' . DS . $project
-		));
+		if ($this->Project->initialize(compact('project')) === false) {
+			$this->err('Invalid project');
+			return 1;
+		}
 
 		$revision = $this->args[2];
 
-		$data = $this->Svn->commit($revision);
+		$data = $this->Project->Repo->commit($revision);
 
-		$this->Svn->update();
+		$this->Project->Repo->update();
 
 		if (!empty($data)) {
 

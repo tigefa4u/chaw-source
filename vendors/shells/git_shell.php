@@ -45,7 +45,10 @@ class GitShellShell extends Shell {
 
 		$project = rtrim(trim($this->args[1], "'"), '.git');
 
-		$this->Project->initialize(compact('project'));
+		if ($this->Project->initialize(compact('project')) === false) {
+			$this->err('Invalid project');
+			return 1;
+		}
 
 		$allowed = $this->Permission->check('/refs/heads/master', array(
 			'user' => $this->params['user'],

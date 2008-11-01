@@ -18,7 +18,7 @@
  */
 class PreCommitShell extends Shell {
 
-	var $uses = array('Project', 'Permission', 'Svn');
+	var $uses = array('Project', 'Permission');
 
 	function _welcome() {}
 
@@ -31,26 +31,21 @@ class PreCommitShell extends Shell {
 		$this->error(print_r($this->args, true));
 		die();
 
-		$this->Project->id = $this->args[0];
-		$project = $this->Project->field('url');
+		$project = @$this->args[0];
 
-		$this->Project->initialize(compact('project'));
-
-		$path = Configure::read('Content.svn');
-
-		$this->Svn->config(array(
-			'repo' => $path .'repo' . DS . $project,
-			'working' => $path .'working' . DS . $project
-		));
+		if ($this->Project->initialize(compact('project')) === false) {
+			$this->err('Invalid project');
+			return 1;
+		}
 
 		$txn = explode('-', $this->args[2]);
 		$transaction = $this->args[2];
 		$revision = $txn[0];
 
-		$this->log($this->Svn->look('author', array("-t {$transaction}")));
-		$this->log($this->Svn->look('changed', array("-t {$transaction}")));
-		
-		//pr($this->Svn->debug);
+		$this->log($this->Project->Repo->look('author', array("-t {$transaction}")));
+		$this->log($this->Project->Repo->look('changed', array("-t {$transaction}")));
+
+		//pr($this->Project->Repo->debug);
 
 		//pr($this->Permission->file());
 
