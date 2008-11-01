@@ -36,9 +36,12 @@ class AppError extends ErrorHandler {
 
 		if ($__previousError != array($method, $messages)) {
 			$__previousError = array($method, $messages);
-			$this->controller =& new CakeErrorController();
+			$this->controller =& new Controller();
+			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Admin');
+			$this->controller->viewPath = 'errors';
 		} else {
 			$this->controller =& new Controller();
+			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Admin');
 			$this->controller->viewPath = 'errors';
 		}
 
@@ -68,6 +71,9 @@ class AppError extends ErrorHandler {
 
 		if (($method !== 'missingAction' || $method !== 'missingController')
 			&& $this->controller->here !== $this->controller->base . '/admin/install') {
+			if (defined('CAKE_TEST_OUTPUT')) {
+				$this->controller->layout = 'ajax';
+			}
 			$this->dispatchMethod($method, $messages);
 			$this->_stop();
 		}

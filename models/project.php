@@ -20,6 +20,8 @@ class Project extends AppModel {
 
 	var $name = 'Project';
 
+	var $config = array();
+
 	var $Repo;
 
 	var $repoTypes = array('Git', 'Svn');
@@ -122,51 +124,59 @@ class Project extends AppModel {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
 
-		if ($this->initialize() === false) {
-			return false;
-		}
+		if ($this->isApproved) {
+			if ($this->initialize() === false) {
+				return false;
+			}
 
-		if ($this->Repo->create($this->config['url'], array('remote' => 'git@thechaw.com')) !== true) {
-			$this->invalidate('repo_type');
-			return false;
+			if ($this->Repo->create($this->config['url'], array('remote' => 'git@thechaw.com')) !== true) {
+				$this->invalidate('repo_type');
+				return false;
+			}
 		}
 
 		return true;
 	}
 
 	function afterSave($created) {
-		$hooks = array(
-			'Git' => array('post-receive'),
-			'Svn' => array('pre-commit', 'post-commit')
-		);
+		if ($this->isApproved) {
+			$this->config['id'] = $this->id;
+			$hooks = array(
+				'Git' => array('post-receive'),
+				'Svn' => array('pre-commit', 'post-commit')
+			);
 
-		$project = $this->data['Project']['url'];
-		$chaw = APP . 'content' . DS;
+			$project = $this->data['Project']['url'];
+			$chaw = Configure::read('Content.base');
 
-		foreach ($hooks[$this->config['repo_type']] as $hook) {
-			if (!file_exists("{$this->Repo->repo}/hooks/{$hook}")) {
-				$this->Repo->hook($hook, array('project' => $project, 'chaw' => $chaw));
-			}
-
-			if ($created) {
-				if ($hook === 'post-commit') {
-					$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} {$this->Repo->repo} 1");
+			foreach ($hooks[$this->config['repo_type']] as $hook) {
+				if (!file_exists("{$this->Repo->repo}/hooks/{$hook}")) {
+					$this->Repo->hook($hook, array('project' => $project, 'chaw' => $chaw));
 				}
 
-				if ($hook === 'post-receive') {
-					$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} refs/heads/master");
+				if ($created) {
+					if ($hook === 'post-commit') {
+						$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} {$this->Repo->repo} 1");
+					}
+
+					if ($hook === 'post-receive') {
+						$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} refs/heads/master");
+					}
 				}
 			}
-		}
 
-		$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
+			$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
-		if (!empty($this->data['Project']['user_id'])) {
-			$this->Permission->create(array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']));
-			$this->Permission->save();
-			$this->Permission->saveFile($this->config);
-		} else {
-			$this->Permission->saveFile($this->config);
+			if (!empty($this->data['Project']['user_id'])) {
+				$this->Permission->create(array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']));
+				$this->Permission->save();
+				$this->Permission->config($this->config);
+				$this->Permission->saveFile();
+
+			} else {
+				$this->Permission->config($this->config);
+				$this->Permission->saveFile();
+			}
 		}
 
 		$this->createShell();
@@ -174,10 +184,10 @@ class Project extends AppModel {
 
 	function createShell($data = array()) {
 
-		$path = CONFIGS . 'templates' . DS;
+		$template = CONFIGS . 'templates' . DS;
+		$chaw = Configure::read('Content.base');
 
 		if (file_exists($path . 'chaw')) {
-			$chaw = APP . 'content' . DS;
 			$console = array_pop(Configure::corePaths('cake')) . 'console' . DS;
 			ob_start();
 			include($path . 'chaw');
@@ -188,7 +198,7 @@ class Project extends AppModel {
 			return $File->write($data);
 		}
 
-		return false;
+		return true;
 	}
 
 	function isUnique($data, $options = array()) {
@@ -200,6 +210,7 @@ class Project extends AppModel {
 		}
 		if (!empty($data['url'])) {
 			if ($this->findByUrl($data['url'])) {
+				$this->invalidate('name');
 				return false;
 			}
 			return true;

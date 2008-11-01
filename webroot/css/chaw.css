@@ -9,6 +9,10 @@ h3 {
 h4 {
 	color: #3b3b3b;
 }
+p {
+	margin-top: 0.5em;
+	line-height: 18px;
+}
 
 em a {
 	color: inherit;

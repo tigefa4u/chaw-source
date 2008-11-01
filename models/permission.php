@@ -31,16 +31,24 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function saveFile($data = array()) {
-		$this->set($data);
+	function saveFile($config = array()) {
+		if (empty($config['repo'])) {
+			$this->set($config);
+			$config = $this->config();
+		} else {
+			$config = $this->config($config);
+		}
+
+		if (!is_dir($config['repo']['path'])) {
+			$Folder = new Folder($config['repo']['path'], true, 0775);
+		}
+
 		$File = $this->__getFile();
 		$File->create();
 
 		if (!$File->exists() || !$File->writable()) {
 			return false;
 		}
-
-		$config = $this->config();
 
 		if (empty($this->data['Permission']['fine_grained'])) {
 			$repo = $config['url'] . ':/';
@@ -58,7 +66,9 @@ class Permission extends AppModel {
 			$this->data['Permission']['fine_grained'] = ob_get_clean();
 		}
 
-		return $File->write(trim($this->data['Permission']['fine_grained']));
+		$result = $File->write(trim($this->data['Permission']['fine_grained']));
+		$this->data = array();
+		return $result;
 	}
 /**
  * undocumented function
@@ -66,7 +76,10 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function config() {
+	function config($config = array()) {
+		if (!empty($config)) {
+			return $this->__config = array_merge($this->__config, $config);
+		}
 		if (empty($this->__config)) {
 			$this->__config = Configure::read('Project');
 		}
@@ -172,7 +185,7 @@ class Permission extends AppModel {
 
 		$parent = array($project => array(), 'groups' => array());
 
-		if ($config['id'] !== 1) {
+		if ($config['id'] != 1) {
 			$project = $config['url'];
 			if (!empty($this->__rules[1])) {
 				$parent = $this->__rules[1];

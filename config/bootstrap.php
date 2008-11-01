@@ -17,6 +17,7 @@
  *
  */
 Configure::write('Content', array(
+	'base' => APP . 'content' . DS,
 	'git' => APP . 'content' . DS . 'git' . DS,
 	'svn' => APP . 'content' . DS . 'svn' . DS ,
 ));

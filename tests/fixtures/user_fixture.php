@@ -15,15 +15,5 @@ class UserFixture extends CakeTestFixture {
 			'modified' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 			);
-	var $records = array(array(
-			'id'  => 1,
-			'username'  => 'Lorem ipsum dolor sit amet',
-			'password'  => 'Lorem ipsum dolor sit amet',
-			'group_id'  => 'Lorem ipsum dolor sit amet',
-			'email'  => 'Lorem ipsum dolor sit amet',
-			'last_login'  => '2008-10-16 10:10:23',
-			'created'  => '2008-10-16 10:10:23',
-			'modified'  => '2008-10-16 10:10:23'
-			));
 }
 ?>

@@ -55,7 +55,7 @@ class PagesController extends AppController{
  * @var array
  * @access public
  */
-	var $uses = null;
+	var $uses = array();
 /**
  * Displays a view
  *

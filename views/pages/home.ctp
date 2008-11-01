@@ -4,9 +4,9 @@
 </p>
 <?php
 if (empty($CurrentUser->username)) :
-	echo $html->tag('p', $html->link('Register for an account', array('controller' => 'users', 'action' => 'add')));
+	echo $html->tag('h3', $html->link('Register for an account', array('controller' => 'users', 'action' => 'add')));
 else:
-	echo $html->tag('p', $html->link('Register for an account', array('controller' => 'users', 'action' => 'add')));
+	echo $html->tag('h3', $html->link('Create a Project', array('admin' => true, 'controller' => 'projects', 'action' => 'add')));
 endif;
 ?>
 
@@ -22,23 +22,6 @@ endif;
 ?>
 <p>
 	<?php
-		$paths = Configure::read('Content');
-		foreach ($paths as $type => $path) {
-			new Folder($path, true, 0775);
-			if (is_writable($path)):
-				echo '<span class="notice success">';
-					echo sprintf(__('Your %s directory is writable.', true), $type);
-				echo '</span>';
-			else:
-				echo '<span class="notice">';
-					echo sprintf(__('please make APP/%s writable.', true), str_replace(APP, "", $path));
-				echo '</span>';
-			endif;
-		}
-	?>
-</p>
-<p>
-	<?php
 		if (is_writable(TMP)):
 			echo '<span class="notice success">';
 				__('Your tmp directory is writable.');
@@ -52,16 +35,19 @@ endif;
 </p>
 <p>
 	<?php
-		$settings = Cache::settings();
-		if (!empty($settings)):
-			echo '<span class="notice success">';
-					echo sprintf(__('The %s is being used for caching. To change the config edit APP/config/core.php ', true), '<em>'. $settings['engine'] . 'Engine</em>');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-					__('Your cache is NOT working. Please check the settings in APP/config/core.php');
-			echo '</span>';
-		endif;
+		$paths = Configure::read('Content');
+		foreach ($paths as $type => $path) {
+			$Folder = @new Folder($path, true, 0775);
+			if (is_writable($path)):
+				echo '<span class="notice success">';
+					echo sprintf(__('Your %s directory is writable.', true), $type);
+				echo '</span>';
+			else:
+				echo '<span class="notice">';
+					echo sprintf(__('APP/%s is NOT writable.', true), str_replace(APP, "", $path));
+				echo '</span>';
+			endif;
+		}
 	?>
 </p>
 <p>
@@ -91,11 +77,11 @@ if (isset($filePresent)):
 	<?php
 		if ($connected->isConnected()):
 			echo '<span class="notice success">';
-	 			__('Cake is able to connect to the database.');
+	 			__('Chaw is able to connect to the database.');
 			echo '</span>';
 		else:
 			echo '<span class="notice">';
-				__('Cake is NOT able to connect to the database.');
+				__('Chaw is NOT able to connect to the database.');
 			echo '</span>';
 		endif;
 	?>

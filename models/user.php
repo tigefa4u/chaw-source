@@ -24,11 +24,27 @@ class User extends AppModel {
 
 	var $validate = array(
 		'username' => array(
-			'required' => array('rule' => 'alphanumeric'),
-			'unique' => array('rule' => 'isUnique')
+			'allowedChars' => array(
+				'rule' => '/^[\-_\.a-zA-Z0-9]{4,}$/',
+				'required' => true,
+				'message' => 'Required: Minimum four (4) characters, letters (no accents), numbers and .-_ permitted.'
+			),
+			'unique' => array(
+				'rule' => 'isUnique',
+				'required' => true,
+				'message' => 'Required: Username must be unique'
+			)
 		),
-		'email' => array('email'),
-		'password' => array('alphanumeric')
+		'email' => array(
+			'rule' => 'email',
+			'required' => true,
+			'message' => 'Required: Valid email address'
+		),
+		'password' => array(
+			'rule' => 'alphaNumeric',
+			'required' => true,
+			'message' => 'Required: Alpha-numeric passwords only'
+		)
 	);
 
 	var $hasMany = array('Permission');
@@ -49,7 +65,7 @@ class User extends AppModel {
 			$path = Configure::read('Content.git') . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
 			$File = new File($path);
 			$data = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user ' . $this->data['User']['username'] . '",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty '
-				. escapeshellarg(str_replace(array("\n", "\r", "\t"), array("", "", ""), trim($this->data['User']['ssh_key']))) . "\n";
+				. str_replace(array("\n", "\r", "\t"), array("", "", ""), trim($this->data['User']['ssh_key'])) . "\n";
 			$File->append($data);
 		}
 		if (!empty($this->data['User']['project_id'])) {
