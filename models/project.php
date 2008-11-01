@@ -124,14 +124,17 @@ class Project extends AppModel {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
 
-		if ($this->isApproved) {
+		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
 			}
 
-			if ($this->Repo->create($this->config['url'], array('remote' => 'git@thechaw.com')) !== true) {
-				$this->invalidate('repo_type');
-				return false;
+			if (!file_exists($this->config['repo']['path'])) {
+				if ($this->Repo->create($this->config['url'], array('remote' => 'git@thechaw.com')) !== true) {
+					$this->invalidate('repo_type');
+					return false;
+				}
+				$this->__created = true;
 			}
 		}
 
@@ -139,7 +142,7 @@ class Project extends AppModel {
 	}
 
 	function afterSave($created) {
-		if ($this->isApproved) {
+		if ($this->__created && !empty($this->data['Project']['approved'])) {
 			$this->config['id'] = $this->id;
 			$hooks = array(
 				'Git' => array('post-receive'),
@@ -167,18 +170,16 @@ class Project extends AppModel {
 
 			$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
-			if (!empty($this->data['Project']['user_id'])) {
-				$this->Permission->create(array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']));
-				$this->Permission->save();
-				$this->Permission->config($this->config);
-				$this->Permission->saveFile();
-
-			} else {
-				$this->Permission->config($this->config);
-				$this->Permission->saveFile();
-			}
+			$this->Permission->config($this->config);
+			$this->Permission->saveFile();
 		}
 
+		if (!empty($this->data['Project']['user_id'])) {
+			$this->Permission->create(array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']));
+			$this->Permission->save();
+
+		}
+		$this->__created = false;
 		$this->createShell();
 	}
 
@@ -187,10 +188,10 @@ class Project extends AppModel {
 		$template = CONFIGS . 'templates' . DS;
 		$chaw = Configure::read('Content.base');
 
-		if (file_exists($path . 'chaw')) {
+		if (file_exists($template . 'chaw') && !file_exists($chaw . 'chaw')) {
 			$console = array_pop(Configure::corePaths('cake')) . 'console' . DS;
 			ob_start();
-			include($path . 'chaw');
+			include($template . 'chaw');
 			$data = ob_get_clean();
 
 			$File = new File($chaw . 'chaw', true, 0775);

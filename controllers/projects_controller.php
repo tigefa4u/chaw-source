@@ -52,10 +52,18 @@ class ProjectsController extends AppController {
 
 		$this->pageTitle = 'Project Setup';
 
+
 		if (!empty($this->data)) {
-			$this->Project->create(array('user_id' => $this->Auth->user('id')));
+			$this->Project->create(array(
+				'user_id' => $this->Auth->user('id'),
+				'approved' => $this->params['isAdmin']
+			));
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was created');
+				if (empty($data['Project']['approved'])) {
+					$this->Session->setFlash('Project is awaiting approval');
+				} else {
+					$this->Session->setFlash('Project was created');
+				}
 				//$this->redirect(array('action' => 'view', $data['Project']['url']));
 			} else {
 				$this->Session->setFlash('Project was NOT created');
@@ -80,6 +88,9 @@ class ProjectsController extends AppController {
 		$this->pageTitle = 'Update Project';
 
 		if (!empty($this->data)) {
+			$this->Project->create(array(
+				'approved' => $this->params['isAdmin']
+			));
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was updated');
 			} else {

@@ -36,9 +36,7 @@ class AppError extends ErrorHandler {
 
 		if ($__previousError != array($method, $messages)) {
 			$__previousError = array($method, $messages);
-			$this->controller =& new Controller();
-			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Admin');
-			$this->controller->viewPath = 'errors';
+			$this->controller =& new CakeErrorController();
 		} else {
 			$this->controller =& new Controller();
 			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Admin');

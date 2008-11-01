@@ -15,6 +15,7 @@ class ProjectTestCase extends CakeTestCase {
 	function start() {
 		parent::start();
 		Configure::write('Content', array(
+			'base' => TMP . 'tests' . DS,
 			'git' => TMP . 'tests' . DS . 'git' . DS,
 			'svn' => TMP . 'tests' . DS . 'svn' . DS ,
 		));
@@ -34,7 +35,8 @@ class ProjectTestCase extends CakeTestCase {
 			'ticket_types' => 'rfc, bug, enhancement',
 			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
 			'ticket_priorities' => 'low, normal, high',
-			'active' => 1
+			'active' => 1,
+			'approved' => 1
 		));
 
 		$this->assertTrue($this->Project->save($data));
@@ -42,7 +44,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(file_exists($path . 'repo' . DS . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->Project->config['repo']['path'] . DS . 'permissions.ini'));
 		@unlink($path . 'permissions.ini');
-		@unlink($this->Project->config['repo']['path'] . DS . 'permissions.ini');
+		@unlink($this->Project->config['repo']['path']);
 
 		$data = array('Project' =>array(
 			'id' => 2,
@@ -53,12 +55,13 @@ class ProjectTestCase extends CakeTestCase {
 			'ticket_types' => 'rfc, bug, enhancement',
 			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
 			'ticket_priorities' => 'low, normal, high',
-			'active' => 1
+			'active' => 1,
+			'approved' => 1
 		));
 
 		$this->assertTrue($this->Project->save($data));
 		$this->assertTrue(file_exists($this->Project->config['repo']['path'] . DS . 'permissions.ini'));
-		@unlink($this->Project->config['repo']['path'] . DS . 'permissions.ini');
+		@unlink($this->Project->config['repo']['path']);
 	}
 
 	function testProjectFind() {

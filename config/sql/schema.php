@@ -50,6 +50,7 @@ class ChawSchema extends CakeSchema {
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'url' => array('type' => 'string', 'null' => false, 'length' => 200),
 			'name' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),

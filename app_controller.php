@@ -32,7 +32,6 @@ class AppController extends Controller {
  *
  **/
 	function beforeFilter() {
-
 		if (!empty($this->params['project']) && $this->Project->id == 1) {
 			unset($this->params['project']);
 		}

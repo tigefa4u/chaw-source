@@ -28,6 +28,20 @@ class AccessComponent extends Object {
 	function initialize(&$controller) {
 		$controller->params['isAdmin'] = false;
 
+		if ($controller->name == 'CakeError') {
+			return false;
+		}
+
+		if (empty($controller->Project)) {
+			if ($controller->params['url']['url'] != 'pages/home') {
+				$controller->Session->write('Install', true);
+				$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
+			} else {
+				$controller->Auth->allow($controller->action);
+			}
+			return;
+		}
+
 		if ($controller->Project->initialize($controller->params) === false) {
 
 			if ($controller->params['url']['url'] == 'users/logout') {
@@ -47,6 +61,7 @@ class AccessComponent extends Object {
 
 			if ($controller->Auth->user()) {
 				if (in_array($controller->params['url']['url'], array('install', 'admin/projects/add'))) {
+					$controller->params['isAdmin'] = true;
 					$controller->Auth->allow($controller->action);
 				} else {
 					$controller->Session->setFlash('Chaw needs to be installed');
