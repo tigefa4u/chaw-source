@@ -12,6 +12,6 @@ if [ -n "$1" ]; then
 else
 	while read oldrev newrev refname
 		do
-		chaw post_receive commit <?php echo $project; ?> $refname $oldrev $newrev
+		chaw post_receive <?php echo $project; ?> $refname $oldrev $newrev
 	done
 fi

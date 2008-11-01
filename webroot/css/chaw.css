@@ -54,12 +54,16 @@ table {
 	padding-right: 20px;
 }
 
-#flashMessage {
+#flashMessage, #authMessag {
 	background: #f4f4f4;
 	margin-top: 0px;
 	padding: 8px 8px 8px 20px;
 	font-size: 110%;
 	height: 20px;
+	color: #222;
+}
+#authMessage {
+	margin-left: -20px;
 }
 
 #navigation {

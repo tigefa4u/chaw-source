@@ -143,10 +143,12 @@ class AccessComponent extends Object {
 			return true;
 		}
 
+		$default = ($access === 'w') ? !$this->isPublic : $this->isPublic;
+
 		$user = array(
 			'user' => $controller->Auth->user('username'),
 			'access' => array($access, $crud),
-			'default' => $this->isPublic
+			'default' => $default
 		);
 
 		$allowed = $controller->Project->Permission->check($controller->params['controller'], $user);

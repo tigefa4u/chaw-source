@@ -23,7 +23,7 @@ class PreCommitShell extends Shell {
 	function _welcome() {}
 
 	function main() {
-		//$this->_commit();
+		return $this->authorize();
 	}
 
 	function authorize() {

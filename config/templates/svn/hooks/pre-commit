@@ -12,7 +12,7 @@ svnlook log -t "$TXN" "$REPOS" | \
 
 cd <?php echo APP; ?>
 
-chaw pre_commit authorize <?php echo $project; ?> $REPOS $TXN
+chaw pre_commit <?php echo $project; ?> $REPOS $TXN
 
 
 exit $?

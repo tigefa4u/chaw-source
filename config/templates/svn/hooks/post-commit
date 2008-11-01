@@ -7,4 +7,4 @@ export PATH="<?php echo env('PATH'); ?>:<?php echo $chaw; ?>"
 
 cd <?php echo APP; ?>
 
-chaw post_commit commit <?php echo $project; ?> $REPOS $REV
+chaw post_commit <?php echo $project; ?> $REPOS $REV

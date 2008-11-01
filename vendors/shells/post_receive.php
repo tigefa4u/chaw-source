@@ -11,19 +11,19 @@
  *
  * @copyright		Copyright 2008, Garrett J. Woodworth
  * @package			chaw
- * @subpackage		chaw.vendors.sheels
+ * @subpackage		chaw.vendors.shells
  * @since			Chaw 0.1
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  *
  */
 class PostReceiveShell extends Shell {
 
-	var $uses = array( 'Project', 'Commit', 'Git');
+	var $uses = array( 'Project', 'Commit');
 
 	function _welcome() {}
 
 	function main() {
-		//$this->_commit();
+		return $this->_commit();
 	}
 
 	function commit() {
@@ -33,28 +33,16 @@ class PostReceiveShell extends Shell {
 		$oldrev = @$this->args[2];
 		$newrev = @$this->args[3];
 
-		$path = Configure::read('Content.git');
-
-		$this->Git->config(array(
-			'repo' => $path .'repo' . DS . $project . '.git',
-			'working' => $path .'working' . DS . $project
-		));
+		if ($this->Project->initialize(compact('project')) === false)  {
+			return;
+		}
 
 		if (!isset($refname)) {
 			$refname = 'refs/heads/master';
 		}
 
-		$data = $this->Git->commit($newrev);
+		$data = $this->Project->Repo->commit($newrev);
 
-		/*
-		pr($this->Git->update());
-		pr($this->Git->debug);
-
-		$this->log($this->Git);
-		$this->log($this->args);
-		$this->log($this->Git->response);
-		$this->log($this->Git->debug);
-		*/
 		if (!empty($data)) {
 
 			$data['Git']['project_id'] = $this->Project->id;

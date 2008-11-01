@@ -23,7 +23,7 @@ class UpdateShell extends Shell {
 	function _welcome() {}
 
 	function main() {
-		//$this->_commit();
+		return $this->authorize();
 	}
 /**
  * undocumented function

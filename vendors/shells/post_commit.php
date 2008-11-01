@@ -23,7 +23,7 @@ class PostCommitShell extends Shell {
 	function _welcome() {}
 
 	function main() {
-		//$this->_commit();
+		return $this->commit();
 	}
 
 	function commit() {
@@ -47,7 +47,7 @@ class PostCommitShell extends Shell {
 
 			$data['Svn']['project_id'] = $this->Project->id;
 			$data['Svn']['type'] = 'svn';
-			
+
 			$this->Commit->create($data['Svn']);
 
 			return $this->Commit->save();
