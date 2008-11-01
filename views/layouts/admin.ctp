@@ -53,7 +53,11 @@
 <body class="admin">
 	<div id="container">
 		<div id="header">
-
+			
+			<span styl="float:right">
+				<?php echo $admin->link('edit', array('controller' => 'projects', 'action' => 'edit'))?>
+			</span>
+			
 			<h1><?php echo $html->link(Configure::read('Project.name'), '/');?></h1>
 
 			<div id="navigation">
