@@ -1,3 +1,13 @@
+#header span.admin {
+	float: right;
+	font-size: 11px;
+}
+#header span.admin a {
+	color: #fff;
+}
+#header span.admin a {
+	color: #ccc;
+}
 #admin-content {
 	width:75%;
 	margin-left: 20px;

@@ -53,11 +53,11 @@
 <body class="admin">
 	<div id="container">
 		<div id="header">
-			
-			<span styl="float:right">
+
+			<span class="admin">
 				<?php echo $admin->link('edit', array('controller' => 'projects', 'action' => 'edit'))?>
 			</span>
-			
+
 			<h1><?php echo $html->link(Configure::read('Project.name'), '/');?></h1>
 
 			<div id="navigation">
@@ -99,6 +99,11 @@
 					?></li>
 
 				</ul>
+				<p style="margin-top: 3em; margin-left: 10px;">
+					<?php
+						echo $html->link('New Project', array('admin' => true, 'controller' => 'projects', 'action' => 'add'));
+					?>
+				</p>
 			</div>
 
 			<div id="admin-content">
@@ -116,10 +121,10 @@
 
 		<div id="footer">
 			<?php echo $html->link(
-							$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
-							'http://www.cakephp.org/',
-							array('target'=>'_new'), null, false
-						);
+					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
+					'http://www.cakephp.org/',
+					array('target'=>'_new'), null, false
+				);
 			?>
 		</div>
 	</div>

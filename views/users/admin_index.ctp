@@ -32,8 +32,8 @@ foreach ($users as $user):
 			<?php echo $user['User']['email']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $html->link(__('View', true), array('action'=>'view', $user['User']['id'])); ?>
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
+			<?php echo $admin->link(__('View', true), array('action'=>'view', $user['User']['id'])); ?>
+			<?php echo $admin->link(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -46,8 +46,6 @@ foreach ($users as $user):
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $html->link(__('New User', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Permissions', true), array('controller'=> 'permissions', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Permission', true), array('controller'=> 'permissions', 'action'=>'add')); ?> </li>
+		<li><?php echo $admin->link(__('New User', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>

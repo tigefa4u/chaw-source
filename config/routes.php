@@ -46,7 +46,7 @@
 
 
 	Router::connect('/projects', array('controller' => 'projects', 'action' => 'index'));
-	Router::connect('/projects/:project', array('controller' => 'projects', 'action' => 'view'));
+	Router::connect('/projects/view/:project', array('controller' => 'projects', 'action' => 'view'));
 	Router::connect('/projects/:action/*', array('controller' => 'projects', 'action' => $Action));
 
 	Router::connect('/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));

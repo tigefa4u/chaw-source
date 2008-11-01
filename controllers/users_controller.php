@@ -29,6 +29,13 @@ class UsersController extends AppController {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
 		}
 	}
+	
+	function index() {
+		$this->redirect(array('action' => 'account'));
+	}
+	function view() {
+		$this->redirect(array('action' => 'account'));
+	}
 
 	function login() {
 		if ($id = $this->Auth->user('id')) {

@@ -37,6 +37,7 @@ class Project extends AppModel {
 
 	var $hasMany = array('Permission');
 
+	var $__created = false;
 
 	function initialize($params = array()) {
 		$this->recursive = -1;
@@ -172,6 +173,16 @@ class Project extends AppModel {
 
 			$this->Permission->config($this->config);
 			$this->Permission->saveFile();
+
+			$Wiki = ClassRegistry::init('Wiki');
+			$Wiki->create(array(
+				'slug' => 'home', 'active' => 1,
+				'project_id' => $this->id,
+				'last_changed_by' => $this->data['Project']['user_id'],
+				'content' => "##The home page for " . $this->data['Project']['name']
+					. "\n\n" . $this->data['Project']['description']
+			));
+			$Wiki->save();
 		}
 
 		if (!empty($this->data['Project']['user_id'])) {

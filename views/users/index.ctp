@@ -8,7 +8,6 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('username');?></th>
 	<th><?php echo $paginator->sort('password');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
@@ -26,9 +25,6 @@ foreach ($users as $user):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-			<?php echo $user['User']['id']; ?>
-		</td>
 		<td>
 			<?php echo $user['User']['username']; ?>
 		</td>
@@ -60,11 +56,4 @@ foreach ($users as $user):
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-<div class="actions">
-	<ul>
-		<li><?php echo $html->link(__('New User', true), array('action'=>'add')); ?></li>
-		<li><?php echo $html->link(__('List Permissions', true), array('controller'=> 'permissions', 'action'=>'index')); ?> </li>
-		<li><?php echo $html->link(__('New Permission', true), array('controller'=> 'permissions', 'action'=>'add')); ?> </li>
-	</ul>
 </div>

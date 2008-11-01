@@ -33,13 +33,12 @@ class ProjectsController extends AppController {
 	}
 
 	function view($url  = null) {
-		if (!empty($this->params['project'])) {
-			$project['Project'] = $this->Project->config;
-		} else {
+		$project = $this->Project->config;
+		if (empty($this->params['project']) && $url == null && $project['id'] != 1) {
 			$project = $this->Project->findByUrl($url);
 		}
 
-		$this->set('project', $project);
+		$this->set('project', array('Project' => $project));
 	}
 
 	function admin_index() {

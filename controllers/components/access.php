@@ -43,7 +43,6 @@ class AccessComponent extends Object {
 		}
 
 		if ($controller->Project->initialize($controller->params) === false) {
-
 			if ($controller->params['url']['url'] == 'users/logout') {
 				$controller->Auth->allow($controller->action);
 				return;
@@ -77,16 +76,9 @@ class AccessComponent extends Object {
 				$controller->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'display', 'home'));
 			}
 		} else {
-			$default = true;
-			if (!empty($controller->Project->config['private'])) {
-				$default = false;
-			}
 			$this->isAllowed = (
 				in_array($controller->params['url']['url'], array('users/add', 'projects')) ||
-				in_array($controller->action, $controller->Auth->allowedActions) ||
-				(
-					$controller->Project->Permission->check($controller->params['controller'], array('access' => 'r', 'default' => $default))
-				)
+				in_array($controller->action, $controller->Auth->allowedActions)
 			);
 
 			if ($this->isAllowed) {
@@ -113,6 +105,10 @@ class AccessComponent extends Object {
 			return true;
 		}
 
+		if ($this->isAllowed) {
+			return true;
+		}
+
 		$crud = $access = 'r';
 		if (!empty($controller->Auth->actionMap[$controller->params['action']])) {
 			$crud = $controller->Auth->actionMap[$controller->params['action']][0];
@@ -121,44 +117,42 @@ class AccessComponent extends Object {
 			$access = 'w';
 		}
 
-		if ($this->isAllowed && $access == 'r') {
-			return true;
-		}
-
-		$options = array(
+		$admin = array(
 			'user' => $controller->Auth->user('username'),
 			'access' => array($access, $crud),
 			'default' => false
 		);
 
-		$allowed = $controller->Project->Permission->check('admin', $options);
+		$allowed = $controller->Project->Permission->check('admin', $admin);
 
-		if ($allowed === false && !empty($controller->Project->config['private'])) {
-			if ($controller->params['url']['url'] !== '/') {
-				$controller->Session->setFlash('Select a Project');
-			}
-			if ($controller->params['url']['url'] != 'projects') {
-				$controller->redirect(array('admin' => false, 'controller' => 'projects'));
-			}
-		} else if ($allowed === true) {
+		if ($allowed === true) {
 			$controller->params['isAdmin'] = true;
 			return true;
 		}
 
-		$options = array(
+		$default = true;
+		if (!empty($controller->Project->config['private'])) {
+			$default = false;
+		}
+
+		$user = array(
 			'user' => $controller->Auth->user('username'),
 			'access' => array($access, $crud),
-			'default' => true
+			'default' => $default
 		);
 
-		$allowed = $controller->Project->Permission->check($controller->params['controller'], $options);
+		$allowed = $controller->Project->Permission->check($controller->params['controller'], $user);
 
 		if ($allowed === true) {
 			return true;
 		}
 
+		if (!empty($controller->Project->config['private'])) {
+			$controller->Session->setFlash('Select a Project');
+			$controller->redirect(array('admin' => false, 'controller' => 'projects'));
+		}
+
 		$controller->Session->setFlash('You are not authorized to access that location');
 		$controller->redirect($controller->referer());
-		return false;
 	}
 }

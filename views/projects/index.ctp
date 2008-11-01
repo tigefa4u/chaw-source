@@ -1,17 +1,16 @@
 <?php
 	if (empty($projects)) {
-		echo $html->tag('h2', 'There are no projects available');
+		echo $html->tag('h2', 'Sorry, no projects are available');
 	}
 ?>
 <div class="projects index">
 <?php foreach ((array)$projects as $project):
 
-		$url = false;
+		$url = null;
 		if ($project['Project']['id'] != 1) {
 			$url = $project['Project']['url'];
 		}
 ?>
-
 	<div class="project">
 
 		<h3 class="name">
@@ -20,13 +19,22 @@
 					'admin' => false, 'project' => $url,
 					'controller' => 'projects', 'action' => 'view',
 				));?>
-			<em>
-				<?php
-					echo $admin->link('admin', array('project' => $url,
-						'admin' => true, 'controller' => 'dashboard'
-					));?>
-			</em>
+
 		</h3>
+
+		<?php if (!empty($this->params['isAdmin'])): ?>
+			<p>
+				<?php
+					echo $html->link('edit', array('project' => $url,
+						'admin' => true, 'controller' => 'projects', 'action' => 'edit'
+					));
+					echo ' | ';
+					echo $html->link('admin', array('project' => $url,
+						'admin' => true, 'controller' => 'dashboard'
+					));
+				?>
+			</p>
+		<?php endif;?>
 
 		<p class="description">
 			<?php echo $project['Project']['description'];?>
