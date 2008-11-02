@@ -58,12 +58,6 @@ class GitShellShell extends Shell {
 		));
 
 		if ($allowed === true) {
-			$path = Configure::read('Content.git');
-			$this->Git->config(array(
-				'repo' => $path .'repo' . DS . $project . '.git',
-				'working' => $path .'working' . DS . $project
-			));
-
 			passthru("{$command} {$path}repo/{$project}", $result);
 			return $result;
 

@@ -4,10 +4,10 @@ oldrev="$2"
 newrev="$3"
 
 export TERM="xterm"
-export PATH="<?php echo env('PATH'); ?>:<?php echo $chaw; ?>"
+export PATH="<?php echo env('PATH'); ?>:<?php echo @$chaw; ?>"
 
 cd <?php echo APP; ?>
 
-cake update <?php echo $project; ?> $refname $oldrev $newrev
+cake update <?php echo @$project; ?> $refname $oldrev $newrev
 
 exit $?

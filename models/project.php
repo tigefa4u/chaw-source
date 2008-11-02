@@ -98,9 +98,11 @@ class Project extends AppModel {
 		$path = Configure::read("Content.{$repoType}");
 
 		$this->config['repo'] = array(
+			'class' => 'Repo.' . $this->config['repo_type'],
 			'path' => $path . 'repo' . DS . $this->config['url'],
 			'type' => $repoType,
 			'working' => $path . 'working' . DS . $this->config['url'],
+			'chmod' => 0777
 		);
 
 		if ($repoType == 'git') {
@@ -110,13 +112,7 @@ class Project extends AppModel {
 		$this->id = $this->config['id'];
 		Configure::write('Project', $this->config);
 
-		$this->Repo = ClassRegistry::init(ucwords($repoType));
-
-		$this->Repo->config(array(
-			'repo' => $this->config['repo']['path'],
-			'working' => $this->config['repo']['working']
-		));
-
+		$this->Repo = ClassRegistry::init($this->config['repo']);
 		return true;
 	}
 
@@ -131,7 +127,7 @@ class Project extends AppModel {
 			}
 
 			if (!file_exists($this->config['repo']['path'])) {
-				if ($this->Repo->create($this->config['url'], array('remote' => 'git@thechaw.com')) !== true) {
+				if ($this->Repo->create(array('remote' => 'git@thechaw.com')) !== true) {
 					$this->invalidate('repo_type');
 					return false;
 				}
@@ -154,17 +150,17 @@ class Project extends AppModel {
 			$chaw = Configure::read('Content.base');
 
 			foreach ($hooks[$this->config['repo_type']] as $hook) {
-				if (!file_exists("{$this->Repo->repo}/hooks/{$hook}")) {
+				if (!file_exists("{$this->Repo->path}/hooks/{$hook}")) {
 					$this->Repo->hook($hook, array('project' => $project, 'chaw' => $chaw));
 				}
 
 				if ($created) {
 					if ($hook === 'post-commit') {
-						$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} {$this->Repo->repo} 1");
+						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} {$this->Repo->path} 1");
 					}
 
 					if ($hook === 'post-receive') {
-						$this->Repo->execute("env - {$this->Repo->repo}/hooks/{$hook} refs/heads/master");
+						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} refs/heads/master");
 					}
 				}
 			}

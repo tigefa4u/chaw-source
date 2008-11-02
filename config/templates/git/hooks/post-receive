@@ -1,17 +1,17 @@
 #!/bin/sh
 
 export TERM="xterm"
-export PATH="<?php echo env('PATH'); ?>:<?php echo $chaw; ?>"
+export PATH="<?php echo env('PATH'); ?>:<?php echo @$chaw; ?>"
 
 cd <?php echo APP; ?>
 
 
 if [ -n "$1" ]; then
-	chaw post_receive commit <?php echo $project; ?>
+	chaw post_receive commit <?php echo @$project; ?>
 
 else
 	while read oldrev newrev refname
 		do
-		chaw post_receive <?php echo $project; ?> $refname $oldrev $newrev
+		chaw post_receive <?php echo @$project; ?> $refname $oldrev $newrev
 	done
 fi
