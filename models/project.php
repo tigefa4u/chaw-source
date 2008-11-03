@@ -59,7 +59,7 @@ class Project extends AppModel {
 			$duration = '+15 seconds';
 		}
 
-		Cache::set(array('prefix' => 'config_', 'duration' => $duration));
+		Cache::set(array('prefix' => 'config_', 'duration' => $duration, 'path' => CACHE . 'persistent'));
 
 		if (!empty($params['project'])) {
 			$key = $params['project'];
@@ -98,7 +98,7 @@ class Project extends AppModel {
 		$path = Configure::read("Content.{$repoType}");
 
 		$this->config['repo'] = array(
-			'class' => 'Repo.' . $this->config['repo_type'],
+			'class' => 'repo.' . $this->config['repo_type'],
 			'path' => $path . 'repo' . DS . $this->config['url'],
 			'type' => $repoType,
 			'working' => $path . 'working' . DS . $this->config['url'],
@@ -108,7 +108,7 @@ class Project extends AppModel {
 		if ($repoType == 'git') {
 			$this->config['repo']['path'] .= '.git';
 		}
-
+		
 		$this->id = $this->config['id'];
 		Configure::write('Project', $this->config);
 
@@ -125,10 +125,10 @@ class Project extends AppModel {
 			if ($this->initialize() === false) {
 				return false;
 			}
-
+			Configure::write('debug', 2);
 			if (!file_exists($this->config['repo']['path'])) {
 				if ($this->Repo->create(array('remote' => 'git@thechaw.com')) !== true) {
-					$this->invalidate('repo_type');
+					$this->invalidate('repo_type', 'the repo could not be created');
 					return false;
 				}
 				$this->__created = true;
@@ -167,7 +167,7 @@ class Project extends AppModel {
 
 			$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
-			$file = $this->Permissions->file();
+			$file = $this->Permission->file();
 			if (empty($file)) {
 				$this->Permission->config($this->config);
 				$this->Permission->saveFile();

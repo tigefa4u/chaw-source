@@ -20,6 +20,11 @@ class ProjectsController extends AppController {
 
 	var $name = 'Projects';
 
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('index');
+	}
+
 	function index() {
 		$this->Project->recursive = 0;
 

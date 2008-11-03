@@ -18,7 +18,7 @@
  */
 class GitShellShell extends Shell {
 
-	var $uses = array('Project', 'Permission', 'Git');
+	var $uses = array('Project', 'Permission');
 
 	var $actionMap = array(
 		'git-upload-pack' => 'r',
@@ -35,9 +35,9 @@ class GitShellShell extends Shell {
 			$this->err('User not found.');
 			return 1;
 		}
-		
+
 		$command = @$this->args[0];
-		
+
 		if (!isset($this->actionMap[$command])) {
 			$this->err('Command not found.');
 			return 1;
@@ -58,7 +58,7 @@ class GitShellShell extends Shell {
 		));
 
 		if ($allowed === true) {
-			passthru("{$command} {$path}repo/{$project}", $result);
+			$result = $this->Project->Repo->execute($command, array($this->Project->Repo->path), 'pass');
 			return $result;
 
 		}

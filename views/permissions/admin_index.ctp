@@ -1,5 +1,5 @@
 <div class="permissions form">
-<?php echo $form->create('Permission');?>
+<?php echo $form->create(array('action' => $this->action));?>
 	<fieldset>
  		<legend><?php __('Manage Permissions');?></legend>
 		<?php

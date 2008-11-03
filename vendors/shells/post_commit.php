@@ -37,7 +37,7 @@ class PostCommitShell extends Shell {
 
 		$revision = $this->args[2];
 
-		$data = $this->Project->Repo->commit($revision);
+		$data = $this->Project->Repo->read($revision);
 
 		$this->Project->Repo->update();
 

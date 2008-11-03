@@ -1,2 +1,0 @@
-1225737993
-a:1:{s:7:"Project";a:15:{s:2:"id";s:1:"1";s:7:"user_id";s:1:"1";s:3:"url";s:4:"chaw";s:4:"name";s:4:"Chaw";s:8:"approved";s:1:"1";s:6:"active";s:1:"1";s:7:"private";s:1:"0";s:9:"repo_type";s:3:"Git";s:6:"groups";s:33:"user, docs team, developer, admin";s:12:"ticket_types";s:21:"rfc, bug, enhancement";s:15:"ticket_statuses";s:43:"open, fixed, invalid, needmoreinfo, wontfix";s:17:"ticket_priorities";s:17:"low, normal, high";s:11:"description";s:16:"this is the chaw";s:7:"created";s:10:"2008-11-02";s:8:"modified";s:10:"2008-11-02";}}
