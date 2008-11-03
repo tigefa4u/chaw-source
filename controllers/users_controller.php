@@ -29,7 +29,7 @@ class UsersController extends AppController {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
 		}
 	}
-	
+
 	function index() {
 		$this->redirect(array('action' => 'account'));
 	}
@@ -94,11 +94,10 @@ class UsersController extends AppController {
 		}
 
 		if ($isGet === false) {
-			$data = $this->data;
-			unset($data['User']['username']);
-			if ($this->User->save($data)) {
+			if ($this->User->save($this->data)) {
 				$this->Session->setFlash('User updated');
 			} else {
+				pr($this->User->validationErrors);
 				$this->Session->setFlash('User NOT updated');
 			}
 		}

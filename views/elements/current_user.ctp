@@ -8,7 +8,7 @@
 			?>
 		</span>
 		<span class="username">
-			<?php echo $html->link($CurrentUser->username, array('controller' => 'users', 'action' => 'account')); ?>
+			<?php echo $html->link($CurrentUser->username, array('admin' => false, 'controller' => 'users', 'action' => 'account')); ?>
 		</span>
 	<?php else:?>
 		<span class="login">

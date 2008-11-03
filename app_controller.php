@@ -49,6 +49,9 @@ class AppController extends Controller {
  *
  **/
 	function beforeRender() {
+		if ($this->params['isAdmin'] !== true) {
+			$this->params['admin'] = false;
+		}
 		if (!empty($this->params['admin'])) {
 			$this->layout = 'admin';
 		}
