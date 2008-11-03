@@ -39,16 +39,21 @@ class Browser extends Object {
 		if (!is_dir($this->Repo->working)) {
 			return false;
 		}
-
+		
+		if (is_file($this->Repo->working . DS . $path)) {
+			$File = new File($this->Repo->working . DS .$path);
+			return array('Content' => $File->read());
+		}
+		
 		$wwwPath = join('/', explode(DS, $path)) . '/';
-
-		$Folder = new Folder($this->Repo->working . $path);
-
+		
+		$Folder = new Folder($this->Repo->working . DS . $path);
+		
 		list($dirs, $files) = $Folder->read(true, array('.svn'));
-
+		
 		$dir = $file = array();
 
-		$path = $Folder->slashTerm($Folder->pwd())_;
+		$path = $Folder->slashTerm($Folder->pwd());
 
 		if ($path === $Folder->slashTerm($this->Repo->working)) {
 			$this->Repo->update();

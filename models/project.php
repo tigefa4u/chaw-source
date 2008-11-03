@@ -142,14 +142,14 @@ class Project extends AppModel {
 		if ($this->__created && !empty($this->data['Project']['approved'])) {
 			$this->config['id'] = $this->id;
 			$hooks = array(
-				'Git' => array('post-receive'),
-				'Svn' => array('pre-commit', 'post-commit')
+				'git' => array('post-receive'),
+				'gvn' => array('pre-commit', 'post-commit')
 			);
 
 			$project = $this->data['Project']['url'];
 			$chaw = Configure::read('Content.base');
 
-			foreach ($hooks[$this->config['repo_type']] as $hook) {
+			foreach ($hooks[$this->Repo->type] as $hook) {
 				if (!file_exists("{$this->Repo->path}/hooks/{$hook}")) {
 					$this->Repo->hook($hook, array('project' => $project, 'chaw' => $chaw));
 				}

@@ -12,6 +12,13 @@
 	?>
 </h2>
 
+<?php
+	if (!empty($data['Content'])) :
+		echo $this->render('view', false);
+		return;
+	endif;
+?>
+
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><?php __('Name');?></th>
