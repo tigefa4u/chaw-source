@@ -45,6 +45,7 @@ class ProjectTestCase extends CakeTestCase {
 
 	function testProjectSave() {
 		$data = array('Project' =>array(
+			'id' => 1,
 			'name' => 'original project',
 			'user_id' => 1,
 			'repo_type' => 'Git',

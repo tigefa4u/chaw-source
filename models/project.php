@@ -108,7 +108,7 @@ class Project extends AppModel {
 		if ($repoType == 'git') {
 			$this->config['repo']['path'] .= '.git';
 		}
-		
+
 		$this->id = $this->config['id'];
 		Configure::write('Project', $this->config);
 
@@ -143,7 +143,7 @@ class Project extends AppModel {
 			$this->config['id'] = $this->id;
 			$hooks = array(
 				'git' => array('post-receive'),
-				'gvn' => array('pre-commit', 'post-commit')
+				'svn' => array('pre-commit', 'post-commit')
 			);
 
 			$project = $this->data['Project']['url'];
