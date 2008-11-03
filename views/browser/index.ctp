@@ -5,10 +5,10 @@
 	<?php
 		$path = '/';
 		foreach ((array)$args as $part):
-			$path .= $part . ' / ';
-			echo '/ ' . $html->link($part, array($path));
+			$path .= $part . '/';
+			echo '/' . $html->link(' ' . $part . ' ', array($path));
 		endforeach;
-		echo ' / ' . $current;
+		echo '/ ' . $current;
 	?>
 </h2>
 
