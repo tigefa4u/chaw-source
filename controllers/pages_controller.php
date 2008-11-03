@@ -57,6 +57,25 @@ class PagesController extends AppController{
  */
 	var $uses = null;
 /**
+ * before filter
+ *
+ * @return void
+ *
+ **/
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('start');
+	}
+/**
+ * The installation page
+ *
+ * @return void
+ *
+ **/
+	function start() {
+
+	}
+/**
  * Displays a view
  *
  * @param mixed What page to display

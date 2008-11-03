@@ -167,18 +167,23 @@ class Project extends AppModel {
 
 			$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
-			$this->Permission->config($this->config);
-			$this->Permission->saveFile();
+			$file = $this->Permissions->file();
+			if (empty($file)) {
+				$this->Permission->config($this->config);
+				$this->Permission->saveFile();
+			}
 
 			$Wiki = ClassRegistry::init('Wiki');
-			$Wiki->create(array(
-				'slug' => 'home', 'active' => 1,
-				'project_id' => $this->id,
-				'last_changed_by' => $this->data['Project']['user_id'],
-				'content' => "##The home page for " . $this->data['Project']['name']
-					. "\n\n" . $this->data['Project']['description']
-			));
-			$Wiki->save();
+			if (!$Wiki->field('slug', array('slug' => 'home'))) {
+				$Wiki->create(array(
+					'slug' => 'home', 'active' => 1,
+					'project_id' => $this->id,
+					'last_changed_by' => $this->data['Project']['user_id'],
+					'content' => "##The home page for " . $this->data['Project']['name']
+						. "\n\n" . $this->data['Project']['description']
+				));
+				$Wiki->save();
+			}
 		}
 
 		if (!empty($this->data['Project']['user_id'])) {

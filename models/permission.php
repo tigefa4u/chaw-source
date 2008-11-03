@@ -50,17 +50,16 @@ class Permission extends AppModel {
 			return false;
 		}
 
+		if (empty($this->data['Permission']['fine_grained']) && empty($this->data['Permission']['username'])) {
+			return false;
+		}
+
 		if (empty($this->data['Permission']['fine_grained'])) {
 			$repo = $config['url'] . ':/';
 			if ($config['repo']['type'] == 'git') {
 				$repo = 'refs/heads/master';
 			}
-			if (empty($this->data['Permission']['user_id'])) {
-				$this->data['Permission']['user_id'] = 1;
-			}
-
-			$this->User->id = $this->data['Permission']['user_id'];
-			$username = $this->User->field('username');
+			$username = $this->data['Permission']['username'];
 			ob_start();
 			include(CONFIGS . 'templates' . DS . $config['repo']['type'] . DS . 'permissions.ini');
 			$this->data['Permission']['fine_grained'] = ob_get_clean();

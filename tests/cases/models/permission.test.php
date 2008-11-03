@@ -12,6 +12,7 @@ class PermissionTest extends CakeTestCase {
 	function start() {
 		parent::start();
 		Configure::write('Content', array(
+			'base' => TMP . 'tests' . DS,
 			'git' => TMP . 'tests' . DS . 'git' . DS,
 			'svn' => TMP . 'tests' . DS . 'svn' . DS ,
 		));
@@ -35,7 +36,14 @@ class PermissionTest extends CakeTestCase {
 				)
 			)
 		);
+	}
 
+	function end() {
+		parent::end();
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
 	}
 
 	function testSaveFile() {
@@ -159,6 +167,18 @@ class PermissionTest extends CakeTestCase {
 			)
 		);
 		$this->assertEqual($result, $expected);
+	}
+
+	function testUserPermissions() {
+		Configure::write('Project', $this->__projects['One']);
+		$Permission = new TestPermission();
+		$Permission->create(array(
+			'project_id' => 1,
+			'user_id' => 1,
+			'username' => 'gwoo',
+		));
+
+
 	}
 
 	function testCheck() {
