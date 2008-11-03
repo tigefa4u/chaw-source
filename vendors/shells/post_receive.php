@@ -23,7 +23,7 @@ class PostReceiveShell extends Shell {
 	function _welcome() {}
 
 	function main() {
-		return $this->_commit();
+		return $this->commit();
 	}
 
 	function commit() {
