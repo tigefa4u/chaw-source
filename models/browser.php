@@ -48,9 +48,9 @@ class Browser extends Object {
 
 		$dir = $file = array();
 
-		$path = $Folder->pwd();
+		$path = $Folder->slashTerm($Folder->pwd())_;
 
-		if ($path === $this->Repo->working) {
+		if ($path === $Folder->slashTerm($this->Repo->working)) {
 			$this->Repo->update();
 		}
 
