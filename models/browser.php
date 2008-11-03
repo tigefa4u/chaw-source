@@ -17,40 +17,41 @@
  *
  */
 class Browser extends Object {
-	
+
 	var $useTable = false;
 
-	/* path to files */
-	var $config = array('path' => null, 'type' => null, 'working' => null);
-
+/**
+ * The Current Repo object
+ *
+ * @var object
+ *
+ **/
+	var $Repo = null;
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function read($path = null) {
 		$data = null;
 
-		if ($this->config['working'] == null) {
+		if (!is_dir($this->Repo->working)) {
 			return false;
 		}
 
-		$this->config['working'] = Folder::slashTerm($this->config['working']);
-
 		$wwwPath = join('/', explode(DS, $path)) . '/';
 
-		$Folder = new Folder($this->config['working'] . $path);
+		$Folder = new Folder($this->Repo->working . $path);
 
 		list($dirs, $files) = $Folder->read(true, array('.svn'));
 
 		$dir = $file = array();
 
-		$path = $Folder->slashTerm($Folder->pwd());
-		
-		$Repo = ClassRegistry::init($this->config['type']);
+		$path = $Folder->pwd();
 
-		$Repo->config(array(
-			'repo' => $this->config['path'],
-			'working' => $this->config['working']
-		));
-	
-		if ($path === $this->config['working']) {
-			$Repo->update();
+		if ($path === $this->Repo->working) {
+			$this->Repo->update();
 		}
 
 		$count = count($dirs);
@@ -60,7 +61,7 @@ class Browser extends Object {
 			$dir[$i]['md5'] = null;
 			$dir[$i]['size'] = $this->__size($path . $dirs[$i]);
 			$dir[$i]['icon'] = '/icons/dir.gif';
-			$dir[$i]['info'] = $Repo->pathInfo($path . $dirs[$i]);
+			$dir[$i]['info'] = $this->Repo->pathInfo($path . $dirs[$i]);
 		}
 
 		$count = count($files);
@@ -70,28 +71,10 @@ class Browser extends Object {
 			$file[$i]['icon'] = $this->__icon($files[$i]);
 			$file[$i]['path'] = $wwwPath . $files[$i];
 			$file[$i]['md5'] = md5($Folder->pwd() . $files[$i]);
-			$file[$i]['info'] = $Repo->pathInfo($path . $files[$i]);
+			$file[$i]['info'] = $this->Repo->pathInfo($path . $files[$i]);
 		}
 
 		return array('Folder' => $dir, 'File' => $file);
-	}
-
-	function __gitInfo($name) {
-		$Git = ClassRegistry::init('Git');
-
-		$Git->config(array(
-			'repo' => $this->config['path'],
-			'working' => $this->config['working']
-		));
-
-		$path = str_replace($this->config['working'], '', $name);
-
-		return $Git->pathInfo($path);
-	}
-
-	function __svnInfo($name) {
-		$Svn = ClassRegistry::init('Svn');
-		return $Svn->pathInfo($name);
 	}
 
 	function __size($file = null, $ext = 'B', $size = '0') {

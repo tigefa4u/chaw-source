@@ -30,7 +30,7 @@ class BrowserController extends AppController {
 			$current = array_pop($args);
 		}
 
-		$this->Browser->config = $this->Project->config['repo'];
+		$this->Browser->Repo = $this->Project->Repo;
 		$data = $this->Browser->read($path);
 
 		$this->set(compact('data', 'args', 'current'));
