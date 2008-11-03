@@ -1,0 +1,29 @@
+FOR GIT
+make sure "git" is in $PATH
+http://blog.drewolson.org/2008/05/remote-git-repos-on-ubuntu-right-way.html
+http://osxdaily.com/2007/10/29/how-to-add-a-user-from-the-os-x-command-line-works-with-leopard/
+
+create the git user...
+chown -R git /path/to/content/git/repo
+mkdir .ssh 
+touch .ssh/authorized_keys 
+put git $PATH in ~/.bashrc
+
+
+FOR SVN
+port install subversion +mod_dav_svn
+
+<VirtualHost *:80>
+    ServerName chaw.svn
+	DocumentRoot "/Volumes/Home/htdocs/chaw/content/repo/"
+	<Directory "/Volumes/Home/htdocs/chaw/">
+		 Options Indexes MultiViews
+		 AllowOverride None
+		 Order allow,deny
+		 Allow from all
+	</Directory>
+	<Location /svn>
+	  DAV svn
+	  SVNParentPath /Volumes/Home/htdocs/chaw/content/repo/svn
+	</Location>
+</VirtualHost>
