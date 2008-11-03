@@ -10,7 +10,7 @@ $javascript->codeBlock($script, array('inline' => false));
 ?>
 
 <div class="browser view">
-<?php 	
-	echo $html->tag('pre', $html->tag('code', $data['Content']));
+<?php
+	echo $html->tag('pre', $html->tag('code', h($data['Content'])));
 ?>
 </div>
