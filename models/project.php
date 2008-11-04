@@ -43,6 +43,7 @@ class Project extends AppModel {
 		$this->recursive = -1;
 		$this->config = array(
 			'id' => null,
+			'user_id' => 1,
 			'name' => Inflector::humanize(Configure::read('App.dir')),
 			'url' => null,
 			'repo_type' => 'Git',
