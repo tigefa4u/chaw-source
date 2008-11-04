@@ -21,11 +21,11 @@
 
 <table cellpadding="0" cellspacing="0">
 	<tr>
-		<th><?php __('Name');?></th>
-		<th><?php __('Size');?></th>
-		<th><?php __('Revision');?></th>
+		<th style="padding-left: 28px"><?php __('Name');?></th>
 		<th><?php __('Author');?></th>
 		<th><?php __('Message');?></th>
+		<th><?php __('Commit');?></th>
+		<th><?php __('Size');?></th>
 	</tr>
 <?php
 	$i = 0;
@@ -36,11 +36,11 @@
 		}
 ?>
 		<tr<?php echo $class?>>
-			<td><?php echo $html->link($item['name'], array($item['path']));?></td>
-			<td><?php echo $item['size']['num'];?> <?php echo $item['size']['ext'];?></td>
-			<td><?php echo $item['info']['revision'];?></td>
+			<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
 			<td><?php echo $item['info']['author'];?></td>
 			<td><?php echo $item['info']['message'];?></td>
+			<td><?php echo $html->link($item['info']['revision'], array('controller' => 'commits', 'action'=> 'view', $item['info']['revision']), array('class' => 'commit'));?></td>
+			<td><?php echo $item['size']['num'];?> <?php echo $item['size']['ext'];?></td>
 		</tr>
 <?php
 	endforeach;
@@ -54,11 +54,11 @@
 		}
 ?>
 		<tr<?php echo $class?>>
-			<td><?php echo $html->link($item['name'], array($item['path']));?></td>
-			<td><?php echo $item['size']['num'];?> <?php echo $item['size']['ext'];?></td>
-			<td><?php echo $item['info']['revision'];?></td>
+			<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
 			<td><?php echo $item['info']['author'];?></td>
 			<td><?php echo $item['info']['message'];?></td>
+			<td><?php echo $html->link($item['info']['revision'], array('controller' => 'commits', 'action'=> 'view', $item['info']['revision']), array('class' => 'commit'));?></td>
+			<td><?php echo $item['size']['num'];?> <?php echo $item['size']['ext'];?></td>
 		</tr>
 <?php
 	endforeach;

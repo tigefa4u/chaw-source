@@ -26,7 +26,7 @@
 	Router::connect('/commits', array('controller' => 'commits', 'action' => 'index'));
 	Router::connect('/commits/:action/*', array('controller' => 'commits', 'action' => 'index'));
 
-	Router::connect('/browser', array('controller' => 'browser', 'action' => 'index'));
+	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/browser/:action/*', array('controller' => 'browser', 'action' => 'index'));
 
 	Router::connect('/tickets', array('controller' => 'tickets', 'action' => 'index'));

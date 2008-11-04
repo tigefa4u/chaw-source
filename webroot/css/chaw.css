@@ -273,8 +273,9 @@ fieldset.options textarea {
 .browser table th, .diff th {
   border-left: 1px solid #ddd;
   text-align: left;
-  background: #eee;
-  padding: 5px 10px;
+  background: #CBCBCB;
+  padding: 5px 10px 5px 4px;
+  border: 0;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
 
@@ -282,11 +283,33 @@ fieldset.options textarea {
 .browser table td {
   text-align: left;
   background: #f7f7f7;
+  padding: 5px 10px 5px 4px;
+  border : 0;
   border-bottom: 1px solid #ccc;
-  border-left: 1px solid #ddd;
+  border-left: 0px solid #ddd;
 }
 .browser table tr.zebra td {
 	background:#FAFAFA;
+}
+.browser a.folder {
+	background: url('images/folder.gif') no-repeat left;
+	color: #333;
+	text-decoration: none;
+	padding-left: 24px;
+}
+.browser a.folder:hover {
+	color: #000;
+	text-decoration: underline;
+}
+.browser a.file {
+	background: url('images/file.gif') no-repeat left;
+	color: #656565;
+	text-decoration: none;
+	padding-left: 24px;
+}
+.browser a.file:hover {
+	color: #bbb;
+	text-decoration: underline;
 }
 
 .versions div.help {
