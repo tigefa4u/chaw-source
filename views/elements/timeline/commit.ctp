@@ -5,11 +5,13 @@
 	</h3>
 
 	<p>
-		<strong>Author:</strong> <?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['author'];?>
+		<strong>Changed by:</strong>
+		<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['author'];?>
+		<strong>on:</strong> <?php echo $time->nice($data['commit_date']);?>
 	</p>
 
 	<p>
-		<strong>Date:</strong> <?php echo $data['commit_date'];?>
+		<strong>When:</strong> <?php echo $time->nice($data['commit_date']);?>
 	</p>
 
 	<p class="message">

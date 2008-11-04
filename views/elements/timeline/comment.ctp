@@ -1,13 +1,14 @@
 <div class="comment">
 
 	<h3>
-		Comment by 	<em><?php echo $data['User']['username'];?></em>
+		Comment by 	<?php echo  $html->link($data['User']['username'], array('controller' => 'tickets', 'action' => 'view', $data['Ticket']['id']));?>
 	</h3>
 	<p>
-		<strong><?php echo Inflector::humanize($data['Ticket']['type']);?> Ticket:</strong> <?php echo $html->link($data['Ticket']['title'], array('controller' => 'tickets', 'action' => 'view', $data['Ticket']['id']));?>
+		<strong><?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:</strong>
+		<?php echo $html->link($data['Ticket']['title'], array('controller' => 'tickets', 'action' => 'view', $data['Ticket']['id']));?>
 	</p>
 	<p>
-		<strong>Date:</strong> <?php echo $data['created'];?>
+		<strong>Date:</strong> <?php echo $time->nice($data['created']);?>
 	</p>
 
 </div>

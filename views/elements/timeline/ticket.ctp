@@ -1,7 +1,8 @@
 <div class="ticket">
 
 	<h3>
-		<?php echo Inflector::humanize($data['type']);?> Ticket: <?php echo $html->link($data['title'], array('controller' => 'tickets', 'action' => 'view', $data['id']));?>
+		<?php echo strtoupper(Inflector::humanize($data['type']));?> Ticket: 
+		<?php echo $html->link($data['title'], array('controller' => 'tickets', 'action' => 'view', $data['id']));?>
 	</h3>
 
 	<p>
@@ -9,7 +10,7 @@
 	</p>
 
 	<p>
-		<strong>Date:</strong> <?php echo $data['created'];?>
+		<strong>Date:</strong> <?php echo $time->nice($data['created']);?>
 	</p>
 
 </div>

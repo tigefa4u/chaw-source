@@ -188,11 +188,12 @@ fieldset.options textarea {
 	height: 200px;
 }
 
+.timeline h3 {
+	margin-top: 1em;
+	font-size: 130%;
+}
 .timeline .summary {
 	padding-bottom: 20px;
-}
-.timeline .summary h3 {
- 	font-size: 140%;
 }
 .timeline .summary p {
  	font-size: 120%;
@@ -202,9 +203,26 @@ fieldset.options textarea {
 	font-size: 85%;
 }
 
+.timeline .comment h3 {
+	color: #633;
+}
+.timeline .commit h3 {
+	color: #963;
+}
+.timeline .ticket h3 {
+	color: #990;
+}
+.timeline .wiki h3 {
+	color: #69C;
+}
+
 .tickets form {
+	font-size: 80%;
 	min-width: 800px;
 	white-space: nowrap;
+}
+.tickets legend {
+	font-size: 180%;
 }
 .tickets fieldset.main {
 	float: left;
@@ -239,14 +257,17 @@ fieldset.options textarea {
 .tickets textarea#TicketComment {
 	height: 130px;
 }
-
 .tickets .comment {
+	font-size: 140%;
 	width: 60%;
+	margin: 0;
+	padding: 0;
 	margin-bottom:1em;
-	padding:0.5em;
+	padding:0.5em 0;
 }
 .tickets .comment .date {
 	font-weight: bold;
+	color: #633;
 }
 .tickets .comment .body {
 	border: 1px solid #ccc;
@@ -278,7 +299,6 @@ fieldset.options textarea {
   border: 0;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
-
 }
 .browser table td {
   text-align: left;

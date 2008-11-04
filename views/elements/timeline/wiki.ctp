@@ -5,11 +5,11 @@
 	</h3>
 
 	<p>
-		<strong>Author:</strong> <?php echo $data['User']['username'];?>
+		<strong>Author:</strong> <?php echo @$data['User']['username'];?>
 	</p>
 
 	<p>
-		<strong>Date:</strong> <?php echo $data['created'];?>
+		<strong>Date:</strong> <?php echo $time->nice($data['created']);?>
 	</p>
 
 </div>

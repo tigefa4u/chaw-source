@@ -45,14 +45,10 @@ class Ticket extends AppModel {
 				$this->data['Tag']['Tag'] = $this->Tag->generate($this->data['Ticket']['tags']);
 			}
 		}
-		return true;
-	}
 
-	function afterSave($created) {
-
-		if (!$created) {
+		if ($this->id) {
 			$comment = $this->data['Ticket']['comment'];
-			unset($this->data['Ticket']['comment']);
+			//unset($this->data['Ticket']['comment']);
 
 			$changes = array();
 			foreach((array)$this->data['Ticket']['previous'] as $field => $previous) {
@@ -67,19 +63,24 @@ class Ticket extends AppModel {
 					}
 				}
 			}
-			
-			if (!empty($changes) && !empty($comment)) {
+
+			if (!empty($changes) || !empty($comment)) {
 				$data = array('Comment' => array(
 					'ticket_id' => $this->id,
 					'project_id' => $this->data['Ticket']['project_id'],
 					'user_id' => $this->data['Ticket']['user_id'],
 					'body' => join("\n", $changes) ."\n\n" . $comment
 				));
-		
+
 				$this->Comment->create($data);
-				$this->Comment->save();
+				return $this->Comment->save();
 			}
 		}
+
+		return true;
+	}
+
+	function afterSave($created) {
 
 		if ($created) {
 			$timeline = array('Timeline' => array(

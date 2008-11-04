@@ -19,6 +19,8 @@
 class TimelineController extends AppController {
 
 	var $name = 'Timeline';
+	
+	var $helpers = array('Time');
 
 	var $paginate = array(
 		'limit' => 10,

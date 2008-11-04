@@ -77,9 +77,19 @@ class TicketsController extends AppController {
 				'previous' => $this->Session->read('Ticket.previous')
 			));
 
-			if ($this->Ticket->save($this->data)) {
-				$this->Session->setFlash('Ticket saved');
+			if ($data = $this->Ticket->save($this->data)) {
+				if (!empty($data['Ticket']['comment'])) {
+					$this->Session->setFlash('Comment saved');
+				} else {
+					$this->Session->setFlash('Ticket updated');
+				}
 				$this->Session->delete('Ticket.previous');
+			} else {
+				if (!empty($data['Ticket']['comment'])) {
+					$this->Session->setFlash('Comment was NOT saved');
+				} else {
+					$this->Session->setFlash('Ticket was NOT updated');
+				}
 			}
 		}
 		$this->view($id);
