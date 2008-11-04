@@ -24,6 +24,7 @@ Configure::write('Content', array(
 
 Configure::write('Project', array(
 	'id' => null,
+	'user_id' => 1,
 	'name' => Inflector::humanize(Configure::read('App.dir')),
 	'url' => null,
 	'repo_type' => 'Git',
