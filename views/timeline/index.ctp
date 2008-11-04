@@ -2,7 +2,7 @@
 $script = '
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
-	$(".summary").each(function () {
+	$(".message").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});
 });

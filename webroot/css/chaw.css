@@ -291,7 +291,8 @@ fieldset.options textarea {
 .browser table th, .browser table td {
   padding: 5px 10px;
 }
-.browser table th, .diff th {
+.browser table th {
+  color: #888;
   border-left: 1px solid #ddd;
   text-align: left;
   background: #CBCBCB;

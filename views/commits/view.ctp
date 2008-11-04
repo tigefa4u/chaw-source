@@ -46,6 +46,6 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php endif?>
 
 	<?php
-		echo (!empty($commit['Commit']['diff'])) ? $html->tag('pre', $html->tag('code', $commit['Commit']['diff'], array('class' => 'diff'))) : null;
+		echo (!empty($commit['Commit']['diff'])) ? $html->tag('pre', $html->tag('code', h($commit['Commit']['diff']), array('class' => 'diff'))) : null;
 	?>
 </div>

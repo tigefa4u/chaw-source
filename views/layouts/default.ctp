@@ -33,23 +33,12 @@
 	<?php
 		echo $html->charset();
 		echo $html->meta('icon');
-
 		echo $html->css(array('generic', 'chaw'));
-		//echo $html->css('highlight/idea');
-
-
+	?>
+	<?php
 		echo $javascript->link('jquery-1.2.6.min');
-
 		echo $javascript->link('gshowdown');
-
-		//echo $javascript->link('smartarea');
-
-		//echo $javascript->link('MeatballSocietyCreoleV0.4');
-
-		//echo $javascript->link(array('wiky', 'wiky.lang', 'wiky.math'));
-
 		echo $scripts_for_layout;
-
 	?>
 </head>
 <body>
