@@ -17,6 +17,7 @@
  *
  */
 	Router::connect('/', array('controller' => 'wiki', 'action' => 'index'));
+
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
 	Router::connect('/start', array('controller' => 'pages', 'action' => 'start'));
@@ -45,13 +46,14 @@
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'view'));
 
-
 	Router::connect('/projects', array('controller' => 'projects', 'action' => 'index'));
 	Router::connect('/projects/view/:project', array('controller' => 'projects', 'action' => 'view'));
 	Router::connect('/projects/:action/*', array('controller' => 'projects', 'action' => $Action));
 
 	Router::connect('/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
 	Router::connect('/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
+
+	Router::connect('/:project', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
 	Router::connect('/:project/admin/:controller/:action/:id', array('admin'=> true, 'controller' => 'dashboard'));

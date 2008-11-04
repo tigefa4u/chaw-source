@@ -21,7 +21,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <div class="wiki form">
 
-	<?php echo $form->create();?>
+	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>
 		<fieldset>
 	 		<legend><?php echo $this->pageTitle; ?></legend>
 		<?php

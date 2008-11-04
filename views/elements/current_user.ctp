@@ -8,13 +8,13 @@
 			?>
 		</span>
 		<span class="username">
-			<?php echo $html->link($CurrentUser->username, array('admin' => false, 'controller' => 'users', 'action' => 'account')); ?>
+			<?php echo $html->link($CurrentUser->username, array('admin' => false, 'project' => false, 'controller' => 'users', 'action' => 'account')); ?>
 		</span>
 	<?php else:?>
 		<span class="login">
-			<?php echo $html->link('Login', array('controller' => 'users', 'action' => 'login')); ?>
+			<?php echo $html->link('Login', array('project' => false, 'controller' => 'users', 'action' => 'login')); ?>
 			or
-			<?php echo $html->link('Register', array('controller' => 'users', 'action' => 'add')); ?>
+			<?php echo $html->link('Register', array('project' => false, 'controller' => 'users', 'action' => 'add')); ?>
 		</span>
 	<?php endif;?>
 </div>

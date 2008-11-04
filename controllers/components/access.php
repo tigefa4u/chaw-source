@@ -113,7 +113,7 @@ class AccessComponent extends Object {
 
 		if ($this->check($C) === false) {
 			if ($this->isPublic === false) {
-				if (!$this->isAllowed) {
+				if (!$this->isAllowed && !in_array($this->url, array('users/add', 'users/login', 'users/logout'))) {
 					if (!in_array($this->url, array('projects', 'users/login', 'users/logout'))) {
 						$C->Session->setFlash('Select a Project');
 						$C->redirect(array('controller' => 'projects'));

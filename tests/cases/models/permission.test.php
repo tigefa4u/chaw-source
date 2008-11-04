@@ -185,11 +185,16 @@ class PermissionTest extends CakeTestCase {
 		Configure::write('Project', $this->__projects['One']);
 		$Permission = new TestPermission();
 
-		$this->assertTrue($Permission->check("/refs/heads/master", array('group' => 'chaw-developers', 'access' => 'rw')));
+		$this->assertTrue($Permission->check("/refs/heads/master", array('group' => 'chaw-developers', 'access' => 'rw', 'default' => false)));
 
-		$this->assertFalse($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
+		//gwoo is in chaw-developers which has rw on /refs/heads/master
+		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
 
-		$this->assertFalse($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
+		//bob is in chaw-developers which has rw on /refs/heads/master
+		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'bob', 'access' => 'w')));
+
+		//larry is NOT in chaw-developers which has rw on /refs/heads/master
+		$this->assertFalse($Permission->check("/refs/heads/master", array('user' => 'larry', 'access' => 'w')));
 
 		$this->assertTrue($Permission->check("/tickets/add", array('user' => 'gwoo', 'access' => 'r')));
 
@@ -203,14 +208,42 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertTrue($Permission->check("/refs/heads/master", array('group' => 'project_two-developers', 'access' => 'rw')));
 
-		$this->assertFalse($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
+		//gwoo is in project_two-developers which has rw on /refs/heads/master
+		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
 
-		$this->assertFalse($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
+		//bob is NOT in project_two-developers which has rw on /refs/heads/master
+		$this->assertFalse($Permission->check("/refs/heads/master", array('user' => 'bob', 'access' => 'w')));
+
+		//larry is in project_two-developers which has rw on /refs/heads/master
+		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'larry', 'access' => 'w')));
 
 		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'r')));
 
 		$this->assertTrue($Permission->check("/test/override", array('user' => 'gwoo', 'access' => 'r')));
 
+	}
+
+
+	function testGroupsBetter() {
+		Configure::write('Project', $this->__projects['Two']);
+		$Permission = new TestPermission();
+
+		$data['Permission']['fine_grained'] = "
+		[/refs/heads/master]
+		gwoo = r
+		@project_two-developers = rw
+
+		[wiki]
+		@project_two-developers = rw
+
+		[groups]
+		project_two-developers = gwoo, nate, larry";
+
+		$Permission->saveFile($data);
+
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
+
+		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => 'rw')));
 	}
 }
 ?>

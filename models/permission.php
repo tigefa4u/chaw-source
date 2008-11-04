@@ -119,6 +119,17 @@ class Permission extends AppModel {
 					$check = $perms['*'];
 				}
 
+				if (!empty($rules['groups'])) {
+					foreach ($rules['groups'] as $agroup => $users) {
+						if (in_array($user, $users)) {
+							if(isset($perms['@' . $agroup])) {
+								$check .= $perms['@' . $agroup];
+								break;
+							}
+						}
+					}
+				}
+
 				if(isset($perms['@' . $group])) {
 					$check .= $perms['@' . $group];
 				}

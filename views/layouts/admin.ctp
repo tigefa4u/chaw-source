@@ -58,7 +58,7 @@
 				<?php echo $admin->link('edit', array('controller' => 'projects', 'action' => 'edit'))?>
 			</span>
 
-			<h1><?php echo $html->link(Configure::read('Project.name'), '/');?></h1>
+			<h1><?php echo $html->link(Configure::read('Project.name'), array('admin' => false,'controller' => 'wiki', 'action' => 'index'));?></h1>
 
 			<div id="navigation">
 				<ul>
