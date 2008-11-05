@@ -401,3 +401,12 @@ fieldset.options textarea {
 	padding: 8px 0;
 	list-style-type: none;
 }
+.projects fieldset.main {
+	width: 40%;
+}
+.projects fieldset.options {
+	width: 40%;
+}
+.projects fieldset.main textarea {
+	height: 200px;
+}

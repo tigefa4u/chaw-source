@@ -1,7 +1,7 @@
 <div class="commit">
 
 	<h3>
-		Commit: <?php echo $html->link($data['revision'], array('controller' => 'commits', 'action' => 'view', $data['revision']));?>
+		Commit: <?php echo $chaw->commit($data['revision']);?>
 	</h3>
 
 	<p>

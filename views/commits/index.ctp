@@ -24,7 +24,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	<div class="commit">
 
 		<h3>
-			<?php echo $html->link($commit['Commit']['revision'], array('controller' => 'commits', 'action' => 'view', $commit['Commit']['revision']));?>
+			<?php echo $chaw->commit($commit['Commit']['revision']);?>
 		</h3>
 
 		<p>
