@@ -61,27 +61,27 @@
 			<h1><?php echo $html->link(Configure::read('Project.name'), array('admin' => false,'controller' => 'wiki', 'action' => 'index'));?></h1>
 
 			<div id="navigation">
-				<ul>					
+				<ul>
 					<li><?php
 						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
 						echo $html->link('Wiki', array('admin' => false, 'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
-					
+
 					<li><?php
 						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
 						echo $html->link('Timeline', array('admin' => false, 'controller' => 'timeline', 'action' => 'index'), $options);
 					?></li>
-					
+
 					<li><?php
 						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
 						echo $html->link('Tickets', array('admin' => false, 'controller' => 'tickets', 'action' => 'index'), $options);
 					?></li>
-					
+
 					<li><?php
 						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
 						echo $html->link('Source', array('admin' => false, 'controller' => 'browser', 'action' => 'index'), $options);
 					?></li>
-					
+
 					<li><?php
 						$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
 						echo $html->link('Versions', array('admin' => false, 'controller' => 'versions', 'action' => 'index'), $options);
@@ -120,7 +120,7 @@
 				</ul>
 				<p style="margin-top: 3em; margin-left: 10px;">
 					<?php
-						echo $html->link('New Project', array('admin' => true, 'controller' => 'projects', 'action' => 'add'));
+						echo $html->link('New Project', array('admin' => false, 'controller' => 'projects', 'action' => 'add'));
 					?>
 				</p>
 			</div>

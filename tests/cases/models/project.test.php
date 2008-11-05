@@ -56,7 +56,8 @@ class ProjectTestCase extends CakeTestCase {
 			'ticket_priorities' => 'low, normal, high',
 			'description' => 'this is a test project',
 			'active' => 1,
-			'approved' => 1
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
 		));
 
 		$this->assertTrue($this->Project->save($data));
@@ -76,7 +77,8 @@ class ProjectTestCase extends CakeTestCase {
 			'ticket_priorities' => 'low, normal, high',
 			'description' => 'this is a test project',
 			'active' => 1,
-			'approved' => 1
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
 		));
 
 		$this->assertTrue($this->Project->save($data));
@@ -95,7 +97,8 @@ class ProjectTestCase extends CakeTestCase {
 			'ticket_priorities' => 'low, normal, high',
 			'description' => 'this is a test project',
 			'active' => 1,
-			'approved' => 1
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
 		));
 
 		$this->assertTrue($this->Project->save($data));

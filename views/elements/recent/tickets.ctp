@@ -5,8 +5,8 @@ if (!empty($tickets)):
 	foreach ($tickets as $ticket) :
 
 		$li .= $html->tag('li',
-			$html->link($ticket['Commit']['id'], array('admin' => false,
-				'controller' => 'tickets', 'action' => 'view', $ticket['Commit']['id']
+			$html->link($ticket['Ticket']['title'], array('admin' => false,
+				'controller' => 'tickets', 'action' => 'view', $ticket['Ticket']['id']
 			))
 		);
 

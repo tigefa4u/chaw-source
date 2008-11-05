@@ -8,7 +8,14 @@ App::import('Model', array('Project', 'Permission'));
 class TestAccess extends AccessComponent {
 }
 
+class TestProject extends Project {
+	var $cacheSources = false;
+	var $useDbConfig  = 'test_suite';
+}
+
 class TestAccessController extends Controller {
+
+	var $components = array('Access', 'Auth');
 
 	var $testRedirect = null;
 
@@ -41,29 +48,284 @@ class AccessComponentTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 	}
 
-	function testInitialize() {
+	function __runStartup() {
+		$this->Controller->Access->user = array();
+		$this->Controller->Auth->allowedActions = array();
+		$this->Controller->action = $this->Controller->params['action'];
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+
+		$this->Controller->Access->startup($this->Controller);
+		if ($this->Controller->testRedirect == null) {
+			$this->Controller->Auth->startup($this->Controller);
+		}
+	}
+
+	function testInstall() {
 		$Access = new TestAccess();
 
-		$Access->user = array('User' => array(
-			'id' => 1, 'username' => 'gwoo'
+		$this->Controller->params = array(
+			'controller' => 'browser',
+			'action' => 'index',
+			'url' => array('url' => '/')
+		);
+		$this->__runStartup($this->Controller);
+		$expected = array('admin' => false, 'project' => false, 'controller' => 'pages', 'action' => 'start');
+		$this->assertEqual($this->Controller->testRedirect, $expected);
+
+		$this->Controller->params = array(
+			'controller' => 'pages',
+			'action' => 'start',
+			'url' => array('url' => 'start')
+		);
+
+		$this->Controller->testRedirect = null;
+		$this->__runStartup($this->Controller);
+		$expected = null;
+		$this->assertEqual($this->Controller->testRedirect, $expected);
+
+		$this->Controller->Project = new TestProject();
+
+		$this->Controller->params = array(
+			'controller' => 'users',
+			'action' => 'add',
+			'url' => array('url' => 'users/add')
+		);
+		$this->Controller->testRedirect = null;
+		$this->__runStartup($this->Controller);
+		$expected = null;
+		$this->assertEqual($this->Controller->testRedirect, $expected);
+
+		$this->Controller->Session->delete('Install');
+	}
+
+	function testAccessAfterInstallation() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->params['url']['url'] = '/';
-		$result = $Access->startup($this->Controller);
-		$expected = true;
-		$this->assertEqual($result, $expected);
+		$this->Controller->Project = new TestProject();
+		$this->assertTrue($this->Controller->Project->save($data));
 
-		$result = $this->Controller->testRedirect;
-		$expected = array('admin' => false, 'project' => false, 'controller' => 'pages', 'action' => 'start');
-		$this->assertEqual($result, $expected);
 		$this->Controller->testRedirect = null;
 
-		$this->Controller->params['url']['url'] = 'start';
-		$result = $Access->startup($this->Controller);
-		$expected = true;
-		$this->assertEqual($result, $expected);
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'login',
+			'url' => array('url' => 'users/login')
+		);
+		$this->__runStartup($this->Controller);
 		$this->assertNull($this->Controller->testRedirect);
 
+		$this->Controller->testRedirect = null;
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'logout',
+			'url' => array('url' => 'users/logout')
+		);
+		$this->__runStartup($this->Controller);
+		$this->assertNull($this->Controller->testRedirect);
+
+		$this->Controller->testRedirect = null;
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'account',
+			'url' => array('url' => 'users/account')
+		);
+		$this->__runStartup($this->Controller);
+
+		$result = $this->Controller->testRedirect;
+		$expected = '/users/login';
+		$this->assertEqual($result, $expected);
+	}
+
+	function testOwnerAndinstalled() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'Chaw',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->Controller->Project = new TestProject();
+		$this->assertTrue($this->Controller->Project->save($data));
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'browser',
+			'action' => 'index',
+			'url' => array('url' => 'source')
+		);
+
+		$this->Controller->Session->write('Auth.User', array('id' => 1, 'username' => 'gwoo'));
+
+		$this->__runStartup($this->Controller);
+		$this->assertNull($this->Controller->testRedirect);
+		$this->assertTrue($this->Controller->params['isAdmin']);
+
+		$this->Controller->Session->del('Auth.User');
+	}
+
+
+	function testAnonymousAndPublic() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->Controller->Project = new TestProject();
+		$this->assertTrue($this->Controller->Project->save($data));
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'browser',
+			'action' => 'index',
+			'url' => array('url' => 'source')
+		);
+
+		$this->__runStartup($this->Controller);
+		$this->assertNull($this->Controller->testRedirect);
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => 'original_project',
+			'controller' => 'projects',
+			'action' => 'index',
+			'url' => array('url' => 'projects')
+		);
+
+		$this->__runStartup($this->Controller);
+		$this->assertNull($this->Controller->testRedirect);
+	}
+
+	function testAnonymousAndPrivate() {
+		$this->Controller->Session->del('Auth.User');
+
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'Chaw',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 1,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->Controller->Project = new TestProject();
+		$this->assertTrue($this->Controller->Project->save($data));
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'browser',
+			'action' => 'index',
+			'url' => array('url' => 'source')
+		);
+
+		$this->__runStartup($this->Controller);
+		$expected = array('admin' => false, 'controller' => 'projects');
+		$this->assertEqual($this->Controller->testRedirect, $expected);
+		$this->assertFalse($this->Controller->params['isAdmin']);
+
+		$this->Controller->testRedirect = null;
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'projects',
+			'action' => 'index',
+			'url' => array('url' => 'projects')
+		);
+
+		$this->__runStartup($this->Controller);
+		$this->assertNull($this->Controller->testRedirect);
+
+	}
+
+	function testUserAndPrivate() {
+		$this->Controller->Session->del('Auth.User');
+
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'Chaw',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 1,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->Controller->Project = new TestProject();
+		$this->assertTrue($this->Controller->Project->save($data));
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'browser',
+			'action' => 'index',
+			'url' => array('url' => 'source')
+		);
+
+		$this->Controller->Session->write('Auth.User', array('id' => 4, 'username' => 'bob'));
+
+		$this->__runStartup($this->Controller);
+		$expected = array('admin' => false, 'controller' => 'projects');
+		$this->assertEqual($this->Controller->testRedirect, $expected);
+		$this->assertFalse($this->Controller->params['isAdmin']);
+
+		$this->Controller->Session->del('Auth.User');
 	}
 
 
@@ -71,8 +333,6 @@ class AccessComponentTest extends CakeTestCase {
 		parent::start();
 
 		$this->Controller = new TestAccessController();
-		$this->Controller->Auth = new AuthComponent();
-		$this->Controller->Session = new SessionComponent();
 
 		Configure::write('Content', array(
 			'base' => TMP . 'tests' . DS,

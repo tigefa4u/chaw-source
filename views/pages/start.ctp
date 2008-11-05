@@ -53,7 +53,7 @@ if ($installReady) :
 	if (empty($CurrentUser->username)) :
 		echo $html->tag('h3', $html->link('Register for an account', array('controller' => 'users', 'action' => 'add')));
 	else:
-		echo $html->tag('h3', $html->link('Create a Project', array('admin' => true, 'controller' => 'projects', 'action' => 'add')));
+		echo $html->tag('h3', $html->link('Create a Project', array('admin' => false, 'controller' => 'projects', 'action' => 'add')));
 	endif;
 endif;
 ?>

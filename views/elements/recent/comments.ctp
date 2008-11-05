@@ -5,9 +5,10 @@ if (!empty($comments)):
 	foreach ($comments as $comment) :
 
 		$li .= $html->tag('li',
-			$html->link($comment['Ticket']['title'], array('admin' => false,
+			"on "
+			. $html->link($comment['Ticket']['title'], array('admin' => false,
 				'controller' => 'tickets', 'action' => 'view', $comment['Ticket']['id']
-			))
+			)) . " from {$comment['User']['username']}"
 		);
 
 	endforeach;

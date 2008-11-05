@@ -56,6 +56,3 @@
 		echo $paginator->next();
 	?>
 </div>
-<div class="actions">
-	<?php echo $admin->link('New Project', array('admin' => true, 'controller' => 'projects', 'action' => 'add')); ?>
-</div>

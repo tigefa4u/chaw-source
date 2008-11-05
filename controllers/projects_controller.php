@@ -52,10 +52,9 @@ class ProjectsController extends AppController {
 		$this->render('index');
 	}
 
-	function admin_add() {
+	function add() {
 
 		$this->pageTitle = 'Project Setup';
-
 
 		if (!empty($this->data)) {
 			$this->Project->create(array(

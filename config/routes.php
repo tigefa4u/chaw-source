@@ -21,7 +21,6 @@
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
 	Router::connect('/start', array('controller' => 'pages', 'action' => 'start'));
-	Router::connect('/install', array('admin'=> true, 'controller' => 'projects', 'action' => 'add'));
 
 	Router::connect('/commits', array('controller' => 'commits', 'action' => 'index'));
 	Router::connect('/commits/:action/*', array('controller' => 'commits', 'action' => 'index'));
