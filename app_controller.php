@@ -21,7 +21,7 @@ class AppController extends Controller {
 	var $components = array('Access', 'Auth');
 
 	var $helpers = array(
-		'Html', 'Form', 'Javascript', 'Admin'
+		'Html', 'Form', 'Javascript', 'Chaw'
 	);
 
 	var $uses = array('Project');

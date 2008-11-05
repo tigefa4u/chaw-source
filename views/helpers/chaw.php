@@ -1,10 +1,10 @@
 <?php
 
-class AdminHelper extends AppHelper {
+class ChawHelper extends AppHelper {
 
 	var $helpers = array('Html');
 
-	function link($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
+	function admin($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		if (!empty($this->params['isAdmin'])) {
 			return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
 		}
@@ -24,5 +24,19 @@ class AdminHelper extends AppHelper {
 			}
 		}
 		return join("\n", $result);
+	}
+
+	function commit($revision = null) {
+		if (!$revision) {
+			return null;
+		}
+		return $this->Html->link(substr($revision, 0, 4) .'...' . substr($revision, -4, 4),
+			array(
+				'controller' => 'commits', 'action'=> 'view', $revision
+			),
+			array(
+				'class' => 'commit', 'title' => $revision
+			)
+		);
 	}
 }

@@ -39,7 +39,7 @@ class AppError extends ErrorHandler {
 			$this->controller =& new CakeErrorController();
 		} else {
 			$this->controller =& new Controller();
-			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Admin');
+			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Chaw');
 			$this->controller->viewPath = 'errors';
 		}
 

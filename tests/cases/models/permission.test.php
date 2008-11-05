@@ -244,17 +244,20 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => 'rw')));
 	}
-	
+
 	function moreChecks() {
 		Configure::write('Project', $this->__projects['Two']);
 		$Permission = new TestPermission();
-		
+
 		$data['Permission']['fine_grained'] = "";
 		$Permission->saveFile($data);
 
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'permissions.ini'));
 
 		$this->assertTrue($Permission->check("browser", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
+
+		$this->assertTrue($Permission->check("browser", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
+
 	}
 }
 ?>

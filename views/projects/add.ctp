@@ -1,5 +1,5 @@
 <?php
-	echo $admin->messages($messages);
+	echo $chaw->messages($messages);
 ?>
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action));?>

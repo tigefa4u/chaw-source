@@ -15,57 +15,55 @@
 <?php echo $this->element('project_details'); ?>
 
 <?php
-	if (!empty($data['Content'])) :
+	if (isset($data['Content'])) :
 		echo $this->render('view', false);
-		return;
-	endif;
+	else:
 ?>
-
-<table cellpadding="0" cellspacing="0">
-	<tr>
-		<th style="padding-left: 28px"><?php __('Name');?></th>
-		<th><?php __('Author');?></th>
-		<th><?php __('Message');?></th>
-		<th><?php __('Date');?></th>
-		<th><?php __('Commit');?></th>
-	</tr>
-<?php
-	$i = 0;
-	foreach ((array)$data['Folder'] as $item):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="zebra"';
-		}
-?>
-		<tr<?php echo $class?>>
-			<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
-			<td><?php echo $item['info']['author'];?></td>
-			<td><?php echo $item['info']['message'];?></td>
-			<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
-			<td><?php echo $html->link($item['info']['revision'], array('controller' => 'commits', 'action'=> 'view', $item['info']['revision']), array('class' => 'commit'));?></td>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<th style="padding-left: 28px"><?php __('Name');?></th>
+			<th><?php __('Author');?></th>
+			<th><?php __('Message');?></th>
+			<th><?php __('Date');?></th>
+			<th><?php __('Commit');?></th>
 		</tr>
-<?php
-	endforeach;
-?>
+	<?php
+		$i = 0;
+		foreach ((array)$data['Folder'] as $item):
+			$class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="zebra"';
+			}
+	?>
+			<tr<?php echo $class?>>
+				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
+				<td><?php echo $item['info']['author'];?></td>
+				<td><?php echo $item['info']['message'];?></td>
+				<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
+				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
+			</tr>
+	<?php
+		endforeach;
+	?>
 
-<?php
-	foreach ((array)$data['File'] as $item):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="zebra"';
-		}
-?>
-		<tr<?php echo $class?>>
-			<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
-			<td><?php echo $item['info']['author'];?></td>
-			<td><?php echo $item['info']['message'];?></td>
-			<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
-			<td><?php echo $html->link($item['info']['revision'], array('controller' => 'commits', 'action'=> 'view', $item['info']['revision']), array('class' => 'commit'));?></td>
-		</tr>
-<?php
-	endforeach;
-?>
+	<?php
+		foreach ((array)$data['File'] as $item):
+			$class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="zebra"';
+			}
+	?>
+			<tr<?php echo $class?>>
+				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
+				<td><?php echo $item['info']['author'];?></td>
+				<td><?php echo $item['info']['message'];?></td>
+				<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
+				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
+			</tr>
+	<?php
+		endforeach;
+	?>
 
-</table>
-
+	</table>
+<?php endif;?>
 </div>
