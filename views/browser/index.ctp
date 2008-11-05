@@ -12,6 +12,8 @@
 	?>
 </h2>
 
+<?php echo $this->element('project_details'); ?>
+
 <?php
 	if (!empty($data['Content'])) :
 		echo $this->render('view', false);

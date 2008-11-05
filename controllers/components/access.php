@@ -101,8 +101,7 @@ class AccessComponent extends Object {
 			return true;
 		}
 
-		$isOwner = ($this->user('id') == $C->Project->config['user_id']);
-		if ($isOwner) {
+		if ($isOwner = ($this->user('id') == $C->Project->config['user_id'])) {
 			$C->params['isAdmin'] = $this->isAllowed = true;
 			return true;
 		}
@@ -114,9 +113,9 @@ class AccessComponent extends Object {
 		if ($this->check($C) === false) {
 			if ($this->isPublic === false) {
 				if (!$this->isAllowed && !in_array($this->url, array('users/add', 'users/login', 'users/logout', 'users/account'))) {
-					if (!in_array($this->url, array('projects', 'users/login', 'users/logout'))) {
+					if (!in_array($this->url, array('projects'))) {
 						$C->Session->setFlash('Select a Project');
-						$C->redirect(array('controller' => 'projects'));
+						$C->redirect(array('admin' => false, 'controller' => 'projects'));
 					}
 				}
 				return false;
@@ -163,8 +162,7 @@ class AccessComponent extends Object {
 		$allowAdmin = $C->Project->Permission->check('admin', $admin);
 
 		if ($allowAdmin === true) {
-			$C->params['isAdmin'] = $this->isAllowed = true;
-			return true;
+			return $C->params['isAdmin'] = $this->isAllowed = true;
 		}
 
 		$default = ($access === 'w') ? !$this->isPublic : $this->isPublic;

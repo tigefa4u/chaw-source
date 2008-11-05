@@ -33,6 +33,7 @@ Configure::write('Project', array(
 	'ticket_types' => 'rfc, bug, enhancement',
 	'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
 	'ticket_priorities' => 'low, normal, high',
-	'active' => 1
+	'active' => 1,
+	'remote' => 'git@thechaw.com'
 ));
 ?>

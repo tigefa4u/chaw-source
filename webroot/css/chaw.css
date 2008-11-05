@@ -1,5 +1,6 @@
 h2 {
 	color: #804000;
+	margin-bottom: 6px;
 }
 
 h3 {
@@ -82,7 +83,7 @@ table {
 	text-decoration: none;
 }
 
-#navigation li a:hover {
+#navigation li a:hover, #navigation li a.on {
 	padding: 10px;
 	background-color: #fff;
 	color: #333;
@@ -161,6 +162,9 @@ table {
 .right {
 	float:right;
 	margin-right: 20px;
+}
+.index {
+	overflow: visible;
 }
 .view .textarea textarea {
 	height: 200px;
@@ -282,6 +286,8 @@ fieldset.options textarea {
 
 .browser h2 {
 	color: #333;
+	margin-top: 32px;
+	margin-bottom: 4px;
 }
 .browser table, .diff {
   width: 100%;
@@ -293,21 +299,25 @@ fieldset.options textarea {
 }
 .browser table th {
   color: #888;
-  border-left: 1px solid #ddd;
   text-align: left;
   background: #CBCBCB;
   padding: 5px 10px 5px 4px;
-  border: 0;
+  border-width: 0;;
+/*
+  border-left: 0px solid #ddd;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
+*/
 }
 .browser table td {
   text-align: left;
   background: #f7f7f7;
   padding: 5px 10px 5px 4px;
   border : 0;
+/*
   border-bottom: 1px solid #ccc;
   border-left: 0px solid #ddd;
+*/
 }
 .browser table tr.zebra td {
 	background:#FAFAFA;
@@ -358,4 +368,36 @@ fieldset.options textarea {
 
 .users form {
 	width: 60%;
+}
+.project-details {
+	margin: 0;
+	background: #f4f4f4;
+	padding: 4px 10px;
+	margin-bottom: 10px;
+	margin-right: 1%;
+}
+.panel {
+	float: left;
+	width: 49%;
+	margin-right: 1%;
+	margin-bottom: 1em;
+	background: #f4f4f4;
+	padding: 0px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.panel h4 {
+	margin: 0;
+	padding: 4px 10px;
+	color: #888;
+	background: #cbcbcb;
+}
+.panel ul {
+	padding: 0 10px;
+	margin: 0;
+}
+.panel ul li {
+	margin: 0;
+	padding: 8px 0;
+	list-style-type: none;
 }

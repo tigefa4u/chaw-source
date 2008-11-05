@@ -1,21 +1,15 @@
 <div class="dashboard index">
 	<h2><?php __('Dashboard');?></h2>
 
-	<div class="panel">
-		<?php echo $this->element('recent_tickets'); ?>
+	<?php echo $this->element('project_details'); ?>
+
+	<div class="panels">
+		<?php echo $this->element('recent/commits'); ?>
+
+		<?php echo $this->element('recent/tickets'); ?>
+
+		<?php echo $this->element('recent/comments'); ?>
+
+		<?php echo $this->element('recent/wiki'); ?>
 	</div>
-
-	<div class="panel">
-		<?php echo $this->element('recent_comments'); ?>
-	</div>
-
-	<div class="panel">
-		<?php echo $this->element('recent_commits'); ?>
-	</div>
-
-	<div class="panel">
-		<?php echo $this->element('recent_wiki'); ?>
-	</div>
-
-
 </div>

@@ -17,7 +17,7 @@
 			<?php
 				echo $html->link($project['Project']['name'], array(
 					'admin' => false, 'project' => $url,
-					'controller' => 'wiki', 'action' => 'index',
+					'controller' => 'browser', 'action' => 'index',
 				));?>
 
 		</h3>

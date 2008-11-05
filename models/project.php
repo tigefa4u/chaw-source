@@ -41,19 +41,7 @@ class Project extends AppModel {
 
 	function initialize($params = array()) {
 		$this->recursive = -1;
-		$this->config = array(
-			'id' => null,
-			'user_id' => 1,
-			'name' => Inflector::humanize(Configure::read('App.dir')),
-			'url' => null,
-			'repo_type' => 'Git',
-			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
-			'active' => 1
-		);
+		$this->config = Configure::read('Project');
 
 		$duration = '+99 days';
 		if (Configure::read() > 1) {
@@ -71,7 +59,8 @@ class Project extends AppModel {
 					Cache::write($key, $project);
 				}
 			}
-		} else {
+		}
+		if (empty($project)) {
 			$key = Configure::read('App.dir');
 			$project = Cache::read($key);
 			if (empty($project)) {
@@ -81,6 +70,7 @@ class Project extends AppModel {
 				}
 			}
 		}
+
 		if (!empty($this->data['Project'])) {
 			if (empty($project)) {
 				$project = array('Project' => array());
@@ -128,7 +118,7 @@ class Project extends AppModel {
 			}
 			Configure::write('debug', 2);
 			if (!file_exists($this->config['repo']['path'])) {
-				if ($this->Repo->create(array('remote' => 'git@thechaw.com')) !== true) {
+				if ($this->Repo->create(array('remote' => $this->config['remote'])) !== true) {
 					$this->invalidate('repo_type', 'the repo could not be created');
 					return false;
 				}

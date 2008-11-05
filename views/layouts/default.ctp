@@ -43,19 +43,49 @@
 </head>
 <body>
 	<div id="container">
+
 		<div id="header">
 
-			<h1><?php echo $html->link(Configure::read('Project.name'), array('controller' => 'wiki', 'action' => 'index'));?></h1>
+			<h1><?php echo $html->link(Configure::read('Project.name'), array('controller' => 'browser', 'action' => 'index'));?></h1>
 
 			<div id="navigation">
 				<ul>
-					<li><?php echo $html->link('Wiki', array('controller' => 'wiki', 'action' => 'index'));?></li>
-					<li><?php echo $html->link('Timeline', array('controller' => 'timeline', 'action' => 'index'));?></li>
-					<li><?php echo $html->link('Tickets', array('controller' => 'tickets', 'action' => 'index'));?></li>
-					<li><?php echo $html->link('Source', array('controller' => 'browser', 'action' => 'index'));?></li>
-					<li><?php echo $html->link('Versions', array('controller' => 'versions', 'action' => 'index'));?></li>
-					<li><?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index'));?></li>
-					<li><?php echo $admin->link('Admin', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'));?></li>
+					<li><?php
+						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
+						echo $html->link('Source', array('admin' => false, 'controller' => 'browser', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
+						echo $html->link('Wiki', array('admin' => false, 'controller' => 'wiki', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
+						echo $html->link('Timeline', array('admin' => false, 'controller' => 'timeline', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
+						echo $html->link('Tickets', array('admin' => false, 'controller' => 'tickets', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
+						echo $html->link('Versions', array('admin' => false, 'controller' => 'versions', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
+						echo $html->link('Projects', array('admin' => false, 'controller' => 'projects', 'action' => 'index'), $options);
+					?></li>
+
+					<?php if (!empty($this->params['isAdmin'])):?>
+						<li><?php
+							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
+							echo $html->link('Admin', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'), $options);
+						?></li>
+					<?php endif;?>
 				</ul>
 			</div>
 
@@ -71,6 +101,7 @@
 				<?php
 					echo $content_for_layout;
 				?>
+				<div class="clear"><!----></div>
 			</div>
 
 		</div>

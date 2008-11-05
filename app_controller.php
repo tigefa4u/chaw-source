@@ -32,8 +32,8 @@ class AppController extends Controller {
  *
  **/
 	function beforeFilter() {
-		if (!empty($this->params['project']) && $this->Project->id == 1) {
-			unset($this->params['project']);
+		if (!empty($this->Project) && $this->Project->id == 1) {
+			$this->params['project'] = null;
 		}
 
 		if ($this->action == 'admin_login') {
@@ -56,7 +56,7 @@ class AppController extends Controller {
 			$this->layout = 'admin';
 		}
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
-		$this->set('CurrentProject', Set::map(Configure::read('Project')));
+		$this->set('CurrentProject', Set::map(Configure::read('Project'), true));
 	}
 /**
  * undocumented function

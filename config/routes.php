@@ -53,7 +53,7 @@
 	Router::connect('/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
 	Router::connect('/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
 
-	Router::connect('/:project', array('controller' => 'wiki', 'action' => 'index'));
+	Router::connect('/:project', array('controller' => 'browser', 'action' => 'index'));
 
 	Router::connect('/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
 	Router::connect('/:project/admin/:controller/:action/:id', array('admin'=> true, 'controller' => 'dashboard'));
