@@ -29,10 +29,13 @@
 	- unordered list 1
 	<br />
 	1. ordered list 2
+<?php if (empty($short)):?>
 	<br />
 	<br />
 	[link](http://url.com/)
 	<br />
 	<br />
 	ohloh widgets: [ohloh:project/widget_name]
+<?php endif;?>
+
 </div>

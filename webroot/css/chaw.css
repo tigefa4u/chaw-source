@@ -250,6 +250,7 @@ fieldset.options textarea {
 	clear: none;
 	margin-top: 0;
 	width: 20%;
+	font-size: 120%;
 }
 .tickets h3 em {
 	font-size: 80%;
@@ -369,6 +370,33 @@ fieldset.options textarea {
 .users form {
 	width: 60%;
 }
+.users form h4 {
+	margin: 1em 0;
+}
+.users form .checkbox input {
+	float: left;
+	clear: none;
+	display: inline;
+}
+.users form .checkbox input.text {
+	width: 92%;
+}
+.users form .select select {
+	float: left;
+	margin-right: 2%;
+}
+.users form .select input.text {
+	width: 80%;
+	float: left;
+	clear: none;
+	display: inline;
+}
+
+.users form fieldset fieldset .submit {
+	margin: 0 20px;
+	font-size: 90%;
+}
+
 .project-details {
 	margin: 0;
 	background: #f4f4f4;

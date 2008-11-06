@@ -46,22 +46,46 @@ class User extends AppModel {
 		)
 	);
 
-	var $hasMany = array('Permission');
+	//var $hasMany = array('Permission');
 
-	function permit() {
-		if (!empty($this->data['User']['group'])) {
-			$data = array('Permission' => array(
-				'user_id' => $this->id,
-				'project_id' => $this->data['User']['project_id'],
-				'group' => $this->data['User']['group']
+	var $SshKey = null;
+
+	function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->SshKey = ClassRegistry::init('SshKey');
+	}
+
+	function beforeSave() {
+
+		if (!empty($this->data['SshKey']['content'])) {
+			$this->SshKey->set(array(
+				'username' => $this->data['User']['username'],
 			));
-			$this->Permission->save($data);
+
+			return $this->SshKey->save($this->data['SshKey']);
 		}
+
+		if (!empty($this->data['Key']) && !empty($this->data['User']['username'])) {
+			foreach ($this->data['Key'] as $type => $keys) {
+				foreach ($keys as $key) {
+					if (!empty($key['chosen'])) {
+						$delete[$type][] = $key['content'];
+					}
+				}
+			}
+
+			foreach ($delete as $type => $keys) {
+				$result = $this->SshKey->delete(array(
+					'type' => $type, 'username' => $this->data['User']['username'],
+					'content' => $keys
+				));
+			}
+		}
+
+		return true;
 	}
 
 	function afterSave($created) {
-
-		$this->saveKey();
 
 		if (!empty($this->data['User']['project_id']) && empty($this->data['User']['group'])) {
 			$this->Permission->create(array(
@@ -86,50 +110,15 @@ class User extends AppModel {
 		}
 	}
 
-	function saveKey($username = null, $key = null) {
-		if ($username == null) {
-			if (empty($this->data['User']['username'])) {
-				return false;
-			} else {
-				$username = $this->data['User']['username'];
-			}
+	function permit() {
+		if (!empty($this->data['User']['group'])) {
+			$data = array('Permission' => array(
+				'user_id' => $this->id,
+				'project_id' => $this->data['User']['project_id'],
+				'group' => $this->data['User']['group']
+			));
+			$this->Permission->save($data);
 		}
-		if ($key == null) {
-			if (empty($this->data['User']['ssh_key'])) {
-				return false;
-			} else {
-				$key = $this->data['User']['ssh_key'];
-			}
-		}
-
-		$path = Configure::read('Content.git') . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
-		$File = new File($path, true);
-
-		if ($File->writable() !== true) {
-			return false;
-		}
-
-		$new = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user ' . $username. '",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty '
-			. str_replace(array("\n", "\r", "\t"), array("", "", ""), trim($key));
-
-		$lines = array();
-		$found = false;
-		if ($keys = $File->read()) {
-			$lines = explode("\n", $keys);
-			foreach ($lines as $num => $line) {
-				if (preg_match('/-user\s' . $username . '/', $line)) {
-					$lines[$num] = $new;
-					$found = true;
-					break;
-				}
-			}
-		}
-
-		if (!$found) {
-			$lines[] = $new;
-		}
-
-		return $File->write(join("\n", $lines));
 	}
 }
 ?>

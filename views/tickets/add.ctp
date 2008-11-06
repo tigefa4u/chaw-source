@@ -17,7 +17,9 @@ $javascript->codeBlock($script, array('inline' => false));
  		<legend><?php __('Add Ticket');?></legend>
 		<?php
 			echo $form->input('title');
-			echo $form->input('description');
+			echo $form->input('description', array(
+				'value' => "###What happened:\n- something\n\n###What was expected:\n- something else\n\n"
+			));
 		?>
 		
 		<div class="input">
@@ -48,7 +50,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	</fieldset>
 	
 	<div class="help">
-		<?php echo $this->element('markdown_help'); ?>
+		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
 
 <?php echo $form->end('Submit');?>

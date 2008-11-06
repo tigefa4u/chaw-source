@@ -40,12 +40,17 @@ class UsersController extends AppController {
 	function login() {
 		if ($id = $this->Auth->user('id')) {
 			$this->User->id = $id;
-			$this->User->save(array('last_login' => date('Y-m-d H:m:s')));
-			if (strpos($this->Auth->redirect(), 'user/add') !== false) {
-				$this->redirect($this->Auth->redirect());
-			} else {
-				$this->redirect('/');
+			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
+
+			$redirect = $this->Auth->redirect();
+
+			if (strpos($redirect, 'user/add') !== false) {
+				$this->redirect(array());
 			}
+			if ($redirect == '/') {
+				$redirect = '/users/account';
+			}
+			$this->redirect($redirect);
 		}
 	}
 
@@ -97,11 +102,22 @@ class UsersController extends AppController {
 			if ($this->User->save($this->data)) {
 				$this->Session->setFlash('User updated');
 			} else {
-				pr($this->User->validationErrors);
+				//pr($this->User->validationErrors);
 				$this->Session->setFlash('User NOT updated');
 			}
 		}
 
+		$types = $this->Project->repoTypes();
+
+		$sshKeys = array();
+		foreach ($types as $type) {
+			$sshKeys[$type] = $this->User->SshKey->read(array(
+				'type' => $type,
+				'username' => $this->data['User']['username']
+			));
+		}
+
+		$this->set(compact('sshKeys', 'types'));
 		$this->render('edit');
 	}
 

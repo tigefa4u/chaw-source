@@ -173,12 +173,6 @@ class Project extends AppModel {
 				$this->Permission->saveFile();
 			}
 		}
-
-		if (!empty($this->data['Project']['user_id'])) {
-			$this->Permission->create(array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']));
-			$this->Permission->save();
-
-		}
 		$this->__created = false;
 		$this->createShell();
 	}
