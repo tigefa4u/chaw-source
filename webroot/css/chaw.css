@@ -163,6 +163,9 @@ table {
 	float:right;
 	margin-right: 20px;
 }
+div.actions {
+	margin-top: 1em;
+}
 .index {
 	overflow: visible;
 }

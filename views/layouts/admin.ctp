@@ -63,6 +63,11 @@
 			<div id="navigation">
 				<ul>
 					<li><?php
+						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
+						echo $html->link('Source', array('admin' => false, 'controller' => 'browser', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
 						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
 						echo $html->link('Wiki', array('admin' => false, 'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
@@ -75,11 +80,6 @@
 					<li><?php
 						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
 						echo $html->link('Tickets', array('admin' => false, 'controller' => 'tickets', 'action' => 'index'), $options);
-					?></li>
-
-					<li><?php
-						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
-						echo $html->link('Source', array('admin' => false, 'controller' => 'browser', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
