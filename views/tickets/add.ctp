@@ -1,12 +1,18 @@
 <?php
+$html->css('highlight/idea', null, null, false);
+$javascript->link('highlight', false);
+
 $script = '
+hljs.initHighlightingOnLoad();
+
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
-	$("#Preview").html(converter.makeHtml($("#TicketDescription").val()));
+	$("#Preview").html(converter.makeHtml(jQuery.trim($("#TicketDescription").val())));
 	$("#TicketDescription").bind("keyup", function() {
 		$("#Preview").html("<h3>Preview</h3>" + converter.makeHtml($(this).val()));
+		hljs.initHighlighting.called = false;
+		hljs.initHighlighting();
 	});
-	//$("#WikiContent").smartArea();
 });
 ';
 $javascript->codeBlock($script, array('inline' => false));
@@ -21,11 +27,11 @@ $javascript->codeBlock($script, array('inline' => false));
 				'value' => "###What happened:\n- something\n\n###What was expected:\n- something else\n\n"
 			));
 		?>
-		
+
 		<div class="input">
 			<div id="Preview"></div>
 		</div>
-	
+
 	</fieldset>
 
 
@@ -48,7 +54,7 @@ $javascript->codeBlock($script, array('inline' => false));
 			echo $form->input('priority');
 		?>
 	</fieldset>
-	
+
 	<div class="help">
 		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>

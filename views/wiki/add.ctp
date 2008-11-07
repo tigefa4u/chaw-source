@@ -1,19 +1,18 @@
 <?php
-/*
+$html->css('highlight/idea', null, null, false);
+$javascript->link('highlight', false);
+
 $script = '
-$(document).ready(function(){
-	$("#Html").html(Wiky.toHtml($("#Text").val()));
-});
-';
-*/
-$script = '
+hljs.initHighlightingOnLoad();
+
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
 	$("#Preview").html(converter.makeHtml(jQuery.trim($("#WikiContent").val())));
 	$("#WikiContent").bind("keyup", function() {
 		$("#Preview").html("<h3>Preview</h3>" + converter.makeHtml($(this).val()));
+		hljs.initHighlighting.called = false;
+		hljs.initHighlighting();
 	});
-	//$("#WikiContent").smartArea();
 });
 ';
 $javascript->codeBlock($script, array('inline' => false));

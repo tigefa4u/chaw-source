@@ -10,7 +10,10 @@
 	<br />
 	```<code>inline code</code>```
 	<br />
-	<pre>preformatted: <br/>4 spaces or tab</pre>
+<pre><code>{{{
+  three brackets
+  with code inside
+}}}</code></pre>
 	<br />
 	# header 1
 	<br />

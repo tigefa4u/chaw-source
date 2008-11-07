@@ -324,7 +324,8 @@ var _HashHTMLBlocks = function(text) {
 		)
 		/g,hashElement);
 	*/
-	text = text.replace(/(?:\n\n)([ ]{0,3}(?:<([?%])[^\r]*?\2>)[ \t]*(?=\n{2,}))/g,hashElement);
+	//text = text.replace(/(?:\n\n)([ ]{0,3}(?:<([?%])[^\r]*?\2>)[ \t]*(?=\n{2,}))/g,hashElement);
+	//text = text.replace(/<\?/g,"&lt;?");
 
 	// attacklab: Undo double lines (see comment at top of this function)
 	text = text.replace(/\n\n/g,"\n");
@@ -926,6 +927,21 @@ var _DoCodeBlocks = function(text) {
 	// attacklab: strip sentinel
 	text = text.replace(/~0/,"");
 
+	text = text.replace(/(\{{3,}([\s\S]*?)\}{3,})/g,
+		function(wholeMatch,m1,m2,m3) {
+			var codeblock = m2;
+
+			codeblock = _EncodeCode( _Outdent(codeblock));
+			codeblock = _Detab(codeblock);
+			codeblock = codeblock.replace(/^\n+/g,""); // trim leading newlines
+			codeblock = codeblock.replace(/\n+$/g,""); // trim trailing whitespace
+
+			codeblock = "<pre><code class='php'>" + codeblock + "\n</code></pre>";
+
+			return hashBlock(codeblock);
+		}
+	);
+
 	return text;
 }
 
@@ -1000,7 +1016,6 @@ var _EncodeCode = function(text) {
 	// Do the angle bracket song and dance:
 	text = text.replace(/</g,"&lt;");
 	text = text.replace(/>/g,"&gt;");
-
 	// Now, escape characters that are magic in Markdown:
 	text = escapeCharacters(text,"\*_{}[]\\",false);
 

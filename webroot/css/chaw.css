@@ -1,3 +1,15 @@
+.str { color:#181; font-style:italic }
+.kwd { color:#369 }
+.com { color:#666 }
+.typ { color:#c40 }
+.lit { color:#900 }
+.pun { color:#000; font-weight:bold  }
+.pln { color:#333 }
+.tag { color:#369; font-weight:bold  }
+.atn { color:#939; font-weight:bold  }
+.atv { color:#181 }
+.dec { color:#606 }
+
 h2 {
 	color: #804000;
 	margin-bottom: 6px;
@@ -179,6 +191,9 @@ fieldset.options select {
 fieldset.options textarea {
 	width: 100%;
 	height: 60px;
+}
+.wiki {
+	padding-top: 20px;
 }
 
 .wiki form {

@@ -1,5 +1,10 @@
 <?php
+$html->css('highlight/idea', null, null, false);
+$javascript->link('highlight', false);
+
 $script = '
+hljs.initHighlightingOnLoad();
+
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
 	//$("#Preview").html(jQuery.trim($("#Preview").text()));

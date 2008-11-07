@@ -91,6 +91,10 @@ class Svn extends Repo {
 			));
 			$this->checkout(array($file, $working));
 		}
+
+		$File = new File($path . DS . 'conf' . DS . 'svnserve.conf');
+		$File->write("[general]\nauthz-db = ../permissions.ini\n");
+
 		if (is_dir($path) && is_dir($working . DS . 'branches')) {
 			return true;
 		}

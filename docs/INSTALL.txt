@@ -1,29 +1,24 @@
 FOR GIT
 make sure "git" is in $PATH
-http://blog.drewolson.org/2008/05/remote-git-repos-on-ubuntu-right-way.html
+
+create the users...
+
+on OSX
 http://osxdaily.com/2007/10/29/how-to-add-a-user-from-the-os-x-command-line-works-with-leopard/
+sudo dscl . -create /Users/git
+sudo dscl . -create /Users/git UserShell /bin/bash
+sudo dscl . -create /Users/git NFSHomeDirectory /path/to/chaw/content/git/repo
 
-create the git user...
-chown -R git /path/to/content/git/repo
-mkdir .ssh 
-touch .ssh/authorized_keys 
-put git $PATH in ~/.bashrc
+sudo dscl . -create /Users/svn
+sudo dscl . -create /Users/svn UserShell /bin/bash
+sudo dscl . -create /Users/svn NFSHomeDirectory /path/to/chaw/content/svn/repo
+
+on *nix
+http://blog.drewolson.org/2008/05/remote-git-repos-on-ubuntu-right-way.html
+adduser ...
 
 
-FOR SVN
-port install subversion +mod_dav_svn
-
-<VirtualHost *:80>
-    ServerName chaw.svn
-	DocumentRoot "/Volumes/Home/htdocs/chaw/content/repo/"
-	<Directory "/Volumes/Home/htdocs/chaw/">
-		 Options Indexes MultiViews
-		 AllowOverride None
-		 Order allow,deny
-		 Allow from all
-	</Directory>
-	<Location /svn>
-	  DAV svn
-	  SVNParentPath /Volumes/Home/htdocs/chaw/content/repo/svn
-	</Location>
-</VirtualHost>
+GOTCHAS
+-/etc/sshd_config
+AllowUsers is all or has the git and svn users
+StrictModes no

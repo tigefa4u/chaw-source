@@ -105,6 +105,7 @@ class UsersController extends AppController {
 				//pr($this->User->validationErrors);
 				$this->Session->setFlash('User NOT updated');
 			}
+			unset($this->data['SshKey']);
 		}
 
 		$types = $this->Project->repoTypes();

@@ -30,6 +30,12 @@ class SvnTest extends CakeTestCase {
 		$this->assertTrue($Svn->create());
 		$this->assertTrue(file_exists($Svn->config['path']));
 		$this->assertTrue(file_exists($Svn->config['working']));
+
+		$this->assertTrue(file_exists($Svn->config['path'] . DS .'conf' . DS . 'svnserve.conf'));
+		$result = file_get_contents($Svn->config['path'] . DS .'conf' . DS . 'svnserve.conf');
+		$expected = "[general]\nauthz-db = ../permissions.ini\n";
+		$this->assertEqual($result, $expected);
+
 		//pr($Svn->debug);
 		//pr($Svn->response);
 	}
