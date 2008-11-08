@@ -58,6 +58,7 @@ class TicketsController extends AppController {
 
 			if ($this->Ticket->save($this->data)) {
 				$this->Session->setFlash('Ticket saved');
+				$this->redirect(array('tickets'));
 			}
 		}
 

@@ -39,6 +39,11 @@ class Ticket extends AppModel {
 
 	var $hasAndBelongsToMany = array('Tag');
 
+	var $validate = array(
+		'title' => array('notEmpty'),
+		'description' => array('notEmpty')
+	);
+
 	function beforeSave() {
 		if (!empty($this->data['Ticket']['tags'])) {
 			if (empty($this->data['Ticket']['previous']) || !empty($this->data['Ticket']['previous']) && $this->data['Ticket']['tags'] != $this->data['Ticket']['previous']['tags']) {
