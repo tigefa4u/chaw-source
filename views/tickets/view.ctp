@@ -7,9 +7,11 @@ hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
-	$("#Preview").html(jQuery.trim($("#Preview").text()));
+	$("#Preview").html(converter.makeHtml(jQuery.trim($("#Preview").text())));
 	$("#TicketDescription").bind("keyup", function() {
-		$("#Preview").html(jQuery.trim($(this).val()));
+		$("#Preview").html(converter.makeHtml($(this).val()));
+		hljs.initHighlighting.called = false;
+		hljs.initHighlighting();
 	});
 	$(".modify").click(function() {
 		$("#modify").show();
