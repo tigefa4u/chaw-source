@@ -34,6 +34,9 @@ Configure::write('Project', array(
 	'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
 	'ticket_priorities' => 'low, normal, high',
 	'active' => 1,
-	'remote' => 'git@thechaw.com'
+	'remote' => array(
+		'git' => 'git@thechaw.com',
+		'svn' => 'svn+ssh://svn@thechaw.com'
+	)
 ));
 ?>

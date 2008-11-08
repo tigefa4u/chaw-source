@@ -32,15 +32,7 @@ class AppController extends Controller {
  *
  **/
 	function beforeFilter() {
-		if (!empty($this->Project) && $this->Project->id == 1) {
-			$this->params['project'] = null;
-		}
-
-		if ($this->action == 'admin_login') {
-			$this->params['action'] = $this->action = 'login';
-		}
-
-		$this->Auth->loginAction = array('admin' => false, 'controller' => 'users', 'action' => 'login');
+		$this->Auth->loginAction = '/users/login';
 	}
 /**
  * undocumented function
@@ -55,8 +47,14 @@ class AppController extends Controller {
 		if (!empty($this->params['admin'])) {
 			$this->layout = 'admin';
 		}
+
+		$this->params['project'] = null;
+		if (!empty($this->Project) && $this->Project->id != 1) {
+			$this->params['project'] = $this->Project->config['url'];
+		}
+
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
-		$this->set('CurrentProject', Set::map(Configure::read('Project'), true));
+		$this->set('CurrentProject', Set::map($this->Project->config, true));
 	}
 /**
  * undocumented function

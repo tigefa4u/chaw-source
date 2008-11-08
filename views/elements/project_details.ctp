@@ -8,7 +8,10 @@
 		<?php
 			if ($CurrentProject->repo->type == 'git'):
 				echo '<strong>git clone</strong> ';
-				echo "{$CurrentProject->remote}:{$CurrentProject->url}.git";
+				echo "{$CurrentProject->remote->git}:{$CurrentProject->url}.git";
+			else:
+				echo '<strong>svn checkout</strong> ';
+				echo "{$CurrentProject->remote->svn}/{$CurrentProject->url}";
 			endif;
 		?>
 	</p>
