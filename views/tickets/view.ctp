@@ -7,7 +7,7 @@ hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
-	//$("#Preview").html(jQuery.trim($("#Preview").text()));
+	$("#Preview").html(jQuery.trim($("#Preview").text()));
 	$("#TicketDescription").bind("keyup", function() {
 		$("#Preview").html(jQuery.trim($(this).val()));
 	});
@@ -37,7 +37,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	</h3>
 
 	<div id="Preview" class="description">
-		<?php echo $html->clean($ticket['Ticket']['description']); ?>
+		<?php echo h($ticket['Ticket']['description']); ?>
 	</div>
 
 	<div class="ticket edit">
