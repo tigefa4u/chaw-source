@@ -111,13 +111,13 @@ class AccessComponent extends Object {
 			return true;
 		}
 
-		if ($this->url == 'projects') {
-			$C->Auth->allow('index');
+		if ($isOwner = ($this->user('id') == $C->Project->config['user_id'])) {
+			$C->params['isAdmin'] = $this->isAllowed = true;
 			return true;
 		}
 
-		if ($isOwner = ($this->user('id') == $C->Project->config['user_id'])) {
-			$C->params['isAdmin'] = $this->isAllowed = true;
+		if ($this->url == 'projects') {
+			$C->Auth->allow('index');
 			return true;
 		}
 
