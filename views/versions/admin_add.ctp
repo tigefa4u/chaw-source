@@ -14,7 +14,7 @@ $javascript->codeBlock($script, array('inline' => false));
 <?php echo $form->create(array('action' => $this->action));?>
 	<fieldset class="main">
  		<legend><?php echo $this->pageTitle;?></legend>
-	<?php
+	<?php		
 		echo $form->input('title');
 		echo $form->input('description');
 		echo $form->input('due_date');
@@ -26,7 +26,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	</fieldset>
 
 	<div class="help">
-		<?php echo $this->element('markdown_help'); ?>
+		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
 
 <?php echo $form->end('Submit');?>

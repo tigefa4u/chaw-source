@@ -20,5 +20,15 @@ class Version extends AppModel {
 
 	var $name = 'Version';
 
+	var $belongsTo = array('Project');
+
+	var $validate = array(
+		'title' => array('notEmpty')
+	);
+
+	function beforeSave() {
+		$this->data['Version']['slug'] = Inflector::slug($this->data['Version']['title']);
+		return true;
+	}
 }
 ?>

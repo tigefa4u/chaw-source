@@ -16,6 +16,11 @@ $javascript->codeBlock($script, array('inline' => false));
  		<legend><?php echo $this->pageTitle;?></legend>
 	<?php
 		echo $form->input('id');
+
+		if (!empty($this->params['isAdmin'])) :
+			echo $form->input('project_id');
+		endif;
+
 		echo $form->input('title');
 		echo $form->input('description');
 		echo $form->input('due_date');
@@ -27,7 +32,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	</fieldset>
 
 	<div class="help">
-		<?php echo $this->element('markdown_help'); ?>
+		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
 
 <?php echo $form->end('Submit');?>

@@ -4,8 +4,6 @@
 class ChawSchema extends CakeSchema {
 	var $name = 'Chaw';
 
-	var $file = 'schema_2.php';
-
 	function before($event = array()) {
 		return true;
 	}
@@ -72,9 +70,10 @@ class ChawSchema extends CakeSchema {
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $tags_tickets = array(
-			'tag_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'primary'),
+			'id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'primary'),
+			'tag_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'ticket_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'indexes' => array()
+			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $tickets = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
@@ -113,6 +112,8 @@ class ChawSchema extends CakeSchema {
 		);
 	var $versions = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'slug' => array('type' => 'string', 'null' => false, 'length' => 200),
 			'title' => array('type' => 'string', 'null' => false, 'length' => 100),
 			'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'due_date' => array('type' => 'date', 'null' => true, 'default' => NULL),

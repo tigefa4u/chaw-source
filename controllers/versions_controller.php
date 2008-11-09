@@ -23,6 +23,9 @@ class VersionsController extends AppController {
 
 	function index() {
 		$this->Version->recursive = 0;
+		$this->paginate = array(
+			'conditions' => array('Project.id' => $this->Project->id)
+		);
 		$this->set('versions', $this->paginate());
 	}
 
@@ -37,6 +40,13 @@ class VersionsController extends AppController {
 
 	function admin_index() {
 		$this->Version->recursive = 0;
+
+		if (empty($this->params['isAdmin'])) {
+			$this->paginate = array(
+				'conditions' => array('Project.id' => $this->Project->id)
+			);
+		}
+
 		$this->set('versions', $this->paginate());
 
 		$this->render('index');
@@ -56,7 +66,7 @@ class VersionsController extends AppController {
 		$this->pageTitle = "New Version";
 
 		if (!empty($this->data)) {
-			$this->Version->create();
+			$this->Version->create(array('project_id' => $this->Project->id));
 			if ($this->Version->save($this->data)) {
 				$this->Session->setFlash(__('The Version has been saved', true));
 				$this->redirect(array('action'=>'index'));
@@ -67,7 +77,8 @@ class VersionsController extends AppController {
 	}
 
 	function admin_edit($id = null) {
-		$this->pageTitle = "Update Version";
+
+		$this->pageTitle = "Modify Version";
 
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Version', true));
@@ -84,18 +95,12 @@ class VersionsController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Version->read(null, $id);
 		}
-	}
 
-	function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Version', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Version->del($id)) {
-			$this->Session->setFlash(__('Version deleted', true));
-			$this->redirect(array('action'=>'index'));
-		}
-	}
 
+		if (!empty($this->params['isAdmin'])) {
+			$this->set('projects', $this->Version->Project->find('list'));
+		}
+
+	}
 }
 ?>
