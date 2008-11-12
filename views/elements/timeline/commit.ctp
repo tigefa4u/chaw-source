@@ -10,10 +10,6 @@
 		<strong>on:</strong> <?php echo $time->nice($data['commit_date']);?>
 	</p>
 
-	<p>
-		<strong>When:</strong> <?php echo $time->nice($data['commit_date']);?>
-	</p>
-
 	<p class="message">
 		<?php echo $data['message'];?>
 	</p>

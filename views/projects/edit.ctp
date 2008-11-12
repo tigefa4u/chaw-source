@@ -2,7 +2,9 @@
 	echo $chaw->messages($messages);
 ?>
 <div class="projects form">
-<?php echo $form->create(array('action' => $this->action));?>
+<?php echo $form->create('Project', array('url' => array(
+		'action' => $this->action, 'id' => false
+	)));?>
 	<fieldset>
  		<legend><?php echo $this->pageTitle; ?></legend>
 	<?php

@@ -37,16 +37,15 @@ class PostCommitShell extends Shell {
 
 		$revision = $this->args[2];
 
-		$data = $this->Project->Repo->read($revision);
+		$data = $this->Project->Repo->read($revision, false);
 
 		$this->Project->Repo->update();
 
 		if (!empty($data)) {
 
-			$data['Svn']['project_id'] = $this->Project->id;
-			$data['Svn']['type'] = 'svn';
+			$data['project_id'] = $this->Project->id;
 
-			$this->Commit->create($data['Svn']);
+			$this->Commit->create($data);
 
 			return $this->Commit->save();
 		}

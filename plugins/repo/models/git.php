@@ -127,14 +127,30 @@ class Git extends Repo {
 
 		return false;
 	}
+/**
+ * find all revisions and return contents of read.
+ *
+ * @return array
+ *
+ **/
+/*
+	function find($type = 'all', $options = array()) {
+		$youngest = trim($this->look('youngest'));
+		$data = array();
 
+		for($i = 1; $i <= $youngest; $i++) {
+			$data[]'Repo'] = $this->read($i, false);
+		}
+		return $data;
+	}	
+*/
 /**
  * undocumented function
  *
  * @return void
  *
  **/
-	function read($newrev) {
+	function read($newrev, $diff = true) {
 		$info = $this->run('show', array($newrev, "--pretty=format:%H::%an::%ai::%s"), 'capture');
 		if (empty($info)) {
 			return null;
@@ -144,9 +160,11 @@ class Git extends Repo {
 
 		$changes = array();
 
-		$diff = join("\n", $info);
+		if ($diff) {
+			$diff = join("\n", $info);
+		}
 
-		$data['Git'] = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
+		$data = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
 		return $data;
 	}
 /**

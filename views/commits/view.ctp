@@ -36,7 +36,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<strong>Changes:</strong>
 		<ul>
 		<?php
-			foreach (unserialize($commit['Commit']['changes']) as $changed) :
+			foreach ($commit['Commit']['changes'] as $changed) :
 				echo $html->tag('li', $changed);
 			endforeach;
 

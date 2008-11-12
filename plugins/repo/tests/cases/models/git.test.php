@@ -41,7 +41,7 @@ class GitTest extends CakeTestCase {
 	function testRead() {
 		$Git = ClassRegistry::init($this->__repos[1]);
 		$result = $Git->read("refs/heads/master");
-		$this->assertEqual($result['Git']['message'], 'Initial Project Commit');
+		$this->assertEqual($result['message'], 'Initial Project Commit');
 
 		//pr($Git->debug);
 		//pr($Git->response);

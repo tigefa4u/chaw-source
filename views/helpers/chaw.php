@@ -30,12 +30,14 @@ class ChawHelper extends AppHelper {
 		if (!$revision) {
 			return null;
 		}
-		
+
+		$title = $revision;
+
 		if (strlen($revision) > 10) {
-			$revision = substr($revision, 0, 4) .'...' . substr($revision, -4, 4);
+			$title = substr($revision, 0, 4) .'...' . substr($revision, -4, 4);
 		}
-		
-		return $this->Html->link($revision,
+
+		return $this->Html->link($title,
 			array(
 				'controller' => 'commits', 'action'=> 'view', $revision
 			),

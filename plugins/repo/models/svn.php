@@ -79,16 +79,16 @@ class Svn extends Repo {
 		parent::_create();
 		extract($this->config);
 
+		$file = 'file://' . $path;
 		if (!is_dir($path)) {
 			$this->admin('create', $path);
-		}
-
-		if (!is_dir($working . DS . 'branches')) {
-			$file = 'file://' . $path;
 			$this->import(array(
 					CONFIGS . 'templates' . DS . 'svn' .DS . 'project', $file,
 					'--message "Initial Project Import"'
 			));
+		}
+
+		if (!is_dir($working . DS . 'branches')) {
 			$this->checkout(array($file, $working));
 		}
 
@@ -112,16 +112,30 @@ class Svn extends Repo {
 		}
 		return $this->run('update', array($path));
 	}
+/**
+ * find all revisions and return contents of read.
+ *
+ * @return array
+ *
+ **/
+	function find($type = 'all', $options = array()) {
+		$youngest = trim($this->look('youngest'));
+		$data = array();
 
+		for($i = 1; $i <= $youngest; $i++) {
+			$data[]['Repo'] = $this->read($i, false);
+		}
+		return $data;
+	}
 /**
  * Read the author, data, messages, changes, and diff for a revision
  *
  * @param string $revision id of the revision
  * @example $this->Svn->read(1);
- * @return void
+ * @return array
  *
  **/
-	function read($revision = null) {
+	function read($revision = null, $diff = true) {
 		$author = trim($this->look('author', array('-r', $revision)));
 
 		$commit_date = $this->look('date', array('-r', $revision));
@@ -132,7 +146,9 @@ class Svn extends Repo {
 
 		$changed = $this->look('changed', array('-r', $revision));
 
-		$diff = $this->look('diff', array('-r', $revision));
+		if ($diff) {
+			$diff = $this->look('diff', array('-r', $revision));
+		}
 
 		$temp = array();
 		$temp = explode("\n", $changed);
@@ -167,7 +183,7 @@ class Svn extends Repo {
 			$changes[] = $action . ' ' . $file;
 		}
 
-		$data['Svn'] = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
+		$data = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
 		return $data;
 	}
 /**
@@ -189,13 +205,17 @@ class Svn extends Repo {
  **/
 	function pathInfo($path) {
 		$data = $this->run('log', array($path));
-
 		$lines = explode("\n", $data);
 		$info = (!empty($lines[3])) ? explode("|", $lines[1]) : array();
 
 		$result['revision'] = (!empty($info[0])) ? trim($info[0], 'r') : null;
 		$result['author'] = (!empty($info[1])) ? trim($info[1]) : null;
-		$result['date'] = (!empty($info[2])) ? trim($info[2]) : null;
+
+		$result['date'] = null;
+		if ((!empty($info[2]))) {
+			$bits = explode(" ", trim($info[2]));
+			$result['date'] = $bits[0] . ' ' . @$bits[1];
+		}
 		$result['message'] = (!empty($lines[3])) ? trim($lines[3]) : null;
 
 		return $result;

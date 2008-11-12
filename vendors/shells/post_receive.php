@@ -46,10 +46,9 @@ class PostReceiveShell extends Shell {
 
 		if (!empty($data)) {
 
-			$data['Git']['project_id'] = $this->Project->id;
-			$data['Git']['type'] = 'git';
+			$data['project_id'] = $this->Project->id;
 
-			$this->Commit->create($data['Git']);
+			$this->Commit->create($data);
 
 			if (!$this->Commit->save()) {
 				return false;

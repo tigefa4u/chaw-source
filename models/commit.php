@@ -20,12 +20,13 @@ class Commit extends AppModel {
 
 	var $name = 'Commit';
 
-	var $belongsTo = array('User');
+	var $belongsTo = array('User', 'Project');
 
 	var $hasOne = array(
 		'Timeline' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('model' => 'Commit')
+			'conditions' => array('model' => 'Commit'),
+			'dependent' => true
 		)
 	);
 
@@ -51,6 +52,17 @@ class Commit extends AppModel {
 			$this->Timeline->create($timeline);
 			$this->Timeline->save();
 		}
+	}
+
+	function findByRevision($revision) {
+		$commit = parent::findByRevision($revision);
+		$data = $this->Project->Repo->read($revision);
+		if (!empty($commit)) {
+			$commit['Commit'] = array_merge($commit['Commit'], $data);
+		} else {
+			$commit['Commit'] = $data;
+		}
+		return $commit;
 	}
 }
 ?>

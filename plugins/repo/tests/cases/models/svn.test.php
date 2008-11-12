@@ -22,8 +22,15 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function getTests() {
-		return array_merge(array('start', 'startCase'), array('testCreate', 'testHook', 'testRead'), array('end', 'endCase'));
+		return array_merge(
+			array('start', 'startCase'),
+			array(
+				'testCreate', 'testHook', 'testRead', 'testCommit', 'testFind',
+			),
+			array('end', 'endCase')
+		);
 	}
+
 
 	function testCreate() {
 		$Svn = ClassRegistry::init($this->__repos[1]);
@@ -49,30 +56,53 @@ class SvnTest extends CakeTestCase {
 	function testRead() {
 		$Svn = ClassRegistry::init($this->__repos[1]);
 		$result = $Svn->read(1);
-		$this->assertEqual($result['Svn']['revision'], 1);
-		$this->assertEqual($result['Svn']['message'], 'Initial Project Import');
+		$this->assertEqual($result['revision'], 1);
+		$this->assertEqual($result['message'], 'Initial Project Import');
 
 		//var_dump($result);
 		//var_dump($Svn->debug);
 		//var_dump($Svn->response);
 	}
-
-	function testInfo() {
-		pr($Svn->info());
-
-		pr($Svn->look('author', $Svn->repo));
-	}
-
+	
+	
 	function testCommit() {
 		$Svn = ClassRegistry::init($this->__repos[1]);
 
 		$File = new File($Svn->working . '/branches/demo_1.0.x.x/index.php', true);
 		$File->write("this is a new php file with plain text");
 
-		pr($Svn->run('add', array(dirname($File->pwd()))));
-		pr($Svn->run('commit', array($Svn->workingCopy, '--message "Adding index.php"')));
-		pr($Svn->info('/branches/demo_1.0.x.x/index.php'));
+		$result = $Svn->run('add', array(dirname($File->pwd())));
+		//var_dump($result);
+		
+		$result = $Svn->run('commit', array($Svn->working, '--message "Adding index.php"'));
+		//var_dump($result);
+		
+		$result = $Svn->info('/branches/demo_1.0.x.x/index.php');
+		//var_dump($result);
 	}
+	
+	function testFind() {
+		$Svn = ClassRegistry::init($this->__repos[1]);
+		$result = $Svn->find();
+		
+		$this->assertEqual($result[0]['Repo']['revision'], 1);
+		$this->assertEqual($result[0]['Repo']['message'], 'Initial Project Import');
+		
+		$this->assertEqual($result[1]['Repo']['revision'], 2);
+		$this->assertEqual($result[1]['Repo']['message'], 'Adding index.php');
+		
+		var_dump($result);
+		//var_dump($Svn->debug);
+		//var_dump($Svn->response);
+	}
+	
+	/*
+	function testInfo() {
+		pr($Svn->info());
+
+		pr($Svn->look('author', $Svn->repo));
+	}
+
 
 	function testCheckout() {
 		pr($Svn->run('co', array(
@@ -85,5 +115,6 @@ class SvnTest extends CakeTestCase {
 		$Svn = ClassRegistry::init($this->__repos[1]);
 		pr($Svn->run('blame', $Svn->working . '/cake/libs/file.php'));
 	}
+	*/
 }
 ?>

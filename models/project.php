@@ -50,6 +50,10 @@ class Project extends AppModel {
 
 		Cache::set(array('prefix' => 'config_', 'duration' => $duration, 'path' => CACHE . 'persistent'));
 
+		if (!empty($this->data['Project']['url'])) {
+			$params['project'] = $this->data['Project']['url'];
+		}
+
 		if (!empty($params['project'])) {
 			$key = $params['project'];
 			$project = Cache::read($key);
@@ -112,16 +116,21 @@ class Project extends AppModel {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
 
+		if ($this->id && !empty($this->data['Project']['repo_type'])) {
+			unset($this->data['Project']['repo_type']);
+		}
+
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
 			}
 			Configure::write('debug', 2);
-			if (!file_exists($this->config['repo']['path'])) {
+			if (!file_exists($this->config['repo']['path']) || !file_exists($this->config['repo']['working'])) {
 				if ($this->Repo->create(array('remote' => $this->config['remote'])) !== true) {
 					$this->invalidate('repo_type', 'the repo could not be created');
 					return false;
 				}
+
 				$this->__created = true;
 			}
 		}
