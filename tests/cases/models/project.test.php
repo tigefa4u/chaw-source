@@ -105,8 +105,40 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 	}
 
-	function testProjectFind() {
+	function testProjectFork() {
+		//first we have to save a project
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
 
+		$this->assertTrue($this->Project->save($data));
+		$path = Configure::read('Content.git');
+		$this->assertTrue(file_exists($path . 'repo' . DS . 'permissions.ini'));
+		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		$this->Project->create(array(
+			'project_id' => 1,
+			'user_id' => 2,
+			'fork' => 'gwoo',
+			'approved' => 1
+		));
+		$this->assertTrue($this->Project->fork($this->Project->config));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		//pr($this->Project->Repo->debug);
+		//pr($this->Project->Repo->response);
 	}
 }
 ?>

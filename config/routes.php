@@ -54,6 +54,27 @@
 
 	Router::connect('/:project', array('controller' => 'browser', 'action' => 'index'));
 
+	//Fork routes
+
+	Router::connect('/:project/fork', array('controller' => 'projects', 'action' => 'fork'));
+
+	Router::connect('/forks/:fork/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
+	//Router::connect('/:project/forks/:fork/admin/:controller/:action/:id', array('admin'=> true, 'controller' => 'dashboard'));
+	Router::connect('/:project/forks/:fork/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
+
+	Router::connect('/forks/:fork/:project/wiki/edit/:id', array('controller' => 'wiki', 'action' => 'add'), array('pass' => array('id')));
+	Router::connect('/forks/:fork/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'));
+	Router::connect('/forks/:fork/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
+
+	Router::connect('/forks/:fork/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
+
+	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
+	//Router::connect('/:project/forks/:fork/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));
+	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array('action' => 'index|view|add|edit|modify|delete'));
+
+
+	//Base project routes
+
 	Router::connect('/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
 	//Router::connect('/:project/admin/:controller/:action/:id', array('admin'=> true, 'controller' => 'dashboard'));
 	Router::connect('/:project/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
@@ -61,6 +82,11 @@
 	Router::connect('/:project/wiki/edit/:id', array('controller' => 'wiki', 'action' => 'add'), array('pass' => array('id')));
 	Router::connect('/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'));
 	Router::connect('/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
+
+	Router::connect('/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
+
+
+	//these should be last
 
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	//Router::connect('/:project/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));

@@ -19,8 +19,13 @@
 class AppHelper extends Helper {
 
 	function url($url = null, $full = false) {
-		if (is_array($url) && !empty($this->params['project'])) {
-			$url = array_merge(array('project' => $this->params['project']), $url);
+		if (is_array($url)) {
+			if (!empty($this->params['project'])) {
+				$url = array_merge(array('project' => $this->params['project']), $url);
+			}
+			if (!empty($this->params['fork'])) {
+				$url = array_merge(array('fork' => $this->params['fork']), $url);
+			}
 		}
 		return Router::url($url, $full);
 	}

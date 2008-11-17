@@ -1,7 +1,14 @@
 <div class="browser index">
 
 <h2>
-	<?php echo $html->link(Configure::read('Project.url'), array('action' => 'index'))?>
+	<?php
+		$title = null;
+		if (!empty($CurrentProject->fork)) {
+			$title = "forks / {$CurrentProject->fork} / ";
+		}
+		$title .= $CurrentProject->url;
+		echo $html->link($title, array('action' => 'index'));
+	?>
 	<?php
 		$path = '/';
 		foreach ((array)$args as $part):

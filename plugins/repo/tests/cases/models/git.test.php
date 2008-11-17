@@ -47,6 +47,19 @@ class GitTest extends CakeTestCase {
 		//pr($Git->response);
 	}
 
+	function testFork() {
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$result = $Git->fork("gwoo");
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/gwoo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test'));
+
+		//pr($Git->debug);
+		//pr($Git->response);
+
+		//die();
+
+	}
+
 	function testPathInfo() {
 		//pr($Git->pathInfo());
 	}

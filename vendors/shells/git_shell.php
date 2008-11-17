@@ -43,9 +43,18 @@ class GitShellShell extends Shell {
 			return 1;
 		}
 
-		$project = rtrim(trim($this->args[1], "'"), '.git');
+		$project = @$this->args[1];
 
-		if ($this->Project->initialize(compact('project')) === false) {
+		$fork = null;
+		if (strpos($project, 'forks') !== false) {
+			$parts = explode('/', $project);
+			$fork = $parts[1];
+			$project = $parts[2];
+
+		}
+		$project = str_replace('.git', '', trim($project, "'"));
+
+		if ($this->Project->initialize(compact('project', 'fork')) === false) {
 			$this->err('Invalid project');
 			return 1;
 		}

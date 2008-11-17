@@ -36,8 +36,10 @@
 		echo $html->css(array('generic', 'chaw'));
 	?>
 	<?php
-		echo $javascript->link('jquery-1.2.6.min');
-		echo $javascript->link('gshowdown');
+		if (!empty($javascript)) {
+			echo $javascript->link('jquery-1.2.6.min');
+			echo $javascript->link('gshowdown');
+		}
 		echo $scripts_for_layout;
 	?>
 </head>
@@ -52,38 +54,52 @@
 				<ul>
 					<li><?php
 						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
-						echo $html->link('Source', array('admin' => false, 'controller' => 'browser', 'action' => 'index'), $options);
+						echo $html->link('Source', array(
+							'admin' => false,
+							'controller' => 'browser', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
-						echo $html->link('Wiki', array('admin' => false, 'controller' => 'wiki', 'action' => 'index'), $options);
+						echo $html->link('Wiki', array(
+							'admin' => false,
+							'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
-						echo $html->link('Timeline', array('admin' => false, 'controller' => 'timeline', 'action' => 'index'), $options);
+						echo $html->link('Timeline', array(
+							'admin' => false,
+							'controller' => 'timeline', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
-						echo $html->link('Tickets', array('admin' => false, 'controller' => 'tickets', 'action' => 'index'), $options);
+						echo $html->link('Tickets', array(
+							'admin' => false,
+							'controller' => 'tickets', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
-						echo $html->link('Versions', array('admin' => false, 'controller' => 'versions', 'action' => 'index'), $options);
+						echo $html->link('Versions', array(
+							'admin' => false,
+							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
-						echo $html->link('Projects', array('admin' => false, 'controller' => 'projects', 'action' => 'index'), $options);
+						echo $html->link('Projects', array(
+							'admin' => false, 'project'=> false, 'fork' => false,
+							'controller' => 'projects', 'action' => 'index'), $options);
 					?></li>
 
 					<?php if (!empty($this->params['isAdmin'])):?>
 						<li><?php
 							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
-							echo $html->link('Admin', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'), $options);
+							echo $html->link('Admin', array(
+								'admin' => true,
+								'controller' => 'dashboard', 'action' => 'index'), $options);
 						?></li>
 					<?php endif;?>
 				</ul>
@@ -108,10 +124,10 @@
 
 		<div id="footer">
 			<?php echo $html->link(
-							$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
-							'http://www.cakephp.org/',
-							array('target'=>'_new'), null, false
-						);
+					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
+					'http://www.cakephp.org/',
+					array('target'=>'_new'), null, false
+				);
 			?>
 		</div>
 	</div>

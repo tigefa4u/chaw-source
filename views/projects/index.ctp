@@ -10,13 +10,17 @@
 		if ($project['Project']['id'] != 1) {
 			$url = $project['Project']['url'];
 		}
+		$fork = null;
+		if (!empty($project['Project']['fork'])) {
+			$fork = $project['Project']['fork'];
+		}
 ?>
 	<div class="project">
 
 		<h3 class="name">
 			<?php
 				echo $html->link($project['Project']['name'], array(
-					'admin' => false, 'project' => $url,
+					'admin' => false, 'project' => $url, 'fork'=> $fork,
 					'controller' => 'browser', 'action' => 'index',
 				));?>
 
@@ -26,16 +30,18 @@
 			<p>
 				<?php
 					echo $html->link('view', array(
-						'admin' => false, 'project' => $url,
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'projects', 'action' => 'view',
 					));
 					echo ' | ';
-					echo $html->link('edit', array('project' => $url,
-						'admin' => true, 'controller' => 'projects', 'action' => 'edit'
+					echo $html->link('edit', array(
+						'admin' => true, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'projects', 'action' => 'edit'
 					));
 					echo ' | ';
-					echo $html->link('admin', array('project' => $url,
-						'admin' => true, 'controller' => 'dashboard'
+					echo $html->link('admin', array(
+						'admin' => true, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'dashboard'
 					));
 				?>
 			</p>

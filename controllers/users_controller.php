@@ -23,7 +23,7 @@ class UsersController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->autoRedirect = false;
-		$this->Auth->allow('add', 'logout');
+		$this->Auth->allow('add', 'login', 'logout');
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];

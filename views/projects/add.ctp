@@ -9,7 +9,7 @@
 		echo $form->input('id');
 		echo $form->input('repo_type');
 		echo $form->input('name', array(
-			'error' => array('unique' => 'The project name is already used.')
+			'error' => array('unique' => 'The project name must be unique.')
 		));
 		echo $form->input('description');
 		echo $form->input('private');

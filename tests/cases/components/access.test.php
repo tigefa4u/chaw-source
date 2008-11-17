@@ -55,6 +55,8 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
 
+		$this->Controller->Auth->allow('add', 'login', 'logout', 'index');
+
 		$this->Controller->Access->startup($this->Controller);
 		if ($this->Controller->testRedirect == null) {
 			$this->Controller->Auth->startup($this->Controller);
@@ -63,9 +65,9 @@ class AccessComponentTest extends CakeTestCase {
 
 	function testInstall() {
 		$Access = new TestAccess();
-		
+
 		$this->Controller->Project = new TestProject();
-		
+
 		$this->Controller->params = array(
 			'controller' => 'browser',
 			'action' => 'index',
@@ -74,9 +76,9 @@ class AccessComponentTest extends CakeTestCase {
 		$this->__runStartup($this->Controller);
 		$expected = array('admin' => false, 'project' => false, 'controller' => 'pages', 'action' => 'start');
 		$this->assertEqual($this->Controller->testRedirect, $expected);
-		
+
 		$this->Controller->Project = null;
-		
+
 		$this->Controller->params = array(
 			'controller' => 'pages',
 			'action' => 'start',

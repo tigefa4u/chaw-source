@@ -206,10 +206,10 @@ class Repo extends Overloadable {
  *
  **/
 	function _create($options = array(), $return = false) {
-		extract($this->config);
+		extract(array_merge($this->config, $options));
 
-		$path = dirname($this->path);
-		$working = dirname($this->working);
+		$path = dirname($path);
+		$working = dirname($working);
 
 		if (!is_dir($path)) {
 			$Parent = new Folder($path, true, $chmod);

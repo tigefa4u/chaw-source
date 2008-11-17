@@ -22,6 +22,12 @@ class AccessComponent extends Object {
  *
  * @var string
  **/
+	var $access = 'r';	
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $user = array();
 /**
  * undocumented class variable
@@ -81,7 +87,7 @@ class AccessComponent extends Object {
 			return true;
 		}
 
-		$this->isAllowed = in_array($this->url, array('users/add', 'users/login', 'users/logout'));
+		$this->isAllowed = in_array($this->url, $C->Auth->allowedActions);
 
 		if ($C->Project->initialize($C->params) === false) {
 
@@ -93,7 +99,7 @@ class AccessComponent extends Object {
 
 			if ($this->user()) {
 				if (!in_array($this->url, array('projects/add'))) {
-					$C->Session->setFlash('Chaw needs to be installed');
+					//$C->Session->setFlash('Chaw needs to be installed');
 					$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'start'));
 					return false;
 				}
@@ -125,7 +131,7 @@ class AccessComponent extends Object {
 			$this->isPublic = false;
 		}
 
-		$requireLogin = in_array($this->url, array('users/account', 'projects/add'));
+		$requireLogin = !in_array($this->url, $C->Auth->allowedActions);
 
 		if ($this->check($C)) {
 			if (!$requireLogin) {

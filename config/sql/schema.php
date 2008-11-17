@@ -45,13 +45,16 @@ class ChawSchema extends CakeSchema {
 		);
 	var $projects = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'url' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'fork' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'user_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+			'project_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'name' => array('type' => 'string', 'null' => false, 'length' => 200),
 			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),
+			'ohloh_project' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200),
 			'groups' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_types' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_statuses' => array('type' => 'string', 'null' => true, 'default' => NULL),

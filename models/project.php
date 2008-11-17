@@ -30,8 +30,12 @@ class Project extends AppModel {
 
 	var $validate = array(
 		'name' => array(
-			'required' => array('rule' => 'notEmpty'),
-			'unique' => array('rule' => 'isUnique')
+			'required' => array(
+				'rule' => 'notEmpty',
+			),
+			'unique' => array(
+				'rule' => 'isUnique'
+			)
 		)
 	);
 
@@ -53,12 +57,19 @@ class Project extends AppModel {
 		if (!empty($this->data['Project']['url'])) {
 			$params['project'] = $this->data['Project']['url'];
 		}
+		if (!empty($this->data['Project']['fork'])) {
+			$params['fork'] = $this->data['Project']['fork'];
+		}
 
 		if (!empty($params['project'])) {
-			$key = $params['project'];
+			$conditions['url'] = $params['project'];
+			if (!empty($params['fork'])) {
+				$conditions['fork'] = $params['fork'];
+			}
+			$key = join('_', $conditions);
 			$project = Cache::read($key);
 			if (empty($project)) {
-				$project = $this->findByUrl($params['project']);
+				$project = $this->find($conditions);
 				if (!empty($project)) {
 					Cache::write($key, $project);
 				}
@@ -92,12 +103,17 @@ class Project extends AppModel {
 		$repoType = strtolower($this->config['repo_type']);
 		$path = Configure::read("Content.{$repoType}");
 
+		$fork = null;
+		if (!empty($this->config['fork'])) {
+			$fork = 'forks' . DS . $this->config['fork'] . DS;
+		}
+
 		$this->config['repo'] = array(
 			'class' => 'repo.' . $this->config['repo_type'],
-			'path' => $path . 'repo' . DS . $this->config['url'],
 			'type' => $repoType,
-			'working' => $path . 'working' . DS . $this->config['url'],
-			'chmod' => 0777
+			'chmod' => 0777,
+			'path' => $path . 'repo' . DS . $fork . $this->config['url'],
+			'working' => $path . 'working' . DS . $fork . $this->config['url'],
 		);
 
 		if ($repoType == 'git') {
@@ -111,20 +127,38 @@ class Project extends AppModel {
 		return true;
 	}
 
+	function fork($data = array()) {
+		$this->set($data);
+
+		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['remote']))) {
+			$this->__created = true;
+			$this->data['Project']['project_id'] = $this->id;
+			$this->data['Project']['name'] = $this->data['Project']['fork'] . "'s fork of " . $this->data['Project']['name'];
+		}
+
+		if (!empty($this->data['Project']['id'])) {
+			$this->id = null;
+			unset($this->data['Project']['id'], $this->data['Project']['created'], $this->data['Project']['modified']);
+		}
+
+		return $this->save();
+	}
+
 	function beforeSave() {
-		if (!empty($this->data['Project']['name'])) {
+		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
 
-		if ($this->id && !empty($this->data['Project']['repo_type'])) {
+		/*
+		if ($this->id && !empty($this->data['Project']['repo_type']) && $this->data['Project']['repo_type'] == $this->config['repo_type']) {
 			unset($this->data['Project']['repo_type']);
 		}
-
+		*/
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
 			}
-			Configure::write('debug', 2);
+
 			if (!file_exists($this->config['repo']['path']) || !file_exists($this->config['repo']['working'])) {
 				if ($this->Repo->create(array('remote' => $this->config['remote'])) !== true) {
 					$this->invalidate('repo_type', 'the repo could not be created');
@@ -213,7 +247,8 @@ class Project extends AppModel {
 			return true;
 		}
 		if (!empty($data['url'])) {
-			if ($this->findByUrl($data['url'])) {
+			$reserved = array('forks');
+			if (in_array($data['url'], $reserved) || $this->findByUrl($data['url'])) {
 				$this->invalidate('name');
 				return false;
 			}

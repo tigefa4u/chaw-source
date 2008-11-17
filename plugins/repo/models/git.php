@@ -63,7 +63,7 @@ class Git extends Repo {
 			$remote = "git@git.chaw";
 		}
 
-		$project = array_pop(explode(DS, $path));
+		$project = basename($path);
 		$this->remote(array('add', 'origin', "{$remote}:{$project}"));
 
 		$this->before(array(
@@ -75,6 +75,46 @@ class Git extends Repo {
 		$this->update();
 
 		if (is_dir($path) && is_dir($working)) {
+			return true;
+		}
+
+		return false;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function fork($user = null, $options = array()) {
+		if (!$user) {
+			return false;
+		}
+		extract($this->config);
+
+		$project = basename($path);
+		$fork = dirname($path) . DS . 'forks' . DS . $user . DS . $project;
+
+		$this->config(array(
+			'working' => $fork
+		));
+
+		if ($this->pull('master', array('--bare'))) {
+			if (!empty($options['remote'])) {
+				$remote = $options['remote'];
+				unset($options['remote']);
+			} else {
+				$remote = "git@git.chaw";
+			}
+			$this->config(array(
+				'path' => $fork,
+				'working' => dirname($working) . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
+			));
+			$this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
+			$this->pull();
+		}
+
+		if (is_dir($this->config['path']) && is_dir($this->config['working'])) {
 			return true;
 		}
 
@@ -142,7 +182,7 @@ class Git extends Repo {
 			$data[]'Repo'] = $this->read($i, false);
 		}
 		return $data;
-	}	
+	}
 */
 /**
  * undocumented function

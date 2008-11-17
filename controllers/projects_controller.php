@@ -46,10 +46,39 @@ class ProjectsController extends AppController {
 		$this->set('project', array('Project' => $project));
 	}
 
-	function admin_index() {
-		$this->Project->recursive = 0;
-		$this->set('projects', $this->paginate());
-		$this->render('index');
+	function start() {
+
+	}
+
+	function fork() {
+		if ($this->Project->Repo->type == 'svn') {
+			$this->Session->setFlash('You cannot fork an svn project yet');
+			$this->redirect($this->referer());
+		}
+
+		if (!empty($this->data)) {
+			$this->Project->create(array_merge(
+				$this->Project->config,
+				array(
+					'user_id' => $this->Auth->user('id'),
+					'fork' => $this->Auth->user('username'),
+					'approved' => 1, //$this->params['isAdmin']
+				)
+			));
+			if ($data = $this->Project->fork()) {
+				if (empty($data['Project']['approved'])) {
+					$this->Session->setFlash('Project is awaiting approval');
+				} else {
+					$this->Session->setFlash('Project was created');
+				}
+				$this->redirect(array(
+					'fork' => $data['Project']['fork'],
+					'controller' => 'browser', 'action' => 'index',
+				));
+			} else {
+				$this->Session->setFlash('Project was NOT created');
+			}
+		}
 	}
 
 	function add() {
@@ -85,6 +114,11 @@ class ProjectsController extends AppController {
 		$this->render('add');
 	}
 
+	function admin_index() {
+		$this->Project->recursive = 0;
+		$this->set('projects', $this->paginate());
+		$this->render('index');
+	}
 
 	function admin_edit($id = null) {
 
