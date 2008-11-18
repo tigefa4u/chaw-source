@@ -23,6 +23,9 @@ class ProjectTestCase extends CakeTestCase {
 			'git' => TMP . 'tests' . DS . 'git' . DS,
 			'svn' => TMP . 'tests' . DS . 'svn' . DS ,
 		));
+		Configure::write('Project', array(
+			'id' => 0
+		));
 		$this->Project = new TestProject();
 	}
 
@@ -147,6 +150,54 @@ class ProjectTestCase extends CakeTestCase {
 
 		//pr($this->Project->Repo->debug);
 		//pr($this->Project->Repo->response);
+	}
+
+	function testProjectActivate() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$this->Project->id = 1;
+		$result = $this->Project->save(array('active' => 1));
+		$this->assertTrue($result);
+
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'another project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 0,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$this->Project->id = 2;
+		$result = $this->Project->save(array('active' => 1));
+		$this->assertTrue($result);
 	}
 }
 ?>

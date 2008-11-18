@@ -30,7 +30,7 @@ class ProjectsController extends AppController {
 
 		if ($this->params['isAdmin'] === false) {
 			$this->paginate = array(
-				'conditions' => array('Project.private' => 0),
+				'conditions' => array('Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1),
 				'order' => 'Project.id ASC'
 			);
 		}
@@ -47,10 +47,6 @@ class ProjectsController extends AppController {
 		$this->set('project', array('Project' => $project));
 	}
 
-	function start() {
-
-	}
-
 	function fork() {
 		if ($this->Project->Repo->type == 'svn') {
 			$this->Session->setFlash('You cannot fork an svn project yet');
@@ -63,7 +59,7 @@ class ProjectsController extends AppController {
 				array(
 					'user_id' => $this->Auth->user('id'),
 					'fork' => $this->Auth->user('username'),
-					'approved' => 1, //$this->params['isAdmin']
+					'approved' => 1,
 				)
 			));
 			if ($data = $this->Project->fork()) {
@@ -99,7 +95,7 @@ class ProjectsController extends AppController {
 				} else {
 					$this->Session->setFlash('Project was created');
 				}
-				//$this->redirect(array('action' => 'view', $data['Project']['url']));
+				$this->redirect(array('controller' => 'timeline', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash('Project was NOT created');
 			}
@@ -117,23 +113,11 @@ class ProjectsController extends AppController {
 		$this->render('add');
 	}
 
-	function admin_index() {
-		if ($this->params['isAdmin'] === false) {
-			$this->redirect($this->referer());
-		}
-		$this->Project->recursive = 0;
-		$this->set('projects', $this->paginate());
-		$this->render('index');
-	}
-
-	function admin_edit($id = null) {
+	function edit() {
 
 		$this->pageTitle = 'Update Project';
 
 		if (!empty($this->data)) {
-			$this->Project->create(array(
-				'approved' => $this->params['isAdmin']
-			));
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was updated');
 			} else {
@@ -148,6 +132,102 @@ class ProjectsController extends AppController {
 		$this->set('messages', $this->Project->messages);
 
 		$this->render('edit');
+	}
+
+	function admin_index() {
+		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
+			$this->redirect($this->referer());
+		}
+		$this->Project->recursive = 0;
+		$this->set('projects', $this->paginate());
+	}
+
+	function admin_edit($id = null) {
+		if (!$id) {
+			$this->Session->setFlash('The project was invalid');
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$this->pageTitle = 'Project Admin';
+
+		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
+			$this->redirect($this->referer());
+		}
+
+		$this->Project->id = $id;
+
+		if (!empty($this->data)) {
+			if ($data = $this->Project->save($this->data)) {
+				$this->Session->setFlash('Project was updated');
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash('Project was NOT updated');
+			}
+		}
+
+		$this->data = $this->Project->read();
+
+		$this->set('repoTypes', $this->Project->repoTypes());
+
+		$this->set('messages', $this->Project->messages);
+
+		$this->render('edit');
+	}
+
+	function admin_approve($id = null) {
+		if ($id) {
+			$this->Project->id = $id;
+			if ($this->Project->save(array('approved' => 1))) {
+				$this->Session->setFlash('The project was approved');
+			} else {
+				$this->Session->setFlash('The project was NOT approved');
+			}
+		} else {
+			$this->Session->setFlash('The project was invalid');
+		}
+		$this->redirect(array('action' => 'index'));
+	}
+
+	function admin_reject($id = null) {
+		if ($id) {
+			$this->Project->id = $id;
+			if ($this->Project->save(array('approved' => 0))) {
+				$this->Session->setFlash('The project was rejected');
+			} else {
+				$this->Session->setFlash('The project was NOT rejected');
+			}
+		} else {
+			$this->Session->setFlash('The project was invalid');
+		}
+		$this->redirect(array('action' => 'index'));
+	}
+
+	function admin_activate($id = null) {
+		if ($id) {
+			$this->Project->id = $id;
+			if ($this->Project->save(array('active' => 1))) {
+				$this->Session->setFlash('The project was activated');
+			} else {
+				$this->Session->setFlash('The project was NOT activated');
+			}
+		} else {
+			$this->Session->setFlash('The project was invalid');
+		}
+		$this->redirect(array('action' => 'index'));
+	}
+
+	function admin_deactivate($id = null) {
+		if ($id) {
+			$this->Project->id = $id;
+			if ($this->Project->save(array('active' => 0))) {
+				$this->Session->setFlash('The project was deactivated');
+			} else {
+				$this->Session->setFlash('The project was NOT deactivated');
+			}
+		} else {
+			$this->Session->setFlash('The project was invalid');
+		}
+		$this->redirect(array('action' => 'index'));
 	}
 }
 ?>

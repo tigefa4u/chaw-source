@@ -39,6 +39,8 @@ class Project extends AppModel {
 		),
 	);
 
+	var $belongsTo = array('User');
+
 	var $hasMany = array('Permission');
 
 	var $__created = false;
@@ -128,20 +130,18 @@ class Project extends AppModel {
 	}
 
 	function beforeSave() {
-		if (empty($this->data['Project']['username'])) {
-			$this->invalidate('user', 'Invalid user');
-			return false;
-		}
-
 		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
 
-		/*
-		if ($this->id && !empty($this->data['Project']['repo_type']) && $this->data['Project']['repo_type'] == $this->config['repo_type']) {
+		if ($this->id &&
+			!empty($this->data['Project']['repo_type']) &&
+			!empty($this->config['repo_type']) &&
+			$this->data['Project']['repo_type'] == $this->config['repo_type']
+		) {
 			unset($this->data['Project']['repo_type']);
 		}
-		*/
+
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
@@ -155,6 +155,11 @@ class Project extends AppModel {
 
 				$this->__created = true;
 			}
+		}
+
+		if ($this->__created && empty($this->data['Project']['username'])) {
+			$this->invalidate('user', 'Invalid user');
+			return false;
 		}
 
 		return true;

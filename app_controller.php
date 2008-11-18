@@ -49,7 +49,7 @@ class AppController extends Controller {
 		}
 
 		$this->params['project'] = null;
-		if (!empty($this->Project->config) && $this->Project->id != 1) {
+		if (!empty($this->Project->config) && $this->Project->config['id'] !== '1') {
 			$this->params['project'] = $this->Project->config['url'];
 		}
 

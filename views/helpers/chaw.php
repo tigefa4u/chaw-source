@@ -5,7 +5,7 @@ class ChawHelper extends AppHelper {
 	var $helpers = array('Html');
 
 	function admin($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
-		if (!empty($this->params['isAdmin'])) {
+		if (!empty($this->params['isAdmin']) || !empty($this->params['isOwner'])) {
 			return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
 		}
 		return null;
@@ -45,5 +45,21 @@ class ChawHelper extends AppHelper {
 				'class' => 'commit', 'title' => $revision
 			)
 		);
+	}
+
+	function toggle($value, $options) {
+		if (!empty($options['url'])) {
+			$url = $options['url'];
+			unset($options['url']);
+		}
+
+		$option = $options[0];
+		if ($value == 1) {
+			$option = $options[1];
+		}
+
+		$url = array_merge((array)$url, array('action' => $option));
+
+		return $this->Html->link($option, $url, array('class' => 'toggle', 'title' => $option));
 	}
 }

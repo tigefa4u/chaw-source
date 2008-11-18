@@ -55,7 +55,7 @@
 		<div id="header">
 
 			<span class="admin">
-				<?php echo $chaw->admin('edit', array('controller' => 'projects', 'action' => 'edit'))?>
+				<?php echo $chaw->admin('edit', array('admin' => false, 'controller' => 'projects', 'action' => 'edit'))?>
 			</span>
 
 			<h1><?php echo $html->link(Configure::read('Project.name'), array('admin' => false,'controller' => 'wiki', 'action' => 'index'));?></h1>
@@ -119,6 +119,15 @@
 			<div id="admin-navigation">
 				<h4>Admin</h4>
 				<ul>
+					<?php
+						if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
+							$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
+							echo $html->tag('li', $html->link('Projects', array(
+								'admin' => true, 'project'=> false, 'fork' => false,
+								'controller' => 'projects', 'action' => 'index'), $options
+							));
+						endif;
+					?>
 					<li><?php
 						$options = ($this->name == 'Users') ? array('class' => 'on') : null;
 						echo $html->link('Users', array('admin' => true, 'controller' => 'users', 'action' => 'index'), $options);

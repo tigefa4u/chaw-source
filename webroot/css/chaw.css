@@ -52,6 +52,9 @@ table {
 	float: left;
 	width: 100%;
 }
+table tr, table td {
+	border: 0;
+}
 
 #content {
 	clear: both;

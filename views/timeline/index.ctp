@@ -22,7 +22,11 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="paging">
 	<?php
 		echo $paginator->prev();
-		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
+				
+		echo $paginator->numbers(array(
+			'before' => ' | ', 'after' => ' | '
+		));
+				
 		echo $paginator->next();
 	?>
 </div>

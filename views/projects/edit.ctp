@@ -2,7 +2,9 @@
 	echo $chaw->messages($messages);
 ?>
 <div class="projects form">
-<?php echo $form->create(array('action' => $this->action));?>
+<?php echo $form->create(array('action' => $this->action,
+		'url' => (empty($this->params['admin'])) ? array('id' => false) : array()
+));?>
 	<fieldset class="main">
  		<legend><?php echo $this->pageTitle; ?></legend>
 	<?php
@@ -11,6 +13,12 @@
 		echo $form->input('name', array('disabled' => true));
 		echo $form->hidden('url');
 		echo $form->input('description');
+
+		if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
+			echo $form->input('private');
+			echo $form->input('active');
+			echo $form->input('approved');
+		endif;
 	?>
 	</fieldset>
 	<fieldset class="options">

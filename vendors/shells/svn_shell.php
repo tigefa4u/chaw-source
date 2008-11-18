@@ -73,7 +73,6 @@ class SvnShellShell extends Shell {
 		$this->out('This may take a while...');
 		$this->out('First we start by getting all the previous revisions.');
 
-
 		$data = $this->Project->Repo->find();
 
 		if (!empty($data)) {
@@ -85,11 +84,11 @@ class SvnShellShell extends Shell {
 			$results = false;
 			foreach ($data as $revision) {
 
-				$revision['project_id'] = $this->Project->id;
+				$revision['Repo']['project_id'] = $this->Project->id;
 
-				$this->Commit->create($revision);
+				$this->Commit->create($revision['Repo']);
 				if ($this->Commit->save()) {
-					$this->out("Commit: {$revision['revision']} synced.");
+					$this->out("Commit: {$revision['Repo']['revision']} synced.");
 					$results = true;
 				}
 				sleep(1);
