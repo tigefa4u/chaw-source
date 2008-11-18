@@ -48,6 +48,7 @@ class ProjectTestCase extends CakeTestCase {
 			'id' => 1,
 			'name' => 'original project',
 			'user_id' => 1,
+			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
 			'groups' => 'user, docs team, developer, admin',
@@ -68,6 +69,7 @@ class ProjectTestCase extends CakeTestCase {
 		$data = array('Project' =>array(
 			'id' => 2,
 			'name' => 'test project',
+			'username' => 'gwoo',
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
@@ -88,6 +90,7 @@ class ProjectTestCase extends CakeTestCase {
 		$data = array('Project' =>array(
 			'id' => 3,
 			'name' => 'svn project',
+			'username' => 'gwoo',
 			'user_id' => 1,
 			'repo_type' => 'Svn',
 			'private' => 0,
@@ -111,6 +114,7 @@ class ProjectTestCase extends CakeTestCase {
 			'id' => 1,
 			'name' => 'original project',
 			'user_id' => 1,
+			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
 			'groups' => 'user, docs team, developer, admin',
@@ -127,6 +131,10 @@ class ProjectTestCase extends CakeTestCase {
 		$path = Configure::read('Content.base');
 		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		$result = file_get_contents($path . 'permissions.ini');
+		$expected = "[admin]\ngwoo = crud\n\n[refs/heads/master]\ngwoo = rw";
+		$this->assertEqual($result, $expected);
 
 		$this->Project->create(array(
 			'project_id' => 1,

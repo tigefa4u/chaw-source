@@ -90,6 +90,7 @@ class ProjectsController extends AppController {
 		if (!empty($this->data)) {
 			$this->Project->create(array(
 				'user_id' => $this->Auth->user('id'),
+				'username' => $this->Auth->user('username'),
 				'approved' => $this->params['isAdmin']
 			));
 			if ($data = $this->Project->save($this->data)) {

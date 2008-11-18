@@ -36,7 +36,7 @@ class Project extends AppModel {
 			'unique' => array(
 				'rule' => 'isUnique'
 			)
-		)
+		),
 	);
 
 	var $hasMany = array('Permission');
@@ -127,24 +127,12 @@ class Project extends AppModel {
 		return true;
 	}
 
-	function fork($data = array()) {
-		$this->set($data);
-
-		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['remote']))) {
-			$this->__created = true;
-			$this->data['Project']['project_id'] = $this->id;
-			$this->data['Project']['name'] = $this->data['Project']['fork'] . "'s fork of " . $this->data['Project']['name'];
-		}
-
-		if (!empty($this->data['Project']['id'])) {
-			$this->id = null;
-			unset($this->data['Project']['id'], $this->data['Project']['created'], $this->data['Project']['modified']);
-		}
-
-		return $this->save();
-	}
-
 	function beforeSave() {
+		if (empty($this->data['Project']['username'])) {
+			$this->invalidate('user', 'Invalid user');
+			return false;
+		}
+
 		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		}
@@ -215,7 +203,9 @@ class Project extends AppModel {
 				$Wiki->save();
 
 				$this->Permission->config($this->config);
-				$this->Permission->saveFile();
+				$this->Permission->saveFile(array('Permission' => array(
+					'username' => $this->data['Project']['username']
+				)));
 			}
 
 			if (!$this->Permission->field('id', array('project_id' => $this->id))) {
@@ -247,6 +237,29 @@ class Project extends AppModel {
 		}
 
 		return true;
+	}
+
+
+	function fork($data = array()) {
+		$this->set($data);
+
+		if (empty($this->Repo)) {
+			return false;
+		}
+
+		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['remote']))) {
+			$this->__created = true;
+			$this->data['Project']['project_id'] = $this->id;
+			$this->data['Project']['name'] = $this->data['Project']['fork'] . "'s fork of " . $this->data['Project']['name'];
+			$this->data['Project']['username'] = $this->data['Project']['fork'];
+		}
+
+		if (!empty($this->data['Project']['id'])) {
+			$this->id = null;
+			unset($this->data['Project']['id'], $this->data['Project']['created'], $this->data['Project']['modified']);
+		}
+
+		return $this->save();
 	}
 
 	function isUnique($data, $options = array()) {
