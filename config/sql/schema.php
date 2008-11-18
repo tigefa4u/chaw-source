@@ -46,8 +46,8 @@ class ChawSchema extends CakeSchema {
 	var $projects = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'url' => array('type' => 'string', 'null' => false, 'length' => 200),
-			'fork' => array('type' => 'string', 'null' => false, 'length' => 200),
 			'user_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+			'fork' => array('type' => 'string', 'null' => true, 'length' => 200),
 			'project_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'name' => array('type' => 'string', 'null' => false, 'length' => 200),
 			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '1'),

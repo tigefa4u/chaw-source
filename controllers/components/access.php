@@ -130,6 +130,10 @@ class AccessComponent extends Object {
 			$this->isAllowed = true;
 		}
 
+		if ($this->url == 'users/account') {
+			$this->isAllowed = true;
+		}
+
 		if (!empty($C->Project->config['private'])) {
 			$this->isPublic = false;
 		}
