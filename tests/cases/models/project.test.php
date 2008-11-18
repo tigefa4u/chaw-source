@@ -61,8 +61,8 @@ class ProjectTestCase extends CakeTestCase {
 		));
 
 		$this->assertTrue($this->Project->save($data));
-		$path = Configure::read('Content.git');
-		$this->assertTrue(file_exists($path . 'repo' . DS . 'permissions.ini'));
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 
 		$data = array('Project' =>array(
@@ -124,8 +124,8 @@ class ProjectTestCase extends CakeTestCase {
 		));
 
 		$this->assertTrue($this->Project->save($data));
-		$path = Configure::read('Content.git');
-		$this->assertTrue(file_exists($path . 'repo' . DS . 'permissions.ini'));
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 
 		$this->Project->create(array(

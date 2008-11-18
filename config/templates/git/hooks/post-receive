@@ -7,11 +7,11 @@ cd <?php echo APP; ?>
 
 
 if [ -n "$1" ]; then
-	chaw post_receive commit <?php echo @$project; ?>
+	chaw post_receive commit <?php echo @$project; ?> -fork <?php echo @$fork; ?>
 
 else
 	while read oldrev newrev refname
 		do
-		chaw post_receive <?php echo @$project; ?> $refname $oldrev $newrev
+		chaw post_receive <?php echo @$project; ?> -fork <?php echo @$fork; ?> $refname $oldrev $newrev
 	done
 fi

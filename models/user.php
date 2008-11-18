@@ -46,7 +46,7 @@ class User extends AppModel {
 		)
 	);
 
-	//var $hasMany = array('Permission');
+	var $hasOne = array('Permission');
 
 	var $SshKey = null;
 

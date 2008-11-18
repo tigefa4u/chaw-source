@@ -42,7 +42,7 @@ class AppController extends Controller {
  **/
 	function beforeRender() {
 		if ($this->params['isAdmin'] !== true) {
-			$this->params['admin'] = false;
+			//$this->params['admin'] = false;
 		}
 		if (!empty($this->params['admin'])) {
 			$this->layout = 'admin';
@@ -54,7 +54,7 @@ class AppController extends Controller {
 		}
 
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
-		$this->set('CurrentProject', Set::map($this->Project->config, true));
+		$this->set('CurrentProject', Set::map(Configure::read('Project'), true));
 	}
 /**
  * undocumented function

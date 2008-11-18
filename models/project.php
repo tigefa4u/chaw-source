@@ -181,14 +181,16 @@ class Project extends AppModel {
 			);
 
 			$project = $this->data['Project']['url'];
+			$fork = (!empty($this->data['Project']['fork'])) ? $this->data['Project']['fork'] : false;
+
 			$chaw = Configure::read('Content.base');
 
 			foreach ($hooks[$this->Repo->type] as $hook) {
 				if (!file_exists("{$this->Repo->path}/hooks/{$hook}")) {
-					$this->Repo->hook($hook, array('project' => $project, 'chaw' => $chaw));
+					$this->Repo->hook($hook, array('project' => $project, 'fork' => $fork, 'chaw' => $chaw));
 				}
 
-				if ($created) {
+				if ($this->__created) {
 					if ($hook === 'post-commit') {
 						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} {$this->Repo->path} 1");
 					}
@@ -214,6 +216,14 @@ class Project extends AppModel {
 
 				$this->Permission->config($this->config);
 				$this->Permission->saveFile();
+			}
+
+			if (!$this->Permission->field('id', array('project_id' => $this->id))) {
+				$this->Permission->create(array(
+					'project_id' => $this->id,
+					'user_id' => $this->data['Project']['user_id']
+				));
+				$this->Permission->save();
 			}
 		}
 		$this->__created = false;

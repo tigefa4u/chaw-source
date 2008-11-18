@@ -59,9 +59,19 @@ class GitShellShell extends Shell {
 			return 1;
 		}
 
+		$user = $this->Permission->User->field('id', array('username' => $this->params['user']));
+
+		if (!$this->Permission->field('id', array('project_id' => $this->Project->id, 'user_id' => $user))) {
+			$this->Permission->create(array(
+				'project_id' => $this->Project->id,
+				'user_id' => $user
+			));
+			$this->Permission->save();
+		}
+
 		$allowed = $this->Permission->check('/refs/heads/master', array(
 			'user' => $this->params['user'],
-			'group' => @$permissions['Permission']['group'],
+			//'group' => @$permissions['Permission']['group'],
 			'access' => $this->actionMap[$command],
 			'default' => false
 		));

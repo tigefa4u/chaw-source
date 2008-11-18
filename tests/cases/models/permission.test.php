@@ -72,7 +72,7 @@ class PermissionTest extends CakeTestCase {
 
 		$Permission->saveFile($data);
 
-		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'permissions.ini'));
 
 
 		Configure::write('Project', $this->__projects['Two']);
@@ -128,7 +128,6 @@ class PermissionTest extends CakeTestCase {
 			)
 		);
 		$this->assertEqual($result, $expected);
-
 
 		Configure::write('Project', $this->__projects['Two']);
 		$Permission = new TestPermission();

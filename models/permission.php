@@ -111,7 +111,19 @@ class Permission extends AppModel {
 		}
 
 		foreach ((array)$rules[$project] as $rule => $perms) {
-			if (ltrim($rule, '/') == ltrim($path, '/')) {
+
+			$isMatch = ltrim($rule, '/') == ltrim($path, '/');
+
+			/* for multi paths
+			$paths = explode('/', $path);
+
+			if (strpos($rule, '/') !== false) {
+				if (substr($rule, -1) == '*') {
+
+				}
+			}
+			*/
+			if ($isMatch) {
 
 				$check = null;
 
@@ -145,6 +157,7 @@ class Permission extends AppModel {
 				foreach ($access as $perm) {
 					if ($check && strpos($check, $perm) !== false) {
 						return true;
+						return compact('check', 'perm', 'user', 'group');
 					}
 				}
 				return false;
@@ -184,39 +197,38 @@ class Permission extends AppModel {
  *
  **/
 	function rules($project = null) {
-		if ($project !== null) {
-			if (!empty($this->__rules[$project])) {
-				return $this->__rules[$project];
-			} else {
-				return array();
-			}
+		$config = $this->config();
+
+		if ($project === null) {
+			$project = $config['url'];
 		}
 
-		$project = 1;
-		$config = $this->config();
+		if (!empty($this->__rules[$project])) {
+			return $this->__rules[$project];
+		}
 
 		$parent = array($project => array(), 'groups' => array());
 
 		if ($config['id'] != 1) {
-			$project = $config['url'];
 			if (!empty($this->__rules[1])) {
 				$parent = $this->__rules[1];
 			} else {
 				if ($file = $this->file(true)) {
-					$parent = $this->__rules[1] = $this->toArray($file);
+					$this->__rules[1] = $parent = $this->toArray($file);
 				}
 			}
 		}
 
 		$rules = $this->toArray($this->file());
 
-		if (empty($rules)) {
-			return array();
+		if (empty($rules[$project])) {
+			$rules[$project] = array();
 		}
 
 		if (!empty($parent[$project])) {
-			$rules[$project] = array_merge($rules[$project], $parent[$project]);
+			$rules[$project] = Set::merge($rules[$project], $parent[$project]);
 		}
+
 		if (!empty($rules['groups']) && !empty($parent['groups'])) {
 			$rules['groups'] = array_merge($rules['groups'], $parent['groups']);
 		}
@@ -296,9 +308,8 @@ class Permission extends AppModel {
 	function &__getFile($root = false) {
 		$config = $this->config();
 		$path = $config['repo']['path'] . DS;
-		$repoType = strtolower($config['repo']['type']);
 		if ($config['id'] == 1 || $root === true) {
-			$path = Configure::read("Content.{$repoType}") . 'repo' . DS;
+			$path = Configure::read("Content.base");
 		}
 		$File = new File($path . 'permissions.ini');
 		return $File;

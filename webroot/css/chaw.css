@@ -141,7 +141,7 @@ table {
 	background: #fff;
 }
 #current-user .username {
-	padding-top: 2px;
+	padding-top: 4px;
 	padding-left: 4px;
 }
 #current-user span a {
@@ -458,4 +458,8 @@ fieldset.options textarea {
 }
 .start {
 	padding-top: 20px;
+}
+a.detail {
+	color: #69C;
+	padding-left: 10px;
 }

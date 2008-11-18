@@ -48,14 +48,15 @@ class AccessComponentTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 	}
 
-	function __runStartup() {
-		$this->Controller->Access->user = array();
+	function __runStartup($allowedActions = array()) {
+		$this->Controller->Access->user = $allowedActions;
 		$this->Controller->Auth->allowedActions = array();
 		$this->Controller->action = $this->Controller->params['action'];
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
 
-		$this->Controller->Auth->allow('add', 'login', 'logout', 'index');
+		$this->Controller->Auth->allow('add', 'login', 'logout');
+		$this->Controller->Auth->deny('account');
 
 		$this->Controller->Access->startup($this->Controller);
 		if ($this->Controller->testRedirect == null) {
@@ -73,7 +74,7 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'index',
 			'url' => array('url' => '/')
 		);
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$expected = array('admin' => false, 'project' => false, 'controller' => 'pages', 'action' => 'start');
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 
@@ -86,7 +87,7 @@ class AccessComponentTest extends CakeTestCase {
 		);
 
 		$this->Controller->testRedirect = null;
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$expected = null;
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 
@@ -98,7 +99,7 @@ class AccessComponentTest extends CakeTestCase {
 			'url' => array('url' => 'users/add')
 		);
 		$this->Controller->testRedirect = null;
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$expected = null;
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 
@@ -133,7 +134,7 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'login',
 			'url' => array('url' => 'users/login')
 		);
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
 
 		$this->Controller->testRedirect = null;
@@ -143,7 +144,7 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'logout',
 			'url' => array('url' => 'users/logout')
 		);
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
 
 		$this->Controller->testRedirect = null;
@@ -153,7 +154,7 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'account',
 			'url' => array('url' => 'users/account')
 		);
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 
 		$result = $this->Controller->testRedirect;
 		$expected = '/users/login';
@@ -186,14 +187,14 @@ class AccessComponentTest extends CakeTestCase {
 			'project' => null,
 			'controller' => 'browser',
 			'action' => 'index',
-			'url' => array('url' => 'source')
+			'url' => array('url' => 'browser')
 		);
 
 		$this->Controller->Session->write('Auth.User', array('id' => 1, 'username' => 'gwoo'));
 
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
-		$this->assertTrue($this->Controller->params['isAdmin']);
+		$this->assertTrue($this->Controller->params['isOwner']);
 
 		$this->Controller->Session->del('Auth.User');
 	}
@@ -225,10 +226,11 @@ class AccessComponentTest extends CakeTestCase {
 			'project' => null,
 			'controller' => 'browser',
 			'action' => 'index',
-			'url' => array('url' => 'source')
+			'url' => array('url' => 'browser')
 		);
 
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
+
 		$this->assertNull($this->Controller->testRedirect);
 
 		$this->Controller->testRedirect = null;
@@ -240,7 +242,7 @@ class AccessComponentTest extends CakeTestCase {
 			'url' => array('url' => 'projects')
 		);
 
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
 	}
 
@@ -272,11 +274,11 @@ class AccessComponentTest extends CakeTestCase {
 			'project' => null,
 			'controller' => 'browser',
 			'action' => 'index',
-			'url' => array('url' => 'source')
+			'url' => array('url' => 'browser')
 		);
 
-		$this->__runStartup($this->Controller);
-		$expected = array('admin' => false, 'controller' => 'projects');
+		$this->__runStartup();
+		$expected = array('admin' => false, 'project'=> false, 'fork'=> false, 'controller' => 'projects', 'action' => 'index');
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
@@ -288,7 +290,7 @@ class AccessComponentTest extends CakeTestCase {
 			'url' => array('url' => 'projects')
 		);
 
-		$this->__runStartup($this->Controller);
+		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
 
 	}
@@ -321,13 +323,13 @@ class AccessComponentTest extends CakeTestCase {
 			'project' => null,
 			'controller' => 'browser',
 			'action' => 'index',
-			'url' => array('url' => 'source')
+			'url' => array('url' => 'browser')
 		);
 
 		$this->Controller->Session->write('Auth.User', array('id' => 4, 'username' => 'bob'));
 
-		$this->__runStartup($this->Controller);
-		$expected = array('admin' => false, 'controller' => 'projects');
+		$this->__runStartup();
+		$expected = array('admin' => false, 'project'=> false, 'fork'=> false, 'controller' => 'projects', 'action' => 'index');
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 

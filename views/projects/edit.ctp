@@ -11,11 +11,6 @@
 		echo $form->input('name', array('disabled' => true));
 		echo $form->hidden('url');
 		echo $form->input('description');
-		echo $form->input('private');
-		echo $form->input('active');
-		if (!empty($this->params['isAdmin'])):
-			echo $form->input('approved');
-		endif;
 	?>
 	</fieldset>
 	<fieldset class="options">

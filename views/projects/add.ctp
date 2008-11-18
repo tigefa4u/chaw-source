@@ -13,7 +13,6 @@
 		));
 		echo $form->input('description');
 		echo $form->input('private');
-		echo $form->input('active');
 	?>
 	</fieldset>
 	<fieldset class="options">

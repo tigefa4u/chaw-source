@@ -33,7 +33,9 @@ class PostReceiveShell extends Shell {
 		$oldrev = @$this->args[2];
 		$newrev = @$this->args[3];
 
-		if ($this->Project->initialize(compact('project')) === false) {
+		$fork = @$this->params['fork'];
+
+		if ($this->Project->initialize(compact('project', 'fork')) === false) {
 			$this->err('Invalid project');
 			return 1;
 		}

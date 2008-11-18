@@ -8,10 +8,8 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('username');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th class="actions"><?php __('Actions');?></th>
 </tr>
 <?php
 $i = 0;
@@ -23,17 +21,10 @@ foreach ($users as $user):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $user['User']['id']; ?>
-		</td>
-		<td>
 			<?php echo $user['User']['username']; ?>
 		</td>
 		<td>
 			<?php echo $user['User']['email']; ?>
-		</td>
-		<td class="actions">
-			<?php echo $chaw->admin(__('View', true), array('action'=>'view', $user['User']['id'])); ?>
-			<?php echo $chaw->admin(__('Edit', true), array('action'=>'edit', $user['User']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

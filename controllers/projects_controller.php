@@ -30,7 +30,8 @@ class ProjectsController extends AppController {
 
 		if ($this->params['isAdmin'] === false) {
 			$this->paginate = array(
-				'conditions' => array('Project.private' => 0)
+				'conditions' => array('Project.private' => 0),
+				'order' => 'Project.id ASC'
 			);
 		}
 
@@ -75,6 +76,7 @@ class ProjectsController extends AppController {
 					'fork' => $data['Project']['fork'],
 					'controller' => 'browser', 'action' => 'index',
 				));
+
 			} else {
 				$this->Session->setFlash('Project was NOT created');
 			}
@@ -115,6 +117,9 @@ class ProjectsController extends AppController {
 	}
 
 	function admin_index() {
+		if ($this->params['isAdmin'] === false) {
+			$this->redirect($this->referer());
+		}
 		$this->Project->recursive = 0;
 		$this->set('projects', $this->paginate());
 		$this->render('index');

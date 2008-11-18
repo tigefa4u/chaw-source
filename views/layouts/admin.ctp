@@ -96,12 +96,17 @@
 							'admin' => false,
 							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
+					<li><?php
+						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
+						echo $html->link('Projects', array(
+							'admin' => false, 'project'=> false, 'fork' => false,
+							'controller' => 'projects', 'action' => 'index'), $options);
+					?></li>
 				</ul>
 			</div>
 
 		</div>
 		<div id="content">
-
 
 			<?php
 				echo $this->element('current_user');
@@ -115,10 +120,6 @@
 				<h4>Admin</h4>
 				<ul>
 					<li><?php
-						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
-						echo $html->link('Projects', array('admin' => true, 'controller' => 'projects', 'action' => 'index'), $options);
-					?></li>
-					<li><?php
 						$options = ($this->name == 'Users') ? array('class' => 'on') : null;
 						echo $html->link('Users', array('admin' => true, 'controller' => 'users', 'action' => 'index'), $options);
 					?></li>
@@ -130,7 +131,10 @@
 				</ul>
 				<p style="margin-top: 3em; margin-left: 10px;">
 					<?php
-						echo $html->link('New Project', array('admin' => false, 'controller' => 'projects', 'action' => 'add'));
+						echo $html->link('New Project', array(
+							'admin' => false, 'project' => false, 'fork' => false,
+							'controller' => 'projects', 'action' => 'add'
+						));
 					?>
 				</p>
 			</div>

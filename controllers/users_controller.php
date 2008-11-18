@@ -24,6 +24,7 @@ class UsersController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->autoRedirect = false;
 		$this->Auth->allow('add', 'login', 'logout');
+		$this->Auth->deny('account');
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
@@ -44,7 +45,7 @@ class UsersController extends AppController {
 
 			$redirect = $this->Auth->redirect();
 
-			if (strpos($redirect, 'user/add') !== false) {
+			if (strpos($redirect, 'users/add') !== false) {
 				$this->redirect(array());
 			}
 			if ($redirect == '/') {
@@ -125,6 +126,9 @@ class UsersController extends AppController {
 
 	function admin_index() {
 		$this->User->recursive = 0;
+		if (!empty($this->params['project']) && $this->Project->id !== 1) {
+			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
+		}
 		$this->set('users', $this->paginate());
 	}
 
