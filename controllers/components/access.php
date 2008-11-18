@@ -48,6 +48,12 @@ class AccessComponent extends Object {
  **/
 	var $isAllowed = false;
 /**
+ * undocumented class variable
+ *
+ * @var string
+ **/
+	var $allowedActions = array();
+/**
  * initialize
  *
  * @return void
@@ -87,7 +93,8 @@ class AccessComponent extends Object {
 			return true;
 		}
 
-		$allowedAction = in_array($C->action, $C->Auth->allowedActions);
+		$allowedByAuth = in_array($C->action, $C->Auth->allowedActions);
+		$this->isAllowed = in_array($C->action, $this->allowedActions);
 
 		if ($C->Project->initialize($C->params) === false) {
 
@@ -110,7 +117,7 @@ class AccessComponent extends Object {
 				return true;
 			}
 
-			if (!$allowedAction) {
+			if (!$allowedByAuth) {
 				$login =  Router::url(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'));
 				$C->Session->setFlash("Chaw needs to be installed. Please <a href='{$login}'>Login</a> or Register");
 				$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'add'));
@@ -130,10 +137,6 @@ class AccessComponent extends Object {
 			$this->isAllowed = true;
 		}
 
-		if ($C->name == 'Users') {
-			$this->isAllowed = true;
-		}
-
 		if (!empty($C->Project->config['private'])) {
 			$this->isPublic = false;
 		}
@@ -145,7 +148,7 @@ class AccessComponent extends Object {
 		}
 
 		if ($this->isPublic === false) {
-			if (!$this->isAllowed && !$allowedAction) {
+			if (!$this->isAllowed && !$allowedByAuth) {
 				$C->Session->setFlash('Select a Project');
 				$C->redirect(array(
 					'admin' => false, 'project' => false, 'fork' => false,
@@ -161,7 +164,7 @@ class AccessComponent extends Object {
 			return false;
 		}
 
-		if (!$this->isAllowed && !$allowedAction) {
+		if (!$this->isAllowed && !$allowedByAuth) {
 			$C->Auth->deny($C->action);
 			$C->Auth->authError = "Please login to continue.";
 			return false;
@@ -245,6 +248,18 @@ class AccessComponent extends Object {
 		}
 
 		return false;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function allow($actions = array()) {
+		if (!is_array($actions)) {
+			$actions = func_get_args();
+		}
 
+		$this->allowedActions = array_merge($this->allowedActions, $actions);
 	}
 }
