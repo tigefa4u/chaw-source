@@ -130,7 +130,7 @@ class AccessComponent extends Object {
 			$this->isAllowed = true;
 		}
 
-		if ($this->url == 'users/account') {
+		if ($this->name == 'Users') {
 			$this->isAllowed = true;
 		}
 
