@@ -52,7 +52,7 @@ class UsersController extends AppController {
 				$this->redirect(array());
 			}
 			if ($redirect == '/') {
-				$redirect = '/users/account';
+				$redirect = '/dashboard';
 			}
 			$this->redirect($redirect);
 
