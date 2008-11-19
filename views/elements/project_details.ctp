@@ -20,12 +20,13 @@
 
 			if (empty($CurrentProject->fork)):
 				echo $html->link('fork', array(
-					'fork' => false,
+					'admin' => false, 'fork' => false,
 					'controller' => 'projects', 'action' => 'fork'
 				), array('class' => 'detail'));
 			endif;
 
 			echo $html->link('download tar', array(
+				'admin' => false,
 				'controller' => 'projects', 'action' => 'index', 'ext' => 'tar'
 			), array('class' => 'detail'));
 
