@@ -140,10 +140,12 @@
 				</ul>
 				<p style="margin-top: 3em; margin-left: 10px;">
 					<?php
-						echo $html->link('New Project', array(
-							'admin' => false, 'project' => false, 'fork' => false,
-							'controller' => 'projects', 'action' => 'add'
-						));
+						if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
+							echo $html->link('New Project', array(
+								'admin' => false, 'project' => false, 'fork' => false,
+								'controller' => 'projects', 'action' => 'add'
+							));
+						endif;
 					?>
 				</p>
 			</div>
