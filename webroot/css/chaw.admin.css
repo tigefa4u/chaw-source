@@ -53,3 +53,8 @@
 .actions {
 	margin-top: 20px;
 }
+
+.panel {
+	float: left;
+	width: 49%;
+}

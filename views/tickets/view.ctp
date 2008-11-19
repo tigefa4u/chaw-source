@@ -46,7 +46,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
-			<?php echo $form->create(array('action' => 'modify'));?>
+			<?php echo $form->create(array('action' => 'modify', 'url'=> array($form->value('Ticket.id'), 'id'=> false)));?>
 
 				<div id="modify" style="display:none">
 					<fieldset class="main">
@@ -109,7 +109,9 @@ $javascript->codeBlock($script, array('inline' => false));
 				<fieldset class="options">
 					<legend>Options</legend>
 					<?php
-						echo $form->input('version_id');
+						if (!empty($versions)) {
+							echo $form->input('version_id');
+						}
 						echo $form->input('type');
 						echo $form->input('priority');
 					?>

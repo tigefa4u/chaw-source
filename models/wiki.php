@@ -27,16 +27,17 @@ class Wiki extends AppModel {
 	var $belongsTo = array(
 		'User' => array(
 			'foreignKey' => 'last_changed_by'
-		)
+		),
+		'Project'
 	);
-
+/*
 	var $hasOne = array(
 		'Timeline' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('model' => 'Wiki')
+			'conditions' => array('Timeline.model = \'Wiki\'')
 		)
 	);
-
+*/
 	function beforeSave(){
 		if (!empty($this->data['Wiki']['title'])) {
 			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
@@ -53,7 +54,8 @@ class Wiki extends AppModel {
 	}
 
 	function afterSave($created) {
-
+		$Timeline = ClassRegistry::init('Timeline');
+		
 		if ($created) {
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Wiki']['project_id'],
@@ -61,8 +63,8 @@ class Wiki extends AppModel {
 				'foreign_key' => $this->id,
 			));
 
-			$this->Timeline->create($timeline);
-			$this->Timeline->save();
+			$Timeline->create($timeline);
+			$Timeline->save();
 		}
 	}
 

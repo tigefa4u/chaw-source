@@ -84,4 +84,11 @@ class ChawHelper extends AppHelper {
 
 		return compact('project', 'fork');
 	}
+
+	function url($data = array(), $url = array()) {
+		if (!empty($data)) {
+			$url = array_merge($url, $this->params($data));
+		}
+		return $url;
+	}
 }

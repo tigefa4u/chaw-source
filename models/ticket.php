@@ -23,18 +23,19 @@ class Ticket extends AppModel {
 	var $actsAs = array('Containable');
 
 	var $belongsTo = array(
+		'Project',
 		'Version',
 		'Owner' => array('className' => 'User', 'foreignKey' => 'Owner'),
 		'Reporter' => array('className' => 'User', 'foreignKey' => 'reporter'),
 	);
-
+/*
 	var $hasOne = array(
 		'Timeline' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('model' => 'Ticket')
+			'conditions' => array('Timeline.model = \'Ticket\'')
 		)
 	);
-
+*/
 	var $hasMany = array('Comment');
 
 	var $hasAndBelongsToMany = array('Tag');
@@ -86,6 +87,7 @@ class Ticket extends AppModel {
 	}
 
 	function afterSave($created) {
+		$Timeline = ClassRegistry::init('Timeline');
 
 		if ($created) {
 			$timeline = array('Timeline' => array(
@@ -94,8 +96,8 @@ class Ticket extends AppModel {
 				'foreign_key' => $this->id,
 			));
 
-			$this->Timeline->create($timeline);
-			$this->Timeline->save();
+			$Timeline->create($timeline);
+			$Timeline->save();
 		}
 	}
 }

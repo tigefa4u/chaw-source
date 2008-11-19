@@ -22,15 +22,17 @@ class Comment extends AppModel {
 
 	var $belongsTo = array('User', 'Ticket');
 
+/*
 	var $hasOne = array(
 		'Timeline' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('model' => 'Comment')
+			'conditions' => array('Timeline.model = \'Comment\'')
 		)
 	);
-
+*/
 	function afterSave($created) {
-
+		$Timeline = ClassRegistry::init('Timeline');
+		
 		if ($created) {
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Comment']['project_id'],
@@ -38,8 +40,8 @@ class Comment extends AppModel {
 				'foreign_key' => $this->id,
 			));
 
-			$this->Timeline->create($timeline);
-			$this->Timeline->save();
+			$Timeline->create($timeline);
+			$Timeline->save();
 		}
 	}
 

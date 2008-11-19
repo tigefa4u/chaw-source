@@ -84,8 +84,9 @@ class CommitTestCase extends CakeTestCase {
 
 		$this->assertEqual($results, $data);
 
-		$this->Commit->Timeline->recursive = -1;
-		$results = $this->Commit->Timeline->find('first');
+		$Timeline = ClassRegistry::init('Timeline');
+		$Timeline->recursive = -1;
+		$results = $Timeline->find('first');
 		pr($results);
 	}
 }

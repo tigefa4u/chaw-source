@@ -311,7 +311,7 @@ class Project extends AppModel {
 	function repoTypes() {
 		return array_combine($this->repoTypes, $this->repoTypes);
 	}
-	
+
 	function from() {
 		$baseDomain = env('HTTP_BASE');
 		if ($baseDomain[0] === '.') {

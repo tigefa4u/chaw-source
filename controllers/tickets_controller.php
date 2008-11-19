@@ -25,27 +25,32 @@ class TicketsController extends AppController {
 	function index() {
 		$this->Ticket->recursive = 0;
 		$statuses = array_values($this->Project->ticket('statuses'));
-		
+
 		$conditions = array('Ticket.project_id' => $this->Project->id);
-		
+
 		if (empty($this->passedArgs['status'])) {
 			$this->passedArgs['status'] = $statuses[0];
 		}
 		$conditions['Ticket.status'] = $this->passedArgs['status'];
-		
+
 		$this->set('current', $this->passedArgs['status']);
 		$this->set('statuses', $statuses);
 		$this->set('tickets', $this->paginate('Ticket', $conditions));
 	}
 
 	function view($id = null) {
-
+		if (!$id) {
+			$this->Session->setFlash('Invalid ticket');
+			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
+		}
 		$this->Ticket->contain(array('Tag', 'Comment', 'Comment.User'));
 		$ticket = $this->data = $this->Ticket->read(null, $id);
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 
-		$versions = $this->Ticket->Version->find('list');
+		$versions = $this->Ticket->Version->find('list', array(
+			'conditions' => array('Version.project_id' => $this->Project->id
+		)));
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
@@ -63,11 +68,13 @@ class TicketsController extends AppController {
 
 			if ($this->Ticket->save($this->data)) {
 				$this->Session->setFlash('Ticket saved');
-				$this->redirect(array('tickets'));
+				$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 			}
 		}
 
-		$versions = $this->Ticket->Version->find('list');
+		$versions = $this->Ticket->Version->find('list', array(
+			'conditions' => array('Version.project_id' => $this->Project->id
+		)));
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
 

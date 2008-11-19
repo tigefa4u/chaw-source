@@ -4,10 +4,20 @@ if (!empty($tickets)):
 	$li = null;
 	foreach ($tickets as $ticket) :
 
+		$url = array('admin' => false,
+			'controller' => 'tickets', 'action' => 'view', $ticket['Ticket']['id']
+		);
+
+		$project = null;
+		if (!emptY($ticket['Project']) && $ticket['Project']['id'] !== $CurrentProject->id) {
+			$url = $chaw->url($ticket['Project'], $url);
+			$project = ' in '. $html->link($ticket['Project']['name'], $chaw->url($ticket['Project'], array(
+				'admin' => false, 'controller' => 'browser'
+			)), array('class' => 'project'));
+		}
+
 		$li .= $html->tag('li',
-			$html->link($ticket['Ticket']['title'], array('admin' => false,
-				'controller' => 'tickets', 'action' => 'view', $ticket['Ticket']['id']
-			))
+			$html->link($ticket['Ticket']['title'], $url) . $project
 		);
 
 	endforeach;

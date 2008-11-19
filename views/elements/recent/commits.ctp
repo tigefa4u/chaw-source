@@ -4,9 +4,16 @@ if (!empty($commits)):
 	$li = null;
 	foreach ($commits as $commit) :
 
+		$project = null;
+		if (!emptY($commit['Project']) && $commit['Project']['id'] !== $CurrentProject->id) {
+			$project = ' in '. $html->link($commit['Project']['name'], $chaw->url($commit['Project'], array(
+				'admin' => false, 'controller' => 'browser'
+			)), array('class' => 'project'));
+		}
+
 		$li .= $html->tag('li',
 			$chaw->commit($commit['Commit']['revision'], $commit['Project']) .
-			"<br />[{$commit['Commit']['author']}] {$commit['Commit']['message']}"
+			 $project . "<br />[{$commit['Commit']['author']}] {$commit['Commit']['message']}"
 		);
 
 	endforeach;
