@@ -25,9 +25,9 @@ class User extends AppModel {
 	var $validate = array(
 		'username' => array(
 			'allowedChars' => array(
-				'rule' => '/^[\-_\.a-zA-Z0-9]{4,}$/',
+				'rule' => '/^[\-_\.a-zA-Z0-9]{3,}$/',
 				'required' => true,
-				'message' => 'Required: Minimum four (4) characters, letters (no accents), numbers and .-_ permitted.'
+				'message' => 'Required: Minimum three (3) characters, letters (no accents), numbers and .-_ permitted.'
 			),
 			'unique' => array(
 				'rule' => 'isUnique',
