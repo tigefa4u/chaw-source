@@ -1,5 +1,15 @@
 <div class="tickets index">
-<h2>Tickets</h2>
+<h2>
+	<?php echo Inflector::humanize($current)?>
+	Tickets
+</h2>
+<?php
+	$links = array();
+	foreach ($statuses as $status) {
+		$links[] = $html->link($status, array('status' => $status));
+	}
+	echo join(' | ', $links);
+?>
 <p>
 <?php
 echo $paginator->counter(array(

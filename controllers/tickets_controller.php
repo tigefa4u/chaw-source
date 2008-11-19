@@ -24,12 +24,17 @@ class TicketsController extends AppController {
 
 	function index() {
 		$this->Ticket->recursive = 0;
-		$conditions = null;
-
-		if (!empty($this->params['project'])) {
-			$conditions = array('Ticket.project_id' => $this->Project->id);
+		$statuses = array_values($this->Project->ticket('statuses'));
+		
+		$conditions = array('Ticket.project_id' => $this->Project->id);
+		
+		if (empty($this->passedArgs['status'])) {
+			$this->passedArgs['status'] = $statuses[0];
 		}
-
+		$conditions['Ticket.status'] = $this->passedArgs['status'];
+		
+		$this->set('current', $this->passedArgs['status']);
+		$this->set('statuses', $statuses);
 		$this->set('tickets', $this->paginate('Ticket', $conditions));
 	}
 

@@ -24,12 +24,7 @@ class CommitsController extends AppController {
 
 	function index() {
 		$this->Commit->recursive = 0;
-		$conditions = null;
-
-		if (!empty($this->params['project'])) {
-			$conditions = array('Commit.project_id' => $this->Project->id);
-		}
-
+		$conditions = array('Commit.project_id' => $this->Project->id);
 		$this->set('commits', $this->paginate('Commit', $conditions));
 	}
 

@@ -13,17 +13,19 @@
 			if ($CurrentProject->repo->type == 'git'):
 				echo '<strong>git clone</strong> ';
 				echo "{$CurrentProject->remote->git}:$remote{$CurrentProject->url}.git";
+				
+				if (empty($CurrentProject->fork)):
+					echo $html->link('fork', array(
+						'admin' => false, 'fork' => false,
+						'controller' => 'projects', 'action' => 'fork'
+					), array('class' => 'detail'));
+				endif;
+				
 			else:
 				echo '<strong>svn checkout</strong> ';
 				echo "{$CurrentProject->remote->svn}/$remote{$CurrentProject->url}";
 			endif;
 
-			if (empty($CurrentProject->fork)):
-				echo $html->link('fork', array(
-					'admin' => false, 'fork' => false,
-					'controller' => 'projects', 'action' => 'fork'
-				), array('class' => 'detail'));
-			endif;
 			
 			/*
 			echo $html->link('download tar', array(

@@ -34,9 +34,7 @@ class TimelineController extends AppController {
 	function index() {
 		$this->Timeline->recursive = 2;
 
-		if (!empty($this->params['project'])) {
-			$this->paginate['conditions'] = array('Timeline.project_id' => $this->Project->id);
-		}
+		$this->paginate['conditions'] = array('Timeline.project_id' => $this->Project->id);
 
 		$timeline = $this->paginate();
 		$this->set('timeline', $timeline);
