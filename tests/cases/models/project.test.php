@@ -109,6 +109,12 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		$Timeline = ClassRegistry::init('Timeline');
+		$result = $Timeline->find('all', array('conditions' => array('Timeline.project_id' => 3)));
+
+		$this->assertEqual($result[0]['Wiki']['slug'], 'home');
+
 	}
 
 	function testProjectFork() {

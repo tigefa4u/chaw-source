@@ -115,8 +115,6 @@ class DashboardController extends AppController {
 		));
 
 		$this->set(compact('wiki', 'tickets', 'comments', 'commits'));
-
-		$this->render('index');
 	}
 
 }

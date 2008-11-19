@@ -30,7 +30,7 @@ class PostCommitShell extends Shell {
 
 		$project = $this->args[0];
 
-		if ($this->Project->initialize(compact('project')) === false) {
+		if ($this->Project->initialize(compact('project')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid project');
 			return 1;
 		}

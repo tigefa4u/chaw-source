@@ -54,10 +54,6 @@
 	<div id="container">
 		<div id="header">
 
-			<span class="admin">
-				<?php echo $chaw->admin('edit', array('admin' => false, 'controller' => 'projects', 'action' => 'edit'))?>
-			</span>
-
 			<h1><?php echo $html->link(Configure::read('Project.name'), array('admin' => false,'controller' => 'wiki', 'action' => 'index'));?></h1>
 
 			<div id="navigation">
@@ -119,6 +115,21 @@
 			<div id="admin-navigation">
 				<h4>Admin</h4>
 				<ul>
+					<li><?php
+						$options = ($this->name == 'Dashboard') ? array('class' => 'on') : null;
+						echo $html->link('Dashboard', array('admin' => true, 'controller' => 'dashboard', 'action' => 'index'), $options);
+					?></li>
+					<li><?php
+						$options = ($this->name == 'Permissions') ? array('class' => 'on') : null;
+						echo $html->link('Permissions', array('admin' => true, 'controller' => 'permissions', 'action' => 'index'), $options);
+					?></li>
+					<li><?php
+						$options = ($this->name == 'Users') ? array('class' => 'on') : null;
+						echo $html->link('Users', array('admin' => true, 'controller' => 'users', 'action' => 'index'), $options);
+					?></li>
+					<li><?php
+						echo $html->link('Settings', array('admin' => false, 'controller' => 'projects', 'action' => 'edit'))
+					?></li>
 					<?php
 						if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
 							$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
@@ -128,14 +139,6 @@
 							));
 						endif;
 					?>
-					<li><?php
-						$options = ($this->name == 'Users') ? array('class' => 'on') : null;
-						echo $html->link('Users', array('admin' => true, 'controller' => 'users', 'action' => 'index'), $options);
-					?></li>
-					<li><?php
-						$options = ($this->name == 'Permissions') ? array('class' => 'on') : null;
-						echo $html->link('Permissions', array('admin' => true, 'controller' => 'permissions', 'action' => 'index'), $options);
-					?></li>
 
 				</ul>
 				<p style="margin-top: 3em; margin-left: 10px;">

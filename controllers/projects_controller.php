@@ -104,7 +104,7 @@ class ProjectsController extends AppController {
 				} else {
 					$this->Session->setFlash('Project was created');
 				}
-				$this->redirect(array('controller' => 'timeline', 'action' => 'index'));
+				$this->redirect(array('project' => $data['Project']['url'], 'controller' => 'timeline', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash('Project was NOT created');
 			}

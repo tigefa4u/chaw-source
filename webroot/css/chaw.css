@@ -55,6 +55,9 @@ table {
 table tr, table td {
 	border: 0;
 }
+#header {
+	padding-right: 6px;
+}
 
 #content {
 	clear: both;
@@ -155,7 +158,20 @@ table tr, table td {
 #current-user span a:hover {
 	text-decoration: underline;
 }
-
+#current-user span.edit {
+	float: right;
+	vertical-align: middle;
+}
+#current-user span.edit a {
+	font-size: 11px;
+	padding: 2px 6px;
+	text-decoration: underline;
+	color: #bbb;
+}
+#current-user span.edit a:hover {
+	text-decoration: none;
+	color: #333;
+}
 #current-user span.login {
 	font-size: 90%;
 	font-weight: normal;
@@ -371,7 +387,18 @@ fieldset.options textarea {
 	margin-top: 2em;
 	width: 20%;
 }
-
+.permissions form {
+	float: left;
+	width: 66%;
+}
+.permissions .help {
+	float: right;
+	margin-top: 34px;
+	width: 30%;
+}
+.permissions .help .rule {
+	font-family: monospace;
+}
 .permissions form .select {
 	clear: none;
 	float: left;
