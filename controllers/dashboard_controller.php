@@ -22,8 +22,15 @@ class DashboardController extends AppController {
 
 	var $uses = array('Timeline');
 
-	function index() {
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Access->allow('index');
+	}
 
+	function index() {
+		if (!$this->Auth->user()) {
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
 		$user = $this->Auth->user('id');
 
 		$projects = $this->Project->Permission->find('all', array(
