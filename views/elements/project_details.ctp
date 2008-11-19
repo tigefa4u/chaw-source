@@ -24,6 +24,11 @@
 					'controller' => 'projects', 'action' => 'fork'
 				), array('class' => 'detail'));
 			endif;
+
+			echo $html->link('download tar', array(
+				'controller' => 'projects', 'action' => 'index', 'ext' => 'tar'
+			), array('class' => 'detail'));
+
 		?>
 	</p>
 </div>

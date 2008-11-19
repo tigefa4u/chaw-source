@@ -26,6 +26,15 @@ class ProjectsController extends AppController {
 	}
 
 	function index() {
+		if ($this->RequestHandler->ext == 'tar') {
+			$this->set(array(
+				'project' => basename($this->Project->Repo->working),
+				'working' => $this->Project->Repo->working
+			));
+
+			$this->render('package');
+		}
+
 		$this->Project->recursive = 0;
 
 		if ($this->params['isAdmin'] === false) {

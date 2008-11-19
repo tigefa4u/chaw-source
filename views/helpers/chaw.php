@@ -26,7 +26,7 @@ class ChawHelper extends AppHelper {
 		return join("\n", $result);
 	}
 
-	function commit($revision = null) {
+	function commit($revision = null, $project = array()) {
 		if (!$revision) {
 			return null;
 		}
@@ -37,14 +37,18 @@ class ChawHelper extends AppHelper {
 			$title = substr($revision, 0, 4) .'...' . substr($revision, -4, 4);
 		}
 
-		return $this->Html->link($title,
-			array(
-				'controller' => 'commits', 'action'=> 'view', $revision
-			),
-			array(
-				'class' => 'commit', 'title' => $revision
-			)
+		$url = array(
+			'admin' => false,
+			'controller' => 'commits', 'action'=> 'view', $revision
 		);
+
+		if (!empty($project)) {
+			$url = array_merge($url, $this->params($project));
+		}
+
+		return $this->Html->link($title, $url, array(
+			'class' => 'commit', 'title' => $revision
+		));
 	}
 
 	function toggle($value, $options) {
@@ -61,5 +65,23 @@ class ChawHelper extends AppHelper {
 		$url = array_merge((array)$url, array('action' => $option));
 
 		return $this->Html->link($option, $url, array('class' => 'toggle', 'title' => $option));
+	}
+
+	function params($data = array()) {
+		if (!empty($data['Project'])) {
+			$data = $data['Project'];
+		}
+
+		$project = null;
+		if ($data['id'] != 1) {
+			$project = $data['url'];
+		}
+
+		$fork = null;
+		if (!empty($data['fork'])) {
+			$fork = $data['fork'];
+		}
+
+		return compact('project', 'fork');
 	}
 }

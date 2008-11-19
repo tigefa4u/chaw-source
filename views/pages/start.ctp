@@ -42,7 +42,7 @@
 			if (!is_writable($path)):
 				$installReady = false;
 				echo '<span class="notice">';
-					echo sprintf(__('APP/%s is NOT writable.', true), str_replace(APP, "", $path));
+					echo sprintf(__('%s is NOT writable.', true), str_replace(APP, "APP/", $path));
 				echo '</span>';
 			endif;
 		}

@@ -5,7 +5,7 @@ if (!empty($commits)):
 	foreach ($commits as $commit) :
 
 		$li .= $html->tag('li',
-			$chaw->commit($commit['Commit']['revision']) .
+			$chaw->commit($commit['Commit']['revision'], $commit['Project']) .
 			"<br />[{$commit['Commit']['author']}] {$commit['Commit']['message']}"
 		);
 
