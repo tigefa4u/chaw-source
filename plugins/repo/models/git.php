@@ -190,12 +190,12 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function read($newrev, $diff = true) {
-		$info = $this->run('show', array($newrev, "--pretty=format:%H::%an::%ai::%s"), 'capture');
+	function read($newrev, $diff = false) {
+		$info = $this->run('show', array($newrev, "--pretty=format:%H::::%an::::%ai::::%s"), 'capture');
 		if (empty($info)) {
 			return null;
 		}
-		list($revision, $author, $commit_date, $message) = explode('::', $info[0]);
+		list($revision, $author, $commit_date, $message) = explode('::::', $info[0]);
 		unset($info[0]);
 
 		$changes = array();

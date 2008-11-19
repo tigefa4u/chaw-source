@@ -49,15 +49,16 @@ class Browser extends Object {
 
 		$Folder = new Folder($this->Repo->working . DS . $path);
 
-		list($dirs, $files) = $Folder->read(true, array('.git', '.svn'));
-
-		$dir = $file = array();
-
 		$path = $Folder->slashTerm($Folder->pwd());
 
 		if ($path === $Folder->slashTerm($this->Repo->working)) {
 			$this->Repo->update();
 		}
+
+
+		list($dirs, $files) = $Folder->read(true, array('.git', '.svn'));
+
+		$dir = $file = array();
 
 		$count = count($dirs);
 		for ($i = 0; $i < $count; $i++) {

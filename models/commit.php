@@ -56,7 +56,7 @@ class Commit extends AppModel {
 
 	function findByRevision($revision) {
 		$commit = parent::findByRevision($revision);
-		$data = $this->Project->Repo->read($revision);
+		$data = $this->Project->Repo->read($revision, true);
 		if (!empty($commit)) {
 			$commit['Commit'] = array_merge($commit['Commit'], $data);
 		} else {

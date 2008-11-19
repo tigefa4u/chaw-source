@@ -44,7 +44,7 @@ class PostReceiveShell extends Shell {
 			$refname = 'refs/heads/master';
 		}
 
-		$data = $this->Project->Repo->read($newrev);
+		$data = $this->Project->Repo->read($newrev, false);
 
 		if (!empty($data)) {
 

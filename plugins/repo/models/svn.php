@@ -135,7 +135,7 @@ class Svn extends Repo {
  * @return array
  *
  **/
-	function read($revision = null, $diff = true) {
+	function read($revision = null, $diff = false) {
 		$author = trim($this->look('author', array('-r', $revision)));
 
 		$commit_date = $this->look('date', array('-r', $revision));
@@ -204,7 +204,16 @@ class Svn extends Repo {
  *
  **/
 	function pathInfo($path) {
-		$data = $this->run('log', array($path));
+		//return array('revision' => null, 'date' => null, 'message' => null, 'author' => null);
+		$info = $this->run('info', array($path));
+	
+		$youngest = null;
+		if (preg_match('/Last Changed Rev: (.*)/', $info, $matches)) {
+			$youngest = trim($matches[1]);
+		}
+
+		$data = $this->run('log', array($path, '-r', $youngest));
+
 		$lines = explode("\n", $data);
 		$info = (!empty($lines[3])) ? explode("|", $lines[1]) : array();
 
