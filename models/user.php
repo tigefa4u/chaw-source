@@ -66,6 +66,7 @@ class User extends AppModel {
 		}
 
 		if (!empty($this->data['Key']) && !empty($this->data['User']['username'])) {
+			$delete = array();
 			foreach ($this->data['Key'] as $type => $keys) {
 				foreach ($keys as $key) {
 					if (!empty($key['chosen'])) {

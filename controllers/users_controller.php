@@ -26,7 +26,7 @@ class UsersController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->autoRedirect = false;
 		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
-		$this->Access->allow('forgotten', 'verify', 'account', 'add', 'login', 'logout', 'change');
+		$this->Access->allow('forgotten', 'verify', 'account', 'add', 'edit', 'login', 'logout', 'change');
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
