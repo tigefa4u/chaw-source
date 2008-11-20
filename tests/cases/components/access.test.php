@@ -397,6 +397,24 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->assertNull($this->Controller->testRedirect);
 		$this->assertFalse($this->Controller->params['isAdmin']);
+		
+		
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'projects',
+			'action' => 'index',
+			'named' => array('type' => 'fork'),
+			'url' => array('url' => 'projects/index/type:fork')
+		);
+
+		$this->Controller->Session->write('Auth.User', array('id' => 4, 'username' => 'bob'));
+
+		$this->__runStartup();
+
+		$this->assertNull($this->Controller->testRedirect);
+		$this->assertFalse($this->Controller->params['isAdmin']);
 
 		$this->Controller->Session->del('Auth.User');
 	}

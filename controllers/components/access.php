@@ -133,7 +133,7 @@ class AccessComponent extends Object {
 
 		$C->Auth->allow('index');
 
-		if ($this->url == 'projects') {
+		if ($C->params['controller'] == 'projects' && $C->params['action'] == 'index') {
 			$this->isAllowed = true;
 		}
 
