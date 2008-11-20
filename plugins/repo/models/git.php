@@ -274,8 +274,8 @@ class Git extends Repo {
 
 		$result['revision'] = (!empty($info[0])) ? trim(array_shift($info), 'commit ') : null;
 
-		$result['author'] = (!empty($info[1])) ? trim(array_shift($info), "Author: ") : null;
-		$result['date'] = (!empty($info[2])) ? trim(array_shift($info), "Date: ") : null;
+		$result['author'] = (!empty($info[1])) ? str_replace("Author: ", "", array_shift($info)) : null;
+		$result['date'] = (!empty($info[2])) ? str_replace("Date: ", array_shift($info)) : null;
 		$result['message'] = (!empty($info)) ? trim(join("\n", $info)) : null;
 
 		return $result;
