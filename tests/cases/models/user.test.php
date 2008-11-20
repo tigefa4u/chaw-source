@@ -35,7 +35,7 @@ class UserTestCase extends CakeTestCase {
 	function testUserInstance() {
 		$this->assertTrue(is_a($this->User, 'User'));
 	}
-
+	
 	function testUserSave() {
 		/*
 		$result = $this->User->saveKey('gwoo', 'ssh-dss something something else');

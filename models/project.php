@@ -213,14 +213,7 @@ class Project extends AppModel {
 				)));
 			}
 
-			if (!$this->Permission->field('id', array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']))) {
-				$this->Permission->create(array(
-					'project_id' => $this->id,
-					'user_id' => $this->data['Project']['user_id'],
-					'group' => 'admin'
-				));
-				$this->Permission->save();
-			}
+			$this->permit($this->data['Project']['user_id'], 'admin');
 		}
 
 		$this->__created = false;
@@ -267,16 +260,36 @@ class Project extends AppModel {
 		}
 
 		if ($data = $this->save()) {
-			if (!$this->Permission->field('id', array('project_id' => $data['Project']['project_id'], 'user_id' =>  $data['Project']['user_id']))) {
-				$this->Permission->create(array(
-					'project_id' => $data['Project']['project_id'],
-					'user_id' => $data['Project']['user_id']
-				));
-				$this->Permission->save();
-			}
+			$this->id = $data['Project']['project_id'];
+			$this->permit($data['Project']['user_id']);
 			return true;
 		}
 		return false;
+	}
+
+	function permit($user, $group = null) {
+		if (!is_int($user)) {
+			$user = $this->Permission->User->field('id', array('username' => $user));
+		}
+
+		if (!$user || !$this->id) {
+			return false;
+		}
+
+		if (!$this->Permission->field('id', array('project_id' => $this->id, 'user_id' => $user))) {
+			$this->Permission->create(array(
+				'project_id' => $this->id,
+				'user_id' => $user,
+				'group' => $group
+			));
+			$this->Permission->save();
+
+			$this->recursive = -1;
+			$this->updateAll(
+				array('Project.users_count' => 'users_count + 1'),
+				array('Project.id' => $this->id)
+			);
+		}
 	}
 
 	function isUnique($data, $options = array()) {

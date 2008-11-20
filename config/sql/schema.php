@@ -54,6 +54,7 @@ class ChawSchema extends CakeSchema {
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),
+			'users_count' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'ohloh_project' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200),
 			'groups' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_types' => array('type' => 'string', 'null' => true, 'default' => NULL),
