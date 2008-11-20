@@ -46,11 +46,11 @@ class ProjectsController extends AppController {
 			);
 		}
 
-		$this->paginate['conditions']['Project.fork'] = '';
+		$this->paginate['conditions']['Project.fork'] = null;
 
 		if(!empty($this->passedArgs['type'])) {
 			if ($this->passedArgs['type'] == 'fork') {
-				$this->paginate['conditions']['Project.fork !='] = '';
+				$this->paginate['conditions']['Project.fork !='] = null;
 			}
 			unset($this->paginate['conditions']['Project.fork']);
 		}
