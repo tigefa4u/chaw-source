@@ -269,13 +269,18 @@ class Git extends Repo {
  **/
 	function pathInfo($path = null) {
 		$this->before(array("cd {$this->working}"));
-		$info = $this->run('log', array("--pretty=medium", '-1', '--', $path));
+		$info = $this->run('log', array("--pretty=medium", '-1', '--', str_replace($this->working . '/', '', $path)));
+
+		if (empty($info)) {
+			return null;
+		}
+
 		$info = explode("\n", $info);
 
 		$result['revision'] = (!empty($info[0])) ? trim(array_shift($info), 'commit ') : null;
 
 		$result['author'] = (!empty($info[1])) ? str_replace("Author: ", "", array_shift($info)) : null;
-		$result['date'] = (!empty($info[2])) ? str_replace("Date: ", array_shift($info)) : null;
+		$result['date'] = (!empty($info[2])) ? date('Y-m-d H:m:s', strtotime(str_replace("Date: ", "", array_shift($info)))) : null;
 		$result['message'] = (!empty($info)) ? trim(join("\n", $info)) : null;
 
 		return $result;
