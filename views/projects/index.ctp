@@ -3,6 +3,13 @@
 		echo $html->tag('h2', 'Sorry, no projects are available');
 	}
 ?>
+<div class="page-navigation">
+	<?php echo $html->link('All', array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
+	|
+	<?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index'));?>
+	|
+	<?php echo $html->link('Forks', array('controller' => 'projects', 'action' => 'index', 'type' => 'fork'));?>
+</div>
 <div class="projects index">
 <?php foreach ((array)$projects as $project):
 

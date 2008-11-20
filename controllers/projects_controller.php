@@ -39,10 +39,22 @@ class ProjectsController extends AppController {
 
 		if ($this->params['isAdmin'] === false) {
 			$this->paginate = array(
-				'conditions' => array('Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1),
-				'order' => 'Project.id ASC'
+				'conditions' => array(
+					'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
+				),
+				'order' => 'Project.users_count DESC, Project.created ASC'
 			);
 		}
+
+		$this->paginate['conditions']['Project.fork'] = '';
+
+		if(!empty($this->passedArgs['type'])) {
+			if ($this->passedArgs['type'] == 'fork') {
+				$this->paginate['conditions']['Project.fork !='] = '';
+			}
+			unset($this->paginate['conditions']['Project.fork']);
+		}
+
 
 		$this->set('projects', $this->paginate());
 	}
