@@ -147,7 +147,7 @@ class AccessComponent extends Object {
 			}
 		}
 
-		if (!$this->user() && !$this->isAllowed && !$allowedByAuth) {
+		if (!$this->user() && !$this->isAllowed && !$allowedByAuth && $this->url !== '/') {
 			$C->Auth->deny($C->action);
 			$C->Auth->authError = "Please login to continue.";
 			return false;
