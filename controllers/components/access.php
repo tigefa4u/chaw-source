@@ -187,27 +187,30 @@ class AccessComponent extends Object {
 			$this->access = 'w';
 		}
 
+		$username = $this->user('username');
 
-		$admin = array(
-			'user' => $this->user('username'),
-			'access' => array($this->access, $crud),
-			'default' => false
-		);
+		if (!empty($username)) {
+			$admin = array(
+				'user' => $username,
+				'access' => array($this->access, $crud),
+				'default' => false
+			);
 
-		$allowAdmin = $C->Project->Permission->check('admin', $admin);
+			$allowAdmin = $C->Project->Permission->check('admin', $admin);
 
-		if ($allowAdmin === true) {
-			return $C->params['isAdmin'] = $this->isAllowed = true;
+			if ($allowAdmin === true) {
+				return $C->params['isAdmin'] = $this->isAllowed = true;
+			}
 		}
 
 		if ($this->isAllowed) {
 			return true;
 		}
 
-		$default = ($this->access === 'w' || !empty($C->params['admin'])) ? false : $this->isPublic;
+		$default = ((!$username && $this->access == 'w') || !empty($C->params['admin'])) ? false : $this->isPublic;
 
 		$user = array(
-			'user' => $this->user('username'),
+			'user' => $username,
 			'access' => array($this->access, $crud),
 			'default' => $default
 		);
