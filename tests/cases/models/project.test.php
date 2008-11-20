@@ -118,6 +118,10 @@ class ProjectTestCase extends CakeTestCase {
 	}
 
 	function testProjectFork() {
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
 		//first we have to save a project
 		$data = array('Project' =>array(
 			'id' => 1,
@@ -145,14 +149,32 @@ class ProjectTestCase extends CakeTestCase {
 		$expected = "[admin]\ngwoo = crud\n\n[refs/heads/master]\ngwoo = rw";
 		$this->assertEqual($result, $expected);
 
-		$this->Project->create(array(
-			'project_id' => 1,
-			'user_id' => 2,
-			'fork' => 'gwoo',
-			'approved' => 1
+		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 1)));
+		unset($results[0]['Permission']['created'], $results[0]['Permission']['modified']);
+		$this->assertEqual($results[0]['Permission'], array('id'=> 1, 'user_id' => 1, 'project_id' => 1, 'group' => 'admin'));
+
+		$this->Project->create(array_merge(
+			$this->Project->config,
+			array(
+				'user_id' => 2,
+				'fork' => 'bob',
+				'approved' => 1,
+			)
 		));
-		$this->assertTrue($this->Project->fork($this->Project->config));
+		$this->assertTrue($this->Project->fork());
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 1)));
+		unset($results[0]['Permission']['created'], $results[0]['Permission']['modified']);
+		$this->assertEqual($results[0]['Permission'], array('id'=> 1, 'user_id' => 1, 'project_id' => 1, 'group' => 'admin'));
+		unset($results[1]['Permission']['created'], $results[1]['Permission']['modified']);
+		$this->assertEqual($results[1]['Permission'], array('id'=> 3, 'user_id' => 2, 'project_id' => 1, 'group' => null));
+
+
+		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 2)));
+		unset($results[0]['Permission']['created'], $results[0]['Permission']['modified']);
+		$this->assertEqual($results[0]['Permission'], array('id'=> 2, 'user_id' => 2, 'project_id' => 2, 'group' => 'admin'));
+
 
 		//pr($this->Project->Repo->debug);
 		//pr($this->Project->Repo->response);

@@ -157,7 +157,7 @@ class Project extends AppModel {
 			}
 		}
 
-		if ($this->__created && empty($this->data['Project']['username'])) {
+		if ($this->__created && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
 			$this->invalidate('user', 'Invalid user');
 			return false;
 		}
@@ -213,14 +213,16 @@ class Project extends AppModel {
 				)));
 			}
 
-			if (!$this->Permission->field('id', array('project_id' => $this->id))) {
+			if (!$this->Permission->field('id', array('project_id' => $this->id, 'user_id' => $this->data['Project']['user_id']))) {
 				$this->Permission->create(array(
 					'project_id' => $this->id,
-					'user_id' => $this->data['Project']['user_id']
+					'user_id' => $this->data['Project']['user_id'],
+					'group' => 'admin'
 				));
 				$this->Permission->save();
 			}
 		}
+
 		$this->__created = false;
 		$this->createShell();
 	}
@@ -264,7 +266,17 @@ class Project extends AppModel {
 			unset($this->data['Project']['id'], $this->data['Project']['created'], $this->data['Project']['modified']);
 		}
 
-		return $this->save();
+		if ($data = $this->save()) {
+			if (!$this->Permission->field('id', array('project_id' => $data['Project']['project_id'], 'user_id' =>  $data['Project']['user_id']))) {
+				$this->Permission->create(array(
+					'project_id' => $data['Project']['project_id'],
+					'user_id' => $data['Project']['user_id']
+				));
+				$this->Permission->save();
+			}
+			return true;
+		}
+		return false;
 	}
 
 	function isUnique($data, $options = array()) {

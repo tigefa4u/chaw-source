@@ -1,5 +1,8 @@
 <div class="users index">
 <h2><?php __('Users');?></h2>
+<h4>
+	Anyone who clones or forks the project
+</h4>
 <p>
 <?php
 echo $paginator->counter(array(
@@ -30,7 +33,7 @@ foreach ($users as $user):
 		<td>
 			<?php echo $user['User']['last_login']; ?>
 		</td>
-		
+
 	</tr>
 <?php endforeach; ?>
 </table>
@@ -43,6 +46,5 @@ foreach ($users as $user):
 <div class="actions">
 	<ul>
 		<li><?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all'=>true)) : null; ?></li>
-		<li><?php echo $chaw->admin(__('New User', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>

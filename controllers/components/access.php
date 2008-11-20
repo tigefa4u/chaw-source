@@ -106,7 +106,7 @@ class AccessComponent extends Object {
 
 			if ($this->user()) {
 				if (!in_array($this->url, array('projects/add'))) {
-					//$C->Session->setFlash('Chaw needs to be installed');
+					$C->Session->setFlash('Chaw needs to be installed');
 					$C->redirect(array(
 						'admin' => false, 'project' => false,
 						'controller' => 'pages', 'action'=> 'start'
@@ -147,6 +147,12 @@ class AccessComponent extends Object {
 			}
 		}
 
+		if (!$this->user() && !$this->isAllowed && !$allowedByAuth) {
+			$C->Auth->deny($C->action);
+			$C->Auth->authError = "Please login to continue.";
+			return false;
+		}
+
 		if ($this->isPublic === false) {
 			if (!$this->isAllowed && !$allowedByAuth) {
 				$C->Session->setFlash('Select a Project');
@@ -164,11 +170,6 @@ class AccessComponent extends Object {
 			return false;
 		}
 
-		if (!$this->isAllowed && !$allowedByAuth) {
-			$C->Auth->deny($C->action);
-			$C->Auth->authError = "Please login to continue.";
-			return false;
-		}
 		return true;
 	}
 /**
@@ -205,6 +206,10 @@ class AccessComponent extends Object {
 
 		if ($this->isAllowed) {
 			return true;
+		}
+
+		if ($this->access == 'w' && !$username) {
+			return $this->isAllowed = false;
 		}
 
 		$default = ((!$username && $this->access == 'w') || !empty($C->params['admin'])) ? false : $this->isPublic;
