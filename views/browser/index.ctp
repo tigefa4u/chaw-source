@@ -45,7 +45,7 @@
 			<tr<?php echo $class?>>
 				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
-				<td><?php echo $item['info']['message'];?></td>
+				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
@@ -63,7 +63,7 @@
 			<tr<?php echo $class?>>
 				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
-				<td><?php echo $item['info']['message'];?></td>
+				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>

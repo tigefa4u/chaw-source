@@ -360,6 +360,10 @@ fieldset.options textarea {
 .browser table tr.zebra td {
 	background:#FAFAFA;
 }
+.browser table td.message {
+	font-size: 80%;
+}
+
 .browser a.folder {
 	background: url('images/folder.gif') no-repeat left;
 	color: #333;
