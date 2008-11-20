@@ -16,7 +16,7 @@ class ProjectFixture extends CakeTestFixture {
 			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),
 			'ohloh_project' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200),
-			'users' => array('type' => 'integer', 'null' => false, 'default' => 0),
+			'users_count' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'groups' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_types' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_statuses' => array('type' => 'string', 'null' => true, 'default' => NULL),
