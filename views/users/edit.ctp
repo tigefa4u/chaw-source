@@ -12,12 +12,13 @@
 	<fieldset>
  		<legend><?php __('Ssh Keys');?></legend>
 		<?php
+			
 			foreach ((array)$sshKeys as $type => $keys) {
-				$fields = null;
-
+				$spans = $fields = null;
+				
 				foreach ((array)$keys as $i => $sshKey) {
 
-					$fields .= $form->checkbox("Key.{$type}.{$i}.chosen", array(
+					$fields = $form->checkbox("Key.{$type}.{$i}.chosen", array(
 						'value' => 1,
 					));
 
@@ -27,16 +28,17 @@
 						'class' => 'text'
 					));
 
+					$spans .= $html->tag('span', $fields, array('class' => 'checkbox'));
 				}
 				$legend = $html->tag('legend', $type);
 
 				if ($fields !== null) {
 					echo $html->tag('fieldset',
 						$legend .
-						$html->tag('div', $fields, array('class' => 'checkbox')) .
+						$html->tag('div', $spans, array('class' => 'checkbox')) .
 						$form->submit('delete')
 					);
-			}
+				}
 			}
 		?>
 

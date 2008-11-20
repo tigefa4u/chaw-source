@@ -10,6 +10,7 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('username');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
+	<th><?php echo $paginator->sort('last_login');?></th>
 </tr>
 <?php
 $i = 0;
@@ -26,6 +27,10 @@ foreach ($users as $user):
 		<td>
 			<?php echo $user['User']['email']; ?>
 		</td>
+		<td>
+			<?php echo $user['User']['last_login']; ?>
+		</td>
+		
 	</tr>
 <?php endforeach; ?>
 </table>
@@ -37,6 +42,7 @@ foreach ($users as $user):
 </div>
 <div class="actions">
 	<ul>
+		<li><?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all'=>true)) : null; ?></li>
 		<li><?php echo $chaw->admin(__('New User', true), array('action'=>'add')); ?></li>
 	</ul>
 </div>

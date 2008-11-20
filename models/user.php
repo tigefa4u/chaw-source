@@ -86,17 +86,6 @@ class User extends AppModel {
 		return true;
 	}
 
-	function afterSave($created) {
-
-		if (!empty($this->data['User']['project_id']) && empty($this->data['User']['group'])) {
-			$this->Permission->create(array(
-				'user_id' => $this->id,
-				'project_id' => $this->data['User']['project_id'],
-				'group' => $this->data['User']['group']
-			));
-			$this->Permission->save();
-		}
-	}
 
 	function isUnique($data, $options = array()) {
 		if (!empty($data['username'])) {

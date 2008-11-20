@@ -421,6 +421,11 @@ fieldset.options textarea {
 .users form h4 {
 	margin: 1em 0;
 }
+.users form .checkbox span.checkbox {
+	clear: both;
+	display: block;
+	padding-top: 4px;
+}
 .users form .checkbox input {
 	float: left;
 	clear: none;

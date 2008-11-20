@@ -125,6 +125,7 @@ class SshKey extends AppModel {
 			return false;
 		}
 
+		$this->_File->lock = null;
 		if ($keys = $this->_File->read()) {
 			$this->lines = explode("\n", $keys);
 		}
@@ -152,7 +153,8 @@ class SshKey extends AppModel {
  **/
 	function write() {
 		$this->_File->lock = true;
-		return $this->_File->write(join("\n", $this->lines), 'w', true);
+		$result = $this->_File->write(join("\n", $this->lines), 'w', true);
+		return $result;
 	}
 /**
  * delete a key
@@ -181,7 +183,9 @@ class SshKey extends AppModel {
 			$keys = array($keys);
 		}
 
-		$this->read();
+		if (empty($this->lines)) {
+			$this->read();
+		}
 
 		$oldKeys = array_flip($this->lines);
 
@@ -199,7 +203,7 @@ class SshKey extends AppModel {
 			$this->user[$username] = array();
 			return $this->write();
 		}
-		return false;
+		return true;
 	}
 /**
  * get command for a given user

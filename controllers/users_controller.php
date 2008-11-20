@@ -148,10 +148,10 @@ class UsersController extends AppController {
 
 	function admin_index() {
 		$this->User->recursive = 0;
-		if (!empty($this->params['project']) && $this->Project->id !== '1') {
+		if (empty($this->passedArgs['all'])) {
 			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
 		}
-		$this->paginate['fields'] = array('DISTINCT User.username', 'User.email');
+		$this->paginate['fields'] = array('DISTINCT User.username', 'User.email', 'User.last_login');
 
 		$this->set('users', $this->paginate());
 	}
