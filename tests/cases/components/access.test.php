@@ -289,6 +289,20 @@ class AccessComponentTest extends CakeTestCase {
 		);
 
 		$this->__runStartup();
+		$expected = array('admin' => false, 'project'=> false, 'fork'=> false, 'controller' => 'projects', 'action' => 'index');
+		$this->assertEqual($this->Controller->testRedirect, $expected);
+		$this->assertFalse($this->Controller->params['isAdmin']);
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'tickets',
+			'action' => 'add',
+			'url' => array('url' => 'tickets/add')
+		);
+
+		$this->__runStartup();
 		$this->assertEqual($this->Controller->testRedirect, '/users/login');
 		$this->assertFalse($this->Controller->params['isAdmin']);
 

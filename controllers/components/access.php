@@ -147,14 +147,8 @@ class AccessComponent extends Object {
 			}
 		}
 
-		if (!$this->user() && !$this->isAllowed && !$allowedByAuth && $this->url !== '/') {
-			$C->Auth->deny($C->action);
-			$C->Auth->authError = "Please login to continue.";
-			return false;
-		}
-
 		if ($this->isPublic === false) {
-			if (!$this->isAllowed && !$allowedByAuth) {
+			if (!$this->isAllowed && !$allowedByAuth && $this->access == 'r') {
 				$C->Session->setFlash('Select a Project');
 				$C->redirect(array(
 					'admin' => false, 'project' => false, 'fork' => false,
@@ -162,6 +156,12 @@ class AccessComponent extends Object {
 				));
 				return false;
 			}
+		}
+
+		if (!$this->user() && !$this->isAllowed && !$allowedByAuth) {
+			$C->Auth->deny($C->action);
+			$C->Auth->authError = "Please login to continue.";
+			return false;
 		}
 
 		if ($this->user() && !$this->isAllowed) {
