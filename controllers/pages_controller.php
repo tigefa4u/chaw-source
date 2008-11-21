@@ -64,7 +64,6 @@ class PagesController extends AppController{
  **/
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('start');
 	}
 /**
  * The installation page

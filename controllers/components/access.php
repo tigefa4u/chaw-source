@@ -81,15 +81,14 @@ class AccessComponent extends Object {
 			$this->user = $C->Auth->user();
 		}
 
-		if (empty($C->Project)) {
-			if ($this->url != 'start') {
-				$C->Session->setFlash('Chaw needs to be installed');
-				$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'start'));
-				return false;
-			}
-
+		if ($this->url === 'start') {
 			$C->Session->write('Install', true);
 			$C->Auth->allow('start');
+			return true;
+		}
+
+		if (empty($C->Project)) {
+			$C->Auth->allow($C->action);
 			return true;
 		}
 

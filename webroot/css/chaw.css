@@ -68,6 +68,12 @@ table tr, table td {
 	border-bottom: 1px solid #ddd;
 }
 
+#footer span {
+	float: left;
+	font-size: 11px;
+	color: #3b3b3b;
+}
+
 #page-content {
 	padding-left: 20px;
 	padding-right: 20px;
