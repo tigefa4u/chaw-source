@@ -28,7 +28,7 @@ class PostReceiveShell extends Shell {
 
 	function commit() {
 
-		$project = str_replace('.git', '', trim(@$this->args[0], "'");
+		$project = str_replace('.git', '', trim(@$this->args[0], "'"));
 		$refname = @$this->args[1];
 		$oldrev = @$this->args[2];
 		$newrev = @$this->args[3];
