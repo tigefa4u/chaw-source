@@ -65,6 +65,7 @@ class Project extends AppModel {
 
 		if (!empty($params['project'])) {
 			$conditions['url'] = $params['project'];
+			$conditions['fork'] = null;
 			if (!empty($params['fork'])) {
 				$conditions['fork'] = $params['fork'];
 			}
