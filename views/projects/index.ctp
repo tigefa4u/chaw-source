@@ -64,6 +64,7 @@
 </div>
 <div class="paging">
 	<?php
+		$paginator->options(array('url'=> $this->passedArgs));
 		echo $paginator->prev();
 		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
 		echo $paginator->next();
