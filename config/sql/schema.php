@@ -1,6 +1,6 @@
-<?php
+<?php 
 /* SVN FILE: $Id$ */
-/* Chaw schema generated on: 2008-10-31 00:10:22 : 1225438882*/
+/* Chaw schema generated on: 2008-11-22 14:11:16 : 1227383956*/
 class ChawSchema extends CakeSchema {
 	var $name = 'Chaw';
 
@@ -45,17 +45,17 @@ class ChawSchema extends CakeSchema {
 		);
 	var $projects = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'url' => array('type' => 'string', 'null' => false, 'length' => 200),
-			'user_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
-			'fork' => array('type' => 'string', 'null' => true, 'length' => 200),
-			'project_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
-			'name' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'url' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
+			'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'fork' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
+			'project_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),
-			'users_count' => array('type' => 'integer', 'null' => false, 'default' => 0),
-			'ohloh_project' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200),
+			'users_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'ohloh_project' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'groups' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_types' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'ticket_statuses' => array('type' => 'string', 'null' => true, 'default' => NULL),
@@ -65,16 +65,24 @@ class ChawSchema extends CakeSchema {
 			'modified' => array('type' => 'date', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
+	var $queues = array(
+			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'name' => array('type' => 'string', 'null' => true, 'default' => NULL),
+			'slug' => array('type' => 'string', 'null' => true, 'default' => NULL),
+			'tickets_count' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
+		);
 	var $tags = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'key' => array('type' => 'string', 'null' => false, 'length' => 100),
-			'name' => array('type' => 'string', 'null' => false, 'length' => 100),
+			'key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
+			'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $tags_tickets = array(
-			'id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'key' => 'primary'),
+			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'tag_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'ticket_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
@@ -88,7 +96,7 @@ class ChawSchema extends CakeSchema {
 			'type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'status' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'priority' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
-			'title' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'title' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 			'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
@@ -105,14 +113,14 @@ class ChawSchema extends CakeSchema {
 		);
 	var $users = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'username' => array('type' => 'string', 'null' => false, 'length' => 40),
-			'password' => array('type' => 'string', 'null' => false, 'length' => 40),
-			'email' => array('type' => 'string', 'null' => false, 'length' => 200),
-			'ohloh_account' => array('type' => 'string', 'null' => true, 'length' => 200),
+			'username' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
+			'password' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
+			'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
+			'ohloh_account' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'last_login' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'tmp_pass' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
-			'token' => array('type' => 'string', 'null' => true, 'length' => 40),
-			'token_expires' => array('type' => 'date', 'null' => true),
+			'token' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
+			'token_expires' => array('type' => 'date', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
@@ -120,8 +128,8 @@ class ChawSchema extends CakeSchema {
 	var $versions = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'slug' => array('type' => 'string', 'null' => false, 'length' => 200),
-			'title' => array('type' => 'string', 'null' => false, 'length' => 100),
+			'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
+			'title' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
 			'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'due_date' => array('type' => 'date', 'null' => true, 'default' => NULL),
 			'completed' => array('type' => 'boolean', 'null' => true, 'default' => NULL),
@@ -132,7 +140,7 @@ class ChawSchema extends CakeSchema {
 	var $wiki = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
-			'slug' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'last_changed_by' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'content' => array('type' => 'text', 'null' => true, 'default' => NULL),
