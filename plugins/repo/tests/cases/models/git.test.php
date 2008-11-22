@@ -60,6 +60,25 @@ class GitTest extends CakeTestCase {
 
 	}
 
+	function testFindAll() {
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/.git'));
+
+		$File = new File(TMP . 'tests/git/working/test/.gitignore');
+		$File->write('this is something new');
+
+		$Git->commit(array("-m", "'Updating git ignore'"));
+		$Git->push();
+
+		$result = $Git->find('all', array('path' => TMP . 'tests/git/working/test/.gitignore'));
+
+		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore');
+		$this->assertEqual($result[1]['Repo']['message'], 'Initial Project Commit');
+
+	}
+
 	function testPathInfo() {
 		//pr($Git->pathInfo());
 	}

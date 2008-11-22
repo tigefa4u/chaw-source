@@ -46,7 +46,7 @@
 				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
-				<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
+				<td><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
 	<?php
@@ -64,7 +64,7 @@
 				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
-				<td><?php echo date("F d, Y", strtotime($item['info']['date']));?></td>
+				<td><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
 	<?php

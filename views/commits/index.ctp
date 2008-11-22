@@ -1,11 +1,5 @@
 <?php
-$javascript->link('highlight', false);
-
 $script = '
-
-hljs.initHighlightingOnLoad("diff");
-
-
 $(document).ready(function(){
 	converter = new Showdown.converter("' . $this->webroot . '");
 	$(".message").each(function () {

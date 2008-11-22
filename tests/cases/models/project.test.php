@@ -174,8 +174,16 @@ class ProjectTestCase extends CakeTestCase {
 		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 2)));
 		unset($results[0]['Permission']['created'], $results[0]['Permission']['modified']);
 		$this->assertEqual($results[0]['Permission'], array('id'=> 2, 'user_id' => 2, 'project_id' => 2, 'group' => 'admin'));
-
-
+		
+		
+		$result = $this->Project->field('users_count', array('id' => 1));
+		$this->assertEqual($result, 2);
+		
+		$result = $this->Project->field('users_count', array('id' => 2));
+		$this->assertEqual($result, 1);
+		
+		
+		//die();
 		//pr($this->Project->Repo->debug);
 		//pr($this->Project->Repo->response);
 	}

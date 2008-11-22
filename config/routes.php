@@ -93,7 +93,7 @@
 	Router::connect('/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
-
+	Router::connect('/:project/commits/history/*', array('controller' => 'commits', 'action' => 'history'));
 
 	//these should be last
 

@@ -67,7 +67,7 @@ class Git extends Repo {
 		$this->remote(array('add', 'origin', "{$remote}:{$project}"));
 
 		$this->before(array(
-			"cd {$working}", "touch .gitignore", "{$type} add ."
+			"cd {$working}", "touch .gitignore"
 		));
 		$this->commit(array("-m", "'Initial Project Commit'"));
 		$this->run("--bare", array('update-server-info'));
@@ -79,6 +79,27 @@ class Git extends Repo {
 		}
 
 		return false;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function commit($options = array()) {
+		extract($this->config);
+
+		$path = '.';
+		if (!empty($options['path'])) {
+			$path = $options['path'];
+			unset($options['path']);
+		}
+
+		$this->before(array(
+			"cd {$working}", "{$type} add {$path}"
+		));
+
+		$this->run('commit', $options);
 	}
 /**
  * undocumented function
@@ -173,17 +194,23 @@ class Git extends Repo {
  * @return array
  *
  **/
-/*
 	function find($type = 'all', $options = array()) {
-		$youngest = trim($this->look('youngest'));
+		extract(array_merge(array('path' => null), $options));
+		if (empty($path)) {
+			return false;
+		}
+
+		$this->before(array("cd {$this->working}"));
+		$info = explode("\n", $this->run('log', array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path))));
+		
 		$data = array();
 
-		for($i = 1; $i <= $youngest; $i++) {
-			$data[]'Repo'] = $this->read($i, false);
+		foreach ($info as $commit) {
+			$data[]['Repo'] = $this->read($commit, false);
 		}
+
 		return $data;
 	}
-*/
 /**
  * undocumented function
  *

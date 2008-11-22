@@ -15,7 +15,9 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 
-<h2>Commit <?php echo $commit['Commit']['revision'];?></h2>
+<h2>
+	Commit <?php echo $commit['Commit']['revision'];?>
+</h2>
 
 <div class="commit view">
 

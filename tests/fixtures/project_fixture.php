@@ -7,7 +7,7 @@ class ProjectFixture extends CakeTestFixture {
 	var $fields = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'url' => array('type' => 'string', 'null' => false, 'length' => 200),
-			'fork' => array('type' => 'string', 'null' => false, 'length' => 200),
+			'fork' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200),
 			'user_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'project_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'name' => array('type' => 'string', 'null' => false, 'length' => 200),

@@ -32,5 +32,20 @@ class CommitsController extends AppController {
 		$commit = $this->Commit->findByRevision($revision);
 		$this->set('commit', $commit);
 	}
+
+	function history() {
+		$args = func_get_args();
+		$path = join(DS, $args);
+
+		$current = null;
+
+		if ($args > 0) {
+			$current = array_pop($args);
+		}
+
+		$commits = $this->Project->Repo->find('all', array('path' => $path));
+
+		$this->set(compact('commits', 'args', 'current'));
+	}
 }
 ?>

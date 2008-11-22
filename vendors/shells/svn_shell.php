@@ -73,7 +73,7 @@ class SvnShellShell extends Shell {
 		$this->out('This may take a while...');
 		$this->out('First we start by getting all the previous revisions.');
 
-		$data = $this->Project->Repo->find();
+		$data = array_reverse($this->Project->Repo->find());
 
 		if (!empty($data)) {
 

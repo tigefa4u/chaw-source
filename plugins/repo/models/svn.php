@@ -64,7 +64,13 @@ class Svn extends Repo {
  **/
 	function look($command, $options = array()) {
 		extract($this->config);
-		return $this->execute("{$type}look {$command} {$this->path}", $options);
+
+		$path = null;
+		if (!empty($options['path'])) {
+			$path = ' ' . $options['path'];
+			unset($options['path']);
+		}
+		return $this->execute("{$type}look {$command} {$this->path}{$path}", $options);
 	}
 /**
  * Create a new repo; initialize the branches, tags, trunk; checkout a working copy to TMP
@@ -119,11 +125,21 @@ class Svn extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
-		$youngest = trim($this->look('youngest'));
+		$path = null;
+		if (!empty($options['path'])) {
+			$path = $options['path'];
+		}
+		$history = $this->look('history', array('path' => $path));
+		if (preg_match_all('/[\\s+](\\d+)[\\s+]/', $history, $matches)) {
+			$revisions = array_filter($matches[1]);
+		}
+
 		$data = array();
 
-		for($i = 1; $i <= $youngest; $i++) {
-			$data[]['Repo'] = $this->read($i, false);
+		if (!empty($revisions)) {
+			foreach ($revisions as $revision) {
+				$data[]['Repo'] = $this->read(trim($revision), false);
+			}
 		}
 		return $data;
 	}
@@ -206,7 +222,7 @@ class Svn extends Repo {
 	function pathInfo($path) {
 		//return array('revision' => null, 'date' => null, 'message' => null, 'author' => null);
 		$info = $this->run('info', array($path));
-	
+
 		$youngest = null;
 		if (preg_match('/Last Changed Rev: (.*)/', $info, $matches)) {
 			$youngest = trim($matches[1]);

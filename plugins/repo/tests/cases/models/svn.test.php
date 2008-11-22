@@ -20,7 +20,7 @@ class SvnTest extends CakeTestCase {
 			$Cleanup->delete();
 		}
 	}
-
+/*
 	function getTests() {
 		return array_merge(
 			array('start', 'startCase'),
@@ -30,7 +30,7 @@ class SvnTest extends CakeTestCase {
 			array('end', 'endCase')
 		);
 	}
-
+*/
 
 	function testCreate() {
 		$Svn = ClassRegistry::init($this->__repos[1]);
@@ -63,8 +63,8 @@ class SvnTest extends CakeTestCase {
 		//var_dump($Svn->debug);
 		//var_dump($Svn->response);
 	}
-	
-	
+
+
 	function testCommit() {
 		$Svn = ClassRegistry::init($this->__repos[1]);
 
@@ -73,29 +73,50 @@ class SvnTest extends CakeTestCase {
 
 		$result = $Svn->run('add', array(dirname($File->pwd())));
 		//var_dump($result);
-		
+
 		$result = $Svn->run('commit', array($Svn->working, '--message "Adding index.php"'));
 		//var_dump($result);
-		
+
 		$result = $Svn->info('/branches/demo_1.0.x.x/index.php');
 		//var_dump($result);
 	}
-	
+
 	function testFind() {
 		$Svn = ClassRegistry::init($this->__repos[1]);
 		$result = $Svn->find();
-		
-		$this->assertEqual($result[0]['Repo']['revision'], 1);
-		$this->assertEqual($result[0]['Repo']['message'], 'Initial Project Import');
-		
-		$this->assertEqual($result[1]['Repo']['revision'], 2);
-		$this->assertEqual($result[1]['Repo']['message'], 'Adding index.php');
-		
-		var_dump($result);
+
+		$this->assertEqual($result[0]['Repo']['revision'], 2);
+		$this->assertEqual($result[0]['Repo']['message'], 'Adding index.php');
+
+		$this->assertEqual($result[1]['Repo']['revision'], 1);
+		$this->assertEqual($result[1]['Repo']['message'], 'Initial Project Import');
+
+		//var_dump($result);
 		//var_dump($Svn->debug);
 		//var_dump($Svn->response);
 	}
-	
+
+	function testHistory() {
+		$Svn = ClassRegistry::init($this->__repos[1]);
+
+		$File = new File($Svn->working . '/branches/demo_1.0.x.x/index.php', true);
+		$File->write("this is a new php file with plain text tha is being changed");
+
+		$result = $Svn->run('commit', array($Svn->working, '--message "Updating index.php"'));
+
+
+		$result = $Svn->find('all', array('path' => '/branches/demo_1.0.x.x/index.php'));
+
+		$this->assertEqual($result[0]['Repo']['revision'], 3);
+		$this->assertEqual($result[0]['Repo']['message'], 'Updating index.php');
+		$this->assertEqual($result[1]['Repo']['revision'], 2);
+		$this->assertEqual($result[1]['Repo']['message'], 'Adding index.php');
+
+		//var_dump($result);
+		//var_dump($Svn->debug);
+		//var_dump($Svn->response);
+	}
+
 	/*
 	function testInfo() {
 		pr($Svn->info());

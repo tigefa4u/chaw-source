@@ -26,7 +26,9 @@ p {
 	margin-top: 0.5em;
 	line-height: 18px;
 }
-
+pre {
+	padding-right: 0;
+}
 em a {
 	color: inherit;
 	font-size: 80%;
@@ -395,6 +397,25 @@ fieldset.options textarea {
 	text-decoration: underline;
 }
 
+.browser span.history {
+	float: right;
+}
+
+.browser span.history a {
+	font-size: 80%;
+	text-decoration: none;
+}
+
+.history h3 {
+	color: #333;
+}
+.history h4 {
+	font-size: 120%;
+	padding-top: 10px;
+}
+.history .changes li {
+	font-size: 80%;
+}
 .versions div.help {
 	float: left;
 	clear: none;
@@ -472,6 +493,10 @@ fieldset.options textarea {
 	margin-right: 1%;
 }
 
+
+.browser .project-details {
+	margin-right: 0;
+}
 
 .panel {
 	float: left;
