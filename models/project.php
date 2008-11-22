@@ -104,6 +104,14 @@ class Project extends AppModel {
 		$this->config = array_merge($this->config, $project['Project']);
 
 		$repoType = strtolower($this->config['repo_type']);
+
+		if (!empty($this->data['Project']['remote'])) {
+			$this->config['remote'][$repoType] = $this->data['Project']['remote'];
+		}
+		if (is_string($this->config['remote'])) {
+			$this->config['remote'][$repoType] = $this->config['remote'];
+		}
+
 		$path = Configure::read("Content.{$repoType}");
 
 		$fork = null;
