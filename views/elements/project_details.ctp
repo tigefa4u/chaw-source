@@ -15,10 +15,10 @@
 				echo "{$CurrentProject->remote->git}:$remote{$CurrentProject->url}.git";
 
 				if (empty($CurrentProject->fork)):
-					echo ' '. $html->link('fork', array(
+					echo $html->tag('span', $html->link('fork', array(
 						'admin' => false, 'fork' => false,
 						'controller' => 'projects', 'action' => 'fork'
-					), array('class' => 'detail'));
+					), array('class' => 'detail')));
 				endif;
 
 			else:
@@ -27,10 +27,10 @@
 			endif;
 
 			/*
-			echo $html->link('download tar', array(
+			echo $html->tag('span', $html->link('download tar', array(
 				'admin' => false,
 				'controller' => 'projects', 'action' => 'index', 'ext' => 'tar'
-			), array('class' => 'detail'));
+			), array('class' => 'detail')));
 			*/
 
 		?>

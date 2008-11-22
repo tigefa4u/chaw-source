@@ -117,6 +117,7 @@ class Project extends AppModel {
 			'chmod' => 0777,
 			'path' => $path . 'repo' . DS . $fork . $this->config['url'],
 			'working' => $path . 'working' . DS . $fork . $this->config['url'],
+			'remote' => $this->config['remote'][$repoType]
 		);
 
 		if ($repoType == 'git') {
@@ -149,7 +150,7 @@ class Project extends AppModel {
 			}
 
 			if (!file_exists($this->config['repo']['path']) || !file_exists($this->config['repo']['working'])) {
-				if ($this->Repo->create(array('remote' => $this->config['remote'])) !== true) {
+				if ($this->Repo->create(array('remote' => $this->config['repo']['remote'])) !== true) {
 					$this->invalidate('repo_type', 'the repo could not be created');
 					return false;
 				}

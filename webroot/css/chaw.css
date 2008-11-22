@@ -493,6 +493,9 @@ fieldset.options textarea {
 	margin-right: 1%;
 }
 
+.project-details .path span {
+	padding-left: 20px;
+}
 
 .browser .project-details {
 	margin-right: 0;
@@ -540,8 +543,8 @@ fieldset.options textarea {
 }
 a.detail {
 	color: #69C;
-	padding-left: 10px;
 }
+
 a.project {
 	color: #888;
 }
