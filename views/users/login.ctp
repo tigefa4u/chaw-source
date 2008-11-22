@@ -8,6 +8,11 @@
 	<?php
 		echo $form->input('username');
 		echo $form->input('password');
+		
+		echo $form->input('remember_me', array(
+			'type' => 'checkbox',
+			'label' => 'Remember me for 2 weeks'
+		));
 	?>
 	</fieldset>
 <?php echo $form->end('Submit');?>

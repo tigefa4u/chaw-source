@@ -20,7 +20,7 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 
-	var $components = array('Email');
+	var $components = array('Email', 'Cookie' => array('name' => 'Chaw', 'time' => '+2 weeks'));
 
 	function beforeFilter() {
 		parent::beforeFilter();
@@ -41,7 +41,15 @@ class UsersController extends AppController {
 	}
 
 	function login() {
+		if ($cookie = $this->Cookie->read('User')) {
+			$this->Session->write('Auth.User', $cookie);
+		}
+
 		if ($id = $this->Auth->user('id')) {
+
+			if (!empty($this->data['User']['remember_me'])) {
+				$this->Cookie->write('User', $this->Session->read('Auth.User'));
+			}
 
 			$this->User->id = $id;
 			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
