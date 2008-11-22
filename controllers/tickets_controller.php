@@ -43,7 +43,7 @@ class TicketsController extends AppController {
 			$this->Session->setFlash('Invalid ticket');
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
-		$this->Ticket->contain(array('Tag', 'Comment', 'Comment.User'));
+		$this->Ticket->contain(array('Reporter', 'Tag', 'Comment', 'Comment.User'));
 		$ticket = $this->data = $this->Ticket->read(null, $id);
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);

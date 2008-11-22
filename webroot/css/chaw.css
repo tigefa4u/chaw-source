@@ -249,7 +249,9 @@ fieldset.options textarea {
 .timeline .summary p strong {
 	font-size: 85%;
 }
-
+.timeline .comment {
+	font-style: normal;
+}
 .timeline .comment h3 {
 	color: #633;
 }
@@ -312,6 +314,8 @@ fieldset.options textarea {
 	padding: 0;
 	margin-bottom:1em;
 	padding:0.5em 0;
+	font-style: normal;
+	color: #3b3b3b;
 }
 .tickets .comment .date {
 	font-weight: bold;

@@ -37,6 +37,9 @@ $javascript->codeBlock($script, array('inline' => false));
 			<em>(<a href="#modify" class="modify">edit</a>)</em>
 		<?php endif; ?>
 	</h3>
+	<p class="reporter">
+		<strong>reported by:</strong> <?php echo $ticket['Reporter']['username'];?>
+	</p>
 
 	<div id="Preview" class="description">
 		<?php echo h($ticket['Ticket']['description']); ?>
