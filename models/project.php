@@ -278,7 +278,7 @@ class Project extends AppModel {
 	}
 
 	function permit($user, $group = null) {
-		if (!is_int($user)) {
+		if (!is_numeric($user)) {
 			$user = $this->Permission->User->field('id', array('username' => $user));
 		}
 
@@ -296,7 +296,7 @@ class Project extends AppModel {
 
 			$this->recursive = -1;
 			$this->updateAll(
-				array('Project.users_count' => 'users_count + 1'),
+				array('Project.users_count' => 'Project.users_count + 1'),
 				array('Project.id' => $this->id)
 			);
 		}
@@ -304,7 +304,7 @@ class Project extends AppModel {
 
 	function isUnique($data, $options = array()) {
 		if (!empty($data['name'])) {
-			if ($this->findByName($data['name'])) {
+			if ($this->findByUrl(Inflector::underscore($data['name']))) {
 				return false;
 			}
 			return true;
