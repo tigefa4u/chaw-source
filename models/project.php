@@ -272,7 +272,7 @@ class Project extends AppModel {
 		if ($data = $this->save()) {
 			$this->id = $data['Project']['project_id'];
 			$this->permit($data['Project']['user_id']);
-			return true;
+			return $data;
 		}
 		return false;
 	}

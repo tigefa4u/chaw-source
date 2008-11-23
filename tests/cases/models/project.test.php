@@ -161,7 +161,8 @@ class ProjectTestCase extends CakeTestCase {
 				'approved' => 1,
 			)
 		));
-		$this->assertTrue($this->Project->fork());
+		$this->assertTrue($data = $this->Project->fork());
+		$this->assertEqual($data['Project']['url'], 'original_project');
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 
 		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 1)));
