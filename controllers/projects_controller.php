@@ -54,9 +54,10 @@ class ProjectsController extends AppController {
 			}
 			unset($this->paginate['conditions']['Project.fork']);
 		}
-
-
+		
 		$this->set('projects', $this->paginate());
+		
+		$this->set('rssFeed', array('controller' => 'projects'));
 	}
 
 	function view($url  = null) {
@@ -93,7 +94,6 @@ class ProjectsController extends AppController {
 					'fork' => $data['Project']['fork'],
 					'controller' => 'browser', 'action' => 'index',
 				));
-
 			} else {
 				$this->Session->setFlash('Project was NOT created');
 			}

@@ -5,7 +5,7 @@ if (!empty($commits)):
 	foreach ($commits as $commit) :
 
 		$project = null;
-		if (!emptY($commit['Project']) && $commit['Project']['id'] !== $CurrentProject->id) {
+		if (!empty($commit['Project']) && $commit['Project']['id'] !== $CurrentProject->id) {
 			$project = ' in '. $html->link($commit['Project']['name'], $chaw->url($commit['Project'], array(
 				'admin' => false, 'controller' => 'browser'
 			)), array('class' => 'project'));

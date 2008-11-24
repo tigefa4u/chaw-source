@@ -38,6 +38,8 @@ class TimelineController extends AppController {
 
 		$timeline = $this->paginate();
 		$this->set('timeline', $timeline);
+		
+		$this->set('rssFeed', array('controller' => 'timeline'));
 	}
 
 	function sync() {

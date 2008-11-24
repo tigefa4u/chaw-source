@@ -28,11 +28,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>
-		<?php echo Configure::read('Project.name') .' : ' . $title_for_layout;?>
+		<?php echo $CurrentProject->name .' : ' . $title_for_layout;?>
 	</title>
 	<?php
 		echo $html->charset();
 		echo $html->meta('icon');
+		if (isset($rssFeed)) {
+			echo $html->meta('rss', $html->url($rssFeed, true));
+		}
 		echo $html->css(array('generic', 'chaw'));
 	?>
 	<?php

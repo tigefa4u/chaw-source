@@ -223,7 +223,11 @@ class Project extends AppModel {
 				)));
 			}
 
-			$this->permit($this->data['Project']['user_id'], 'admin');
+			$this->permit(array(
+				'user' => $this->data['Project']['user_id'],
+				'group' => 'admin',
+				'count' => 1
+			));
 		}
 
 		$this->__created = false;
@@ -271,24 +275,34 @@ class Project extends AppModel {
 
 		if ($data = $this->save()) {
 			$this->id = $data['Project']['project_id'];
-			$this->permit($data['Project']['user_id']);
+			$this->permit(array(
+				'user' => $data['Project']['user_id'],
+				'id' => $data['Project']['project_id'],
+			));
 			return $data;
 		}
 		return false;
 	}
 
 	function permit($user, $group = null) {
+		$id = $this->id;
+		$count = 'Project.users_count + 1';
+
+		if (is_array($user)) {
+			extract($user);
+		}
+
 		if (!is_numeric($user)) {
 			$user = $this->Permission->User->field('id', array('username' => $user));
 		}
 
-		if (!$user || !$this->id) {
+		if (!$user || !$id) {
 			return false;
 		}
 
-		if (!$this->Permission->field('id', array('project_id' => $this->id, 'user_id' => $user))) {
+		if (!$this->Permission->field('id', array('project_id' => $id, 'user_id' => $user))) {
 			$this->Permission->create(array(
-				'project_id' => $this->id,
+				'project_id' => $id,
 				'user_id' => $user,
 				'group' => $group
 			));
@@ -296,8 +310,8 @@ class Project extends AppModel {
 
 			$this->recursive = -1;
 			$this->updateAll(
-				array('Project.users_count' => 'Project.users_count + 1'),
-				array('Project.id' => $this->id)
+				array('Project.users_count' => $count),
+				array('Project.id' => $id)
 			);
 		}
 	}

@@ -219,10 +219,6 @@ fieldset.options textarea {
 	width: 100%;
 	height: 60px;
 }
-.wiki {
-	padding-top: 20px;
-}
-
 .wiki form {
 	float: left;
 	width: 76%;
@@ -529,6 +525,35 @@ fieldset.options textarea {
 	padding: 8px 0;
 	list-style-type: none;
 }
+.projects {
+	margin-right: 20%;
+}
+.projects .project {
+	clear: both;
+	padding: 8px 0;
+	border-top: 1px #ccc solid;
+	overflow: hidden;
+}
+.projects .project .name {
+	margin: 0;
+	padding: 0;
+	font-size: 120%;
+	float: left;
+	width: 30%;
+	vertical-align: top;
+}
+.projects .project .description {
+	float: left;
+	font-size: 90%;
+	padding-top: 3px;
+}
+.projects .project .admin , .projects .project .nav {
+	float: right;
+	font-size: 80%;
+	padding-top: 2px;
+	padding-left: 4px;
+}
+
 .projects fieldset.main {
 	width: 40%;
 }
@@ -547,4 +572,8 @@ a.detail {
 
 a.project {
 	color: #888;
+}
+
+.rss {
+	vertical-align: middle;
 }

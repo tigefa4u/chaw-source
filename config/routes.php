@@ -16,7 +16,7 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  *
  */
-	Router::parseExtensions('tar');
+	Router::parseExtensions('rss', 'tar');
 
 	Router::connect('/', array('controller' => 'wiki', 'action' => 'index'));
 
