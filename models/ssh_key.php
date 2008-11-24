@@ -132,7 +132,7 @@ class SshKey extends AppModel {
 
 		if ($username) {
 			$this->user[$username] = array();
-			if ($userKeys = preg_grep('/-user\s' . $username . '/', $this->lines)) {
+			if ($userKeys = preg_grep("/-user\s{$username}\"/", $this->lines)) {
 				foreach ($userKeys as $line) {
 					$this->user[$username][] = str_replace($this->command($username), "", $line);
 				}
