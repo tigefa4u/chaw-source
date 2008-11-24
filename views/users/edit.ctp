@@ -7,15 +7,18 @@
 		echo $form->hidden('username');
 		echo $form->input('username', array('disabled' => true));
 		echo $form->input('email');
+		echo $html->tag('div', $html->link('Change Password', array(
+			'admin' => false, 'action' => 'change'
+		)));
 	?>
 	</fieldset>
 	<fieldset>
  		<legend><?php __('Ssh Keys');?></legend>
 		<?php
-			
+
 			foreach ((array)$sshKeys as $type => $keys) {
 				$spans = $fields = null;
-				
+
 				foreach ((array)$keys as $i => $sshKey) {
 
 					$fields = $form->checkbox("Key.{$type}.{$i}.chosen", array(

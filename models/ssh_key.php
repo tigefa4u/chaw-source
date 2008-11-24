@@ -108,8 +108,9 @@ class SshKey extends AppModel {
 			return false;
 		}
 
-		$username = false;
-		if (!empty($this->data['SshKey']['username'])) {
+		$hasUsername = $username = false;
+		if (array_key_exists('username', $this->data['SshKey'])) {
+			$hasUsername = true;
 			$username = $this->data['SshKey']['username'];
 		}
 
@@ -143,7 +144,11 @@ class SshKey extends AppModel {
 			return $this->user[$username];
 		}
 
-		return $this->lines;
+		if (!$hasUsername) {
+			return $this->lines;
+		}
+
+		return array();
 	}
 /**
  * write lines to file

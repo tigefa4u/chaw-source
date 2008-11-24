@@ -123,7 +123,7 @@ class UsersController extends AppController {
 			$this->data = $this->User->read(null, $id);
 		}
 
-		$isAllowed = ($this->params['isAdmin'] || $this->data['User']['id'] == $this->Auth->user('id'));
+		$isAllowed = ($this->params['isAdmin'] || ($this->data['User']['id'] == $this->Auth->user('id')) &&  $this->data['User']['username'] == $this->Auth->user('username'));
 
 		if (!$isAllowed) {
 			$this->render('view');
@@ -131,10 +131,9 @@ class UsersController extends AppController {
 		}
 
 		if ($isGet === false) {
-			if ($this->User->save($this->data)) {
+			if ($data = $this->User->save($this->data)) {
 				$this->Session->setFlash('User updated');
 			} else {
-				//pr($this->User->validationErrors);
 				$this->Session->setFlash('User NOT updated');
 			}
 			unset($this->data['SshKey']);
@@ -143,6 +142,7 @@ class UsersController extends AppController {
 		$types = $this->Project->repoTypes();
 
 		$sshKeys = array();
+
 		foreach ($types as $type) {
 			$sshKeys[$type] = $this->User->SshKey->read(array(
 				'type' => $type,
