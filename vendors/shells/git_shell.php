@@ -36,6 +36,9 @@ class GitShellShell extends Shell {
 			return 1;
 		}
 
+		$this->log($this->args, LOG_INFO);
+		$this->log($this->params, LOG_INFO);
+
 		$command = @$this->args[0];
 
 		if (!isset($this->actionMap[$command])) {
@@ -54,7 +57,7 @@ class GitShellShell extends Shell {
 		}
 		$project = str_replace('.git', '', trim($project, "'"));
 
-		if ($this->Project->initialize(compact('project', 'fork')) === false) {
+		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid project');
 			return 1;
 		}

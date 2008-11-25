@@ -35,6 +35,9 @@ class PostReceiveShell extends Shell {
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
+		$this->log($this->args, LOG_INFO);
+		$this->log($this->params, LOG_INFO);
+
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid project');
 			return 1;
