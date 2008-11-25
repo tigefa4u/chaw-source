@@ -22,6 +22,7 @@ class ProjectsController extends AppController {
 
 	function beforeFilter() {
 		parent::beforeFilter();
+		$this->Auth->mapActions(array('fork' => 'create'));
 		$this->Auth->allow('index');
 	}
 

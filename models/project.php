@@ -37,6 +37,7 @@ class Project extends AppModel {
 				'rule' => 'isUnique'
 			)
 		),
+		'user_id' => array('notEmpty')
 	);
 
 	var $belongsTo = array('User');
