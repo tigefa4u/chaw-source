@@ -57,6 +57,7 @@ class PostReceiveShell extends Shell {
 			$this->Commit->create($data);
 
 			if (!$this->Commit->save()) {
+				$this->out($this->Commit->validationErrors, false);
 				return false;
 			}
 		}

@@ -53,7 +53,7 @@ class TimelineController extends AppController {
 	}
 
 	function delete($id = null) {
-		if (!$id) {
+		if (!$id || empty($this->params['isAdmin'])) {
 			$this->redirect($this->referer());
 		}
 

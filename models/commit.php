@@ -21,6 +21,19 @@ class Commit extends AppModel {
 	var $name = 'Commit';
 
 	var $belongsTo = array('User', 'Project');
+
+	var $validate = array(
+		'project_id' => array('notEmpty'),
+		'user_id' => array('notEmpty'),
+		'revision' => array(
+			'rule' => 'isUnique',
+			'message' => 'revision is not unique'
+		),
+		'author' => array('notEmpty'),
+		'commit_date' => array('notEmpty'),
+		'message' =>array('notEmpty'),
+
+	);
 /*
 	var $hasOne = array(
 		'Timeline' => array(
@@ -64,6 +77,15 @@ class Commit extends AppModel {
 			$commit['Commit'] = $data;
 		}
 		return $commit;
+	}
+
+	function isUnique($data, $options = array()) {
+		if (!empty($data['revision'])) {
+			if ($this->find('count', array('conditons' => array('revision' => $data['revision'])))) {
+				return false;
+			}
+			return true;
+		}
 	}
 }
 ?>
