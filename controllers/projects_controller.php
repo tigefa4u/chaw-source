@@ -138,10 +138,14 @@ class ProjectsController extends AppController {
 	}
 
 	function edit() {
+		if ($this->params['isAdmin'] === false) {
+			$this->redirect($this->referer());
+		}
 
 		$this->pageTitle = 'Update Project';
 
 		if (!empty($this->data)) {
+			$this->data['Project']['id'] = $this->Project->id;
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was updated');
 			} else {

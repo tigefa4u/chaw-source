@@ -47,5 +47,31 @@ class CommitsController extends AppController {
 
 		$this->set(compact('commits', 'args', 'current'));
 	}
+
+	function delete($id = null) {
+		if (!$id || empty($this->params['isAdmin'])) {
+			$this->redirect($this->referer());
+		}
+
+		$this->Commit->bindModel(array('hasOne' => array(
+			'Timeline' => array(
+				'className' => 'Timeline',
+				'foreignKey' => 'foreign_key',
+				'conditions' => array('Timeline.model = \'Commit\''),
+				'dependent' => true
+		))), false);
+
+		if ($this->Commit->del($id)) {
+			$this->Session->setFlash('The commit was deleted');
+		} else {
+			$this->Session->setFlash('The commit was NOT deleted');
+			if ($timeline = $this->Commit->Timeline->find('id', array('Timeline.foreign_key' => $id, 'Timeline.model = \'Commit\''))) {
+				if ($this->Commit->Timeline->del($timeline)) {
+					$this->Session->setFlash('The commit was removed from timeline');
+				}
+			}
+		}
+		$this->redirect(array('action' => 'index'));
+	}
 }
 ?>

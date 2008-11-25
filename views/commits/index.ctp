@@ -15,46 +15,27 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="commit index">
 <?php foreach ((array)$commits as $commit):?>
 
-	<div class="commit">
-
-		<h3>
+	<div class="commit row">
+		<h3 class="name">
 			<?php echo $chaw->commit($commit['Commit']['revision']);?>
 		</h3>
 
-		<p>
-			<strong>Author:</strong> <?php echo $commit['Commit']['author'];?>
-		</p>
-
-		<p>
-			<strong>Date:</strong> <?php echo $commit['Commit']['commit_date'];?>
-		</p>
-
-		<p class="message">
+		<span class="description">
 			<?php echo $commit['Commit']['message'];?>
-		</p>
+		</span>
 
-		<?php
-			$changes = unserialize($commit['Commit']['changes']);
-			if(!empty($changes)):
-		?>
-			<p>
-				<strong>Changes:</strong>
-				<ul>
-				<?php
-					foreach ($changes as $changed) :
-						echo $html->tag('li', $changed);
-					endforeach;
-
-				?>
-				</ul>
-			</p>
-		<?php endif?>
-
-		<?php
-
-			//echo (!empty($commit['Commit']['diff'])) ? $html->tag('pre', $html->tag('code', $commit['Commit']['diff'], array('class' => 'diff'))) : null;
-
-		?>
+		<span class="date">
+			<?php echo $commit['Commit']['commit_date'];?>
+		</span>
+		
+		<span class="author">
+			<?php echo (!empty($commit['User']['username'])) ? $commit['User']['username'] : $commit['Commit']['author'];?>
+		</span>
+		
+		<span class="admin">
+			<?php echo $chaw->admin('delete', array('controller' => 'commits', 'action' => 'delete', $commit['Commit']['id']));?>
+		</span>
+	
 	</div>
 
 <?php endforeach;?>

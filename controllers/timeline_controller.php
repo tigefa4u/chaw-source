@@ -33,7 +33,7 @@ class TimelineController extends AppController {
 
 	function index() {
 		Router::connectNamed(array('type', 'page'));
-		
+
 		$this->Timeline->recursive = 2;
 
 		$this->paginate['conditions'] = array('Timeline.project_id' => $this->Project->id);
@@ -50,6 +50,19 @@ class TimelineController extends AppController {
 
 	function sync() {
 
+	}
+
+	function delete($id = null) {
+		if (!$id) {
+			$this->redirect($this->referer());
+		}
+
+		if ($this->Timeline->del($id)) {
+			$this->Session->setFlash('The timeline event was deleted');
+		} else {
+			$this->Session->setFlash('The timeline event was NOT deleted');
+		}
+		$this->redirect(array('action' => 'index'));
 	}
 }
 ?>

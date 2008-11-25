@@ -36,7 +36,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php
 		foreach ((array)$timeline as $event):
 			$type = $event['Timeline']['model'];
-			echo $this->element('timeline/' . strtolower($type), array('data' => $event[$type]));
+			echo $this->element('timeline/' . strtolower($type), array('event' => $event, 'data' => $event[$type]));
 		endforeach;
 	?>
 </div>
