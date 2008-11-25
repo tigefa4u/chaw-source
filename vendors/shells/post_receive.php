@@ -48,6 +48,7 @@ class PostReceiveShell extends Shell {
 
 		if (!empty($data)) {
 
+			$data['author'] = $this->params['user'];
 			$data['project_id'] = $this->Project->id;
 
 			$this->Commit->create($data);
