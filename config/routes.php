@@ -100,5 +100,5 @@
 	//Router::connect('/:project/:controller/*', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	//Router::connect('/:project/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));
-	Router::connect('/:project/:controller/:action/*', array(), array('action' => 'view|add|edit|modify|delete'));
+	Router::connect('/:project/:controller/:action/*', array(), array('action' => 'index|view|add|edit|modify|delete'));
 ?>
