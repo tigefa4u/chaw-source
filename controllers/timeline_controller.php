@@ -23,7 +23,7 @@ class TimelineController extends AppController {
 	var $helpers = array('Time');
 
 	var $paginate = array(
-		'limit' => 10,
+		'limit' => 30,
 		'order' => 'Timeline.created DESC',
 		'contain' => array(
 			'Comment', 'Comment.User', 'Comment.Ticket', 'Commit', 'Commit.User', 'Ticket', 'Ticket.Reporter',
