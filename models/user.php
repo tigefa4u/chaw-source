@@ -176,5 +176,10 @@ class User extends AppModel {
 		}
 		return substr($password, 0, $length);
 	}
+
+	function paginateCount($conditions, $recursive, $extra) {
+		$fields = array('fields' => 'DISTINCT User.username');
+		return count($this->find('all', compact('conditions', 'fields', 'recursive', 'extra')));
+	}
 }
 ?>
