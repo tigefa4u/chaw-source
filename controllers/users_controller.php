@@ -25,8 +25,12 @@ class UsersController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->autoRedirect = false;
+		$this->Auth->mapActions(array(
+			'account' => 'update', 'change' => 'update'
+		));
 		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
-		$this->Access->allow('forgotten', 'verify', 'account', 'add', 'edit', 'login', 'logout', 'change');
+		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];

@@ -142,6 +142,7 @@ class AccessComponent extends Object {
 
 		if ($this->check($C)) {
 			if ($this->isAllowed) {
+				$C->Auth->allow($C->action);
 				return true;
 			}
 		}

@@ -56,9 +56,12 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Component->initialize($this->Controller);
 
 		$this->Controller->Access->startup($this->Controller);
+
 		if ($this->Controller->testRedirect == null) {
 			$this->Controller->Auth->startup($this->Controller);
 		}
+		$this->Controller->Auth->allowedActions = array();
+		$this->Controller->Access->allowedActions = array();
 	}
 
 	function testInstall() {
@@ -96,14 +99,15 @@ class AccessComponentTest extends CakeTestCase {
 			'url' => array('url' => 'users/add')
 		);
 		$this->Controller->testRedirect = null;
-		$this->__runStartup(array('add', 'login', 'logout'));
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
 		$expected = null;
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 
 		$this->Controller->Session->delete('Install');
 	}
 
-	function testAccessAfterInstallation() {
+	function testAccessAfterInstallationPublic() {
 		$data = array('Project' =>array(
 			'id' => 1,
 			'name' => 'original project',
@@ -132,7 +136,9 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'login',
 			'url' => array('url' => 'users/login')
 		);
-		$this->__runStartup();
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
+
 		$this->assertNull($this->Controller->testRedirect);
 
 		$this->Controller->testRedirect = null;
@@ -142,7 +148,8 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'logout',
 			'url' => array('url' => 'users/logout')
 		);
-		$this->__runStartup(array('add', 'login', 'logout'));
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
 		$this->assertNull($this->Controller->testRedirect);
 
 		$this->Controller->testRedirect = null;
@@ -152,12 +159,82 @@ class AccessComponentTest extends CakeTestCase {
 			'action' => 'account',
 			'url' => array('url' => 'users/account')
 		);
-		$this->__runStartup();
+
+		$this->Controller->Auth->mapActions(array(
+			'account' => 'update', 'change' => 'update'
+		));
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
 
 		$result = $this->Controller->testRedirect;
 		$expected = '/users/login';
 		$this->assertEqual($result, $expected);
 	}
+
+	function testAccessAfterInstallationPrivate() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 1,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->Controller->Project = new TestProject();
+		$this->assertTrue($this->Controller->Project->save($data));
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'login',
+			'url' => array('url' => 'users/login')
+		);
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
+
+		$this->assertNull($this->Controller->testRedirect);
+
+		$this->Controller->testRedirect = null;
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'logout',
+			'url' => array('url' => 'users/logout')
+		);
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
+		$this->assertNull($this->Controller->testRedirect);
+
+		$this->Controller->testRedirect = null;
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'account',
+			'url' => array('url' => 'users/account')
+		);
+
+		$this->Controller->Auth->mapActions(array(
+			'account' => 'update', 'change' => 'update'
+		));
+		$this->Controller->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->__runStartup(array('forgotten', 'verify', 'add', 'login', 'logout'));
+
+		$result = $this->Controller->testRedirect;
+		$expected = '/users/login';
+		$this->assertEqual($result, $expected);
+	}
+
 
 	function testOwnerAndinstalled() {
 		$data = array('Project' =>array(
@@ -255,6 +332,18 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->__runStartup();
 		$this->assertEqual($this->Controller->testRedirect, '/users/login');
+
+		$this->Controller->testRedirect = null;
+
+		$this->Controller->params = array(
+			'project' => 'original_project',
+			'controller' => 'commits',
+			'action' => 'view',
+			'url' => array('url' => 'commits/view/1234567890iuytrewq23456')
+		);
+
+		$this->__runStartup();
+		$this->assertNull($this->Controller->testRedirect);
 	}
 
 	function testAnonymousAndPrivate() {
@@ -397,8 +486,8 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->assertNull($this->Controller->testRedirect);
 		$this->assertFalse($this->Controller->params['isAdmin']);
-		
-		
+
+
 		$this->Controller->testRedirect = null;
 
 		$this->Controller->params = array(
