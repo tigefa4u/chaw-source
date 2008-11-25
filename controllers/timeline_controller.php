@@ -19,7 +19,7 @@
 class TimelineController extends AppController {
 
 	var $name = 'Timeline';
-	
+
 	var $helpers = array('Time');
 
 	var $paginate = array(
@@ -32,13 +32,19 @@ class TimelineController extends AppController {
 	);
 
 	function index() {
+		Router::connectNamed(array('type', 'page'));
+		
 		$this->Timeline->recursive = 2;
 
 		$this->paginate['conditions'] = array('Timeline.project_id' => $this->Project->id);
 
+		if (!empty($this->passedArgs['type'])) {
+			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
+		}
+
 		$timeline = $this->paginate();
 		$this->set('timeline', $timeline);
-		
+
 		$this->set('rssFeed', array('controller' => 'timeline'));
 	}
 

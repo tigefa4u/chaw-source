@@ -35,6 +35,8 @@ class ProjectsController extends AppController {
 			$this->render('package');
 		}
 
+		Router::connectNamed(array('type', 'page'));
+
 		$this->Project->recursive = 0;
 
 		if ($this->params['isAdmin'] === false) {
@@ -42,7 +44,8 @@ class ProjectsController extends AppController {
 				'conditions' => array(
 					'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
 				),
-				'order' => 'Project.users_count DESC, Project.created ASC'
+				'order' => 'Project.users_count DESC, Project.created ASC',
+				'limit' => 20
 			);
 		}
 
@@ -54,9 +57,9 @@ class ProjectsController extends AppController {
 			}
 			unset($this->paginate['conditions']['Project.fork']);
 		}
-		
+
 		$this->set('projects', $this->paginate());
-		
+
 		$this->set('rssFeed', array('controller' => 'projects'));
 	}
 

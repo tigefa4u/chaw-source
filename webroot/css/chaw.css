@@ -70,6 +70,10 @@ table tr, table td {
 	border-bottom: 1px solid #ddd;
 }
 
+#footer {
+	padding: 0 10px;
+}
+
 #footer span {
 	float: left;
 	font-size: 11px;
@@ -212,6 +216,35 @@ div.actions {
 	height: 200px;
 }
 
+.row {
+	clear: both;
+	padding: 8px 0;
+	border-top: 1px #ccc solid;
+	overflow: hidden;
+}
+.row span {
+	margin-left: 10px;
+	float: left;
+	font-size: 90%;
+	padding-top: 3px;
+}
+.row .name {
+	margin: 0;
+	padding: 0;
+	font-size: 120%;
+	float: left;
+	width: 30%;
+	vertical-align: top;
+}
+
+.row .admin , .row .nav {
+	float: right;
+	font-size: 80%;
+	padding-top: 2px;
+	padding-left: 4px;
+}
+
+
 fieldset.options select {
 	width: 100%;
 }
@@ -233,20 +266,24 @@ fieldset.options textarea {
 	height: 200px;
 }
 
-.timeline h3 {
-	margin-top: 1em;
-	font-size: 130%;
+.timeline {
+	margin-right: 20%;
 }
-.timeline .summary {
-	padding-bottom: 20px;
+.timeline .name { 
+	width: 40%;
 }
-.timeline .summary p {
- 	font-size: 120%;
-	margin-bottom: 4px;
+.timeline .message {
+	clear: both;
+	margin: 0;
 }
-.timeline .summary p strong {
-	font-size: 85%;
+.timeline .author {
+	float: right;
+	font-weight: bold;
 }
+.timeline .date {
+	float: right;
+}
+
 .timeline .comment {
 	font-style: normal;
 }
@@ -527,31 +564,6 @@ fieldset.options textarea {
 }
 .projects {
 	margin-right: 20%;
-}
-.projects .project {
-	clear: both;
-	padding: 8px 0;
-	border-top: 1px #ccc solid;
-	overflow: hidden;
-}
-.projects .project .name {
-	margin: 0;
-	padding: 0;
-	font-size: 120%;
-	float: left;
-	width: 30%;
-	vertical-align: top;
-}
-.projects .project .description {
-	float: left;
-	font-size: 90%;
-	padding-top: 3px;
-}
-.projects .project .admin , .projects .project .nav {
-	float: right;
-	font-size: 80%;
-	padding-top: 2px;
-	padding-left: 4px;
 }
 
 .projects fieldset.main {

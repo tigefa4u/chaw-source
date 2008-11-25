@@ -50,9 +50,9 @@
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'view'));
 
-	Router::connect('/projects', array('controller' => 'projects', 'action' => 'index'));
+	Router::connect('/projects', array('controller' => 'projects', 'action' => 'index'), array('action' => 'index'));
 	Router::connect('/projects/view/:project', array('controller' => 'projects', 'action' => 'view'));
-	Router::connect('/projects/:action/*', array('controller' => 'projects', 'action' => $Action));
+	Router::connect('/projects/:action/*', array('controller' => 'projects', 'action' =>  'view|add|edit|modify|delete'));
 
 
 	//Fork routes
@@ -97,7 +97,8 @@
 
 	//these should be last
 
+	//Router::connect('/:project/:controller/*', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	//Router::connect('/:project/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));
-	Router::connect('/:project/:controller/:action/*', array(), array('action' => 'index|view|add|edit|modify|delete'));
+	Router::connect('/:project/:controller/:action/*', array(), array('action' => 'view|add|edit|modify|delete'));
 ?>

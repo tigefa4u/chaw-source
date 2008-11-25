@@ -3,6 +3,9 @@
 		echo $html->tag('h2', 'Sorry, no projects are available');
 	}
 ?>
+<h2>
+	Projects
+</h2>
 <div class="page-navigation">
 	<?php echo $html->link('All', array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
 	|
@@ -31,7 +34,7 @@
 			$fork = $project['Project']['fork'];
 		}
 ?>
-	<div class="project">
+	<div class="project row">
 
 		<h3 class="name">
 			<?php

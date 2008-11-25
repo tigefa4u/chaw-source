@@ -126,15 +126,17 @@
 		</div>
 
 		<div id="footer">
-			<span>
-				<?php echo $html->link('About', '/pages/about');?>
-			</span>
-			<?php echo $html->link(
-					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
-					'http://www.cakephp.org/',
-					array('target'=>'_new'), null, false
-				);
-			?>
+			<p>
+				<span>
+					<?php echo $html->link('About', '/pages/about');?>
+				</span>
+				<?php echo $html->link(
+						$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
+						'http://www.cakephp.org/',
+						array('target'=>'_new'), null, false
+					);
+				?>
+			</p>
 		</div>
 	</div>
 	<?php if(Configure::read('debug') == 0):?>

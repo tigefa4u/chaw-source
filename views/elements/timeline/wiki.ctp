@@ -1,15 +1,25 @@
-<div class="wiki">
+<div class="wiki row">
 
-	<h3>
-		Wiki: <?php echo $html->link($data['slug'], array('controller' => 'wiki', 'action' => 'view', $data['slug']));?>
+	<h3 class="name">
+		Wiki: <?php echo $html->link($data['slug'], array('controller' => 'wiki', 'action' => 'index', $data['slug']));?>
 	</h3>
 
-	<p>
-		<strong>Author:</strong> <?php echo @$data['User']['username'];?>
-	</p>
+	<span class="description">
+		<?php
+			if ($data['created'] != $data['modified']):
+				echo 'modifed';
+			else :
+				echo 'created';
+			endif;
+		?>
+	</span>
 
-	<p>
-		<strong>Date:</strong> <?php echo $time->nice($data['created']);?>
-	</p>
+	<span class="date">
+		<?php echo $time->nice($data['created']);?>
+	</span>
+
+	<span class="author">
+		<?php echo @$data['User']['username'];?>
+	</span>
 
 </div>

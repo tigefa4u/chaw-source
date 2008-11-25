@@ -41,7 +41,7 @@ foreach ($tickets as $ticket):
 			<?php echo $ticket['Ticket']['id']; ?>
 		</td>
 		<td>
-			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', 'id' => $ticket['Ticket']['id'])); ?>
+			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['id'])); ?>
 		</td>
 		<?php if (!empty($ticket['Version']['title'])):?>
 			<td>

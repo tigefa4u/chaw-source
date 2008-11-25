@@ -20,7 +20,7 @@ function format($timeline) {
 		break;
 		case 'Wiki':
 			$title = Inflector::humanize($data['slug']);
-			$link = array('controller' => 'wiki', 'action' => 'view', $data['slug']);
+			$link = array('controller' => 'wiki', 'action' => 'index', $data['slug']);
 			$pubDate = $data['modified'];
 			$description = $data['content'];
 			$author = $data['User']['username'];

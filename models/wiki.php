@@ -43,9 +43,13 @@ class Wiki extends AppModel {
 			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
 		}
 		$this->recursive = -1;
-		$this->updateAll(array('Wiki.active' => 0), array(
+		$this->updateAll(array(
+				'Wiki.active' => 0,
+				'Wiki.modified' => "'" . date('Y-m-d H:m:s') . "'"
+			),
+			array(
 			'Wiki.slug' => $this->data['Wiki']['slug'],
-			'Wiki.project_id' => $this->data['Wiki']['project_id']
+			'Wiki.project_id' => $this->data['Wiki']['project_id'],
 		));
 
 		$this->data['Wiki']['active'] = 1;
@@ -55,7 +59,7 @@ class Wiki extends AppModel {
 
 	function afterSave($created) {
 		$Timeline = ClassRegistry::init('Timeline');
-		
+
 		if ($created) {
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Wiki']['project_id'],

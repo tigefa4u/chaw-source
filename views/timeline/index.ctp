@@ -9,9 +9,30 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-
+<h2>
+	Timeline
+</h2>
+<div class="page-navigation">
+	<?php echo $html->link('All', array('controller' => 'timeline', 'action' => 'index'));?>
+	|
+	<?php echo $html->link('Commits', array('controller' => 'timeline', 'action' => 'index', 'type' => 'commits'));?>
+	|
+	<?php echo $html->link('Tickets', array('controller' => 'timeline', 'action' => 'index', 'type' => 'tickets'));?>
+	|
+	<?php echo $html->link('Comments', array('controller' => 'timeline', 'action' => 'index', 'type' => 'comments'));?>
+	|
+	<?php echo $html->link('Wiki', array('controller' => 'timeline', 'action' => 'index', 'type' => 'wiki'));?>
+	|
+	<?php
+		echo $html->link(
+			$html->image('feed-icon.png', array(
+				'width' => 14, 'height' => 14
+			)),
+			$rssFeed, array(
+			'title' => 'Timeline Feed', 'class' => 'rss', 'escape'=> false
+		));?>
+</div>
 <div class="timeline index">
-<h2>Timeline</h2>
 	<?php
 		foreach ((array)$timeline as $event):
 			$type = $event['Timeline']['model'];

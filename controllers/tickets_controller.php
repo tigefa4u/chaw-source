@@ -23,6 +23,8 @@ class TicketsController extends AppController {
 	var $helpers = array('Time');
 
 	function index() {
+		Router::connectNamed(array('status', 'page'));
+
 		$this->Ticket->recursive = 0;
 		$statuses = array_values($this->Project->ticket('statuses'));
 

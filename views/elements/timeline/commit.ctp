@@ -1,33 +1,20 @@
-<div class="commit">
+<div class="commit row">
 
-	<h3>
+	<h3 class="name">
 		Commit: <?php echo $chaw->commit($data['revision']);?>
 	</h3>
 
-	<p>
-		<strong>Changed by:</strong>
-		<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['author'];?>
-		<strong>on:</strong> <?php echo $time->nice($data['commit_date']);?>
-	</p>
-
-	<p class="message">
+	<span class="description">
 		<?php echo $data['message'];?>
-	</p>
+	</span>
 
-	<?php
-		$changes = unserialize($data['changes']);
-		if(!empty($changes)):
-	?>
-		<p>
-			<strong>Changes:</strong>
-			<ul>
-			<?php
-				foreach ($changes as $changed) :
-					echo $html->tag('li', $changed);
-				endforeach;
+	<span class="date">
+		<?php echo $time->nice($data['commit_date']);?>
+	</span>
 
-			?>
-			</ul>
-		</p>
-	<?php endif?>
+	<span class="author">
+		<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['author'];?>
+	</span>
+
+
 </div>
