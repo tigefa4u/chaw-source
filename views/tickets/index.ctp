@@ -1,4 +1,3 @@
-<div class="tickets index">
 <h2>
 	<?php echo Inflector::humanize($current)?>
 	Tickets
@@ -10,13 +9,14 @@
 	}
 	echo join(' | ', $links);
 ?>
+<div class="tickets index">
 <p>
 <?php
 echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
-<table cellpadding="0" cellspacing="0">
+<table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('id');?></th>
 	<th><?php echo $paginator->sort('title');?></th>
