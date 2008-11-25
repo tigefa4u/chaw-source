@@ -30,7 +30,7 @@ class UsersController extends AppController {
 		));
 		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
 		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
-		
+
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
@@ -60,12 +60,10 @@ class UsersController extends AppController {
 
 			$redirect = $this->Auth->redirect();
 
-			if (strpos($redirect, 'users/add') !== false) {
-				$this->redirect(array());
-			}
-			if ($redirect == '/') {
+			if (strpos($redirect, 'users/add') !== false || $redirect == '/') {
 				$redirect = '/dashboard';
 			}
+
 			$this->redirect($redirect);
 
 		} elseif (!empty($this->data)) {
