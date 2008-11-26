@@ -14,7 +14,7 @@
 				echo '<strong>git clone</strong> ';
 				echo "{$CurrentProject->remote->git}:$remote{$CurrentProject->url}.git";
 
-				if (empty($CurrentProject->fork)):
+				if (empty($CurrentProject->fork) && !empty($CurrenUser->id)):
 					echo $html->tag('span', $html->link('fork', array(
 						'admin' => false, 'fork' => false,
 						'controller' => 'projects', 'action' => 'fork'
