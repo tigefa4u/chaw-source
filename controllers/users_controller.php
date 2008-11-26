@@ -29,7 +29,7 @@ class UsersController extends AppController {
 			'account' => 'update', 'change' => 'update'
 		));
 		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
-		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout');
+		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout', 'account', 'edit', 'change');
 
 
 		if (!empty($this->data['User']['password'])) {

@@ -204,12 +204,12 @@ class AccessComponent extends Object {
 			}
 		}
 
-		if ($this->isAllowed) {
-			return true;
+		if ($this->isAllowed && $this->access == 'w' && !$username) {
+			return $this->isAllowed = false;
 		}
 
-		if ($this->access == 'w' && !$username) {
-			return $this->isAllowed = false;
+		if ($this->isAllowed) {
+			return true;
 		}
 
 		$default = ((!$username && $this->access == 'w') || !empty($C->params['admin'])) ? false : $this->isPublic;
