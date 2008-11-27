@@ -70,7 +70,8 @@
 	Router::connect('/forks/:fork/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/forks/:fork/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
-
+	Router::connect('/forks/:fork/:project/commits/history/*', array('controller' => 'commits', 'action' => 'history'));
+	
 	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	//Router::connect('/:project/forks/:fork/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));
 	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array('action' => 'index|view|add|edit|modify|delete'));

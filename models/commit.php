@@ -24,10 +24,7 @@ class Commit extends AppModel {
 
 	var $validate = array(
 		'project_id' => array('notEmpty'),
-		'revision' => array(
-			'rule' => 'isUnique',
-			'message' => 'revision is not unique'
-		),
+		'revision' => array('notEmpty'),
 		'author' => array('notEmpty'),
 		'commit_date' => array('notEmpty'),
 		'message' =>array('notEmpty'),
