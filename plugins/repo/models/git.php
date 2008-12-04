@@ -195,7 +195,7 @@ class Git extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
-		extract(array_merge(array('path' => null), $options));
+		extract(array_merge(array('path' => '.'), $options));
 		if (empty($path)) {
 			return false;
 		}

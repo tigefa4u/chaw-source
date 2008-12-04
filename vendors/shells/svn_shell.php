@@ -57,10 +57,11 @@ class SvnShellShell extends Shell {
  **/
 	function sync() {
 		$project = $this->args[0];
+		$fork = @$this->args[1];
 
 		//pr($this->Project->find('all'));
 
-		if ($this->Project->initialize(compact('project')) === false) {
+		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid Project');
 			return false;
 		}
