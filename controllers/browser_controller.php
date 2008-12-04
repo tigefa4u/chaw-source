@@ -32,6 +32,12 @@ class BrowserController extends AppController {
 
 		$this->Browser->Repo = $this->Project->Repo;
 		$data = $this->Browser->read($path);
+		
+		if ($path && $current) {
+			$this->pageTitle = $path;
+		} else {
+			$this->pageTitle = 'Source';
+		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
 	}

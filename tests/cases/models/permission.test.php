@@ -34,6 +34,17 @@ class PermissionTest extends CakeTestCase {
 					'path' => TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git',
 					'working' => TMP . 'tests' . DS . 'git' .DS . 'working' . DS . 'project_two'
 				)
+			),
+			'Fork' => array(
+				'id' => 3,
+				'url' => 'project_two',
+				'fork' => 'bob',
+				'project_id' => 3,
+				'repo' => array(
+					'type' => 'git',
+					'path' => TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'forks' . DS . 'bob' . DS . 'project_two.git',
+					'working' => TMP . 'tests' . DS . 'git' .DS . 'working' . DS . 'forks' . DS . 'bob' . DS . 'project_two'
+				)
 			)
 		);
 	}
@@ -244,19 +255,51 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => 'rw')));
 	}
 
-	function moreChecks() {
+	function testSomeMoreChecks() {
 		Configure::write('Project', $this->__projects['Two']);
 		$Permission = new TestPermission();
 
 		$data['Permission']['fine_grained'] = "";
 		$Permission->saveFile($data);
 
-		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
 
 		$this->assertTrue($Permission->check("browser", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
 
 		$this->assertTrue($Permission->check("browser", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
 
+	}
+	
+	function testForkOverride() {
+		Configure::write('Project', $this->__projects['Two']);
+		$Fork = new TestPermission();
+		
+		$data['Permission']['fine_grained'] = "
+		[/refs/heads/master]
+		gwoo = r
+		";
+		
+		$Fork->saveFile($data);
+
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
+		
+		$result = $Fork->rules();
+		pr($result);
+
+		Configure::write('Project', $this->__projects['Fork']);
+		$Permission = new TestPermission();
+		
+		$data['Permission']['fine_grained'] = "
+		[/refs/heads/master]
+		bob = r
+		";
+		
+		$Permission->saveFile($data);
+
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'forks' . DS . 'bob' . DS . 'project_two.git' . DS . 'permissions.ini'));
+		
+		$result = $Permission->rules();
+		pr($result);
 	}
 }
 ?>

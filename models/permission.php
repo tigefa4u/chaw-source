@@ -290,8 +290,8 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function file($root = false) {
-		$File = $this->__getFile($root);
+	function file($parent = false) {
+		$File = $this->__getFile($parent);
 		if (!$File->exists() || !$File->readable()) {
 			if (!$File->create()) {
 				return false;
@@ -305,10 +305,10 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function &__getFile($root = false) {
+	function &__getFile($parent = false) {
 		$config = $this->config();
 		$path = $config['repo']['path'] . DS;
-		if ($config['id'] == 1 || $root === true) {
+		if ($config['id'] == 1 || $parent === true) {
 			$path = Configure::read("Content.base");
 		}
 		$File = new File($path . 'permissions.ini');
