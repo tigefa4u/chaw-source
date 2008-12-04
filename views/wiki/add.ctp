@@ -27,11 +27,23 @@ $javascript->codeBlock($script, array('inline' => false));
 			if ($form->value('slug')) {
 				echo $form->hidden('slug');
 			} else {
-				echo $form->input('slug', array('label' => 'Title'));
+				echo $form->input('title', array('label' => 'Title'));
 			}
-			echo $form->input('content', array('label' => 'Text'));
-		?>
 
+			echo $form->input('path', array('div' => 'input text path',
+				'between' => '<em>group pages</em>',
+				'after' => "use paths to group pages into categories and subcategories. example: blog/{$CurrentUser->username}",
+			));
+
+			echo $form->input('content', array('label' => 'Text'));
+
+			/*if ($form->value('path')) {
+				echo $form->input('path', array('div' => 'input text path',
+					'between' => '<em>group pages</em>',
+					'after' => "use paths to group pages into categories and subcategories. example: blog/{$CurrentUser->username}",
+				));
+			}*/
+		?>
 			<div class="input">
 				<span id="Preview"></span>
 			</div>

@@ -65,15 +65,17 @@ table.smooth {
 table.smooth th {
 	border: 0;
 	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 table.smooth th a {
 	padding: 6px 4px;
 }
 table.smooth td {
 	border: 0;
-	border-top: 1px solid #ccc;
 	vertical-align: middle;
 	padding: 8px 4px;
+	border-bottom: 1px solid #ccc;
+
 }
 table.smooth tr.altrow td {
 	background-color: #fff;
@@ -277,6 +279,17 @@ fieldset.options textarea {
 	float: left;
 	width: 76%;
 }
+.wiki .path label {
+	float: left;
+	display: inline;
+	font-style: normal;
+}
+.wiki .input em {
+	float: right;
+	font-size: 10px;
+	font-style: normal;
+	margin-top: 5px;
+}
 .wiki .help {
 	float: right;
 	margin-top: 34px;
@@ -286,16 +299,31 @@ fieldset.options textarea {
 	font-size: 12px;
 	height: 200px;
 }
+.wiki-content {
+	width: 50%;
+}
+.wiki-side {
+	float: right;
+}
+.wiki-side .page {
+	background: #f4f4f4;
+	padding: 6px 10px;
+	margin-bottom: 10px;
+}
+.wiki-sub {
+	float: left;
+}
 
 .timeline {
 	margin-right: 20%;
 }
 .timeline .name {
-	width: 40%;
+	width: 30%;
 }
 .timeline .message {
 	clear: both;
 	margin: 0;
+	width: 40%;
 }
 .timeline .author {
 	float: right;
@@ -418,6 +446,7 @@ fieldset.options textarea {
   background: #f7f7f7;
   padding: 5px 10px 5px 4px;
   border : 0;
+  vertical-align: middle;
 /*
   border-bottom: 1px solid #ccc;
   border-left: 0px solid #ddd;
@@ -428,6 +457,8 @@ fieldset.options textarea {
 }
 .browser table td.message {
 	font-size: 80%;
+	padding-top: 6px;
+	vertical-align: middle;
 }
 
 .browser a.folder {
@@ -507,6 +538,11 @@ fieldset.options textarea {
 .users form {
 	width: 60%;
 }
+
+.login form {
+	width: 420px;
+}
+
 .users form h4 {
 	margin: 1em 0;
 }

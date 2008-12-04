@@ -35,6 +35,8 @@
 <?php if (empty($short)):?>
 	<br />
 	<br />
+	[wiki:<?php echo $CurrentProject->url?>/page The Page]
+	<br />
 	[link](http://url.com/)
 	<br />
 	<br />

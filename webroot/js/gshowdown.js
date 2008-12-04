@@ -444,9 +444,9 @@ var _DoSpecialRules = function(text) {
 	// get wiki pages
 	//  [wiki:Slug]
 	//
-	text = text.replace(/(^|[^\w])(\[wiki:(.+?)\])+/gm,
-			function(wholeMatch, m0, m1, m2) {
-				return (m0 + "<a href=\"" + base + "wiki/" + m2 + "\">" + m2 + "</a>");
+	text = text.replace(/(^|[^\w])(\[wiki:(.+?)\s(.+?)\])+/gm,
+			function(wholeMatch, m0, m1, m2, m3) {
+				return (m0 + "<a href=\"" + base + "wiki/" + m2 + "\">" + m3 + "</a>");
 			});
 
 	// get ohloh widgets

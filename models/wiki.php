@@ -22,7 +22,12 @@ class Wiki extends AppModel {
 
 	var $useTable = 'wiki';
 
-	var $validate = array('content' => array('notEmpty'));
+	var $actsAs = array('Directory');
+
+	var $validate = array(
+		'title' => array('notEmpty'),
+		'content' => array('notEmpty')
+	);
 
 	var $belongsTo = array(
 		'User' => array(
@@ -42,6 +47,7 @@ class Wiki extends AppModel {
 		if (!empty($this->data['Wiki']['title'])) {
 			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
 		}
+
 		$this->recursive = -1;
 		$this->updateAll(array(
 				'Wiki.active' => 0,
@@ -49,6 +55,7 @@ class Wiki extends AppModel {
 			),
 			array(
 			'Wiki.slug' => $this->data['Wiki']['slug'],
+			'Wiki.path' => $this->data['Wiki']['path'],
 			'Wiki.project_id' => $this->data['Wiki']['project_id'],
 		));
 
