@@ -34,7 +34,7 @@
 
 	Router::connect('/:controller/:action/*', array(), array(
 		'controller' => 'commits|tickets|timeline|versions|users|projects',
-		'action' => 'history|view|add|edit|modify|delete')
+		'action' => 'history|view|add|edit|modify|delete|login|account|logout')
 	);
 
 	Router::connect('/:controller/*', array(), array(
