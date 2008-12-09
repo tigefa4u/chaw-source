@@ -13,7 +13,6 @@ class CommitFixture extends CakeTestFixture {
 			'commit_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'message' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'changes' => array('type' => 'text', 'null' => true, 'default' => NULL),
-			'diff' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))

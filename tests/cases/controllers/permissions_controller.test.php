@@ -9,8 +9,13 @@ class TestPermissions extends PermissionsController {
 
 class PermissionsControllerTest extends CakeTestCase {
 	var $Permissions = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Permissions = new TestPermissions();
 		$this->Permissions->constructClasses();
 	}
@@ -19,7 +24,7 @@ class PermissionsControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Permissions, 'PermissionsController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Permissions);
 	}
 }

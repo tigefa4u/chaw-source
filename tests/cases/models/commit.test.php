@@ -1,19 +1,16 @@
 <?php
 /* SVN FILE: $Id$ */
 /* Commit Test cases generated on: 2008-10-13 09:10:08 : 1223915168*/
-App::import('Model', 'Commit');
-
-class TestCommit extends Commit {
-	//var $cacheSources = false;
-}
-
 class CommitTestCase extends CakeTestCase {
 	var $Commit = null;
-	var $fixtures = array('app.commit', 'app.timeline', 'app.project');
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit',
+	);
 
-	function start() {
-		parent::start();
-		$this->Commit = new Commit();
+	function startTest() {
+		$this->Commit = ClassRegistry::init('Commit');
 	}
 
 	function testCommitInstance() {
@@ -55,39 +52,26 @@ class CommitTestCase extends CakeTestCase {
 			'author' => 'gwoo',
 			'commit_date' => '2008-10-13 09:26:08',
 			'message'  => 'Lorem ipsum dolor sit amet',
-			'diff'  => 'Index: /htdocs/chaw/content/svn/working/one/branches/index.php
-			===================================================================
-			--- /htdocs/chaw/content/svn/working/one/branches/index.php	(revision 5)
-			+++ /htdocs/chaw/content/svn/working/one/branches/index.php	(revision 6)
-			@@ -1,10 +1,10 @@
-			 i am making a change to for file
-
-			-i am making a change to this file
-			-i am making a change to this file
-			+i am gonna make a change to this file
-			+i am a change to this file
-
-
-			-i am making a change to this file
-			+i making a to this file
-
-
-			 i am making a change to this file
-			\ No newline at end of file
-			',
 			'created'  => '2008-10-13 09:26:08',
 			'modified'  => '2008-10-13 09:26:08',
-			'project_id'  => 1
+			'project_id'  => 1,
+			'user_id' => ''
 			));
 
 		$results = $this->Commit->save($data);
-
 		$this->assertEqual($results, $data);
 
 		$Timeline = ClassRegistry::init('Timeline');
 		$Timeline->recursive = -1;
 		$results = $Timeline->find('first');
-		pr($results);
+		unset($results['Timeline']['created'], $results['Timeline']['modified']);
+		$this->assertEqual($results, array('Timeline' => array(
+			'id' => 1, 
+			'project_id' => 1,
+			'model' => 'Commit',
+			'foreign_key' => 1,
+		)));
+		
 	}
 }
 ?>

@@ -66,6 +66,11 @@ class AppError extends ErrorHandler {
 			}
 		}
 
+		if (defined('CAKE_TEST_OUTPUT_HTML')) {
+			$this->controller->layout = 'ajax';
+			debug(Debugger::trace());
+		}
+
 		$this->dispatchMethod($method, $messages);
 		$this->_stop();
 	}

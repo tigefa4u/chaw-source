@@ -9,8 +9,13 @@ class TestDashboard extends DashboardController {
 
 class DashboardControllerTest extends CakeTestCase {
 	var $Dashboard = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Dashboard = new TestDashboard();
 		$this->Dashboard->constructClasses();
 	}
@@ -19,7 +24,7 @@ class DashboardControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Dashboard, 'DashboardController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Dashboard);
 	}
 }

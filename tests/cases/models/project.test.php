@@ -1,13 +1,6 @@
 <?php
 /* SVN FILE: $Id$ */
 /* Project Test cases generated on: 2008-10-06 15:10:20 : 1223321240*/
-App::import('Model', 'Project');
-
-class TestProject extends Project {
-	var $cacheSources = false;
-	var $useDbConfig  = 'test_suite';
-}
-
 class ProjectTestCase extends CakeTestCase {
 	var $Project = null;
 	var $fixtures = array(
@@ -26,7 +19,7 @@ class ProjectTestCase extends CakeTestCase {
 		Configure::write('Project', array(
 			'id' => 0
 		));
-		$this->Project = new TestProject();
+		$this->Project = ClassRegistry::init('Project');
 	}
 
 	function end() {
@@ -175,15 +168,15 @@ class ProjectTestCase extends CakeTestCase {
 		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 2)));
 		unset($results[0]['Permission']['created'], $results[0]['Permission']['modified']);
 		$this->assertEqual($results[0]['Permission'], array('id'=> 2, 'user_id' => 2, 'project_id' => 2, 'group' => 'admin'));
-		
-		
+
+
 		$result = $this->Project->field('users_count', array('id' => 1));
 		$this->assertEqual($result, 2);
-		
+
 		$result = $this->Project->field('users_count', array('id' => 2));
 		$this->assertEqual($result, 1);
-		
-		
+
+
 		//die();
 		//pr($this->Project->Repo->debug);
 		//pr($this->Project->Repo->response);

@@ -8,9 +8,10 @@ App::import('Model', array('Project', 'Permission'));
 class TestAccess extends AccessComponent {
 }
 
-class TestProject extends Project {
+class TestAccessProject extends Project {
 	var $cacheSources = false;
 	var $useDbConfig  = 'test_suite';
+	var $useTable = 'projects';
 }
 
 class TestAccessController extends Controller {
@@ -67,7 +68,7 @@ class AccessComponentTest extends CakeTestCase {
 	function testInstall() {
 		$Access = new TestAccess();
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 
 		$this->Controller->params = array(
 			'controller' => 'browser',
@@ -91,7 +92,7 @@ class AccessComponentTest extends CakeTestCase {
 		$expected = null;
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 
 		$this->Controller->params = array(
 			'controller' => 'users',
@@ -125,7 +126,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -189,7 +190,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -254,7 +255,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -293,7 +294,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -365,7 +366,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -427,7 +428,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -468,7 +469,7 @@ class AccessComponentTest extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->Controller->Project = new TestProject();
+		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$this->Controller->testRedirect = null;
@@ -541,7 +542,7 @@ class AccessComponentTest extends CakeTestCase {
 		);
 
 		Configure::write('Project', $this->__projects['One']);
-		$Permission = new Permission();
+		$Permission = ClassRegistry::init('Permission');
 
 		$data['Permission']['fine_grained'] = "
 			[wiki]

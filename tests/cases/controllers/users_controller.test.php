@@ -9,8 +9,13 @@ class TestUsers extends UsersController {
 
 class UsersControllerTest extends CakeTestCase {
 	var $Users = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Users = new TestUsers();
 		$this->Users->constructClasses();
 	}
@@ -19,7 +24,7 @@ class UsersControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Users, 'UsersController'));
 	}
 
-	function tearDown() {
+	function endTests() {
 		unset($this->Users);
 	}
 }

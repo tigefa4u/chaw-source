@@ -9,8 +9,13 @@ class TestTickets extends TicketsController {
 
 class TicketsControllerTest extends CakeTestCase {
 	var $Tickets = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Tickets = new TestTickets();
 		$this->Tickets->constructClasses();
 	}
@@ -19,7 +24,7 @@ class TicketsControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Tickets, 'TicketsController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Tickets);
 	}
 }

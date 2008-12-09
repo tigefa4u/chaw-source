@@ -9,6 +9,12 @@ class TestPermission extends Permission {
 
 class PermissionTest extends CakeTestCase {
 
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
+
 	function start() {
 		parent::start();
 		Configure::write('Content', array(
@@ -269,37 +275,46 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("browser", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
 
 	}
-	
+
 	function testForkOverride() {
 		Configure::write('Project', $this->__projects['Two']);
 		$Fork = new TestPermission();
-		
+
 		$data['Permission']['fine_grained'] = "
 		[/refs/heads/master]
 		gwoo = r
 		";
-		
+
 		$Fork->saveFile($data);
 
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
-		
+
 		$result = $Fork->rules();
-		pr($result);
+		//pr($result);
 
 		Configure::write('Project', $this->__projects['Fork']);
 		$Permission = new TestPermission();
-		
+
 		$data['Permission']['fine_grained'] = "
 		[/refs/heads/master]
 		bob = r
 		";
-		
+
 		$Permission->saveFile($data);
 
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'forks' . DS . 'bob' . DS . 'project_two.git' . DS . 'permissions.ini'));
-		
+
 		$result = $Permission->rules();
-		pr($result);
+
+		$expected = array('project_two' => array(
+			'/refs/heads/master' => array(
+				'bob' => 'r'
+			),
+			'/test/override' => array(
+				'gwoo' => 'rw'
+			)
+		));
+		$this->assertEqual($result, $expected);
 	}
 }
 ?>

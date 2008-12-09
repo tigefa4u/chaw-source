@@ -9,8 +9,13 @@ class TestVersions extends VersionsController {
 
 class VersionsControllerTest extends CakeTestCase {
 	var $Versions = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Versions = new TestVersions();
 		$this->Versions->constructClasses();
 	}
@@ -19,7 +24,7 @@ class VersionsControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Versions, 'VersionsController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Versions);
 	}
 }

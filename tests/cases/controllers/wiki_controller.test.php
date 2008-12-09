@@ -9,8 +9,13 @@ class TestWiki extends WikiController {
 
 class WikiControllerTest extends CakeTestCase {
 	var $Wiki = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Wiki = new TestWiki();
 		$this->Wiki->constructClasses();
 	}
@@ -19,7 +24,7 @@ class WikiControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Wiki, 'WikiController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Wiki);
 	}
 }

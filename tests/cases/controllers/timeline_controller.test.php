@@ -9,8 +9,13 @@ class TestTimeline extends TimelineController {
 
 class TimelineControllerTest extends CakeTestCase {
 	var $Timeline = null;
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Timeline = new TestTimeline();
 		$this->Timeline->constructClasses();
 	}
@@ -19,7 +24,7 @@ class TimelineControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Timeline, 'TimelineController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Timeline);
 	}
 }

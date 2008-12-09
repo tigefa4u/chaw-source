@@ -9,8 +9,14 @@ class TestProjects extends ProjectsController {
 
 class ProjectsControllerTest extends CakeTestCase {
 	var $Projects = null;
+	
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit'
+	);
 
-	function setUp() {
+	function startTest() {
 		$this->Projects = new TestProjects();
 		$this->Projects->constructClasses();
 	}
@@ -19,7 +25,7 @@ class ProjectsControllerTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->Projects, 'ProjectsController'));
 	}
 
-	function tearDown() {
+	function endTest() {
 		unset($this->Projects);
 	}
 }
