@@ -32,6 +32,7 @@ p {
 }
 pre {
 	padding-right: 0;
+	overflow: auto;
 }
 em a {
 	color: inherit;
@@ -393,8 +394,11 @@ fieldset.options textarea {
 	color: #69C;
 }
 
-.tickets form {
+.tickets .edit {
 	font-size: 80%;
+}
+
+.tickets form {
 	min-width: 800px;
 	white-space: nowrap;
 }
