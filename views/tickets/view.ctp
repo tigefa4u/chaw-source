@@ -85,7 +85,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 			<?php foreach ((array)$ticket['Comment'] as $comment): ?>
 
-				<div class="comment" id="c<?ph echo $comment['id']?>">
+				<div class="comment" id="c<?php echo $comment['id']?>">
 					<span class="date">
 						<?php echo $time->timeAgoInWords($comment['created']);?>
 					</span>
