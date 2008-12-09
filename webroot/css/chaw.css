@@ -32,7 +32,6 @@ p {
 }
 pre {
 	padding-right: 0;
-	overflow: auto;
 }
 em a {
 	color: inherit;
@@ -96,7 +95,7 @@ table.smooth tr.altrow td {
 	padding-top: 35px;
 	padding-left: 0px;
 	padding-right: 0px;
-	overflow: auto;
+	overflow: hidden;
 	border-bottom: 1px solid #ddd;
 }
 
