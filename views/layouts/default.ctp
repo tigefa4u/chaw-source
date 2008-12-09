@@ -29,7 +29,7 @@
 <head>
 	<?php echo $html->charset();?>
 	<title>
-		<?php echo $CurrentProject->name .' / ' . $title_for_layout;?>
+		<?php echo $CurrentProject->name .'/' . $title_for_layout;?>
 	</title>
 	<?php
 		echo $html->meta('icon');

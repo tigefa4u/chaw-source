@@ -19,6 +19,8 @@
 class Wiki extends AppModel {
 
 	var $name = 'Wiki';
+	
+	var $displayField = 'slug';
 
 	var $useTable = 'wiki';
 

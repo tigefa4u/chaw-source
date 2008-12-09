@@ -46,7 +46,10 @@ class TicketsController extends AppController {
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
 		$this->Ticket->contain(array('Reporter', 'Tag', 'Comment', 'Comment.User'));
-		$ticket = $this->data = $this->Ticket->read(null, $id);
+		$ticket = $this->data = $this->Ticket->find(array(
+			'Ticket.number' => $id,
+			'Ticket.project_id' => $this->Project->id
+		));
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 

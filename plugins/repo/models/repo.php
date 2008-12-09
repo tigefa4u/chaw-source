@@ -82,6 +82,19 @@ class Repo extends Overloadable {
  **/
 	var $_before = array();
 /**
+ * so we can paginate
+ *
+ * @var string
+ **/
+	var $recursive = 0;
+/**
+ * so we can paginate
+ *
+ * @var string
+ **/
+	var $alias = null;
+
+/**
  * undocumented function
  *
  * @return void
@@ -89,6 +102,7 @@ class Repo extends Overloadable {
  **/
 	function __construct($config = array()) {
 		$this->config($config);
+		$this->alias = ucwords($this->type);
 	}
 /**
  * undocumented function
@@ -195,9 +209,39 @@ class Repo extends Overloadable {
 				$response = shell_exec($c);
 			break;
 		}
-
-		$this->response = array_merge($this->response, (array)$response);
 		return $response;
+	}
+
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function _findAll($data, $query = array()) {
+		$query = array_merge(array('offset' => 0, 'limit' => 100, 'page' => 1), $query);
+
+		if ($query['page'] > 1) {
+			$query['offset'] = ($query['page'] - 1) * $query['limit'];
+		}
+
+		extract($query);
+
+		$results = array();
+
+		foreach ($data as $key => $value) {
+			if ($key >= $offset) {
+				if ($result = $this->read($value, false)) {
+					$results[]['Repo'] = $result;
+					$key++;
+				}
+			}
+			if ($limit > 0 && $key >= $offset + $limit) {
+				break;
+			}
+		}
+
+		return $results;
 	}
 /**
  * Create the parent folders for a repository

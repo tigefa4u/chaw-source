@@ -49,11 +49,11 @@ class Git extends Repo {
 
 		if (is_dir($path) && !file_exists($path . DS . 'config')) {
 			$this->before(array("cd {$path}"));
-			$this->run("--bare init");
+			$this->response[] = $this->run("--bare init");
 		}
 
 		if (!is_dir($working)) {
-			$this->pull();
+			$this->response[] = $this->pull();
 		}
 
 		if (!empty($options['remote'])) {
@@ -64,15 +64,15 @@ class Git extends Repo {
 		}
 
 		$project = basename($path);
-		$this->remote(array('add', 'origin', "{$remote}:{$project}"));
+		$this->response[] = $this->remote(array('add', 'origin', "{$remote}:{$project}"));
 
 		$this->before(array(
 			"cd {$working}", "touch .gitignore"
 		));
-		$this->commit(array("-m", "'Initial Project Commit'"));
-		$this->run("--bare", array('update-server-info'));
-		$this->push();
-		$this->update();
+		$this->response[] = $this->commit(array("-m", "'Initial Project Commit'"));
+		$this->response[] = $this->run("--bare", array('update-server-info'));
+		$this->response[] = $this->push();
+		$this->response[] = $this->update();
 
 		if (is_dir($path) && is_dir($working)) {
 			return true;
@@ -99,7 +99,7 @@ class Git extends Repo {
 			"cd {$working}", "{$type} add {$path}"
 		));
 
-		$this->run('commit', $options);
+		$this->response[] = $this->run('commit', $options);
 	}
 /**
  * undocumented function
@@ -131,8 +131,8 @@ class Git extends Repo {
 				'path' => $fork,
 				'working' => dirname($working) . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
 			));
-			$this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
-			$this->pull();
+			$this->response[] = $this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
+			$this->response[] = $this->pull();
 		}
 
 		if (is_dir($this->config['path']) && is_dir($this->config['working'])) {
@@ -149,7 +149,7 @@ class Git extends Repo {
  **/
 	function push($branch1 = 'origin', $branch2 = 'master') {
 		$this->before(array("cd {$this->working}"));
-		return $this->run('push', array($branch1, $branch2), 'capture');
+		return $this->response[] = $this->run('push', array($branch1, $branch2), 'capture');
 	}
 /**
  * undocumented function
@@ -159,7 +159,7 @@ class Git extends Repo {
  **/
 	function update($branch = 'master') {
 		$this->before(array("cd {$this->working}"));
- 		return $this->run('pull', array($this->path, $branch), 'capture');
+ 		return $this->response[] = $this->run('pull', array($this->path, $branch), 'capture');
 	}
 /**
  * undocumented function
@@ -175,14 +175,14 @@ class Git extends Repo {
 		}
 
 		if (!is_dir($working)) {
-			$this->run('clone', array_merge($params, array($path, $working)));
+			$this->response[] = $this->run('clone', array_merge($params, array($path, $working)));
 			chmod($working, $chmod);
 		}
 
 		if (is_dir($working)) {
 			$this->before(array("cd {$working}"));
-			$this->run('checkout', array($branch));
-			$this->update($branch);
+			$this->response[] = $this->run('checkout', array($branch));
+			$this->response[] = $this->update($branch);
 			return $this->response;
 		}
 
@@ -195,21 +195,19 @@ class Git extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
-		extract(array_merge(array('path' => '.'), $options));
+		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
 		if (empty($path)) {
 			return false;
 		}
 
 		$this->before(array("cd {$this->working}"));
-		$info = explode("\n", $this->run('log', array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path))));
-		
-		$data = array();
+		$data = explode("\n", $this->run('log', array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path))));
 
-		foreach ($info as $commit) {
-			$data[]['Repo'] = $this->read($commit, false);
+		if ($type == 'count') {
+			return count($data);
 		}
 
-		return $data;
+		return parent::_findAll($data, compact('limit', 'page'));
 	}
 /**
  * undocumented function
@@ -218,11 +216,15 @@ class Git extends Repo {
  *
  **/
 	function read($newrev, $diff = false) {
-		$info = $this->run('show', array($newrev, "--pretty=format:%H::::%an::::%ai::::%s"), 'capture');
+		if ($diff) {
+			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
+		} else {
+			$info = $this->run('log', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
+		}
 		if (empty($info)) {
 			return null;
 		}
-		list($revision, $author, $commit_date, $message) = explode('::::', $info[0]);
+		list($revision, $author, $commit_date, $message) = explode(chr(0), $info[0]);
 		unset($info[0]);
 
 		$changes = array();

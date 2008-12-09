@@ -1,12 +1,12 @@
 <div class="wiki row">
 
 	<h3 class="name">
-		Wiki: <?php echo $html->link($data['slug'], array('controller' => 'wiki', 'action' => 'index', $data['slug']));?>
+		Wiki: <?php echo $html->link($data['Wiki']['slug'], array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['slug']));?>
 	</h3>
 
 	<span class="description">
 		<?php
-			if ($data['created'] != $data['modified']):
+			if ($data['Wiki']['created'] != $data['Wiki']['modified']):
 				echo 'modifed';
 			else :
 				echo 'created';
@@ -15,7 +15,7 @@
 	</span>
 
 	<span class="date">
-		<?php echo $time->nice($data['created']);?>
+		<?php echo $time->nice($data['Wiki']['created']);?>
 	</span>
 
 	<span class="author">

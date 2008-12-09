@@ -36,9 +36,16 @@ class User extends AppModel {
 			)
 		),
 		'email' => array(
-			'rule' => 'email',
-			'required' => true,
-			'message' => 'Required: Valid email address'
+			'valid' => array(
+				'rule' => 'email',
+				'required' => true,
+				'message' => 'Required: Valid email address'
+			),
+			'unique' => array(
+				'rule' => 'isUnique',
+				'required' => true,
+				'message' => 'Required: Email must be unique'
+			)
 		),
 		'password' => array(
 			'rule' => 'alphaNumeric',
@@ -91,6 +98,16 @@ class User extends AppModel {
 		if (!empty($data['username'])) {
 			$this->recursive = -1;
 			if ($result = $this->findByUsername($data['username'])) {
+				if ($this->id === $result['User']['id']) {
+					return true;
+				}
+				return false;
+			}
+			return true;
+		}
+		if (!empty($data['email'])) {
+			$this->recursive = -1;
+			if ($result = $this->findByEmail($data['email'])) {
 				if ($this->id === $result['User']['id']) {
 					return true;
 				}

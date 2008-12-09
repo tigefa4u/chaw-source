@@ -33,12 +33,14 @@ $javascript->codeBlock($script, array('inline' => false));
 		));?>
 </div>
 <div class="timeline index">
+	<table class="smooth">
 	<?php
 		foreach ((array)$timeline as $event):
 			$type = $event['Timeline']['model'];
-			echo $this->element('timeline/' . strtolower($type), array('event' => $event, 'data' => $event[$type]));
+			echo $this->element('timeline/' . strtolower($type), array('data' => $event));
 		endforeach;
 	?>
+	</table>
 </div>
 <div class="paging">
 	<?php

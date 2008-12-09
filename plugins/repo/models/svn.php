@@ -125,23 +125,17 @@ class Svn extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
-		$path = null;
-		if (!empty($options['path'])) {
-			$path = $options['path'];
-		}
-		$history = $this->look('history', array('path' => $path));
-		if (preg_match_all('/[\\s+](\\d+)[\\s+]/', $history, $matches)) {
-			$revisions = array_filter($matches[1]);
+		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
+		if (empty($path)) {
+			return false;
 		}
 
-		$data = array();
-
-		if (!empty($revisions)) {
-			foreach ($revisions as $revision) {
-				$data[]['Repo'] = $this->read(trim($revision), false);
-			}
+		$data = $this->look('history', array('path' => $path));
+		if (preg_match_all('/[\\s+](\\d+)[\\s+]/', $data, $matches)) {
+			$data = array_filter($matches[1]);
 		}
-		return $data;
+
+		return parent::_findAll($data, compact('limit', 'page'));
 	}
 /**
  * Read the author, data, messages, changes, and diff for a revision

@@ -26,39 +26,32 @@
 
 	Router::connect('/dashboard', array('controller' => 'dashboard', 'action' => 'index'));
 
+	Router::connect('/download/:project', array('controller' => 'projects', 'action' => 'index'));
 
-	Router::connect('/commits', array('controller' => 'commits', 'action' => 'index'));
-	Router::connect('/commits/:action/*', array('controller' => 'commits', 'action' => 'index'));
+	Router::connect('/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'), array('admin' => true));
+	Router::connect('/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'), array('admin' => true));
+
+
+	Router::connect('/:controller/:action/*', array(), array(
+		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'action' => 'history|view|add|edit|modify|delete')
+	);
+
+	Router::connect('/:controller/*', array(), array(
+		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'action' => 'index')
+	);
 
 	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
-	Router::connect('/browser/:action/*', array('controller' => 'browser', 'action' => 'index'));
-
-	Router::connect('/tickets', array('controller' => 'tickets', 'action' => 'index'));
-	Router::connect('/tickets/:action/*', array('controller' => 'tickets', 'action' => 'index'));
-
-	Router::connect('/timeline', array('controller' => 'timeline', 'action' => 'index'));
-	Router::connect('/timeline/:action/*', array('controller' => 'timeline', 'action' => 'index'));
-
-	Router::connect('/versions', array('controller' => 'versions', 'action' => 'index'));
-	Router::connect('/versions/:action/*', array('controller' => 'versions', 'action' => 'index'));
-
-	Router::connect('/users', array('controller' => 'users', 'action' => 'index'));
-	Router::connect('/users/:action/*', array('controller' => 'users', 'action' => 'index'));
-
 	Router::connect('/wiki/edit/:id', array('controller' => 'wiki', 'action' => 'add'), array('pass' => array('id')));
 	Router::connect('/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'));
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
-	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'view'));
-
-	Router::connect('/projects', array('controller' => 'projects', 'action' => 'index'), array('action' => 'index'));
-	Router::connect('/projects/view/:project', array('controller' => 'projects', 'action' => 'view'));
-	Router::connect('/projects/:action/*', array('controller' => 'projects', 'action' =>  'view|add|edit|modify|delete'));
 
 
 	//Fork routes
+	Router::connect('/forks/:fork/:project/', array('controller' => 'browser', 'action' => 'index'));
 
-	Router::connect('/:project/fork', array('controller' => 'projects', 'action' => 'fork'));
-
+	Router::connect('/:project/fork', array('controller' => 'projects', 'action' => 'fork'), array('action' => 'fork'));
 	Router::connect('/download/forks/:fork/:project', array('controller' => 'projects', 'action' => 'index'));
 
 	Router::connect('/forks/:fork/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
@@ -70,21 +63,23 @@
 	Router::connect('/forks/:fork/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/forks/:fork/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
-	Router::connect('/forks/:fork/:project/commits/history/*', array('controller' => 'commits', 'action' => 'history'));
-	
+
 	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
-	//Router::connect('/:project/forks/:fork/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));
-	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array('action' => 'index|view|add|edit|modify|delete'));
+
+	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array(
+		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'action' => 'history|view|add|edit|modify|delete')
+	);
+
+	Router::connect('/forks/:fork/:project/:controller/*', array(), array(
+		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'action' => 'index')
+	);
 
 
 	//Base project routes
-
-	Router::connect('/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
-	Router::connect('/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
-
-	Router::connect('/download/:project', array('controller' => 'projects', 'action' => 'index'));
-
 	Router::connect('/:project', array('controller' => 'browser', 'action' => 'index'));
+
 	Router::connect('/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
 	//Router::connect('/:project/admin/:controller/:action/:id', array('admin'=> true, 'controller' => 'dashboard'));
 	Router::connect('/:project/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
@@ -94,12 +89,21 @@
 	Router::connect('/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
-	Router::connect('/:project/commits/history/*', array('controller' => 'commits', 'action' => 'history'));
 
 	//these should be last
 
-	//Router::connect('/:project/:controller/*', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
-	//Router::connect('/:project/:controller/:action/:id', array(), array('action' => 'view|edit|modify|delete', 'id' => $ID, 'pass' => array('id')));
-	Router::connect('/:project/:controller/:action/*', array(), array('action' => 'index|view|add|edit|modify|delete'));
+
+	Router::connect('/:project/:controller/:action/*', array(), array(
+		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'action' => 'history|view|add|edit|modify|delete')
+	);
+
+	Router::connect('/:project/:controller/*', array(), array(
+		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'action' => 'index')
+	);
+
+
+
 ?>

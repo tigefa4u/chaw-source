@@ -6,6 +6,7 @@ class TicketFixture extends CakeTestFixture {
 	var $name = 'Ticket';
 	var $fields = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'number' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'version_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'reporter' => array('type' => 'integer', 'null' => false, 'default' => '0'),

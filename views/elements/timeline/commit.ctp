@@ -1,25 +1,25 @@
 <div class="commit row">
 
 	<h3 class="name">
-		Commit: <?php echo $chaw->commit($data['revision']);?>
+		Commit: <?php echo $chaw->commit($data['Commit']['revision']);?>
 	</h3>
 
 	<span class="description">
-		<?php echo $data['message'];?>
+		<?php echo $text->truncate($data['Commit']['message'], 80, '...', false, true); ?>
 	</span>
 
-<?php if (!empty($this->params['isAdmin'])):?>	
+<?php if (!empty($this->params['isAdmin'])):?>
 	<span class="admin">
-		<?php echo $chaw->admin('delete', array('controller' => 'timeline', 'action' => 'delete', $event['Timeline']['id']));?>
+		<?php echo $chaw->admin('delete', array('controller' => 'timeline', 'action' => 'delete', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
 
 	<span class="date">
-		<?php echo $time->nice($data['commit_date']);?>
+		<?php echo $time->nice($data['Commit']['commit_date']);?>
 	</span>
 
 	<span class="author">
-		<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['author'];?>
+		<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['Commit']['author'];?>
 	</span>
-	
+
 </div>

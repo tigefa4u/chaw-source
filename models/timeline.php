@@ -42,5 +42,15 @@ class Timeline extends AppModel {
 			'conditions' => array('Timeline.model = \'Wiki\'')
 		)
 	);
+
+	function related(&$data) {
+		foreach ($data as $key => $timeline) {
+			$type = $timeline['Timeline']['model'];
+			$this->{$type}->recursive = 0;
+			$related = $this->{$type}->findById($timeline['Timeline']['foreign_key']);
+			$data[$key] = array_merge($timeline, (array)$related);
+		}
+		return $data;
+	}
 }
 ?>

@@ -1,55 +1,87 @@
-<?php 
+<?php
 /* SVN FILE: $Id$ */
-/* Ticket Test cases generated on: 2008-09-23 07:09:29 : 1222170869*/
-App::import('Model', 'Ticket');
+/* Ticket Test cases generated on: 2008-12-08 15:12:43 : 1228778743*/
+class TicketTest extends CakeTestCase {
 
-class TestTicket extends Ticket {
-	var $cacheSources = false;
-	var $useDbConfig  = 'test_suite';
-}
+	var $fixtures = array(
+		'app.project', 'app.permission', 'app.user', 'app.wiki',
+		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
+		'app.tag', 'app.tags_tickets', 'app.commit',
+		'app.ticket'
+	);
 
-class TicketTestCase extends CakeTestCase {
-	var $Ticket = null;
-	var $fixtures = array('app.ticket');
-
-	function start() {
-		parent::start();
-		$this->Ticket = new TestTicket();
+	function startTest() {
+		$this->Ticket = ClassRegistry::init('Ticket');
 	}
 
 	function testTicketInstance() {
 		$this->assertTrue(is_a($this->Ticket, 'Ticket'));
 	}
 
-	function testTicketFind() {
-		$this->Ticket->recursive = -1;
-		$results = $this->Ticket->find('first');
-		$this->assertTrue(!empty($results));
+	function testSave() {
 
-		$expected = array('Ticket' => array(
-			'id'  => 1,
-			'type_id'  => 1,
-			'feature_id'  => 1,
-			'owner'  => 1,
-			'reporter'  => 1,
-			'summary'  => 'Lorem ipsum dolor sit amet',
-			'body'  => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida,
-									phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam,
-									vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit,
-									feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.
-									Orci aliquet, in lorem et velit maecenas luctus, wisi nulla at, mauris nam ut a, lorem et et elit eu.
-									Sed dui facilisi, adipiscing mollis lacus congue integer, faucibus consectetuer eros amet sit sit,
-									magna dolor posuere. Placeat et, ac occaecat rutrum ante ut fusce. Sit velit sit porttitor non enim purus,
-									id semper consectetuer justo enim, nulla etiam quis justo condimentum vel, malesuada ligula arcu. Nisl neque,
-									ligula cras suscipit nunc eget, et tellus in varius urna odio est. Fuga urna dis metus euismod laoreet orci,
-									litora luctus suspendisse sed id luctus ut. Pede volutpat quam vitae, ut ornare wisi. Velit dis tincidunt,
-									pede vel eleifend nec curabitur dui pellentesque, volutpat taciti aliquet vivamus viverra, eget tellus ut
-									feugiat lacinia mauris sed, lacinia et felis.',
-			'created'  => '2008-09-23 07:54:29',
-			'modified'  => '2008-09-23 07:54:29',
-			'status'  => 1
-			));
-		$this->assertEqual($results, $expected);
+		$all = array(
+			array('Ticket' => array(
+				'project_id'  => 1,
+				'version_id' => 1,
+				'reporter'  => 1,
+				'owner'  => 1,
+				'type'  => 'bug',
+				'status'  => 'open',
+				'priority' => 'high',
+				'title'  => 'Lorem ipsum dolor sit amet',
+				'descripiton'  => 'Lorem ipsum dolor sit amet',
+				'created'  => '2008-09-23 07:54:29',
+				'modified'  => '2008-09-23 07:54:29',
+			)),
+			array('Ticket' => array(
+				'project_id'  => 1,
+				'version_id' => 1,
+				'reporter'  => 1,
+				'owner'  => 1,
+				'type'  => 'bug',
+				'status'  => 'open',
+				'priority' => 'high',
+				'title'  => 'Lorem ipsum dolor sit amet',
+				'descripiton'  => 'Lorem ipsum dolor sit amet',
+				'created'  => '2008-09-23 07:54:29',
+				'modified'  => '2008-09-23 07:54:29',
+			)),
+			array('Ticket' => array(
+				'project_id'  => 1,
+				'version_id' => 1,
+				'reporter'  => 1,
+				'owner'  => 1,
+				'type'  => 'bug',
+				'status'  => 'open',
+				'priority' => 'high',
+				'title'  => 'Lorem ipsum dolor sit amet',
+				'descripiton'  => 'Lorem ipsum dolor sit amet',
+				'created'  => '2008-09-23 07:54:29',
+				'modified'  => '2008-09-23 07:54:29',
+			)),
+			array('Ticket' => array(
+				'project_id'  => 1,
+				'version_id' => 1,
+				'reporter'  => 1,
+				'owner'  => 1,
+				'type'  => 'bug',
+				'status'  => 'open',
+				'priority' => 'high',
+				'title'  => 'Lorem ipsum dolor sit amet',
+				'descripiton'  => 'Lorem ipsum dolor sit amet',
+				'created'  => '2008-09-23 07:54:29',
+				'modified'  => '2008-09-23 07:54:29',
+			))
+		);
+
+		$results = $this->Ticket->saveAll($all);
+		$this->assertEqual($results, true);
+
+		$this->Ticket->recursive = -1;
+		$results = $this->Ticket->find('count');
+		$this->assertEqual($results, 4);
+
 	}
 }
 ?>

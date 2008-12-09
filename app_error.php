@@ -39,7 +39,6 @@ class AppError extends ErrorHandler {
 			$this->controller =& new CakeErrorController();
 		} else {
 			$this->controller =& new Controller();
-			$this->controller->helpers = array('Html', 'Form', 'Javascript', 'Chaw');
 			$this->controller->viewPath = 'errors';
 		}
 
@@ -58,23 +57,31 @@ class AppError extends ErrorHandler {
 			$method = 'error';
 		}
 
-		if ($method !== 'error') {
-			if (Configure::read() == 0){
+		if (!in_array($method, array('error', 'missingAction', 'missingController'))) {
+			if (Configure::read() == 0) {
 				$method = 'error404';
-				if(isset($code) && $code == 500) {
+				if (isset($code) && $code == 500) {
 					$method = 'error500';
 				}
 			}
 		}
 
-		if (($method !== 'missingAction' || $method !== 'missingController')
-			&& $this->controller->here !== $this->controller->base . '/admin/install') {
-			if (defined('CAKE_TEST_OUTPUT')) {
-				$this->controller->layout = 'ajax';
-			}
-			$this->dispatchMethod($method, $messages);
-			$this->_stop();
-		}
+		$this->dispatchMethod($method, $messages);
+		$this->_stop();
+	}
+
+	function missingAction($messages = array()) {
+		$this->controller->redirect(array_merge(
+			array('controller' => 'wiki', 'action' => 'index', $this->controller->params['action']),
+			$this->controller->params['pass']
+		));
+	}
+
+	function missingController($messages = array()) {
+		$this->controller->redirect(array_merge(
+			array('controller' => 'wiki', 'action' => 'index', $this->controller->params['controller']),
+			$this->controller->params['pass']
+		));
 	}
 }
 ?>

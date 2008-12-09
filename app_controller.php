@@ -52,12 +52,12 @@ class AppController extends Controller {
 		if (!empty($this->Project->config) && $this->Project->config['id'] !== '1') {
 			$this->params['project'] = $this->Project->config['url'];
 		}
-		
+
 		if (isset($this->viewVars['rssFeed'])) {
 			$this->viewVars['rssFeed'] = array_merge(
 				array(
 				'controller' => 'timeline', 'action' => 'index', 'ext' => 'rss'
-				), 
+				),
 				$this->viewVars['rssFeed']
 			);
 		}

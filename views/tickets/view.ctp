@@ -33,7 +33,7 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="tickets view">
 	<h3 class="title">
 		<?php echo $ticket['Ticket']['title'];?>
-		<?php if (!empty($CurrentUser->id)): ?>
+		<?php if (!empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id'])): ?>
 			<em>(<a href="#modify" class="modify">edit</a>)</em>
 		<?php endif; ?>
 	</h3>
@@ -49,8 +49,9 @@ $javascript->codeBlock($script, array('inline' => false));
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
-			<?php echo $form->create(array('action' => 'modify', 'url'=> array($form->value('Ticket.id'), 'id'=> false)));?>
+			<?php echo $form->create(array('action' => 'modify', 'url'=> array($form->value('Ticket.number'), 'id'=> false)));?>
 
+			<?php if (!empty($this->params['isAdmin'])):?>
 				<div id="modify" style="display:none">
 					<fieldset class="main">
 						<legend>
@@ -78,12 +79,13 @@ $javascript->codeBlock($script, array('inline' => false));
 					</div>
 
 				</div>
+			<?php endif; ?>
 
 		<?php endif; ?>
 
 			<?php foreach ((array)$ticket['Comment'] as $comment): ?>
 
-				<div class="comment">
+				<div class="comment" id="c<?ph echo $comment['id']?>">
 					<span class="date">
 						<?php echo $time->timeAgoInWords($comment['created']);?>
 					</span>
@@ -104,11 +106,14 @@ $javascript->codeBlock($script, array('inline' => false));
 						<?php __('Comment');?>
 					</legend>
 					<?php
-						echo $form->input('status');
+						if (!empty($this->params['isAdmin'])):
+							echo $form->input('status');
+						endif;
+
 						echo $form->textarea('comment');
 					?>
 				</fieldset>
-
+			<?php 	if (!empty($this->params['isAdmin'])):?>
 				<fieldset class="options">
 					<legend>Options</legend>
 					<?php
@@ -119,6 +124,7 @@ $javascript->codeBlock($script, array('inline' => false));
 						echo $form->input('priority');
 					?>
 				</fieldset>
+			<?php endif; ?>
 
 				<div class="submit">
 					<?php echo $form->submit('Submit', array('div' => false));?>

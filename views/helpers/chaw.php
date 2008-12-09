@@ -91,4 +91,23 @@ class ChawHelper extends AppHelper {
 		}
 		return $url;
 	}
+
+	function breadcrumbs($path, $slug) {
+		$out = array();
+		$parts = array_filter(explode('/', $path));
+
+		if ($slug !== 'home') {
+
+			$out[] = $this->Html->link('home', array('controller' => 'wiki', '/'));
+
+			foreach ($parts as $key => $part) {
+				$out[] = $this->Html->link($part, $parts);
+			}
+
+			$out[] = $slug;
+			return join(' > ', $out) ;
+		}
+
+		return null;
+	}
 }

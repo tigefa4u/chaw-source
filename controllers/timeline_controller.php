@@ -20,21 +20,15 @@ class TimelineController extends AppController {
 
 	var $name = 'Timeline';
 
-	var $helpers = array('Time');
+	var $helpers = array('Time', 'Text');
 
 	var $paginate = array(
 		'limit' => 30,
 		'order' => 'Timeline.created DESC',
-		'contain' => array(
-			'Comment', 'Comment.User', 'Comment.Ticket', 'Commit', 'Commit.User', 'Ticket', 'Ticket.Reporter',
-			'Wiki', 'Wiki.User'
-		),
 	);
 
 	function index() {
 		Router::connectNamed(array('type', 'page'));
-
-		$this->Timeline->recursive = 2;
 
 		$this->paginate['conditions'] = array('Timeline.project_id' => $this->Project->id);
 
@@ -43,13 +37,9 @@ class TimelineController extends AppController {
 		}
 
 		$timeline = $this->paginate();
-		$this->set('timeline', $timeline);
+		$this->set('timeline', $this->Timeline->related($timeline));
 
 		$this->set('rssFeed', array('controller' => 'timeline'));
-	}
-
-	function sync() {
-
 	}
 
 	function delete($id = null) {

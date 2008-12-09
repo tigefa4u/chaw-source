@@ -43,7 +43,7 @@ class CommitsController extends AppController {
 			$current = array_pop($args);
 		}
 
-		$commits = $this->Project->Repo->find('all', array('path' => $path));
+		$commits = $this->paginate($this->Project->Repo, array('path' => $path));
 
 		$this->set(compact('commits', 'args', 'current'));
 	}

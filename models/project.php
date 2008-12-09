@@ -319,7 +319,7 @@ class Project extends AppModel {
 
 	function isUnique($data, $options = array()) {
 		if (!empty($data['name'])) {
-			if ($this->findByUrl(Inflector::underscore($data['name']))) {
+			if ($this->findByUrl(Inflector::slug(strtolower($this->data['Project']['name'])))) {
 				return false;
 			}
 			return true;

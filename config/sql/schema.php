@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* SVN FILE: $Id$ */
 /* Chaw schema generated on: 2008-11-22 14:11:16 : 1227383956*/
 class ChawSchema extends CakeSchema {
@@ -29,7 +29,6 @@ class ChawSchema extends CakeSchema {
 			'commit_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'message' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'changes' => array('type' => 'text', 'null' => true, 'default' => NULL),
-			'diff' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
@@ -89,6 +88,7 @@ class ChawSchema extends CakeSchema {
 		);
 	var $tickets = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'number' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'version_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'reporter' => array('type' => 'integer', 'null' => false, 'default' => '0'),

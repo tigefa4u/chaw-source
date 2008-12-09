@@ -1,3 +1,7 @@
+/*
+colors
+blue: #69C;
+*/
 .str { color:#181; font-style:italic }
 .kwd { color:#369 }
 .com { color:#666 }
@@ -81,12 +85,14 @@ table.smooth tr.altrow td {
 	background-color: #fff;
 }
 #header {
+	position: fixed;
+	width: 100%;
 	padding-right: 6px;
 }
 
 #content {
 	clear: both;
-	padding-top: 0px;
+	padding-top: 35px;
 	padding-left: 0px;
 	padding-right: 0px;
 	overflow: auto;
@@ -159,13 +165,12 @@ table.smooth tr.altrow td {
 	margin-left: 20px;
 	background: #f4f4f4;
 	padding: 4px 0px;
-	width: 20%;
+	width: 280px;
 	height: 28px;
 	overflow: hidden;
 }
 #current-user span {
 	display: block;
-	float: left;
 	vertical-align: middle;
 }
 #current-user .gravatar {
@@ -182,7 +187,8 @@ table.smooth tr.altrow td {
 	background: #fff;
 }
 #current-user .username {
-	padding-top: 4px;
+	float: left;
+	padding-top: 0px;
 	padding-left: 4px;
 }
 #current-user span a {
@@ -193,17 +199,21 @@ table.smooth tr.altrow td {
 #current-user span a:hover {
 	text-decoration: underline;
 }
-#current-user span.edit {
+#current-user div.links {
 	float: right;
-	vertical-align: middle;
 }
-#current-user span.edit a {
+#current-user span.link {
+	float: left;
+	vertical-align: middle;
+	margin-left: 4px;
+}
+#current-user span.link a {
 	font-size: 11px;
 	padding: 2px 6px;
 	text-decoration: underline;
 	color: #bbb;
 }
-#current-user span.edit a:hover {
+#current-user span.link a:hover {
 	text-decoration: none;
 	color: #333;
 }
@@ -241,22 +251,20 @@ div.actions {
 
 .row {
 	clear: both;
-	padding: 8px 0;
+	padding: 12px 2px;
 	border-top: 1px #ccc solid;
 	overflow: hidden;
 }
 .row span {
-	margin-left: 10px;
+	margin-right: 10px;
 	float: left;
 	font-size: 90%;
 	padding-top: 3px;
 }
 .row .name {
-	margin: 0;
+	margin: 0 0 4px 0;
 	padding: 0;
 	font-size: 120%;
-	float: left;
-	width: 30%;
 	vertical-align: top;
 }
 
@@ -299,26 +307,62 @@ fieldset.options textarea {
 	font-size: 12px;
 	height: 200px;
 }
+.breadcrumbs {
+	color: #ccc;
+}
+.breadcrumbs a {
+	color: #ccc;
+	text-decoration: none;
+}
+.breadcrumbs a:hover {
+	text-decoration: underline;
+}
 .wiki-content {
 	width: 50%;
 }
-.wiki-side {
+.wiki-content .actions {
+	font-size: 10px;
+}
+.wiki-navigation {
 	float: right;
+	padding-top: 20px;
+	width: 40%;
 }
-.wiki-side .page {
-	background: #f4f4f4;
-	padding: 6px 10px;
+.wiki-navigation h2 {
+	color: #3b3b3b;
+	font-size: 130%;
+	margin: 0;
+	padding: 0;
+}
+.wiki-navigation .description {
+	padding: 2px 40px 2px 0;
 	margin-bottom: 10px;
-}
-.wiki-sub {
 	float: left;
+	font-size: 12px;
 }
 
+.wiki-navigation .paths {
+	clear: left;
+}
+.wiki-navigation .paths h3 {
+	font-size: 100%;
+	color: #3b3b3b;
+}
+.wiki-navigation .paths ul {
+	margin: 0;
+}
+.wiki-navigation .paths li {
+	list-style-type: none;
+	margin: 4px 0;
+}
+.wiki-navigation .paths li a {
+	color: #656565;
+}
 .timeline {
 	margin-right: 20%;
 }
 .timeline .name {
-	width: 30%;
+	width: 100%;
 }
 .timeline .message {
 	clear: both;
@@ -396,7 +440,6 @@ fieldset.options textarea {
 	width: 60%;
 	margin: 0;
 	padding: 0;
-	margin-bottom:1em;
 	padding:0.5em 0;
 	font-style: normal;
 	color: #3b3b3b;

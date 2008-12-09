@@ -20,7 +20,7 @@ class Ticket extends AppModel {
 
 	var $name = 'Ticket';
 
-	var $actsAs = array('Containable');
+	var $actsAs = array('Containable', 'List' => array('position_column' => 'number', 'scope' => 'project_id'));
 
 	var $belongsTo = array(
 		'Project',

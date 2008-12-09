@@ -31,7 +31,6 @@ class UsersController extends AppController {
 		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
 		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout', 'account', 'edit', 'change');
 
-
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
 		}
@@ -125,7 +124,9 @@ class UsersController extends AppController {
 			$this->data = $this->User->read(null, $id);
 		}
 
-		$isAllowed = ($this->params['isAdmin'] || ($this->data['User']['id'] == $this->Auth->user('id')) &&  $this->data['User']['username'] == $this->Auth->user('username'));
+		$isAllowed = ($this->params['isAdmin']
+			|| ($this->data['User']['id'] == $this->Auth->user('id'))
+			&& $this->data['User']['username'] == $this->Auth->user('username'));
 
 		if (!$isAllowed) {
 			$this->render('view');

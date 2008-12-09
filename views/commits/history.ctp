@@ -72,3 +72,9 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php endforeach;?>
 
 </div>
+<?php
+	$paginator->options(array('url' => $this->passedArgs));
+	echo $paginator->prev();
+	echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
+	echo $paginator->next();
+?>

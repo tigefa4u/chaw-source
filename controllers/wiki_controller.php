@@ -25,17 +25,21 @@ class WikiController extends AppController {
 	function index() {
 		extract($this->__params());
 
-		if ($slug === null) {
+		if (!$slug) {
 			$slug = 'home';
 		}
 
+		if ($title = substr($path, 1)) {
+			$this->pageTitle = Inflector::humanize($title) . '/';
+		}
+
 		if ($slug) {
-			$this->pageTitle = Inflector::humanize($slug);
+			$this->pageTitle .=  Inflector::humanize($slug);
 		}
 
 		$wiki = $this->Wiki->find('all', array(
 			'conditions' => array(
-				'Wiki.path' => $path . '/' . $slug,
+				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
 				'Wiki.project_id' => $this->Project->id,
 				'Wiki.active' => 1
 			)
@@ -52,10 +56,16 @@ class WikiController extends AppController {
 			$this->passedArgs[] = $slug;
 			$this->redirect(array_merge(array('action' => 'add'), $this->passedArgs));
 		}
-		$sub = null;
-		//$sub = array_unique(Set::extract($wiki, '/Wiki/path'));
-		//sort($sub);
-		$this->set(compact('path', 'slug', 'wiki', 'page', 'sub'));
+
+		$paths = array_flip($this->Wiki->find('list', array(
+			'fields' => array('Wiki.path', 'Wiki.id'),
+			'conditions' => array(
+				'Wiki.project_id' => $this->Project->id,
+				'Wiki.active' => 1
+			)
+		)));
+		sort($paths);
+		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths'));
 		$this->render('view');
 	}
 
@@ -97,7 +107,7 @@ class WikiController extends AppController {
 	}
 
 	function __params() {
-		$path = $slug = null;
+		$path = '/'; $slug = null;
 		$slug = Inflector::slug(array_pop($this->passedArgs));
 		if(count($this->passedArgs) >= 1) {
 			$path = '/'. join('/', $this->passedArgs);

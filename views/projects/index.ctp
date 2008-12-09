@@ -59,8 +59,8 @@
 					));
 					echo ' | ';
 					echo $html->link('edit', array(
-						'admin' => true, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'projects', 'action' => 'edit'
+						'admin' => true, 'project' => false, 'fork'=> $fork,
+						'controller' => 'projects', 'action' => 'edit', $project['Project']['id']
 					));
 					echo ' | ';
 					echo $html->link('admin', array(
