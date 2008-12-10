@@ -148,7 +148,7 @@ class AccessComponent extends Object {
 		}
 
 		if ($this->isPublic === false) {
-			if (!$this->isAllowed && !$allowedByAuth && $this->access == 'r') {
+			if (!$this->isAllowed && !$allowedByAuth && ($this->access == 'r' && $C->Project->id == 1)) {
 				$C->Session->setFlash('Select a Project');
 				$C->redirect(array(
 					'admin' => false, 'project' => false, 'fork' => false,

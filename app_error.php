@@ -57,7 +57,7 @@ class AppError extends ErrorHandler {
 			$method = 'error';
 		}
 
-		if (!in_array($method, array('error', 'missingAction', 'missingController'))) {
+		if (!in_array($method, array('error'))) {
 			if (Configure::read() == 0) {
 				$method = 'error404';
 				if (isset($code) && $code == 500) {
@@ -77,7 +77,6 @@ class AppError extends ErrorHandler {
 
 	function missingAction($messages = array()) {
 		return parent::missingAction($messages);
-		pr($this->controller->params);
 		/*
 		$this->controller->redirect(array_merge(
 			array('controller' => 'wiki', 'action' => 'index', $this->controller->params['action']),
@@ -88,8 +87,6 @@ class AppError extends ErrorHandler {
 
 	function missingController($messages = array()) {
 		return parent::missingController($messages);
-		
-		pr($this->controller->params);
 		/*
 		$this->controller->redirect(array_merge(
 			array('controller' => 'wiki', 'action' => 'index', $this->controller->params['controller']),
