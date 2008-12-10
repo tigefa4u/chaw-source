@@ -51,16 +51,14 @@ class Ticket extends AppModel {
 				$this->data['Tag']['Tag'] = $this->Tag->generate($this->data['Ticket']['tags']);
 			}
 		}
-		
-		if (empty($this->data['Ticket']['comment']) && empty($this->data['Ticket']['title'])) {
+
+		if (empty($this->data['Ticket']['title']) && empty($this->data['Ticket']['comment']) && empty($this->data['Ticket']['status'])) {
 			return false;
 		}
 
-		if ($this->id && !empty($this->data['Ticket']['comment'])) {
-			$comment = $this->data['Ticket']['comment'];
-			//unset($this->data['Ticket']['comment']);
-
+		if ($this->id && (!empty($this->data['Ticket']['comment']) || !empty($this->data['Ticket']['status']))) {
 			$changes = array();
+
 			foreach((array)$this->data['Ticket']['previous'] as $field => $previous) {
 				if (in_array($field, array('id', 'created', 'modified'))) {
 					continue;
@@ -74,12 +72,12 @@ class Ticket extends AppModel {
 				}
 			}
 
-			if (!empty($changes) || !empty($comment)) {
+			if (!empty($changes) || !empty($this->data['Ticket']['comment'])) {
 				$data = array('Comment' => array(
 					'ticket_id' => $this->id,
 					'project_id' => $this->data['Ticket']['project_id'],
 					'user_id' => $this->data['Ticket']['user_id'],
-					'body' => join("\n", $changes) ."\n\n" . $comment
+					'body' => join("\n", $changes) ."\n\n" . $this->data['Ticket']['comment']
 				));
 
 				$this->Comment->create($data);
