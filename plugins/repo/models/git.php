@@ -147,6 +147,20 @@ class Git extends Repo {
  * @return void
  *
  **/
+	function branch($name, $switch = false) {
+		$this->before(array("cd {$this->working}"));
+		$response = $this->response[] = $this->run('branch', array($name), 'capture');
+		if ($switch === true) {
+			$this->before(array("cd {$this->working}"));
+			$this->checkout('new');
+		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function push($remote = 'origin', $branch = 'master') {
 		$this->before(array("cd {$this->working}"));
 		return $this->response[] = $this->run('push', array($remote, $branch), 'capture');
@@ -195,11 +209,42 @@ class Git extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
+
+		if (is_array($type)) {
+			extract(array_merge(array('commit' => null), $type));
+
+			$fieldMap = array(
+				'hash' => '%H',
+				'email' => '%ae',
+				'author' => '%an',
+				'committer' => '%cn',
+				'committer_email' => '%ce',
+				'subject' => '%s',
+				'body' => '%b'
+			);
+
+			$format = null;
+			if (!empty($options)) {
+				$format = '--pretty=format:';
+				foreach((array)$options as $field) {
+					$format .= $fieldMap[$field] . '%x00';
+				}
+			}
+
+			$data = $this->run('log', array($commit, $format, '-n 1'));
+			if (!empty($data)) {
+				return array_combine($options, array_filter(explode(chr(0), $data)));
+			}
+			return $data;
+		}
+
 		if (!empty($options['conditions']['path'])) {
 			$options['path'] = $options['conditions']['path'];
 			unset($options['conditions']['path']);
 		}
+
 		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
+
 		if (empty($path)) {
 			return false;
 		}
@@ -211,7 +256,9 @@ class Git extends Repo {
 			return count($data);
 		}
 
-		return parent::_findAll($data, compact('limit', 'page'));
+		if ($type == 'all') {
+			return parent::_findAll($data, compact('limit', 'page'));
+		}
 	}
 /**
  * undocumented function
@@ -219,7 +266,7 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function read($newrev, $diff = false) {
+	function read($newrev = null, $diff = false) {
 		if ($diff) {
 			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
 		} else {

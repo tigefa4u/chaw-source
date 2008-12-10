@@ -27,6 +27,8 @@ class PostReceiveShell extends Shell {
 	}
 
 	function commit() {
+		$this->args[] = 'post-receive';
+ 		$this->log($this->args, LOG_INFO);
 
 		$project = str_replace('.git', '', trim(@$this->args[0], "'"));
 		$refname = @$this->args[1];
@@ -34,9 +36,6 @@ class PostReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
-
-		$this->log($this->args, LOG_INFO);
-		$this->log($this->params, LOG_INFO);
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid project');
@@ -51,8 +50,8 @@ class PostReceiveShell extends Shell {
 
 		if (!empty($data)) {
 
-			//$data['author'] = $this->params['user'];
 			$data['project_id'] = $this->Project->id;
+			$data['branch'] = $refname;
 
 			$this->Commit->create($data);
 

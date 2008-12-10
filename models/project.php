@@ -17,17 +17,50 @@
  *
  */
 class Project extends AppModel {
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $name = 'Project';
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $config = array();
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $Repo;
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
+	var $hooks = array(
+		'git' => array('pre-receive', 'post-receive'),
+		'svn' => array('pre-commit', 'post-commit')
+	);
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $repoTypes = array('Git', 'Svn');
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $messages = array('response' => null, 'debug' => null);
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $validate = array(
 		'name' => array(
 			'required' => array(
@@ -39,13 +72,30 @@ class Project extends AppModel {
 		),
 		'user_id' => array('notEmpty')
 	);
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $belongsTo = array('User');
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $hasMany = array('Permission');
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $__created = false;
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function initialize($params = array()) {
 		$this->recursive = -1;
 		$this->config = Configure::read('Project');
@@ -139,7 +189,12 @@ class Project extends AppModel {
 		$this->Repo = ClassRegistry::init($this->config['repo']);
 		return true;
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function beforeSave() {
 		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
@@ -159,12 +214,14 @@ class Project extends AppModel {
 			}
 
 			if (!file_exists($this->config['repo']['path']) || !file_exists($this->config['repo']['working'])) {
-				if ($this->Repo->create(array('remote' => $this->config['repo']['remote'])) !== true) {
+				$this->__created = $this->Repo->create(array(
+					'remote' => $this->config['repo']['remote'],
+				));
+
+				if ($this->__created !== true) {
 					$this->invalidate('repo_type', 'the repo could not be created');
 					return false;
 				}
-
-				$this->__created = true;
 			}
 		}
 
@@ -175,32 +232,33 @@ class Project extends AppModel {
 
 		return true;
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function afterSave($created) {
-		if ($this->__created && !empty($this->data['Project']['approved'])) {
+		if (!empty($this->data['Project']['approved'])) {
+
 			$this->config['id'] = $this->id;
-			$hooks = array(
-				'git' => array('post-receive'),
-				'svn' => array('pre-commit', 'post-commit')
-			);
 
-			$project = $this->data['Project']['url'];
-			$fork = (!empty($this->data['Project']['fork'])) ? $this->data['Project']['fork'] : false;
+			$hooksCreated = $this->createHooks($this->hooks[$this->Repo->type], array(
+				'project' => $this->data['Project']['url'],
+				'fork' => (!empty($this->data['Project']['fork'])) ? $this->data['Project']['fork'] : false,
+				'root' => Configure::read('Content.base')
+			));
 
-			$chaw = Configure::read('Content.base');
+			if ($this->__created && $hooksCreated) {
+				foreach ($this->hooks[$this->Repo->type] as $hook) {
+					if ($this->__created) {
+						if ($hook === 'post-commit') {
+							$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} {$this->Repo->path} 1");
+						}
 
-			foreach ($hooks[$this->Repo->type] as $hook) {
-				if (!file_exists("{$this->Repo->path}/hooks/{$hook}")) {
-					$this->Repo->hook($hook, array('project' => $project, 'fork' => $fork, 'chaw' => $chaw));
-				}
-
-				if ($this->__created) {
-					if ($hook === 'post-commit') {
-						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} {$this->Repo->path} 1");
-					}
-
-					if ($hook === 'post-receive') {
-						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} refs/heads/master");
+						if ($hook === 'post-receive') {
+							$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} refs/heads/master");
+						}
 					}
 				}
 			}
@@ -212,20 +270,22 @@ class Project extends AppModel {
 				$Wiki->create(array(
 					'slug' => 'home', 'active' => 1,
 					'project_id' => $this->id,
-					'last_changed_by' => $this->data['Project']['user_id'],
-					'content' => "##The home page for " . $this->data['Project']['name']
-						. "\n\n" . $this->data['Project']['description']
+					'last_changed_by' => $this->config['user_id'],
+					'content' => "##The home page for " . $this->config['name']
+						. "\n\n" . $this->config['description']
 				));
 				$Wiki->save();
+			}
 
-				$this->Permission->config($this->config);
+			$this->Permission->config($this->config);
+			if ($this->Permission->exists() !== true) {
 				$this->Permission->saveFile(array('Permission' => array(
-					'username' => $this->data['Project']['username']
+					'username' => @$this->data['Project']['username']
 				)));
 			}
 
 			$this->permit(array(
-				'user' => $this->data['Project']['user_id'],
+				'user' => $this->config['user_id'],
 				'group' => 'admin',
 				'count' => 1
 			));
@@ -234,7 +294,30 @@ class Project extends AppModel {
 		$this->__created = false;
 		$this->createShell();
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function createHooks($hooks, $options = array()) {
+		extract(array_merge(array('project' => null, 'fork' => null, 'root' => null), $options));
+		$result = array();
+		if (!empty($hooks)) {
+			foreach ((array)$hooks as $hook) {
+				if (!file_exists("{$this->Repo->path}/hooks/{$hook}")) {
+					$result[] = $this->Repo->hook($hook, array('project' => $project, 'fork' => $fork, 'root' => $root));
+				}
+			}
+		}
+		return $result;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function createShell($data = array()) {
 
 		$template = CONFIGS . 'templates' . DS;
@@ -253,8 +336,12 @@ class Project extends AppModel {
 
 		return true;
 	}
-
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function fork($data = array()) {
 		$this->set($data);
 
@@ -284,7 +371,12 @@ class Project extends AppModel {
 		}
 		return false;
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function permit($user, $group = null) {
 		$id = $this->id;
 		$count = 'Project.users_count + 1';
@@ -316,24 +408,36 @@ class Project extends AppModel {
 			);
 		}
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function isUnique($data, $options = array()) {
 		if (!empty($data['name'])) {
-			if ($this->findByUrl(Inflector::slug(strtolower($this->data['Project']['name'])))) {
+			$data = $this->findByUrl(Inflector::slug(strtolower($data['name'])));
+			if (!empty($test) && $test['Project']['id'] !== $this->id) {
 				return false;
 			}
 			return true;
 		}
 		if (!empty($data['url'])) {
 			$reserved = array('forks');
-			if (in_array($data['url'], $reserved) || $this->findByUrl($data['url'])) {
+			$test = $this->findByUrl($data['url']);
+			if (in_array($data['url'], $reserved) || !empty($data) && $test['Project']['id'] !== $this->id) {
 				$this->invalidate('name');
 				return false;
 			}
 			return true;
 		}
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function ticket($key = null) {
 		switch ($key) {
 			case 'types':
@@ -350,18 +454,33 @@ class Project extends AppModel {
 			break;
 		}
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function groups($key = null) {
 		$Inflector = Inflector::getInstance();
 		$groups = explode(',', $this->config['groups']);
 		$groups = array_map(array($Inflector, 'slug'), $groups, array_fill(0, count($groups), '-'));
 		return array_combine($groups, $groups);
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function repoTypes() {
 		return array_combine($this->repoTypes, $this->repoTypes);
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function from() {
 		$baseDomain = env('HTTP_BASE');
 		if ($baseDomain[0] === '.') {

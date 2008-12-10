@@ -3,7 +3,7 @@
 REPOS="$1"
 REV="$2"
 export TERM="xterm"
-export PATH="<?php echo env('PATH'); ?>:<?php echo @$chaw; ?>"
+export PATH="<?php echo env('PATH'); ?>:<?php echo @$root; ?>"
 
 cd <?php echo APP; ?>
 

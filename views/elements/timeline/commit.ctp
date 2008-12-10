@@ -1,5 +1,9 @@
 <div class="commit row">
-
+	
+	<h3 class="subtitle">
+		<?php echo $data['Commit']['branch'];?>
+	</h3>
+	
 	<h3 class="name">
 		Commit: <?php echo $chaw->commit($data['Commit']['revision']);?>
 	</h3>

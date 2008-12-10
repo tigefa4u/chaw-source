@@ -36,8 +36,8 @@ class GitShellShell extends Shell {
 			return 1;
 		}
 
-		$this->log($this->args, LOG_INFO);
-		$this->log($this->params, LOG_INFO);
+		$this->args[] = 'git_shell';
+ 		$this->log($this->args, LOG_INFO);
 
 		$command = @$this->args[0];
 
@@ -62,22 +62,24 @@ class GitShellShell extends Shell {
 			return 1;
 		}
 
-		$allowed = $this->Permission->check('refs/heads/master', array(
-			'user' => $this->params['user'],
-			//'group' => @$permissions['Permission']['group'],
-			'access' => $this->actionMap[$command],
-			'default' => false
-		));
+		if ($this->actionMap[$command] == 'r') {
+			$allowed = $this->Permission->check('refs/heads/master', array(
+				'user' => $this->params['user'],
+				//'group' => @$permissions['Permission']['group'],
+				'access' => 'r',
+				'default' => false
+			));
 
-		if ($allowed === true) {
-			$result = $this->Project->Repo->execute($command, array($this->Project->Repo->path), 'pass');
+			if ($allowed !== true) {
+				$this->err('Authorization failed');
+				return 1;
+			}
+
 			$this->Project->permit($this->params['user']);
-			return $result;
-
 		}
+		$result = $this->Project->Repo->execute($command, array($this->Project->Repo->path), 'pass');
+		return $result;
 
-		$this->err('Authorization failed');
-		return 1;
 	}
 /**
  * undocumented function
@@ -112,8 +114,9 @@ class GitShellShell extends Shell {
 
 			$results = false;
 			foreach ($data as $revision) {
-				
+
 				if (!empty($revision['Repo']['revision'])) {
+
 					$revision['Repo']['project_id'] = $this->Project->id;
 
 					$this->Commit->create($revision['Repo']);
@@ -132,8 +135,8 @@ class GitShellShell extends Shell {
 		}
 		$this->err('Nothing was synced');
 		return false;
-	
-	}	
+
+	}
 /**
  * undocumented function
  *

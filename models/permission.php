@@ -290,6 +290,16 @@ class Permission extends AppModel {
  * @return void
  *
  **/
+	function exists($parent = false) {
+		$File = $this->__getFile($parent);
+		return $File->exists();
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function file($parent = false) {
 		$File = $this->__getFile($parent);
 		if (!$File->exists() || !$File->readable()) {

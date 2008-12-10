@@ -555,12 +555,24 @@ class AccessComponentTest extends CakeTestCase {
 		$Permission->saveFile($data);
 	}
 
+	function startCase() {
+		$this->__cleanUp();
+	}
+
 	function end() {
 		parent::end();
+		$this->__cleanUp();
+	}
+
+	function __cleanUp() {
+		unset($_SESSION);
 		$Cleanup = new Folder(TMP . 'tests/git');
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
 		}
+		$path = Configure::read('Content.base');
+		@unlink($path . 'chaw');
+		@unlink($path . 'permissions.ini');
 	}
 
 }

@@ -40,7 +40,7 @@ class GitTest extends CakeTestCase {
 
 	function testRead() {
 		$Git = ClassRegistry::init($this->__repos[1]);
-		$result = $Git->read("refs/heads/master");
+		$result = $Git->read();
 		$this->assertEqual($result['message'], 'Initial Project Commit');
 
 		//pr($Git->debug);
@@ -105,6 +105,44 @@ class GitTest extends CakeTestCase {
 		$this->assertTrue(empty($result[1]['Repo']['message']));
 	}
 
+	function testFindWithFields() {
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/.git'));
+
+		$File = new File(TMP . 'tests/git/working/test/.gitignore');
+		$File->write('this is something new');
+
+		$Git->commit(array("-m", "'Updating git ignore'"));
+		$Git->push();
+
+		$result = $Git->find(array(), array('email', 'author'));
+		var_dump($result);
+
+		$result = $Git->read();
+		var_dump($result);
+		pr($Git->debug);
+		pr($Git->response);
+	}
+
+	function testCommitIntoBranch() {
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/.git'));
+
+		$File = new File(TMP . 'tests/git/working/test/.gitignore');
+		$File->write('this is something new');
+
+		$Git->branch('new', true);
+
+		$Git->commit(array("-m", "'Updating git ignore'"));
+		$Git->push('origin', 'new');
+
+		//pr($Git->debug);
+		//pr($Git->response);
+	}
 
 	function testPathInfo() {
 		//pr($Git->pathInfo());

@@ -24,6 +24,7 @@ class ChawSchema extends CakeSchema {
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'branch' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'revision' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
 			'author' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'commit_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),

@@ -33,6 +33,7 @@ class ProjectTestCase extends CakeTestCase {
 		if ($MoreCleanup->pwd() == TMP . 'tests/svn') {
 			$MoreCleanup->delete();
 		}
+		$this->__cleanUp();
 	}
 
 	function testProjectInstance() {
@@ -81,6 +82,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
 
 
 		$data = array('Project' =>array(
@@ -102,6 +104,8 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-commit'));
+
 
 		$Timeline = ClassRegistry::init('Timeline');
 		$result = $Timeline->find('all', array('conditions' => array('Timeline.project_id' => 3)));
@@ -111,10 +115,8 @@ class ProjectTestCase extends CakeTestCase {
 	}
 
 	function testProjectFork() {
-		$Cleanup = new Folder(TMP . 'tests/git');
-		if ($Cleanup->pwd() == TMP . 'tests/git') {
-			$Cleanup->delete();
-		}
+		$this->__cleanUp();
+
 		//first we have to save a project
 		$data = array('Project' =>array(
 			'id' => 1,
@@ -228,6 +230,80 @@ class ProjectTestCase extends CakeTestCase {
 		$this->Project->id = 2;
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
+	}
+
+	function testProjectEditAndUpdateHooks() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'username' => 'gwoo',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'test project',
+			'username' => 'gwoo',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
+		@unlink($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive');
+
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'test project',
+			'username' => 'gwoo',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
+	}
+	
+	function __cleanUp() {
+		$path = Configure::read('Content.base');
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
+		@unlink($path . 'chaw');
+		@unlink($path . 'permissions.ini');
 	}
 }
 ?>

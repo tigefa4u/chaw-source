@@ -3,7 +3,7 @@
 REPOS="$1"
 TXN="$2"
 export TERM="xterm"
-export PATH="<?php echo env('PATH'); ?>:<?php echo @$chaw; ?>"
+export PATH="<?php echo env('PATH'); ?>:<?php echo @$root; ?>"
 
 # Make sure that the log message contains some text.
 svnlook log -t "$TXN" "$REPOS" | \
