@@ -125,6 +125,10 @@ class Svn extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
+		if (!empty($options['conditions']['path'])) {
+			$options['path'] = $options['conditions']['path'];
+			unset($options['conditions']['path']);
+		}
 		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
 		if (empty($path)) {
 			return false;

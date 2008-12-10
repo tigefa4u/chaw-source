@@ -269,20 +269,26 @@ div.actions {
 	font-size: 90%;
 	padding-top: 3px;
 }
-.row .name {
+.row h3.name {
 	margin: 0 0 4px 0;
 	padding: 0;
 	font-size: 120%;
 	vertical-align: top;
 }
+.row img {
+	display: block;
+	float: left;
+	vertical-align: middle;
+	padding: 0 10px 0 0;
+	background: #fff;
+}
 
-.row .admin , .row .nav {
+.row .admin, .row .nav {
 	float: right;
 	font-size: 80%;
 	padding-top: 2px;
 	padding-left: 4px;
 }
-
 
 fieldset.options select {
 	width: 100%;

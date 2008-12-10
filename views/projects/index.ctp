@@ -35,7 +35,8 @@
 		}
 ?>
 	<div class="project row">
-
+		<?php echo $html->image(strtolower($project['Project']['repo_type']) . '.png', array('height' => 40, 'width' => 40)); ?>
+		
 		<h3 class="name">
 			<?php
 				echo $html->link($project['Project']['name'], array(

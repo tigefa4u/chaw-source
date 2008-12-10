@@ -14,13 +14,16 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
+<div class="page-navigation">
+	<?php echo $html->link('All Commits', array('controller' => 'commits', 'action' => 'index'));?>
+</div>
 
 <h2>
-	Commit <?php echo $commit['Commit']['revision'];?>
+	<?php echo $commit['Commit']['revision'];?>
 </h2>
 
-<div class="commit view">
 
+<div class="commit view">
 	<p>
 		<strong>Author:</strong> <?php echo $commit['Commit']['author'];?>
 	</p>
@@ -46,7 +49,6 @@ $javascript->codeBlock($script, array('inline' => false));
 		</ul>
 	</p>
 	<?php endif?>
-
 	<?php
 		echo (!empty($commit['Commit']['diff'])) ? $html->tag('pre', $html->tag('code', h($commit['Commit']['diff']), array('class' => 'diff'))) : null;
 	?>

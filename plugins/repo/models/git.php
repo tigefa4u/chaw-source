@@ -147,9 +147,9 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function push($branch1 = 'origin', $branch2 = 'master') {
+	function push($remote = 'origin', $branch = 'master') {
 		$this->before(array("cd {$this->working}"));
-		return $this->response[] = $this->run('push', array($branch1, $branch2), 'capture');
+		return $this->response[] = $this->run('push', array($remote, $branch), 'capture');
 	}
 /**
  * undocumented function
@@ -157,9 +157,9 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function update($branch = 'master') {
+	function update($remote = 'origin', $branch = 'master') {
 		$this->before(array("cd {$this->working}"));
- 		return $this->response[] = $this->run('pull', array($this->path, $branch), 'capture');
+ 		return $this->response[] = $this->run('pull', array($remote, $branch), 'capture');
 	}
 /**
  * undocumented function
@@ -195,6 +195,10 @@ class Git extends Repo {
  *
  **/
 	function find($type = 'all', $options = array()) {
+		if (!empty($options['conditions']['path'])) {
+			$options['path'] = $options['conditions']['path'];
+			unset($options['conditions']['path']);
+		}
 		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
 		if (empty($path)) {
 			return false;
