@@ -66,7 +66,6 @@ $javascript->codeBlock($script, array('inline' => false));
 						</legend>
 
 						<?php
-							echo $form->input('id');
 							echo $form->input('title');
 							echo $form->input('description');
 						?>
@@ -126,7 +125,7 @@ $javascript->codeBlock($script, array('inline' => false));
 						if (!empty($this->params['isAdmin'])):
 							echo $form->input('status');
 						endif;
-
+						echo $form->input('id');
 						echo $form->textarea('comment');
 					?>
 				</fieldset>
