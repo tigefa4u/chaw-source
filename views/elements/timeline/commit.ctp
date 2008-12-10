@@ -14,7 +14,7 @@
 
 <?php if (!empty($this->params['isAdmin'])):?>
 	<span class="admin">
-		<?php echo $chaw->admin('delete', array('controller' => 'timeline', 'action' => 'delete', $data['Timeline']['id']));?>
+		<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
 

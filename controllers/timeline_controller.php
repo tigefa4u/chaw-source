@@ -42,7 +42,7 @@ class TimelineController extends AppController {
 		$this->set('rssFeed', array('controller' => 'timeline'));
 	}
 
-	function delete($id = null) {
+	function remove($id = null) {
 		if (!$id || empty($this->params['isAdmin'])) {
 			$this->redirect($this->referer());
 		}

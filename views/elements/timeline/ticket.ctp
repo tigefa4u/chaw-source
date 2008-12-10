@@ -9,6 +9,12 @@
 		created
 	</span>
 
+<?php if (!empty($this->params['isAdmin'])):?>
+	<span class="admin">
+		<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
+	</span>
+<?php endif;?>
+
 	<span class="date">
 		<?php echo $time->nice($data['Ticket']['created']);?>
 	</span>
