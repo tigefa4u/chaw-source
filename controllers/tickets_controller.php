@@ -87,13 +87,14 @@ class TicketsController extends AppController {
 	}
 
 	function modify($id = null) {
-		$setPrevious = false;
+
 		if (!empty($this->data)) {
-			$this->data['Ticket'] = array(
+
+			$this->Ticket->set(array(
 				'user_id' => $this->Auth->user('id'),
 				'project_id' => $this->Project->id,
 				'previous' => $this->Session->read('Ticket.previous')
-			);
+			));
 
 			if ($data = $this->Ticket->save($this->data)) {
 				if (!empty($data['Ticket']['comment'])) {
@@ -110,8 +111,8 @@ class TicketsController extends AppController {
 				}
 			}
 		}
-		$this->view($id);
 
+		$this->view($id);
 		$this->render('view');
 	}
 }

@@ -42,7 +42,7 @@ class Ticket extends AppModel {
 
 	var $validate = array(
 		'title' => array('notEmpty'),
-		'description' => array('notEmpty')
+		'description' => array('notEmpty'),
 	);
 
 	function beforeSave() {
@@ -51,8 +51,12 @@ class Ticket extends AppModel {
 				$this->data['Tag']['Tag'] = $this->Tag->generate($this->data['Ticket']['tags']);
 			}
 		}
+		
+		if (empty($this->data['Ticket']['comment']) && empty($this->data['Ticket']['title'])) {
+			return false;
+		}
 
-		if ($this->id) {
+		if ($this->id && !empty($this->data['Ticket']['comment'])) {
 			$comment = $this->data['Ticket']['comment'];
 			//unset($this->data['Ticket']['comment']);
 
