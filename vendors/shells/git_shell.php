@@ -90,6 +90,9 @@ class GitShellShell extends Shell {
 	function sync() {
 		$project = $this->args[0];
 		$fork = @$this->args[1];
+		
+		$this->args[] = 'git_shell';
+ 		$this->log($this->args, LOG_INFO);
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid Project');

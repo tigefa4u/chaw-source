@@ -27,13 +27,14 @@ class PostReceiveShell extends Shell {
 	}
 
 	function commit() {
-		$this->args[] = 'post-receive';
- 		$this->log($this->args, LOG_INFO);
 
 		$project = str_replace('.git', '', trim(@$this->args[0], "'"));
 		$refname = @$this->args[1];
 		$oldrev = @$this->args[2];
 		$newrev = @$this->args[3];
+
+		$this->args[] = 'post-receive';
+ 		$this->log($this->args, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
