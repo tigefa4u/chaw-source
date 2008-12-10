@@ -13,6 +13,12 @@ $(document).ready(function(){
 		hljs.initHighlighting.called = false;
 		hljs.initHighlighting();
 	});
+	$("#TicketComment").bind("keyup", function() {
+		$("#CommentPreviewWrapper").show();
+		$("#CommentPreview").html(converter.makeHtml($(this).val()));
+		hljs.initHighlighting.called = false;
+		hljs.initHighlighting();
+	});
 	$(".modify").click(function() {
 		$("#modify").show();
 	});
@@ -100,6 +106,17 @@ $javascript->codeBlock($script, array('inline' => false));
 			<?php endforeach; ?>
 
 		<?php if (!empty($CurrentUser->id)): ?>
+				<div id="CommentPreviewWrapper" class="comment" style="display:none">
+					<h3 class="clearfix">Preview</h3>
+
+					<span class="date">
+						<?php echo $time->timeAgoInWords(date('Y-m-d', strtotime('now')));?>
+					</span>
+					<span class="user">
+						by <?php echo $CurrentUser->username;?>
+					</span>
+					<div id="CommentPreview" class="body"></div>
+				</div>
 
 				<fieldset class="main">
 			 		<legend>

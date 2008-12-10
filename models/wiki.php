@@ -50,7 +50,7 @@ class Wiki extends AppModel {
 			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
 		}
 
-		if ($this->id) {
+		if (!empty($this->data['Wiki']['update'])) {
 			$this->recursive = -1;
 			$this->updateAll(array(
 					'Wiki.active' => 0,

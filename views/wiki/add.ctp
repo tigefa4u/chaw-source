@@ -24,6 +24,8 @@ $javascript->codeBlock($script, array('inline' => false));
 		<fieldset>
 	 		<legend><?php echo $this->pageTitle; ?></legend>
 		<?php
+			echo $form->hidden('update');
+			
 			if ($form->value('slug')) {
 				echo $form->hidden('slug');
 			} else {

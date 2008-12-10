@@ -80,7 +80,6 @@ class WikiController extends AppController {
 			$this->pageTitle = Inflector::humanize($slug);
 		}
 
-
 		if (!empty($this->data)) {
 			$this->Wiki->create(array(
 				'project_id' => $this->Project->id,
@@ -101,9 +100,17 @@ class WikiController extends AppController {
 				'Wiki.project_id' => $this->Project->id,
 				'Wiki.active' => 1
 			));
+			if (!empty($this->data)) {
+				$this->data['Wiki']['update'] = 1;
+			}
 			$this->data['Wiki']['slug'] = $slug;
 			$this->data['Wiki']['path'] = $path;
 		}
+	}
+
+	function edit() {
+		$this->add();
+		$this->render('add');
 	}
 
 	function __params() {

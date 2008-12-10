@@ -15,7 +15,7 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="page-navigation">
-	<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'add', $path, $slug));?>
+	<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
 	|
 	<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
 </div>
@@ -52,9 +52,9 @@ $javascript->codeBlock($script, array('inline' => false));
 					);
 				endif;
 			endforeach;
-			if ($nav) {
+			if (!empty($nav)) {
 				echo $html->tag('div',
-					'<h3>Wiki Nav</h3>',
+					'<h3>Wiki Nav</h3>' .
 					$html->tag('ul', $nav), array('class' => 'paths')
 				);
 			}
@@ -81,7 +81,7 @@ $javascript->codeBlock($script, array('inline' => false));
 			<div class="actions">
 				<?php echo $html->link('View', array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?>
 				|
-				<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'add', $content['Wiki']['path'], $content['Wiki']['slug']));?>
+				<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $content['Wiki']['path'], $content['Wiki']['slug']));?>
 				|
 				<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $content['Wiki']['path'], $content['Wiki']['slug'], 1));?>
 			</div>

@@ -2,6 +2,13 @@
 colors
 blue: #69C;
 */
+.clear {
+  clear:both;
+  height:0;
+  line-height: 0;
+  padding:0;
+  margin:0;	
+}
 .clearfix:after {
   content : '.';
   display: block;
