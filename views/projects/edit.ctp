@@ -12,6 +12,7 @@
 		echo $form->input('repo_type', array('disabled' => true));
 		echo $form->input('name', array('disabled' => true));
 		echo $form->hidden('url');
+		echo $form->hidden('fork');
 		echo $form->input('description');
 
 		if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
