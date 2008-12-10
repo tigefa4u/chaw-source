@@ -33,7 +33,7 @@ class AppController extends Controller {
  **/
 	function beforeFilter() {
 		$this->Auth->loginAction = '/users/login';
-		$this->Auth->mapAction(array(
+		$this->Auth->mapActions(array(
 			'modify' => 'update',
 			'remove' => 'delete'
 		));
