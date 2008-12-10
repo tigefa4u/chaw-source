@@ -76,17 +76,26 @@ class AppError extends ErrorHandler {
 	}
 
 	function missingAction($messages = array()) {
+		return parent::missingAction($messages);
+		pr($this->controller->params);
+		/*
 		$this->controller->redirect(array_merge(
 			array('controller' => 'wiki', 'action' => 'index', $this->controller->params['action']),
 			$this->controller->params['pass']
 		));
+		*/
 	}
 
 	function missingController($messages = array()) {
+		return parent::missingController($messages);
+		
+		pr($this->controller->params);
+		/*
 		$this->controller->redirect(array_merge(
 			array('controller' => 'wiki', 'action' => 'index', $this->controller->params['controller']),
 			$this->controller->params['pass']
 		));
+		*/
 	}
 }
 ?>
