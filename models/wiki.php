@@ -19,7 +19,7 @@
 class Wiki extends AppModel {
 
 	var $name = 'Wiki';
-	
+
 	var $displayField = 'slug';
 
 	var $useTable = 'wiki';
@@ -50,17 +50,18 @@ class Wiki extends AppModel {
 			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
 		}
 
-		$this->recursive = -1;
-		$this->updateAll(array(
-				'Wiki.active' => 0,
-				'Wiki.modified' => "'" . date('Y-m-d H:m:s') . "'"
-			),
-			array(
-			'Wiki.slug' => $this->data['Wiki']['slug'],
-			'Wiki.path' => $this->data['Wiki']['path'],
-			'Wiki.project_id' => $this->data['Wiki']['project_id'],
-		));
-
+		if ($this->id) {
+			$this->recursive = -1;
+			$this->updateAll(array(
+					'Wiki.active' => 0,
+					'Wiki.modified' => "'" . date('Y-m-d H:m:s') . "'"
+				),
+				array(
+				'Wiki.slug' => $this->data['Wiki']['slug'],
+				'Wiki.path' => $this->data['Wiki']['path'],
+				'Wiki.project_id' => $this->data['Wiki']['project_id'],
+			));
+		}
 		$this->data['Wiki']['active'] = 1;
 
 		return true;

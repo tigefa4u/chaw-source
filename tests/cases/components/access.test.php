@@ -574,6 +574,5 @@ class AccessComponentTest extends CakeTestCase {
 		@unlink($path . 'chaw');
 		@unlink($path . 'permissions.ini');
 	}
-
 }
 ?>

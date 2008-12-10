@@ -176,7 +176,7 @@ class Project extends AppModel {
 			'chmod' => 0777,
 			'path' => $path . 'repo' . DS . $fork . $this->config['url'],
 			'working' => $path . 'working' . DS . $fork . $this->config['url'],
-			'remote' => $this->config['remote'][$repoType]
+			'remote' => is_string($this->config['remote']) ? $this->config['remote'] : $this->config['remote'][$repoType]
 		);
 
 		if ($repoType == 'git') {
@@ -354,6 +354,7 @@ class Project extends AppModel {
 			$this->data['Project']['project_id'] = $this->id;
 			$this->data['Project']['name'] = $this->data['Project']['fork'] . "'s fork of " . $this->data['Project']['name'];
 			$this->data['Project']['username'] = $this->data['Project']['fork'];
+			$this->data['Project']['users_count'] = 1;
 		}
 
 		if (!empty($this->data['Project']['id'])) {

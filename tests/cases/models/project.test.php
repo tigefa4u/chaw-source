@@ -139,6 +139,7 @@ class ProjectTestCase extends CakeTestCase {
 		$path = Configure::read('Content.base');
 		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
 
 		$result = file_get_contents($path . 'permissions.ini');
 		$expected = "[admin]\ngwoo = crud\n\n[refs/heads/master]\ngwoo = rw";
@@ -159,6 +160,14 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue($data = $this->Project->fork());
 		$this->assertEqual($data['Project']['url'], 'original_project');
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
+		@unlink($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive');
+
+		$this->assertTrue($this->Project->save($data));
+		$this->assertEqual($data['Project']['url'], 'original_project');
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
+
 
 		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 1)));
 		unset($results[0]['Permission']['created'], $results[0]['Permission']['modified']);
@@ -295,7 +304,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
 	}
-	
+
 	function __cleanUp() {
 		$path = Configure::read('Content.base');
 		$Cleanup = new Folder(TMP . 'tests/git');
