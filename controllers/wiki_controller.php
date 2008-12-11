@@ -45,12 +45,28 @@ class WikiController extends AppController {
 			)
 		));
 
-		$page = $this->Wiki->find(array(
-			'Wiki.slug' => $slug,
-			'Wiki.path' => $path,
-			'Wiki.project_id' => $this->Project->id,
-			'Wiki.active' => 1
-		));
+		if (!empty($this->data)) {
+			if (!empty($this->params['form']['delete'])) {
+ 				$this->Wiki->delete($this->data['Wiki']['revision']);
+			} else {
+				$page = $this->Wiki->findById($this->data['Wiki']['revision']);
+			}
+
+			if (!empty($this->params['form']['activate']) && !empty($page)) {
+ 				if ($this->Wiki->activate($page)) {
+					$this->Session->setFlash($page['User']['username'] . ' ' . $page['Wiki']['created'] .' is now active');
+				}
+			}
+		}
+
+		if (empty($page)) {
+			$page = $this->Wiki->find(array(
+				'Wiki.slug' => $slug,
+				'Wiki.path' => $path,
+				'Wiki.project_id' => $this->Project->id,
+				'Wiki.active' => 1
+			));
+		}
 
 		if (empty($wiki) && empty($page)) {
 			$this->passedArgs[] = $slug;
@@ -65,7 +81,22 @@ class WikiController extends AppController {
 			)
 		)));
 		sort($paths);
-		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths'));
+
+		if(!empty($page) && !empty($this->params['isAdmin'])) {
+			$this->Wiki->recursive = 0;
+			$revisions = $this->Wiki->find('superList', array(
+				'fields' => array('id', 'User.username', 'created'),
+				'separator' => ' - ',
+				'conditions' => array(
+					'Wiki.slug' => $slug,
+					'Wiki.path' => $path,
+					'Wiki.project_id' => $this->Project->id,
+				),
+				'order' => 'Wiki.created DESC'
+			));
+		}
+
+		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths', 'revisions'));
 		$this->render('view');
 	}
 

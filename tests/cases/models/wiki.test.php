@@ -78,5 +78,40 @@ class WikiTestCase extends CakeTestCase {
 		$this->assertEqual(count($results), 1);
 		$this->assertEqual($results[0]['Wiki']['path'], '/guides/ssh');
 	}
+
+	function testFindSuperList() {
+		$this->testSave();
+		$results = $this->Wiki->find('superList', array('fields' => array('id', 'path', 'slug')));
+		$expected = array(
+			'1' => '/ home',
+			'2' => '/guides setup',
+			'3' => '/guides/ssh keygen'
+		);
+		$this->assertEqual($results, $expected);
+
+		$results = $this->Wiki->find('superList', array(
+			'fields' => array('id', 'path', 'slug'),
+			'separator' => '/'
+		));
+		$expected = array(
+			'1' => '//home',
+			'2' => '/guides/setup',
+			'3' => '/guides/ssh/keygen'
+		);
+		$this->assertEqual($results, $expected);
+	}
+
+	function testActivate() {
+		$this->Wiki->create(array(
+			'slug' => 'keygen',
+			'path' => '/guides/ssh',
+			'content' => 'ok cool'
+		));
+		$this->assertTrue($this->Wiki->save());
+
+		$data = $this->Wiki->find('first');
+		$results = $this->Wiki->activate($data);
+		$this->assertEqual($results, true);
+	}
 }
 ?>

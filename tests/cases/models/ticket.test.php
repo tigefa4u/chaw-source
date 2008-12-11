@@ -83,7 +83,7 @@ class TicketTest extends CakeTestCase {
 		$this->assertEqual($results, 4);
 
 	}
-	
+
 	function testModify() {
 		$this->testSave();
 		$data = array('Ticket' => array(
@@ -97,7 +97,7 @@ class TicketTest extends CakeTestCase {
 		));
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
-		
+
 		$data = array('Ticket' => array(
 			'id' => 3,
 			'project_id'  => 1,
@@ -109,8 +109,6 @@ class TicketTest extends CakeTestCase {
 		));
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
-		
-		
 	}
 }
 ?>

@@ -27,7 +27,6 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <?php if (!empty($page) || !empty($paths)):?>
 <div class="wiki-navigation">
-
 	<?php if(!empty($wiki) && !empty($page)):
 		$data = h($page['Wiki']['content']);
 	?>
@@ -59,6 +58,35 @@ $javascript->codeBlock($script, array('inline' => false));
 				);
 			}
 		?>
+	<?php endif;?>
+
+	<?php
+		if(!empty($this->params['isAdmin'])) {
+			$links = array();
+			if(empty($page['Wiki']['active'])) {
+				$links[] = $html->link('activate', array('action' => 'activate', $page['Wiki']['id']));
+			}
+			$links[] = $html->link('delete', array('action' => 'delete', $page['Wiki']['id']));
+
+			//echo $html->tag('div', join(' | ', $links), array('class' => 'admin'));
+		}
+
+	?>
+
+	<?php if (!empty($revisions)):?>
+		<div class="revisions">
+		<?php
+			echo $form->create(array('action' => 'index', array('url' => array($path, $slug))));
+			echo $form->input('revision', array('value' => $page['Wiki']['id']));
+			echo $html->tag('div',
+				$form->submit('view', array('div' => false, 'name' => 'view'))
+				. $form->submit('activate', array('div' => false, 'name' => 'activate'))
+				. $form->submit('delete', array('div' => false, 'name' => 'delete')),
+				array('class' => 'submit')
+			);
+			echo $form->end();
+		?>
+		</div>
 	<?php endif;?>
 
 </div>

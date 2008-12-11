@@ -37,6 +37,8 @@ class Wiki extends AppModel {
 		),
 		'Project'
 	);
+
+	var $_findMethods = array('superList' => true);
 /*
 	var $hasOne = array(
 		'Timeline' => array(
@@ -45,9 +47,39 @@ class Wiki extends AppModel {
 		)
 	);
 */
+	function _findSuperList($state, $query, $results = array()) {
+		if ($state == 'before') {
+			return $query;
+		}
+
+		if ($state == 'after') {
+			if(!isset($query['separator'])) {
+				$query['separator'] = ' ';
+			}
+			for($i = 0; $i <= 2; $i++) {
+				if (strpos($query['fields'][$i], '.') === false) {
+					$query['fields'][$i] = $this->alias . '/' . $query['fields'][$i];
+				} else {
+					$query['fields'][$i] = str_replace('.', '/', $query['fields'][$i]);
+				}
+			}
+
+			return Set::combine($results, '/'.$query['fields'][0], array(
+					'%s' . $query['separator'] . '%s',
+					'/' . $query['fields'][1],
+					'/' . $query['fields'][2]
+			));
+			return $results;
+		}
+	}
+
 	function beforeSave(){
 		if (!empty($this->data['Wiki']['title'])) {
 			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
+		}
+
+		if (empty($this->data['Wiki']['slug'])) {
+			return false;
 		}
 
 		if (!empty($this->data['Wiki']['update'])) {
@@ -63,7 +95,6 @@ class Wiki extends AppModel {
 			));
 		}
 		$this->data['Wiki']['active'] = 1;
-
 		return true;
 	}
 
@@ -82,5 +113,10 @@ class Wiki extends AppModel {
 		}
 	}
 
+	function activate($data = array()) {
+		$this->set($data);
+		$this->data['Wiki']['update'] = 1;
+		return $this->save();
+	}
 }
 ?>
