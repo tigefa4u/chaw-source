@@ -372,7 +372,7 @@ fieldset.options textarea {
 	clear: left;
 }
 .wiki-navigation .paths h3 {
-	font-size: 100%;
+	font-size: 110%;
 	color: #3b3b3b;
 }
 .wiki-navigation .paths ul {
@@ -386,7 +386,7 @@ fieldset.options textarea {
 	color: #656565;
 }
 .wiki-navigation .revisions {
-	margin-top: 10px;
+	margin-top: 30px;
 }
 .wiki-navigation .revisions form {
 	float: left;
