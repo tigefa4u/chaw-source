@@ -118,12 +118,27 @@ class GitTest extends CakeTestCase {
 		$Git->push();
 
 		$result = $Git->find(array(), array('email', 'author'));
-		var_dump($result);
+		$this->assertEqual($result, array('email' => 'gwoo@cakephp.org', 'author' => 'gwoo'));
 
-		$result = $Git->read();
-		var_dump($result);
-		pr($Git->debug);
-		pr($Git->response);
+		$result = $Git->find(array());
+		unset($result['hash']);
+		$this->assertEqual($result, array(
+			'email' => 'gwoo@cakephp.org',
+			'author' => 'gwoo',
+			'committer' => 'gwoo',
+			'committer_email' => 'gwoo@cakephp.org',
+			'subject' => 'Updating git ignore'
+		));
+
+		$Git = ClassRegistry::init(array(
+			'class' => 'Repo.Git',
+			'type' => 'git',
+			'path' => '/Volumes/Home/htdocs/chaw_content/git/repo/renan.git',
+			'working' => '/Volumes/Home/htdocs/chaw_content/git/working/renan',
+			'chmod' => 0777
+		));
+		$result = $Git->find(array('commit' => 'fdb86255e698e9d873620ca5e14470eca60a7560'), array('email', 'author'));
+		$this->assertEqual($result, array('email' => 'renan.saddam@gmail.com', 'author' => 'renan.saddam'));
 	}
 
 	function testCommitIntoBranch() {

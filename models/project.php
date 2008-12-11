@@ -417,7 +417,7 @@ class Project extends AppModel {
  **/
 	function isUnique($data, $options = array()) {
 		if (!empty($data['name'])) {
-			$data = $this->findByUrl(Inflector::slug(strtolower($data['name'])));
+			$test = $this->findByUrl(Inflector::slug(strtolower($data['name'])));
 			if (!empty($test) && $test['Project']['id'] !== $this->id) {
 				return false;
 			}
@@ -426,7 +426,7 @@ class Project extends AppModel {
 		if (!empty($data['url'])) {
 			$reserved = array('forks');
 			$test = $this->findByUrl($data['url']);
-			if (in_array($data['url'], $reserved) || !empty($data) && $test['Project']['id'] !== $this->id) {
+			if (in_array($test['url'], $reserved) || !empty($test) && $test['Project']['id'] !== $this->id) {
 				$this->invalidate('name');
 				return false;
 			}

@@ -220,18 +220,21 @@ class Git extends Repo {
 				'committer' => '%cn',
 				'committer_email' => '%ce',
 				'subject' => '%s',
-				'body' => '%b'
 			);
 
-			$format = null;
+			$format = '--pretty=format:';
 			if (!empty($options)) {
-				$format = '--pretty=format:';
 				foreach((array)$options as $field) {
 					$format .= $fieldMap[$field] . '%x00';
 				}
+			} else {
+				foreach($fieldMap as $field => $code) {
+					$options[] = $field;
+					$format .= $code . '%x00';
+				}
 			}
-
-			$data = $this->run('log', array($commit, $format, '-n 1'));
+			$this->before(array("cd {$this->working}"));
+			$data = $this->run('log', array($commit, $format, '-1'));
 			if (!empty($data)) {
 				return array_combine($options, array_filter(explode(chr(0), $data)));
 			}
@@ -349,19 +352,13 @@ class Git extends Repo {
  **/
 	function pathInfo($path = null) {
 		$this->before(array("cd {$this->working}"));
-		$info = $this->run('log', array("--pretty=medium", '-1', '--', str_replace($this->working . '/', '', $path)));
+		$info = $this->run('log', array("--pretty=format:%H%x00%an%x00%ai%x00%s", '-1', '--', str_replace($this->working . '/', '', $path)));
 
 		if (empty($info)) {
 			return null;
 		}
-		$info = explode("\n", $info);
-
-		$result['revision'] = (!empty($info[0])) ? trim(array_shift($info), 'commit ') : null;
-		$result['author'] = (!empty($info[1])) ? str_replace("Author: ", "", array_shift($info)) : null;
-		$result['date'] = (!empty($info[2])) ? date('Y-m-d H:m:s', strtotime(str_replace("Date: ", "", array_shift($info)))) : null;
-		$result['message'] = (!empty($info)) ? trim(join("\n", $info)) : null;
-
-		return $result;
+		list($revision, $author, $date, $message) = explode(chr(0), $info);
+		return compact('revision', 'author', 'date', 'message');
 	}
 /**
  * Run a command specific to this type of repo

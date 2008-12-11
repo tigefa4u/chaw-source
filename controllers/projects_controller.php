@@ -144,9 +144,11 @@ class ProjectsController extends AppController {
 			}
 		}
 
-		$this->data = array_merge((array)$this->data, array('Project' => $this->Project->config));
-		if (!empty($this->data['Project']['id'])) {
-			unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
+		if (empty($this->data)) {
+			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->config));
+			if (!empty($this->data['Project']['id'])) {
+				unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
+			}
 		}
 
 		$this->set('repoTypes', $this->Project->repoTypes());
