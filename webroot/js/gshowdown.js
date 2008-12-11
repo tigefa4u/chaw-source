@@ -430,7 +430,7 @@ var _DoSpecialRules = function(text) {
 	//
 	text = text.replace(/(^|[^\w])(\#{1})(\b[0-9]{1,10}\b)+/gm,
 			function(wholeMatch, m0, m1, m2) {
-				return (m0 + "<a href=\"" + base + "tickets/view/" + m2 + "\">" + m1 + m2 + "</a>");
+				return hashBlock(m0 + "<a href=\"" + base + "tickets/view/" + m2 + "\">" + m1 + m2 + "</a>");
 			});
 
 	// get commits
@@ -438,7 +438,7 @@ var _DoSpecialRules = function(text) {
 	//
 	text = text.replace(/(^|[^\w])(\[([A-Za-z0-9+]{1,40})\])+/gm,
 			function(wholeMatch, m0, m1, m2) {
-				return (m0 + "<a href=\"" + base + "commits/view/" + m2 + "\">" + m1 + "</a>");
+				return hashBlock(m0 + "<a href=\"" + base + "commits/view/" + m2 + "\">" + m1 + "</a>");
 			});
 
 	// get wiki pages
@@ -446,7 +446,7 @@ var _DoSpecialRules = function(text) {
 	//
 	text = text.replace(/(^|[^\w])(\[wiki:(.+?)\s(.+?)\])+/gm,
 			function(wholeMatch, m0, m1, m2, m3) {
-				return (m0 + "<a href=\"" + base + "wiki/" + m2 + "\">" + m3 + "</a>");
+				return hashBlock(m0 + "<a href=\"" + base + "wiki/" + m2 + "\">" + m3 + "</a>");
 			});
 
 	// get ohloh widgets
@@ -454,7 +454,7 @@ var _DoSpecialRules = function(text) {
 	//
 	text = text.replace(/(^|[^\w])(\[ohloh:(.+?)\/(.+?)\])+/gm,
 			function(wholeMatch, m0, m1, m2, m3) {
-				return (m0 + "<iframe frameborder=\"0\" height=\"100\" src=\"http://www.ohloh.net/projects/" + m2 + "/widgets/" + m3 + "\">" + m2 + "</iframe>");
+				return hashBlock(m0 + "<iframe frameborder=\"0\" height=\"100\" src=\"http://www.ohloh.net/projects/" + m2 + "/widgets/" + m3 + "\">" + m2 + "</iframe>");
 			});
 
 	return text;

@@ -7,7 +7,7 @@ blue: #69C;
   height:0;
   line-height: 0;
   padding:0;
-  margin:0;	
+  margin:0;
 }
 .clearfix:after {
   content : '.';
@@ -66,12 +66,18 @@ fieldset.main {
 fieldset.options {
 	float: left;
 	width: 20%;
+	font-size: 80%;
+	margin-top: 30px;
 }
 
 table {
 	clear: none;
 	float: left;
 	width: 100%;
+}
+
+table th a {
+	padding: 4px 10px;
 }
 table tr, table td {
 	border: 0;
@@ -165,15 +171,6 @@ table.smooth tr.altrow td {
 }
 
 #current-user {
-	/*
-	border-top: 1px solid #3b3b3b;
-	position: fixed;
-	width: 100%;
-	top: auto;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	*/
 	clear: both;
 	float: right;
 	margin-top: 0px;
@@ -240,7 +237,9 @@ table.smooth tr.altrow td {
 	display: block;
 	color: #bbb;
 }
-
+.zebra {
+	background:#FAFAFA;
+}
 .page-navigation {
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -266,7 +265,7 @@ div.actions {
 
 .row {
 	clear: both;
-	padding: 12px 2px;
+	padding: 12px 2px 6px 2px;
 	border-top: 1px #ccc solid;
 	overflow: hidden;
 }
@@ -313,7 +312,7 @@ fieldset.options textarea {
 }
 .wiki form {
 	float: left;
-	width: 76%;
+	width: 65%;
 }
 .wiki .path label {
 	float: left;
@@ -327,13 +326,20 @@ fieldset.options textarea {
 	margin-top: 5px;
 }
 .wiki .help {
-	float: right;
-	margin-top: 34px;
-	width: 20%;
+	float: left;
+	margin-top: 24px;
+	margin-left: 1%;
+	width: 30%;
 }
 .wiki textarea {
 	font-size: 12px;
-	height: 200px;
+	height: 240px;
+}
+.wiki .input {
+	font-size: 80%;
+}
+.wiki .input label {
+	font-size: 120%;
 }
 .breadcrumbs {
 	color: #ccc;
@@ -405,8 +411,10 @@ fieldset.options textarea {
 	margin-right: 6px;
 }
 .timeline {
-	margin-right: 20%;
+	margin-right: 0%;
+	border-bottom: 1px solid #ccc;
 }
+
 .timeline .name {
 	width: 100%;
 }
@@ -443,6 +451,22 @@ fieldset.options textarea {
 	font-size: 80%;
 }
 
+.tickets .preview h1 {
+	font-size: 180%;
+	color: #333;
+	font-weight: bold;
+}
+.tickets .preview h2 {
+	font-size: 160%;
+	color: #333;
+	font-weight: bold;
+}
+.tickets .preview h3 {
+	font-size: 140%;
+	color: #333;
+	font-weight: bold;
+}
+
 .tickets form {
 	min-width: 800px;
 	white-space: nowrap;
@@ -452,26 +476,31 @@ fieldset.options textarea {
 }
 .tickets fieldset.main {
 	float: left;
-	margin-right: 40px;
+	margin-top: 22px;
+	margin-right: 4%;
 	width: 60%;
 }
 .tickets fieldset.options {
 	float: left;
-	width: 20%;
+	width: 26%;
+}
+.tickets form .submit {
+	clear: left;
 }
 .tickets .textarea textarea {
 	font-size: 12px;
-	height: 400px;
+	height: 300px;
 }
 .tickets .edit .textarea textarea {
 	font-size: 12px;
 	height: 200px;
 }
-.tickets div.help, .versions div.help {
-	float: left;
+.tickets div.help {
+	float: right;
 	clear: none;
-	margin-top: 0;
-	width: 20%;
+	margin-top: 20px;
+	margin-right: 2%;
+	width: 28%;
 	font-size: 100%;
 }
 .tickets h3 em {
@@ -550,9 +579,6 @@ fieldset.options textarea {
   border-left: 0px solid #ddd;
 */
 }
-.browser table tr.zebra td {
-	background:#FAFAFA;
-}
 .browser table td.message {
 	font-size: 80%;
 	padding-top: 6px;
@@ -630,7 +656,7 @@ fieldset.options textarea {
 }
 .permissions textarea {
 	font-size: 12px;
-	height: 200px;
+	height: 300px;
 }
 
 .users form {
@@ -698,6 +724,7 @@ fieldset.options textarea {
 	padding: 0px;
 	overflow: hidden;
 	height: 300px;
+	border-bottom: #ccc 2px solid;
 }
 .panel h4 {
 	margin: 0;
@@ -718,7 +745,11 @@ fieldset.options textarea {
 	list-style-type: none;
 }
 .projects {
-	margin-right: 20%;
+	border-bottom: 1px #ccc solid;
+	margin-right: 0%;
+}
+.projects td.actions a {
+	font-weight: normal;
 }
 
 .projects fieldset.main {
@@ -740,7 +771,7 @@ fieldset.options textarea {
 	padding-top: 20px;
 }
 a.detail {
-	color: #69C;
+	color: #656565;
 }
 
 a.project {

@@ -47,6 +47,11 @@ class Wiki extends AppModel {
 		)
 	);
 */
+	function slug($string) {
+		$replace = (strpos($string, '-') !== false) ? '-' : '_';
+		return Inflector::slug($string, $replace);
+	}
+
 	function _findSuperList($state, $query, $results = array()) {
 		if ($state == 'before') {
 			return $query;
@@ -75,7 +80,7 @@ class Wiki extends AppModel {
 
 	function beforeSave(){
 		if (!empty($this->data['Wiki']['title'])) {
-			$this->data['Wiki']['slug'] = Inflector::slug($this->data['Wiki']['title']);
+			$this->data['Wiki']['slug'] = $this->slug($this->data['Wiki']['title']);
 		}
 
 		if (empty($this->data['Wiki']['slug'])) {

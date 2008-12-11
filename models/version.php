@@ -27,7 +27,7 @@ class Version extends AppModel {
 	);
 
 	function beforeSave() {
-		$this->data['Version']['slug'] = Inflector::slug($this->data['Version']['title']);
+		$this->data['Version']['slug'] = Inflector::slug($this->data['Version']['title'], '-');
 		return true;
 	}
 }

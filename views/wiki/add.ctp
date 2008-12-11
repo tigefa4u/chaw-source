@@ -6,8 +6,11 @@ $script = '
 hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
-	$("#Preview").html(converter.makeHtml(jQuery.trim($("#WikiContent").val())));
+	var text = jQuery.trim($("#WikiContent").val());
+	if (text) {
+		text = "<h3>Preview</h3>" + text;
+	}
+	$("#Preview").html(converter.makeHtml(text));
 	$("#WikiContent").bind("keyup", function() {
 		$("#Preview").html("<h3>Preview</h3>" + converter.makeHtml($(this).val()));
 		hljs.initHighlighting.called = false;
@@ -46,9 +49,8 @@ $javascript->codeBlock($script, array('inline' => false));
 				));
 			}*/
 		?>
-			<div class="input">
-				<span id="Preview"></span>
-			</div>
+
+		<div id="Preview" class="preview"></div>
 
 		</fieldset>
 

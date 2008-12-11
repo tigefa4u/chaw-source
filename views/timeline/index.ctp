@@ -1,7 +1,6 @@
 <?php
 $script = '
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$(".message").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});

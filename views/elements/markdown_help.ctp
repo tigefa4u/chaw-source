@@ -3,9 +3,9 @@
 </h4>
 <div class="markdown">
 	<br />
-	tickets: #1234
+	ticket: #1234
 	<br />
-	commits: [1234]
+	commit: [1234]
 	<br />
 	<br />
 	```<code>inline code</code>```

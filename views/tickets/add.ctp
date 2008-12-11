@@ -6,10 +6,9 @@ $script = '
 hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$("#Preview").html(converter.makeHtml(jQuery.trim($("#TicketDescription").val())));
 	$("#TicketDescription").bind("keyup", function() {
-		$("#Preview").html("<h3>Preview</h3>" + converter.makeHtml($(this).val()));
+		$("#Preview").html(converter.makeHtml($(this).val()));
 		hljs.initHighlighting.called = false;
 		hljs.initHighlighting();
 	});
@@ -24,13 +23,11 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php
 			echo $form->input('title');
 			echo $form->input('description', array(
-				'value' => "###What happened:\n- something\n\n###What was expected:\n- something else\n\n"
+				'value' => "###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n"
 			));
 		?>
 
-		<div class="input">
-			<div id="Preview"></div>
-		</div>
+		<div id="Preview" class="preview"></div>
 
 	</fieldset>
 
@@ -59,5 +56,8 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
 
-<?php echo $form->end('Submit');?>
+	<?php echo $form->submit('Submit')?>
+
+
+<?php echo $form->end();?>
 </div>

@@ -9,13 +9,12 @@ echo $paginator->counter(array(
 ?></p>
 <table cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('id');?></th>
-	<th><?php echo $paginator->sort('user_id');?></th>
-	<th><?php echo $paginator->sort('repo_type');?></th>
+	<th width="20"><?php echo $paginator->sort('Type', 'repo_type');?></th>
 	<th><?php echo $paginator->sort('name');?></th>
+	<th><?php echo $paginator->sort('user_id');?></th>
+	<th><?php echo $paginator->sort('private');?></th>
 	<th><?php echo $paginator->sort('approved');?></th>
 	<th><?php echo $paginator->sort('active');?></th>
-	<th><?php echo $paginator->sort('private');?></th>
 	<th class="actions">&nbsp;</th>
 </tr>
 <?php
@@ -36,12 +35,6 @@ foreach ($projects as $project):
 ?>
 	<tr<?php echo $class;?>>
 		<td>
-			<?php echo $project['Project']['id']; ?>
-		</td>
-		<td>
-			<?php echo $project['User']['username']; ?>
-		</td>
-		<td>
 			<?php echo $project['Project']['repo_type']; ?>
 		</td>
 		<td>
@@ -52,6 +45,12 @@ foreach ($projects as $project):
 				));?>
 		</td>
 		<td>
+			<?php echo $project['User']['username']; ?>
+		</td>
+		<td>
+			<?php echo ($project['Project']['private'] != 0) ? $project['Project']['private'] : null; ?>
+		</td>
+		<td class="actions">
 			<?php
 				echo $chaw->toggle($project['Project']['approved'], array(
 					'approve', 'reject',
@@ -61,7 +60,7 @@ foreach ($projects as $project):
 					)
 				)); ?>
 		</td>
-		<td>
+		<td class="actions">
 			<?php
 				echo $chaw->toggle($project['Project']['active'], array(
 					'activate', 'deactivate',
@@ -71,11 +70,8 @@ foreach ($projects as $project):
 					)
 				)); ?>
 		</td>
-		<td>
-			<?php echo $project['Project']['private']; ?>
-		</td>
 		<td class="actions">
-			<?php echo $html->link(__('Edit', true), array('action'=>'edit', $project['Project']['id'])); ?>
+			<?php echo $html->link(__('edit', true), array('action'=>'edit', $project['Project']['id'])); ?>
 			<?php //echo $html->link(__('Delete', true), array('action'=>'delete', $project['Project']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $project['Project']['id'])); ?>
 		</td>
 	</tr>
@@ -84,6 +80,6 @@ foreach ($projects as $project):
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
+ | 	<?php echo $paginator->numbers();?> |
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>

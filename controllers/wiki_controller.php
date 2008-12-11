@@ -146,7 +146,7 @@ class WikiController extends AppController {
 
 	function __params() {
 		$path = '/'; $slug = null;
-		$slug = Inflector::slug(array_pop($this->passedArgs));
+		$slug = $this->Wiki->slug(array_pop($this->passedArgs));
 		if(count($this->passedArgs) >= 1) {
 			$path = '/'. join('/', $this->passedArgs);
 		}

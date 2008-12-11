@@ -1,7 +1,6 @@
 <?php
 $script = '
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$(".message").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});
@@ -27,23 +26,23 @@ $javascript->codeBlock($script, array('inline' => false));
 		<span class="date">
 			<?php echo $commit['Commit']['commit_date'];?>
 		</span>
-		
+
 		<span class="author">
 			<?php echo (!empty($commit['User']['username'])) ? $commit['User']['username'] : $commit['Commit']['author'];?>
 		</span>
-		
+
 		<span class="admin">
 			<?php echo $chaw->admin('delete', array('controller' => 'commits', 'action' => 'delete', $commit['Commit']['id']));?>
 		</span>
-	
+
 	</div>
 
 <?php endforeach;?>
-
+</div>
+<div class="paging">
 <?php
 	echo $paginator->prev();
 	echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
 	echo $paginator->next();
 ?>
-
 </div>

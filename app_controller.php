@@ -76,8 +76,13 @@ class AppController extends Controller {
  *
  **/
 	function redirect($url = array(), $status = null, $exit = true) {
-		if (is_array($url) && !empty($this->params['project'])) {
-			$url = array_merge(array('project' => $this->params['project']), $url);
+		if (is_array($url)) {
+			if (!empty($this->params['project'])) {
+				$url = array_merge(array('project' => $this->params['project']), $url);
+			}
+			if (!empty($this->params['fork'])) {
+				$url = array_merge(array('fork' => $this->params['fork']), $url);
+			}
 		}
 		parent::redirect($url, $status, $exit);
 	}

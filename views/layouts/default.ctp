@@ -41,7 +41,14 @@
 	<?php
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.2.6.min');
-			echo $javascript->link('gshowdown');
+			echo $javascript->link('gshowdown.min');
+
+			$base = $this->webroot;
+			if (!empty($this->params['fork'])) {
+				$base .= 'forks/' . $this->params['fork'] . '/';
+			}
+			$base .= $this->params['project'] . '/';
+			echo $javascript->codeBlock('var converter = new Showdown.converter("' . $base . '");');
 		}
 		echo $scripts_for_layout;
 	?>

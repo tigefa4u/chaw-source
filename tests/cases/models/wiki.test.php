@@ -113,5 +113,10 @@ class WikiTestCase extends CakeTestCase {
 		$results = $this->Wiki->activate($data);
 		$this->assertEqual($results, true);
 	}
+
+	function testSlug() {
+		$result = $this->Wiki->slug('this-is-hypenated');
+		$this->assertEqual($result, 'this-is-hypenated');
+	}
 }
 ?>

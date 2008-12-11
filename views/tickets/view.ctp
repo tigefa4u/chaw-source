@@ -6,7 +6,6 @@ $script = '
 hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$("#Preview").html(converter.makeHtml(jQuery.trim($("#Preview").text())));
 	$("#TicketDescription").bind("keyup", function() {
 		$("#Preview").html(converter.makeHtml($(this).val()));
@@ -109,7 +108,7 @@ $javascript->codeBlock($script, array('inline' => false));
 					<h3 class="clearfix">Preview</h3>
 
 					<span class="date">
-						<?php echo $time->timeAgoInWords(date('Y-m-d', strtotime('now')));?>
+						<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
 					</span>
 					<span class="user">
 						by <?php echo $CurrentUser->username;?>

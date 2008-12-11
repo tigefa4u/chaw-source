@@ -1,7 +1,6 @@
 <?php
 $script = '
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$(".message").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});
@@ -72,9 +71,11 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php endforeach;?>
 
 </div>
+<div class="paging">
 <?php
 	$paginator->options(array('url' => $this->passedArgs));
 	echo $paginator->prev();
 	echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
 	echo $paginator->next();
 ?>
+</div>

@@ -1,7 +1,6 @@
 <?php
 $script = '
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$("#Preview").html(converter.makeHtml($("#VersionDescription").val()));
 	$("#VersionDescription").bind("keyup", function() {
 		$("#Preview").html("<h3>Preview</h3>" + converter.makeHtml($(this).val()));

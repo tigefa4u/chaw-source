@@ -6,7 +6,6 @@ $script = '
 hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
-	converter = new Showdown.converter("' . $this->webroot . '");
 	$(".wiki-text").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});

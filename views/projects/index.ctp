@@ -4,11 +4,11 @@
 	}
 ?>
 <?php if (empty($this->params['project'])):?>
-	
+
 	<h2>
 		Projects
 	</h2>
-	
+
 	<div class="page-navigation">
 		<?php echo $html->link('All', array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
 		|
@@ -28,7 +28,7 @@
 <?php endif;?>
 
 <div class="projects index">
-	
+
 	<?php if ($this->action == 'forks'):?>
 		<h2>
 			Forks
@@ -36,7 +36,10 @@
 		<?php echo $this->element('project_details'); ?>
 	<?php endif;?>
 
-	<?php foreach ((array)$projects as $project):
+	<?php $i = 0;
+		foreach ((array)$projects as $project):
+
+			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 
 			$url = null;
 			if ($project['Project']['id'] != 1) {
@@ -47,7 +50,7 @@
 				$fork = $project['Project']['fork'];
 			}
 	?>
-		<div class="project row">
+		<div class="project row <?php echo $zebra?>">
 			<?php echo $html->image(strtolower($project['Project']['repo_type']) . '.png', array('height' => 40, 'width' => 40)); ?>
 
 			<h3 class="name">
