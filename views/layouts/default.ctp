@@ -48,7 +48,7 @@
 				$base .= 'forks/' . $this->params['fork'] . '/';
 			}
 			$base .= $this->params['project'] . '/';
-			echo $javascript->codeBlock('var converter = new Showdown.converter("' . $base . '");');
+			echo $javascript->codeBlock('var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");');
 		}
 		echo $scripts_for_layout;
 	?>
