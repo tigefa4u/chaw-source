@@ -43,17 +43,17 @@
 
 	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
-	Router::connect('/wiki/edit/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'edit'));
+	Router::connect('/wiki/edit/*', array('controller' => 'wiki', 'action' => 'edit'), array('action' => 'edit'));
 	Router::connect('/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/forks/:fork/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/forks/:fork/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
-	Router::connect('/forks/:fork/:project/wiki/edit/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'edit'));
+	Router::connect('/forks/:fork/:project/wiki/edit/*', array('controller' => 'wiki', 'action' => 'edit'), array('action' => 'edit'));
 	Router::connect('/forks/:fork/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 	Router::connect('/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
-	Router::connect('/:project/wiki/edit/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'edit'));
+	Router::connect('/:project/wiki/edit/*', array('controller' => 'wiki', 'action' => 'edit'), array('action' => 'edit'));
 	Router::connect('/:project/wiki/*', array('controller' => 'wiki', 'action' => 'index'));
 
 
