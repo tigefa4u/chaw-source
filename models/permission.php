@@ -213,9 +213,14 @@ class Permission extends AppModel {
 			if (!empty($this->__rules[1])) {
 				$parent = $this->__rules[1];
 			} else {
-				if ($file = $this->file(true)) {
-					$this->__rules[1] = $parent = $this->toArray($file);
+				if ($file = $this->parent()) {
+					$parent = $this->__rules[1] = $this->toArray($file);
 				}
+
+				if ($root = $this->root()) {
+					$parent = $this->__rules[1] = Set::merge($parent, $this->toArray($root));
+				}
+
 			}
 		}
 
@@ -290,8 +295,8 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function exists($parent = false) {
-		$File = $this->__getFile($parent);
+	function exists() {
+		$File = $this->__getFile();
 		return $File->exists();
 	}
 /**
@@ -300,9 +305,9 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function file($parent = false) {
-		$File = $this->__getFile($parent);
-		if (!$File->exists() || !$File->readable()) {
+	function file() {
+		$File = $this->__getFile();
+		if (!$File->readable()) {
 			if (!$File->create()) {
 				return false;
 			}
@@ -315,10 +320,44 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function &__getFile($parent = false) {
+	function root() {
+		$path = Configure::read("Content.base");
+		$File = new File($path . 'permissions.ini');
+		return $File->read();
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function parent() {
+		$config = $this->config();
+		if($config['id'] == 1 || empty($config['fork'])) {
+			return array();
+		}
+		if(!empty($config['fork'])) {
+			$path = Configure::read("Content.{$config['repo']['type']}") . 'repo' . DS .  $config['url'] . '.git' . DS;
+		}
+
+		$File = new File($path . 'permissions.ini');
+		if (!$File->readable()) {
+			if (!$File->create()) {
+				return false;
+			}
+		}
+		return $File->read();
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function &__getFile() {
 		$config = $this->config();
 		$path = $config['repo']['path'] . DS;
-		if ($config['id'] == 1 || $parent === true) {
+		if($config['id'] == 1) {
 			$path = Configure::read("Content.base");
 		}
 		$File = new File($path . 'permissions.ini');

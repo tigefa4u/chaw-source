@@ -278,37 +278,37 @@ class PermissionTest extends CakeTestCase {
 
 	function testForkOverride() {
 		Configure::write('Project', $this->__projects['Two']);
-		$Fork = new TestPermission();
+		$Parent = new TestPermission();
 
 		$data['Permission']['fine_grained'] = "
 		[/refs/heads/master]
 		gwoo = r
 		";
 
-		$Fork->saveFile($data);
+		$this->assertTrue($Parent->saveFile($data));
 
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
 
-		$result = $Fork->rules();
-		//pr($result);
+		$result = $Parent->rules();
 
 		Configure::write('Project', $this->__projects['Fork']);
-		$Permission = new TestPermission();
+		$Fork = new TestPermission();
 
 		$data['Permission']['fine_grained'] = "
 		[/refs/heads/master]
 		bob = r
 		";
 
-		$Permission->saveFile($data);
+		$Fork->saveFile($data);
 
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'forks' . DS . 'bob' . DS . 'project_two.git' . DS . 'permissions.ini'));
 
-		$result = $Permission->rules();
+		$result = $Fork->rules();
 
 		$expected = array('project_two' => array(
 			'/refs/heads/master' => array(
-				'bob' => 'r'
+				'bob' => 'r',
+				'gwoo' => 'r'
 			),
 			'/test/override' => array(
 				'gwoo' => 'rw'
