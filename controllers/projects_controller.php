@@ -64,19 +64,33 @@ class ProjectsController extends AppController {
 		$this->set('rssFeed', array('controller' => 'projects'));
 	}
 
+	function forks() {
+		$this->paginate['conditions']['Project.fork !='] = null;
+		$this->paginate['conditions']['Project.project_id'] = $this->Project->id;
+
+		$this->set('projects', $this->paginate());
+		$this->set('rssFeed', array('controller' => 'projects', 'action' => 'forks'));
+
+		$this->render('index');
+	}
+
 	function view($url  = null) {
-		$project = $this->Project->config;
+		$project = array('Project' => $this->Project->config);
 		if (empty($this->params['project']) && $url == null && $project['id'] != 1) {
 			$project = $this->Project->findByUrl($url);
 		}
 
-		$this->set('project', array('Project' => $project));
+		$this->set('project', $project);
 	}
 
 	function fork() {
 		if ($this->Project->Repo->type == 'svn') {
 			$this->Session->setFlash('You cannot fork an svn project yet');
 			$this->redirect($this->referer());
+		}
+
+		if (!empty($this->params['form']['cancel'])) {
+			$this->redirect(array('controller' => 'browser'));
 		}
 
 		if (!empty($this->data)) {

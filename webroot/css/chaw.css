@@ -513,6 +513,12 @@ fieldset.options textarea {
 	margin-top: 32px;
 	margin-bottom: 4px;
 }
+.browser .forks {
+	float: right;
+	margin-top: -20px;
+	margin-right: 4px;
+}
+
 .browser table, .diff {
   width: 100%;
   border-collapse: collapse;
@@ -723,6 +729,12 @@ fieldset.options textarea {
 }
 .projects fieldset.main textarea {
 	height: 200px;
+}
+.fork form div.submit input {
+	margin-right: 6px;
+}
+.confirm {
+	width: 50%;
 }
 .start {
 	padding-top: 20px;

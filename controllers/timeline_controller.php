@@ -23,7 +23,7 @@ class TimelineController extends AppController {
 	var $helpers = array('Time', 'Text');
 
 	var $paginate = array(
-		'limit' => 30,
+		'limit' => 20,
 		'order' => 'Timeline.created DESC',
 	);
 
@@ -35,7 +35,7 @@ class TimelineController extends AppController {
 		if (!empty($this->passedArgs['type'])) {
 			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
 		}
-
+		$this->Timeline->recursive = -1;
 		$timeline = $this->paginate();
 		$this->set('timeline', $this->Timeline->related($timeline));
 

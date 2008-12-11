@@ -37,9 +37,9 @@
 
 
 	/* Specific Routes */
-	Router::connect('/:project/fork', array('controller' => 'projects', 'action' => 'fork'), array('action' => 'fork'));
-	Router::connect('/download/:project', array('controller' => 'projects', 'action' => 'index'));
-	Router::connect('/download/forks/:fork/:project', array('controller' => 'projects', 'action' => 'index'));
+	Router::connect('/:project/fork/it', array('controller' => 'projects', 'action' => 'fork'), array('action' => 'fork'));
+	Router::connect('/download/:project', array('controller' => 'projects', 'action' => 'index', 'ext' => 'tar'), array('ext' => 'tar'));
+	Router::connect('/download/forks/:fork/:project', array('controller' => 'projects', 'action' => 'index', 'ext' => 'tar'), array('ext' => 'tar'));
 
 	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
@@ -64,7 +64,7 @@
 	);
 	Router::connect('/:controller/:action/*', array(), array(
 		'controller' => 'commits|tickets|timeline|versions|users|projects',
-		'action' => 'history|view|add|edit|modify|delete|remove|login|account|logout')
+		'action' => 'history|view|add|edit|modify|delete|remove|login|account|logout|forks')
 	);
 	Router::connect('/:controller/*', array(), array(
 		'controller' => 'commits|tickets|timeline|versions|users|projects',
@@ -90,7 +90,7 @@
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller/:action/*', array(), array(
 		'controller' => 'commits|tickets|timeline|versions|users|projects',
-		'action' => 'history|view|add|edit|modify|delete|remove')
+		'action' => 'history|view|add|edit|modify|delete|remove|forks')
 	);
 	Router::connect('/:project/:controller/*', array(), array(
 		'controller' => 'commits|tickets|timeline|versions|users|projects',
