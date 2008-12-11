@@ -5,7 +5,7 @@ if (!empty($tickets)):
 	foreach ($tickets as $ticket) :
 
 		$url = array('admin' => false,
-			'controller' => 'tickets', 'action' => 'view', $ticket['Ticket']['id']
+			'controller' => 'tickets', 'action' => 'view', $ticket['Ticket']['number']
 		);
 
 		$project = null;

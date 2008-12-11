@@ -44,10 +44,13 @@ class ProjectsController extends AppController {
 
 		$this->Project->recursive = 0;
 
-		if ($this->params['isAdmin'] === false) {
-			$this->paginate['conditions'] = array(
-				'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
-			);
+		$this->paginate['conditions'] = array(
+			'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
+		);
+
+		if ($this->params['isAdmin'] === true) {
+			$this->paginate['conditions'] = array();
+			$this->paginate['order'] = 'Project.id ASC';
 		}
 
 		$this->paginate['conditions']['Project.fork'] = null;
@@ -181,6 +184,10 @@ class ProjectsController extends AppController {
 	function admin_index() {
 		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
+		}
+		if ($this->params['isAdmin'] === true) {
+			$this->paginate['conditions'] = array();
+			$this->paginate['order'] = 'Project.id ASC';
 		}
 		$this->Project->recursive = 0;
 		$this->set('projects', $this->paginate());
