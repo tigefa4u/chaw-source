@@ -20,12 +20,15 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-
 <div class="wiki form">
+
+	<div class="breadcrumbs">
+		<?php echo $chaw->breadcrumbs($path);?>
+	</div>
 
 	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>
 		<fieldset>
-	 		<legend><?php echo $this->pageTitle; ?></legend>
+			<legend><?php echo Inflector::humanize($slug); ?></legend>
 		<?php
 			echo $form->hidden('update');
 
@@ -37,7 +40,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 			echo $form->input('path', array('div' => 'input text path',
 				'between' => '<em>group pages</em>',
-				'after' => "use paths to group pages into categories and subcategories. example: blog/{$CurrentUser->username}",
+				'after' => "use paths to group pages into categories and subcategories. example: /blog/{$CurrentUser->username}",
 			));
 
 			echo $form->input('content', array('label' => 'Text'));

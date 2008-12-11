@@ -3,14 +3,28 @@
 class ChawHelper extends AppHelper {
 
 	var $helpers = array('Html');
-
+/**
+ * undocumented function
+ *
+ * @param string $title
+ * @param string $url
+ * @param string $htmlAttributes
+ * @param string $confirmMessage
+ * @param string $escapeTitle
+ * @return string
+ */
 	function admin($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		if (!empty($this->params['isAdmin']) || !empty($this->params['isOwner'])) {
 			return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
 		}
 		return null;
 	}
-
+/**
+ * undocumented function
+ *
+ * @param string $messages
+ * @return string
+ */
 	function messages($messages = array()) {
 		$result = array();
 		foreach((array)$messages as $type => $types) {
@@ -25,7 +39,13 @@ class ChawHelper extends AppHelper {
 		}
 		return join("\n", $result);
 	}
-
+/**
+ * undocumented function
+ *
+ * @param string $revision
+ * @param string $project
+ * @return string
+ */
 	function commit($revision = null, $project = array()) {
 		if (!$revision) {
 			return null;
@@ -50,7 +70,13 @@ class ChawHelper extends AppHelper {
 			'class' => 'commit', 'title' => $revision
 		));
 	}
-
+/**
+ * undocumented function
+ *
+ * @param string $value
+ * @param string $options
+ * @return string
+ */
 	function toggle($value, $options) {
 		if (!empty($options['url'])) {
 			$url = $options['url'];
@@ -67,6 +93,12 @@ class ChawHelper extends AppHelper {
 		return $this->Html->link($option, $url, array('class' => 'toggle', 'title' => $option));
 	}
 
+/**
+ * undocumented function
+ *
+ * @param string $data
+ * @return array
+ */
 	function params($data = array()) {
 		if (!empty($data['Project'])) {
 			$data = $data['Project'];
@@ -84,30 +116,64 @@ class ChawHelper extends AppHelper {
 
 		return compact('project', 'fork');
 	}
-
+/**
+ * undocumented function
+ *
+ * @param string $data
+ * @param string $url
+ * @return array
+ */
 	function url($data = array(), $url = array()) {
 		if (!empty($data)) {
 			$url = array_merge($url, $this->params($data));
 		}
 		return $url;
 	}
-
-	function breadcrumbs($path, $slug) {
+/**
+ * undocumented function
+ *
+ * @param string $path
+ * @param string $slug
+ * @return string
+ */
+	function breadcrumbs($path, $slug = null) {
 		$out = array();
 		$parts = array_filter(explode('/', $path));
 
-		if ($slug !== 'home') {
-
-			$out[] = $this->Html->link('home', array('controller' => 'wiki', '/'));
-
-			foreach ($parts as $key => $part) {
-				$out[] = $this->Html->link($part, $parts);
-			}
-
-			$out[] = $slug;
-			return join(' > ', $out) ;
+		$rss = null;
+		if ($path && $slug !== 'home') {
+			$out[] = $this->Html->link('home', array('controller' => 'wiki', 'action' => 'index', '/'));
+			$rss = ' . ' . $this->rss('home', array('controller' => 'wiki', 'action' => 'index', '/', 'ext' => 'rss'));
 		}
 
-		return null;
+		foreach ($parts as $key => $part) {
+			$parts['action'] = 'index';
+			$out[] = $this->Html->link($part, $parts);
+		}
+
+		if ($slug) {
+			$out[] = $slug;
+			$parts[] = $slug;
+			$parts['action'] = 'index';
+			$parts['ext'] = 'rss';
+			$rss = ' . ' . $this->rss($path, $parts);
+		}
+		return join(' > ', $out) . $rss;
+	}
+/**
+ * undocumented function
+ *
+ * @param string $title
+ * @param string $url
+ * @return string
+ */
+	function rss($title, $url) {
+		return $this->Html->link(
+			$this->Html->image('feed-icon.png', array(
+				'width' => 14, 'height' => 14
+			)),
+			$url, array(
+			'title' => $title, 'class' => 'rss', 'escape'=> false
+		));
 	}
 }

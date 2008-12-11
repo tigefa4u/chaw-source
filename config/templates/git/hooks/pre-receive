@@ -7,7 +7,7 @@ cd <?php echo APP; ?>
 
 
 if [ -n "$1" ]; then
-	chaw pre_receive commit <?php echo @$project; ?><?php echo (!empty($fork)) ? " -fork {$fork}" : null; ?>
+	chaw pre_receive <?php echo @$project; ?><?php echo (!empty($fork)) ? " -fork {$fork}" : null; ?>
 
 else
 	while read oldrev newrev refname

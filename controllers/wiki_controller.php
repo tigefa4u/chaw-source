@@ -42,7 +42,8 @@ class WikiController extends AppController {
 				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
 				'Wiki.project_id' => $this->Project->id,
 				'Wiki.active' => 1
-			)
+			),
+			'order' => 'Wiki.created DESC'
 		));
 
 		if (!empty($this->data)) {
@@ -73,14 +74,16 @@ class WikiController extends AppController {
 			$this->redirect(array_merge(array('action' => 'add'), $this->passedArgs));
 		}
 
-		$paths = array_flip($this->Wiki->find('list', array(
-			'fields' => array('Wiki.path', 'Wiki.id'),
-			'conditions' => array(
-				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
-			)
-		)));
-		sort($paths);
+		if ($this->RequestHandler->isRss() !== true) {
+			$paths = array_flip($this->Wiki->find('list', array(
+				'fields' => array('Wiki.path', 'Wiki.id'),
+				'conditions' => array(
+					'Wiki.project_id' => $this->Project->id,
+					'Wiki.active' => 1
+				)
+			)));
+			sort($paths);
+		}
 
 		if(!empty($page) && !empty($this->params['isAdmin'])) {
 			$this->Wiki->recursive = 0;
@@ -97,7 +100,6 @@ class WikiController extends AppController {
 		}
 
 		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths', 'revisions'));
-		$this->render('view');
 	}
 
 	function add() {
@@ -107,8 +109,14 @@ class WikiController extends AppController {
 		if ($slug == '1') {
 			$slug = null;
 			$this->pageTitle = 'Create a new page';
-		} else {
-			$this->pageTitle = Inflector::humanize($slug);
+		}
+
+		if ($heading = Inflector::humanize(substr($path, 1))) {
+			$this->pageTitle = $heading . '/';
+		}
+
+		if ($slug) {
+			$this->pageTitle .=  Inflector::humanize($slug);
 		}
 
 		if (!empty($this->data)) {
@@ -137,6 +145,8 @@ class WikiController extends AppController {
 			$this->data['Wiki']['slug'] = $slug;
 			$this->data['Wiki']['path'] = $path;
 		}
+
+		$this->set(compact('path', 'slug', 'heading'));
 	}
 
 	function edit() {

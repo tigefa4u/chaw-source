@@ -22,14 +22,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	|
 	<?php echo $html->link('Wiki', array('controller' => 'timeline', 'action' => 'index', 'type' => 'wiki'));?>
 	|
-	<?php
-		echo $html->link(
-			$html->image('feed-icon.png', array(
-				'width' => 14, 'height' => 14
-			)),
-			$rssFeed, array(
-			'title' => 'Timeline Feed', 'class' => 'rss', 'escape'=> false
-		));?>
+	<?php echo $chaw->rss('Timeline Feed', $rssFeed);?>
 </div>
 <div class="timeline index">
 	<table class="smooth">
