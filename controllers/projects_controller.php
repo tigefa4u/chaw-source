@@ -20,6 +20,10 @@ class ProjectsController extends AppController {
 
 	var $name = 'Projects';
 
+	var $paginate = array(
+		'order' => 'Project.users_count DESC, Project.created ASC'
+	);
+
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->mapActions(array('fork' => 'create'));
@@ -41,12 +45,8 @@ class ProjectsController extends AppController {
 		$this->Project->recursive = 0;
 
 		if ($this->params['isAdmin'] === false) {
-			$this->paginate = array(
-				'conditions' => array(
-					'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
-				),
-				'order' => 'Project.users_count DESC, Project.created ASC',
-				'limit' => 20
+			$this->paginate['conditions'] = array(
+				'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
 			);
 		}
 
@@ -65,8 +65,9 @@ class ProjectsController extends AppController {
 	}
 
 	function forks() {
-		$this->paginate['conditions']['Project.fork !='] = null;
-		$this->paginate['conditions']['Project.project_id'] = $this->Project->id;
+		$this->paginate['conditions'] = array(
+			'Project.fork !=' => null, 'Project.project_id' =>  $this->Project->id
+		);
 
 		$this->set('projects', $this->paginate());
 		$this->set('rssFeed', array('controller' => 'projects', 'action' => 'forks'));
