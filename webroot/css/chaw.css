@@ -29,11 +29,10 @@ blue: #69C;
 .atv { color:#181 }
 .dec { color:#606 }
 a {
-	font-family: monospace;
-	font-size: 120%;
+	font-family: helvetica,arial,sans-serif;
 }
 h2 a {
-	font-family: monospace;
+	font-family: helvetica,arial,sans-serif;
 }
 h2 {
 	color: #804000;
