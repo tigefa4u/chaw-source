@@ -28,20 +28,31 @@ blue: #69C;
 .atn { color:#939; font-weight:bold  }
 .atv { color:#181 }
 .dec { color:#606 }
-a {
+
+#content a {
+	color: #333;
 	font-family: helvetica,arial,sans-serif;
-}
-h2 a {
-	font-family: helvetica,arial,sans-serif;
-}
-h2 {
-	color: #804000;
-	margin-bottom: 6px;
 	font-weight: normal;
+}
+#content h2 a {
+	color: #804000;
+	font-family: helvetica,arial,sans-serif;
+}
+h1 {
+	color: #333;
+	font-weight: normal;
+	font-size: 240%;
+}
+h2, fieldset legend {
+	color: #804000;
+	font-weight: normal;
+	font-size: 200%;
 }
 
 h3 {
-	color: #804000;
+	color: #656565;
+	font-weight: normal;
+	font-size: 190%;
 }
 
 h4 {
@@ -154,7 +165,7 @@ table.smooth tr.altrow td {
 }
 
 #navigation {
-	margin-top: 1px;
+	margin-top: 2px;
 	margin-left: 20px;
 	white-space: nowrap;
 }
@@ -167,10 +178,11 @@ table.smooth tr.altrow td {
 	padding: 10px;
 	color: #fff;
 	text-decoration: none;
+	font-family: Helvetica;
+	font-weight: bold;
 }
 
 #navigation li a:hover, #navigation li a.on {
-	padding: 10px;
 	background-color: #fff;
 	color: #333;
 	text-decoration: none;
@@ -229,7 +241,7 @@ table.smooth tr.altrow td {
 	font-size: 11px;
 	padding: 2px 6px;
 	text-decoration: underline;
-	color: #bbb;
+	color: #999;
 }
 #current-user span.link a:hover {
 	text-decoration: none;
@@ -373,7 +385,7 @@ fieldset.options textarea {
 	text-decoration: underline;
 }
 .wiki-content {
-	width: 50%;
+	width: 60%;
 }
 .wiki-content .actions {
 	font-size: 10px;
@@ -381,7 +393,7 @@ fieldset.options textarea {
 .wiki-navigation {
 	float: right;
 	padding-top: 20px;
-	width: 40%;
+	width: 30%;
 }
 .wiki-navigation h2 {
 	color: #3b3b3b;
@@ -399,15 +411,15 @@ fieldset.options textarea {
 	clear: left;
 }
 .wiki-navigation .paths h3 {
-	font-size: 110%;
-	color: #3b3b3b;
+	font-size: 120%;
+	color: #333;
 }
 .wiki-navigation .paths ul {
 	margin: 0;
 }
 .wiki-navigation .paths li {
 	list-style-type: none;
-	margin: 4px 0;
+	margin: 8px 0;
 }
 .wiki-navigation .paths li a {
 	color: #656565;
@@ -472,32 +484,13 @@ fieldset.options textarea {
 	font-size: 80%;
 }
 
-.tickets .preview h1 {
-	font-size: 180%;
-	color: #333;
-	font-weight: bold;
-}
-.tickets .preview h2 {
-	font-size: 160%;
-	color: #333;
-	font-weight: bold;
-}
-.tickets .preview h3 {
-	font-size: 140%;
-	color: #333;
-	font-weight: bold;
-}
-
 .tickets form {
 	min-width: 800px;
 	white-space: nowrap;
 }
-.tickets legend {
-	font-size: 180%;
-}
 .tickets fieldset.main {
 	float: left;
-	margin-top: 22px;
+	margin-top: 24px;
 	margin-right: 4%;
 	width: 60%;
 }
@@ -558,11 +551,6 @@ fieldset.options textarea {
 	margin: 2px;
 }
 
-.browser h2 {
-	color: #333;
-	margin-top: 32px;
-	margin-bottom: 4px;
-}
 .browser .forks {
 	float: right;
 	margin-top: -20px;

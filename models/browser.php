@@ -55,7 +55,6 @@ class Browser extends Object {
 			$this->Repo->update();
 		}
 
-
 		list($dirs, $files) = $Folder->read(true, array('.git', '.svn'));
 
 		$dir = $file = array();
