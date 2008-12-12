@@ -25,6 +25,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php echo $chaw->breadcrumbs($path, $slug);?>
 </div>
 
+<div class="clear"><!----></div>
 
 <?php if (!empty($page) || !empty($paths)):?>
 <div class="wiki-navigation">
