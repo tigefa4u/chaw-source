@@ -4,16 +4,14 @@
  *
  * Long description
  *
- *
  * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Licensed under The MIT License
- * Redistributions of files must retain the copyright notice.
+ * Redistributions not permitted
  *
  * @copyright		Copyright 2008, Garrett J. Woodworth
  * @package			chaw
  * @subpackage		chaw.models
  * @since			Chaw 0.1
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license			commercial
  *
  */
 class Ticket extends AppModel {
@@ -43,8 +41,16 @@ class Ticket extends AppModel {
 	var $validate = array(
 		'title' => array('notEmpty'),
 		'description' => array('notEmpty'),
+		'project_id' => 'numeric'
 	);
-
+	
+	function beforeValidate() {
+		if (!empty($this->data['Ticket']['project'])) {
+			$this->data['Ticket']['project_id'] = $this->Project->field('id', array('url' => $this->data['Ticket']['project']));
+		}
+		return true;
+	}
+	
 	function beforeSave() {
 		if (!empty($this->data['Ticket']['tags'])) {
 			if (empty($this->data['Ticket']['previous']) || !empty($this->data['Ticket']['previous']) && $this->data['Ticket']['tags'] != $this->data['Ticket']['previous']['tags']) {
