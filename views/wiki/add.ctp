@@ -23,7 +23,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php echo $chaw->breadcrumbs($path);?>
 	</div>
 	
-	<div id="Preview" class="wiki-text"></div>
+	<div id="Preview" class="wiki-content wiki-text"></div>
 	
 	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>
 		
