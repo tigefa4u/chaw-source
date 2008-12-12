@@ -2,7 +2,6 @@
 	<?php echo $html->link('Markdown Help', '/markdown_syntax', array('target' => '_blank')); ?>
 </h4>
 <div class="markdown">
-	<br />
 	ticket: #1234
 	<br />
 	commit: [1234]

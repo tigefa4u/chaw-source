@@ -52,7 +52,7 @@ h2, fieldset legend {
 h3 {
 	color: #656565;
 	font-weight: normal;
-	font-size: 190%;
+	font-size: 160%;
 }
 
 h4 {
@@ -274,6 +274,9 @@ table.smooth tr.altrow td {
 div.actions {
 	margin-top: 1em;
 }
+div.help h4 {
+	font-size: 120%;
+}
 .index {
 	overflow: visible;
 }
@@ -409,6 +412,8 @@ fieldset.options textarea {
 }
 .wiki-navigation .paths {
 	clear: left;
+	margin-bottom: 20px;
+	overflow: hidden;
 }
 .wiki-navigation .paths h3 {
 	font-size: 120%;
@@ -431,9 +436,12 @@ fieldset.options textarea {
 	float: left;
 }
 .wiki-navigation .revisions form div label {
-	font-weight: bold;
+	font-weight: normal;
+	font-size: 120%;
+	color: #333;
 }
-.wiki-navigation .revisions form div input, .wiki-navigation .revisions form div select {
+.wiki-navigation .revisions form div input, 
+.wiki-navigation .revisions form div select {
 	font-size: 80%;
 }
 .wiki-navigation .revisions form div {
@@ -480,6 +488,10 @@ fieldset.options textarea {
 	color: #69C;
 }
 
+.tickets h3 em {
+	font-size: 80%;
+}
+
 .tickets .edit {
 	font-size: 80%;
 }
@@ -488,11 +500,12 @@ fieldset.options textarea {
 	min-width: 800px;
 	white-space: nowrap;
 }
+
 .tickets fieldset.main {
 	float: left;
 	margin-top: 24px;
 	margin-right: 4%;
-	width: 60%;
+	width: 56%;
 }
 .tickets fieldset.options {
 	float: left;
@@ -505,50 +518,63 @@ fieldset.options textarea {
 	font-size: 12px;
 	height: 300px;
 }
-.tickets .edit .textarea textarea {
-	font-size: 12px;
-	height: 200px;
-}
 .tickets div.help {
 	float: right;
 	clear: none;
 	margin-top: 20px;
-	margin-right: 2%;
-	width: 28%;
-	font-size: 100%;
+	margin-right: 4%;
+	width: 30%;
 }
-.tickets h3 em {
-	font-size: 80%;
+.tickets .view {
+	width: 60%;
 }
+
 .tickets .description {
-	width: 62%;
-	margin-bottom: 20px;
+	margin-bottom: 0.4em;
+	padding: 0 0 1em 0;
+	border: 1px solid #ccc;
+	border-width: 1px 0;
+}
+.tickets .view .date {
+	float: right;
 }
 .tickets textarea#TicketComment {
 	height: 130px;
 }
-.tickets .comment {
-	font-size: 140%;
+div.comments {
+	clear: both;
+	padding: 0 4px;
+	margin: 0;
+	margin-top: 40px;
 	width: 60%;
+}
+.comments .comment {
+	font-size: 140%;
 	margin: 0;
 	padding: 0;
 	padding:0.5em 0;
 	font-style: normal;
 	color: #3b3b3b;
 }
-.tickets .comment .date {
+.comments .comment .date {
 	font-weight: bold;
 	color: #633;
 }
-.tickets .comment .body {
+.comments .comment .body {
 	border: 1px solid #ccc;
 	padding: 4px 8px;
+	font-size: 100%;
 }
-.tickets .comment .body ul {
+.comments .comment .body ul {
 	margin-bottom: 16px;
 }
-.tickets .comment .body  li {
+.comments .comment .body  li {
 	margin: 2px;
+	font-size: 80%;
+}
+.comments .textarea textarea {
+	font-size: 12px;
+	height: 200px;
 }
 
 .browser .forks {

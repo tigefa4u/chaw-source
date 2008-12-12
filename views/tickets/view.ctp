@@ -32,25 +32,35 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 <h2>
-	<?php echo ucwords($ticket['Ticket']['type']);?> Ticket
+	<?php strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> Ticket
 	(<em><?php echo $ticket['Ticket']['status'];?></em>)
 </h2>
-<div class="tickets view">
-	<h3 class="title">
-		<?php echo $ticket['Ticket']['title'];?>
-		<?php if (!empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id'])): ?>
-			<em>(<a href="#modify" class="modify">edit</a>)</em>
-		<?php endif; ?>
-	</h3>
-	<p class="reporter">
-		<strong>reported by:</strong> <?php echo $ticket['Reporter']['username'];?>
-	</p>
+<div class="tickets">
 
-	<div id="Preview" class="description">
-		<?php echo h($ticket['Ticket']['description']); ?>
+	<div class="view">
+
+		<h3 class="title">
+			<?php echo $ticket['Ticket']['title'];?>
+			<?php if (!empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id'])): ?>
+				<em>(<a href="#modify" class="modify">edit</a>)</em>
+			<?php endif; ?>
+		</h3>
+
+		<div id="Preview" class="description">
+			<?php echo h($ticket['Ticket']['description']); ?>
+		</div>
+
+		<span class="date">
+			<?php echo $time->timeAgoInWords($ticket['Ticket']['created']);?>
+		</span>
+
+		<span class="reporter">
+			<strong>reported by:</strong> <?php echo $ticket['Reporter']['username'];?>
+		</span>
+
 	</div>
 
-	<div class="ticket edit">
+	<div class="edit">
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
@@ -70,7 +80,7 @@ $javascript->codeBlock($script, array('inline' => false));
 						?>
 					</fieldset>
 
-					<fieldset class="options">
+					<fieldset class="tags options">
 						<legend>Tags</legend>
 						<?php
 							echo $form->textarea('tags');
@@ -87,6 +97,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 		<?php endif; ?>
 
+		<div class="comments">
 			<?php foreach ((array)$ticket['Comment'] as $comment): ?>
 
 				<div class="comment" id="c<?php echo $comment['id']?>">
@@ -102,33 +113,36 @@ $javascript->codeBlock($script, array('inline' => false));
 				</div>
 
 			<?php endforeach; ?>
+		</div>
 
 		<?php if (!empty($CurrentUser->id)): ?>
-				<div id="CommentPreviewWrapper" class="comment" style="display:none">
-					<h3 class="clearfix">Preview</h3>
 
-					<span class="date">
-						<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
-					</span>
-					<span class="user">
-						by <?php echo $CurrentUser->username;?>
-					</span>
-					<div id="CommentPreview" class="body"></div>
-				</div>
+			<div id="CommentPreviewWrapper" class="comment" style="display:none">
+				<h3 class="clearfix">Preview</h3>
 
-				<fieldset class="main">
-			 		<legend>
-						<?php __('Comment');?>
-					</legend>
-					<?php
-						if (!empty($this->params['isAdmin'])):
-							echo $form->input('status');
-						endif;
-						echo $form->input('id');
-						echo $form->textarea('comment');
-					?>
-				</fieldset>
-			<?php 	if (!empty($this->params['isAdmin'])):?>
+				<span class="date">
+					<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
+				</span>
+				<span class="user">
+					by <?php echo $CurrentUser->username;?>
+				</span>
+				<div id="CommentPreview" class="body"></div>
+			</div>
+
+			<fieldset class="comments main">
+		 		<legend>
+					<?php __('Comment');?>
+				</legend>
+				<?php
+					if (!empty($this->params['isAdmin'])):
+						echo $form->input('status');
+					endif;
+					echo $form->input('id');
+					echo $form->textarea('comment');
+				?>
+			</fieldset>
+
+			<?php if (!empty($this->params['isAdmin'])):?>
 				<fieldset class="options">
 					<legend>Options</legend>
 					<?php
@@ -141,10 +155,7 @@ $javascript->codeBlock($script, array('inline' => false));
 				</fieldset>
 			<?php endif; ?>
 
-				<div class="submit">
-					<?php echo $form->submit('Submit', array('div' => false));?>
-				</div>
-
+			<?php echo $form->submit('Submit');?>
 
 			<?php echo $form->end();?>
 
