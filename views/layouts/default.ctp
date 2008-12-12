@@ -37,8 +37,7 @@
 			echo $html->meta('rss', $html->url($rssFeed, true));
 		}
 		echo $html->css(array('generic', 'chaw'));
-	?>
-	<?php
+
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.2.6.min');
 			echo $javascript->link('gshowdown.min');
@@ -70,17 +69,17 @@
 					?></li>
 
 					<li><?php
-						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
-						echo $html->link('Wiki', array(
-							'admin' => false,
-							'controller' => 'wiki', 'action' => 'index'), $options);
-					?></li>
-
-					<li><?php
 						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
 						echo $html->link('Timeline', array(
 							'admin' => false,
 							'controller' => 'timeline', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
+						echo $html->link('Wiki', array(
+							'admin' => false,
+							'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
@@ -105,13 +104,16 @@
 					?></li>
 
 					<?php if (!empty($this->params['isAdmin'])):?>
+
 						<li><?php
 							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
 							echo $html->link('Admin', array(
 								'admin' => true,
 								'controller' => 'dashboard', 'action' => 'index'), $options);
 						?></li>
+
 					<?php endif;?>
+
 				</ul>
 			</div>
 

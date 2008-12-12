@@ -59,6 +59,23 @@ $javascript->codeBlock($script, array('inline' => false));
 		?>
 	<?php endif;?>
 
+	<?php if (!empty($recents)):?>
+		<?php
+			$nav = null;
+			foreach ($recents as $recent):
+					$nav .= $html->tag('li',
+						$html->link(rtrim($recent['Wiki']['path']. '/', '/') . '/' . $recent['Wiki']['slug'], array($recent['Wiki']['path'], $recent['Wiki']['slug']))
+					);
+			endforeach;
+			if (!empty($nav)) {
+				echo $html->tag('div',
+					'<h3>Recent Entries</h3>' .
+					$html->tag('ul', $nav), array('class' => 'paths')
+				);
+			}
+		?>
+	<?php endif;?>
+
 	<?php
 		if(!empty($this->params['isAdmin'])) {
 			$links = array();
@@ -95,7 +112,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php if(!empty($wiki)):?>
 
 		<?php foreach($wiki as $content):
-			$data = h($text->truncate($content['Wiki']['content'], 100, '...', false, true));
+			$data = h($text->truncate($content['Wiki']['content'], 420, '...', false, true));
 		?>
 			<?php if (strpos($data, '##') === false):?>
 				<h3><?php echo $html->link(Inflector::humanize($content['Wiki']['slug']), array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?></h3>

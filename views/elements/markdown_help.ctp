@@ -37,7 +37,7 @@
 	<br />
 	[wiki:page The Page]
 	<br />
-	[link](http://url.com/)
+	[ link](http://url.com/)
 	<br />
 	<br />
 	ohloh widgets: [ohloh:project/widget_name]

@@ -28,14 +28,21 @@ blue: #69C;
 .atn { color:#939; font-weight:bold  }
 .atv { color:#181 }
 .dec { color:#606 }
-
+a {
+	font-family: monospace;
+	font-size: 120%;
+}
+h2 a {
+	font-family: monospace;
+}
 h2 {
 	color: #804000;
 	margin-bottom: 6px;
+	font-weight: normal;
 }
 
 h3 {
-	color: #808000;
+	color: #804000;
 }
 
 h4 {
@@ -321,10 +328,18 @@ fieldset.options textarea {
 	float: left;
 	width: 65%;
 }
-.wiki .path label {
-	float: left;
-	display: inline;
-	font-style: normal;
+.wiki form fieldset {
+	padding-left: 0;
+}
+.wiki form #WikiPath {
+	font-size: 180%;
+	padding: 4px;
+}
+.wiki form #WikiSlug {
+	font-size: 190%;
+	padding: 4px;
+	color: #300;
+	font-weight: bold;
 }
 .wiki .input em {
 	float: right;

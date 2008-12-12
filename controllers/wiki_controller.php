@@ -29,8 +29,8 @@ class WikiController extends AppController {
 			$slug = 'home';
 		}
 
-		if ($title = substr($path, 1)) {
-			$this->pageTitle = Inflector::humanize($title) . '/';
+		if ($heading = Inflector::humanize(ltrim($path, '/'))) {
+			$this->pageTitle = $heading . '/';
 		}
 
 		if ($slug) {
@@ -83,6 +83,16 @@ class WikiController extends AppController {
 				)
 			)));
 			sort($paths);
+			
+			$recents = $this->Wiki->find('all', array(
+				'fields' => array('Wiki.path', 'Wiki.slug'),
+				'conditions' => array(
+					'Wiki.project_id' => $this->Project->id,
+					'Wiki.active' => 1
+				),
+				'limit' => 10,
+				'order' => 'Wiki.id DESC'
+			));
 		}
 
 		if(!empty($page) && !empty($this->params['isAdmin'])) {
@@ -99,7 +109,7 @@ class WikiController extends AppController {
 			));
 		}
 
-		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths', 'revisions'));
+		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths', 'recents', 'revisions'));
 	}
 
 	function add() {
@@ -111,7 +121,7 @@ class WikiController extends AppController {
 			$this->pageTitle = 'Create a new page';
 		}
 
-		if ($heading = Inflector::humanize(substr($path, 1))) {
+		if ($heading = Inflector::humanize(ltrim($path, '/'))) {
 			$this->pageTitle = $heading . '/';
 		}
 
