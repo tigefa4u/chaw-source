@@ -37,6 +37,9 @@ class PostCommitShell extends Shell {
 
 		$revision = $this->args[2];
 
+		$this->args[] = 'pre_commit';
+		$this->log($this->args, LOG_DEBUG);
+
 		$data = $this->Project->Repo->read($revision, false);
 
 		$this->Project->Repo->update();

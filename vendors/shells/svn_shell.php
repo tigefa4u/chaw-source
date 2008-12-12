@@ -30,9 +30,6 @@ class SvnShellShell extends Shell {
  *
  **/
 	function main() {
-		//$this->log($this->params);
-		//$this->log($this->args);
-
 		if (empty($this->params['user'])) {
 			$this->err('User not found.');
 			return 1;
@@ -44,6 +41,11 @@ class SvnShellShell extends Shell {
 			$this->err('Command not found.');
 			return 1;
 		}
+
+		$this->args[] = 'svn_shell';
+		$this->log($this->args, LOG_DEBUG);
+
+		$this->Project->permit($this->params['user']);
 
 		$path = Configure::read('Content.svn');
 		passthru("svnserve -t -r {$path}repo --tunnel-user " . $this->params['user'], $result);
@@ -58,8 +60,6 @@ class SvnShellShell extends Shell {
 	function sync() {
 		$project = $this->args[0];
 		$fork = @$this->args[1];
-
-		//pr($this->Project->find('all'));
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
 			$this->err('Invalid Project');

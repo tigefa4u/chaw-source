@@ -27,7 +27,11 @@ class PreCommitShell extends Shell {
 	}
 
 	function authorize() {
-		return true;
+		$this->args[] = 'pre_commit';
+		$this->log($this->args, LOG_DEBUG);
+		return 0;
+		
+		
 		$this->error(print_r($this->args, true));
 		die();
 
