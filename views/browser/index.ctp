@@ -19,13 +19,13 @@
 	?>
 </h2>
 
-<?php echo $this->element('project_details'); ?>
-
 <?php
 	if (isset($data['Content'])) :
 		echo $this->render('view', false);
 	else:
 ?>
+	<?php echo $this->element('project_details'); ?>
+
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<th style="padding-left: 28px"><?php __('Name');?></th>
@@ -46,7 +46,7 @@
 				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
-				<td><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
+				<td class="date"><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
 	<?php
@@ -64,7 +64,7 @@
 				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
-				<td><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
+				<td class="date"><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
 	<?php

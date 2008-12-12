@@ -8,11 +8,10 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<h2>
-	History
-</h2>
+
 <div class="commits history">
-	<h3>
+	<h2>
+		History /
 		<?php
 			$title = null;
 			if (!empty($CurrentProject->fork)) {
@@ -27,10 +26,9 @@ $javascript->codeBlock($script, array('inline' => false));
 				$path .= $part . '/';
 				echo '/' . $html->link(' ' . $part . ' ', array($path));
 			endforeach;
-			echo '/ ' . $current;
+			echo '/ ' . $html->link($current, array('controller' => 'browser', 'action' => 'index', $path, $current));
 		?>
-	</h3>
-
+	</h2>
 	<?php foreach ((array)$commits as $commit):?>
 
 		<div class="commit">

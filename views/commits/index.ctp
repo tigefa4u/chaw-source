@@ -11,33 +11,13 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <h2>Commits</h2>
 
-<div class="commit index">
-<?php foreach ((array)$commits as $commit):?>
-
-	<div class="commit row">
-		<h3 class="name">
-			<?php echo $chaw->commit($commit['Commit']['revision']);?>
-		</h3>
-
-		<span class="description">
-			<?php echo $commit['Commit']['message'];?>
-		</span>
-
-		<span class="date">
-			<?php echo $commit['Commit']['commit_date'];?>
-		</span>
-
-		<span class="author">
-			<?php echo (!empty($commit['User']['username'])) ? $commit['User']['username'] : $commit['Commit']['author'];?>
-		</span>
-
-		<span class="admin">
-			<?php echo $chaw->admin('delete', array('controller' => 'commits', 'action' => 'delete', $commit['Commit']['id']));?>
-		</span>
-
-	</div>
-
-<?php endforeach;?>
+<div class="commits timeline index">
+<?php $i = 0;
+	foreach ((array)$commits as $commit):
+		$zebra = ($i++ % 2) == 0 ? 'zebra' : null;
+		echo $this->element('timeline/commit', array('data' => $commit, 'zebra' => $zebra));
+	endforeach;
+?>
 </div>
 <div class="paging">
 <?php

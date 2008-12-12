@@ -20,6 +20,8 @@ class CommitsController extends AppController {
 
 	var $name = 'Commits';
 
+	var $helpers = array('Time', 'Text');
+
 	var $paginate = array('order' => 'Commit.created DESC');
 
 	function index() {

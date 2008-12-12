@@ -634,7 +634,7 @@ div.comments {
   border-left: 0px solid #ddd;
 */
 }
-.browser table td.message {
+.browser .message, .browser .date {
 	font-size: 80%;
 	padding-top: 6px;
 	vertical-align: middle;
@@ -661,12 +661,16 @@ div.comments {
 	text-decoration: underline;
 }
 
-.browser span.history {
+.browser p.history {
 	float: right;
+	margin-top: -20px;
 }
 
-.browser span.history a {
-	font-size: 80%;
+.browser p.history a {
+	font-size: 100%;
+	text-decoration: underline;
+}
+.browser p.history a:hover {
 	text-decoration: none;
 }
 

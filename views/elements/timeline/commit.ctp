@@ -1,11 +1,10 @@
 <div class="commit row <?php echo $zebra;?>">
-
 	<h3 class="subtitle">
 		<?php echo $data['Commit']['branch'];?>
 	</h3>
 
 	<h3 class="name">
-		Commit: <?php echo $chaw->commit($data['Commit']['revision']);?>
+		<?php echo (isset($label)) ? $label . ': ' : null;?><?php echo $chaw->commit($data['Commit']['revision']);?>
 	</h3>
 
 	<span class="description">

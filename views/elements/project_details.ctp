@@ -20,7 +20,7 @@
 						'controller' => 'projects', 'action' => 'fork'
 					), array('class' => 'detail')));
 				endif;
-				
+
 				if ($this->action !== 'forks'):
 					if (empty($this->params['fork'])):
 						$link = $html->link('view forks', array('controller' => 'projects', 'action' => 'forks'), array('class' => 'detail'));
@@ -28,7 +28,7 @@
 						$link = $html->link('view main project', array('fork' => false, 'controller' => 'browser'), array('class' => 'detail'));
 					endif;
 					echo $html->tag('span', $link);
-				endif;				
+				endif;
 			else:
 				echo '<strong>svn checkout</strong> ';
 				echo "{$CurrentProject->remote->svn}/$remote{$CurrentProject->url}";
@@ -41,6 +41,10 @@
 			), array('class' => 'detail')));
 			*/
 
+			echo $html->tag('span', $html->link('view history', array(
+				'admin' => false,
+				'controller' => 'commits', 'action' => 'index'
+			), array('class' => 'history')));
 		?>
 	</p>
 </div>

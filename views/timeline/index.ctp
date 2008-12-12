@@ -30,7 +30,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		foreach ((array)$timeline as $event):
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
-			echo $this->element('timeline/' . strtolower($type), array('data' => $event, 'zebra' => $zebra));
+			echo $this->element('timeline/' . strtolower($type), array('label' => ucwords($type), 'data' => $event, 'zebra' => $zebra));
 		endforeach;
 	?>
 	</table>
