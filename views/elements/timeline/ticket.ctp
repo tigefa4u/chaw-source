@@ -1,4 +1,4 @@
-<div class="ticket row">
+<div class="ticket row <?php echo $zebra;?>">
 
 	<h3 class="name">
 		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:
@@ -6,7 +6,7 @@
 	</h3>
 
 	<span class="description">
-		created
+		<?php echo $text->truncate($data['Ticket']['description'], 80, '...', false, true); ?>
 	</span>
 
 <?php if (!empty($this->params['isAdmin'])):?>

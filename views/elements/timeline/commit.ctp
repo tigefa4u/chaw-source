@@ -1,4 +1,4 @@
-<div class="commit row">
+<div class="commit row <?php echo $zebra;?>">
 
 	<h3 class="subtitle">
 		<?php echo $data['Commit']['branch'];?>

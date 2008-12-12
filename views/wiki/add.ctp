@@ -22,9 +22,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	<div class="breadcrumbs">
 		<?php echo $chaw->breadcrumbs($path);?>
 	</div>
-	
-	<div id="Preview" class="wiki-content wiki-text"></div>
-	
+		
 	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>
 		
 		<fieldset>			
@@ -32,15 +30,16 @@ $javascript->codeBlock($script, array('inline' => false));
 			echo $form->hidden('update');
 			
 			echo $form->input('path', array('div' => 'input text path',
-				'label' => "use a path to group pages into categories and subcategories. example: /{$CurrentUser->username}/posts",
+				'label' => "use a path to group pages into categories and subcategories. example: /logs/by/{$CurrentUser->username}/",
 			));
 
 			if ($form->value('slug')) {
 				echo $form->hidden('slug');
 				echo $form->input('slug', array('label' => false, 'disabled' => true));
 			} else {
-				echo $form->input('title', array('label' => 'Title'));
+				echo $form->input('title', array('label' => false, 'value' => 'new title'));
 			}
+			echo '<div id="Preview" class="wiki-text"></div>';
 
 			echo $form->input('content', array('label' => false));
 

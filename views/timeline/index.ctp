@@ -26,10 +26,11 @@ $javascript->codeBlock($script, array('inline' => false));
 </div>
 <div class="timeline index">
 	<table class="smooth">
-	<?php
+	<?php $i = 0;
 		foreach ((array)$timeline as $event):
+			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
-			echo $this->element('timeline/' . strtolower($type), array('data' => $event));
+			echo $this->element('timeline/' . strtolower($type), array('data' => $event, 'zebra' => $zebra));
 		endforeach;
 	?>
 	</table>

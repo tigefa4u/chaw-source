@@ -44,11 +44,9 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php
 			$nav = null;
 			foreach ($paths as $category):
-				if (str_replace($slug, '', $category) !== '/' && $category != $path . '/' . $slug) :
-					$nav .= $html->tag('li',
-						$html->link($category, array($category))
-					);
-				endif;
+				$nav .= $html->tag('li',
+					$html->link(ltrim($category, '/'), array($category))
+				);
 			endforeach;
 			if (!empty($nav)) {
 				echo $html->tag('div',
@@ -63,8 +61,9 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php
 			$nav = null;
 			foreach ($recents as $recent):
+					$title = ltrim($recent['Wiki']['path'] . '/' . $recent['Wiki']['slug'], '/');
 					$nav .= $html->tag('li',
-						$html->link(rtrim($recent['Wiki']['path']. '/', '/') . '/' . $recent['Wiki']['slug'], array($recent['Wiki']['path'], $recent['Wiki']['slug']))
+						$html->link($title, array($recent['Wiki']['path'], $recent['Wiki']['slug']))
 					);
 			endforeach;
 			if (!empty($nav)) {
@@ -75,19 +74,6 @@ $javascript->codeBlock($script, array('inline' => false));
 			}
 		?>
 	<?php endif;?>
-
-	<?php
-		if(!empty($this->params['isAdmin'])) {
-			$links = array();
-			if(empty($page['Wiki']['active'])) {
-				$links[] = $html->link('activate', array('action' => 'activate', $page['Wiki']['id']));
-			}
-			$links[] = $html->link('delete', array('action' => 'delete', $page['Wiki']['id']));
-
-			//echo $html->tag('div', join(' | ', $links), array('class' => 'admin'));
-		}
-
-	?>
 
 	<?php if (!empty($revisions)):?>
 		<div class="revisions">
@@ -124,10 +110,12 @@ $javascript->codeBlock($script, array('inline' => false));
 
 			<div class="actions">
 				<?php echo $html->link('View', array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?>
-				|
-				<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $content['Wiki']['path'], $content['Wiki']['slug']));?>
-				|
-				<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $content['Wiki']['path'], $content['Wiki']['slug'], 1));?>
+				<?php if (!empty($CurrentUser->id)):?>
+					|
+					<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $content['Wiki']['path'], $content['Wiki']['slug']));?>
+					|
+					<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $content['Wiki']['path'], $content['Wiki']['slug'], 1));?>
+				<?php endif; ?>
 			</div>
 
 		<?php endforeach; ?>

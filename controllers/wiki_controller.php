@@ -29,13 +29,7 @@ class WikiController extends AppController {
 			$slug = 'home';
 		}
 
-		if ($heading = Inflector::humanize(ltrim($path, '/'))) {
-			$this->pageTitle = $heading . '/';
-		}
-
-		if ($slug) {
-			$this->pageTitle .=  Inflector::humanize($slug);
-		}
+		$this->pageTitle = 'Wiki/' . ltrim($path . '/' . $slug, '/');
 
 		$wiki = $this->Wiki->find('all', array(
 			'conditions' => array(
@@ -83,7 +77,7 @@ class WikiController extends AppController {
 				)
 			)));
 			sort($paths);
-			
+
 			$recents = $this->Wiki->find('all', array(
 				'fields' => array('Wiki.path', 'Wiki.slug'),
 				'conditions' => array(
@@ -118,16 +112,10 @@ class WikiController extends AppController {
 
 		if ($slug == '1') {
 			$slug = null;
-			$this->pageTitle = 'Create a new page';
+			$this->pageTitle = 'Wiki/add/';
 		}
 
-		if ($heading = Inflector::humanize(ltrim($path, '/'))) {
-			$this->pageTitle = $heading . '/';
-		}
-
-		if ($slug) {
-			$this->pageTitle .=  Inflector::humanize($slug);
-		}
+		$this->pageTitle .= ltrim($path . '/' . $slug, '/');
 
 		if (!empty($this->data)) {
 			$this->Wiki->create(array(
@@ -156,10 +144,11 @@ class WikiController extends AppController {
 			$this->data['Wiki']['path'] = $path;
 		}
 
-		$this->set(compact('path', 'slug', 'heading'));
+		$this->set(compact('path', 'slug'));
 	}
 
 	function edit() {
+		$this->pageTitle = 'Wiki/edit/';
 		$this->add();
 		$this->render('add');
 	}

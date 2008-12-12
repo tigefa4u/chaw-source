@@ -107,6 +107,11 @@
 						'controller' => 'timeline', 'action' => 'index'
 					));
 					echo ' | ';
+					echo $html->link('wiki', array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'wiki', 'action' => 'index'
+					));
+					echo ' | ';
 					echo $html->link('tickets', array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'

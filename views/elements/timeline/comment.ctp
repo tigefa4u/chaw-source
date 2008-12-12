@@ -1,4 +1,4 @@
-<div class="comment row">
+<div class="comment row <?php echo $zebra;?>">
 
 	<h3 class="name">
 		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:
@@ -9,7 +9,7 @@
 	</h3>
 
 	<span class="description">
-		updated
+		<?php echo $text->truncate($data['Comment']['body'], 80, '...', false, true); ?>
 	</span>
 
 <?php if (!empty($this->params['isAdmin'])):?>

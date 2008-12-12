@@ -1,7 +1,9 @@
-<div class="wiki row">
+<div class="wiki row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		Wiki: <?php echo $html->link($data['Wiki']['slug'], array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['slug']));?>
+		Wiki: <?php 
+		$title = ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
+		echo $html->link($title, array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']));?>
 	</h3>
 
 	<span class="description">

@@ -151,6 +151,11 @@ table.smooth tr.altrow td {
 	padding-left: 20px;
 	padding-right: 20px;
 }
+#page-right {
+	float: right;
+	padding-top: 20px;
+	width: 35%;
+}
 
 #flashMessage, #authMessage {
 	background: #f4f4f4;
@@ -193,7 +198,7 @@ table.smooth tr.altrow td {
 	float: right;
 	margin: 0px;
 	padding: 4px 0px;
-	width: 38%;
+	width: 36%;
 	height: 28px;
 	overflow: hidden;
 	background: #f4f4f4;
@@ -316,9 +321,12 @@ div.help h4 {
 	font-size: 12px;
 	color: #656565;
 }
+.row .description {
+
+}
 .row .admin, .row .nav {
 	float: right;
-	font-size: 80%;
+	font-size: 100%;
 	padding-top: 2px;
 	padding-left: 4px;
 }
@@ -338,21 +346,27 @@ fieldset.options textarea {
 	padding-bottom: 10px;
 }
 .wiki form {
+	margin-top: 0px;
 	float: left;
-	width: 65%;
+	width: 64%;
 }
 .wiki form fieldset {
+	border: 0;
 	padding-left: 5px;
+	margin-top: 0;
 }
 .wiki form #WikiPath {
 	font-size: 180%;
 	padding: 4px;
 }
-.wiki form #WikiSlug {
+.wiki form #WikiSlug, .wiki form #WikiTitle {
 	font-size: 190%;
 	padding: 4px;
 	color: #300;
 	font-weight: normal;
+}
+.wiki form div.wiki-text {
+	padding: 0 0.5em;
 }
 .wiki .input em {
 	float: right;
@@ -362,7 +376,7 @@ fieldset.options textarea {
 }
 .wiki .help {
 	float: left;
-	margin-top: 24px;
+	margin-top: 155px;
 	margin-left: 1%;
 	width: 30%;
 }
@@ -391,12 +405,12 @@ fieldset.options textarea {
 	width: 56%;
 }
 .wiki-content .actions {
-	font-size: 10px;
+	font-size: 100%;
 }
 .wiki-navigation {
 	float: right;
 	padding-top: 20px;
-	width: 37%;
+	width: 35%;
 }
 .wiki-navigation h2 {
 	color: #3b3b3b;
