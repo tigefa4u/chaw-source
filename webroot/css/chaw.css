@@ -29,12 +29,12 @@ blue: #69C;
 .atv { color:#181 }
 .dec { color:#606 }
 
-#content a {
+a {
 	color: #333;
 	font-family: helvetica,arial,sans-serif;
 	font-weight: normal;
 }
-#content h2 a {
+h2 a {
 	color: #804000;
 	font-family: helvetica,arial,sans-serif;
 }
@@ -652,7 +652,7 @@ div.comments {
 }
 .browser a.file {
 	background: url('images/file.gif') no-repeat left;
-	color: #656565;
+	color: #999;
 	text-decoration: none;
 	padding-left: 24px;
 }
