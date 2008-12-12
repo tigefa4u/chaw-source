@@ -233,7 +233,6 @@ class Git extends Repo {
 					$format .= $code . '%x00';
 				}
 			}
-			$this->before(array("cd {$this->working}"));
 			$data = $this->run('log', array($commit, $format, '-1'));
 			if (!empty($data)) {
 				return array_combine($options, array_filter(explode(chr(0), $data)));
@@ -252,7 +251,6 @@ class Git extends Repo {
 			return false;
 		}
 
-		$this->before(array("cd {$this->working}"));
 		$data = explode("\n", $this->run('log', array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path))));
 
 		if ($type == 'count') {

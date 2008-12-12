@@ -218,9 +218,9 @@ class Permission extends AppModel {
 				}
 
 				if ($root = $this->root()) {
-					$parent = $this->__rules[1] = Set::merge($parent, $this->toArray($root));
+					$root = $this->toArray($root);
+					$parent = $this->__rules[1] = Set::merge($parent, $root);
 				}
-
 			}
 		}
 
@@ -229,7 +229,7 @@ class Permission extends AppModel {
 		if (empty($rules[$project])) {
 			$rules[$project] = array();
 		}
-
+		
 		if (!empty($parent[$project])) {
 			$rules[$project] = Set::merge($rules[$project], $parent[$project]);
 		}

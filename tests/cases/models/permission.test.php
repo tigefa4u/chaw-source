@@ -282,7 +282,7 @@ class PermissionTest extends CakeTestCase {
 
 		$data['Permission']['fine_grained'] = "
 		[/refs/heads/master]
-		gwoo = r
+		gwoo = rw
 		";
 
 		$this->assertTrue($Parent->saveFile($data));
@@ -297,6 +297,7 @@ class PermissionTest extends CakeTestCase {
 		$data['Permission']['fine_grained'] = "
 		[/refs/heads/master]
 		bob = r
+		gwoo = r
 		";
 
 		$Fork->saveFile($data);
@@ -308,7 +309,7 @@ class PermissionTest extends CakeTestCase {
 		$expected = array('project_two' => array(
 			'/refs/heads/master' => array(
 				'bob' => 'r',
-				'gwoo' => 'r'
+				'gwoo' => 'rw'
 			),
 			'/test/override' => array(
 				'gwoo' => 'rw'
