@@ -191,13 +191,12 @@ table.smooth tr.altrow td {
 #current-user {
 	clear: both;
 	float: right;
-	margin-top: 0px;
-	margin-left: 20px;
-	background: #f4f4f4;
+	margin: 0px;
 	padding: 4px 0px;
-	width: 280px;
+	width: 38%;
 	height: 28px;
 	overflow: hidden;
+	background: #f4f4f4;
 }
 #current-user span {
 	display: block;
@@ -388,7 +387,8 @@ fieldset.options textarea {
 	text-decoration: underline;
 }
 .wiki-content {
-	width: 60%;
+	margin-right: 4%;
+	width: 56%;
 }
 .wiki-content .actions {
 	font-size: 10px;
@@ -396,7 +396,7 @@ fieldset.options textarea {
 .wiki-navigation {
 	float: right;
 	padding-top: 20px;
-	width: 30%;
+	width: 37%;
 }
 .wiki-navigation h2 {
 	color: #3b3b3b;
@@ -511,6 +511,9 @@ fieldset.options textarea {
 	float: left;
 	width: 26%;
 }
+.tickets .edit fieldset.options {
+	font-size: 100%;
+}
 .tickets form .submit {
 	clear: left;
 }
@@ -572,7 +575,10 @@ div.comments {
 	margin: 2px;
 	font-size: 80%;
 }
-.comments .textarea textarea {
+.tickets fieldset.comments {
+	padding-right: 40px;
+}
+.tickets fieldset.comments .textarea textarea {
 	font-size: 12px;
 	height: 200px;
 }

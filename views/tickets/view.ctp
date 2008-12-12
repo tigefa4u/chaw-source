@@ -32,7 +32,7 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 <h2>
-	<?php strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> Ticket
+	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> Ticket
 	(<em><?php echo $ticket['Ticket']['status'];?></em>)
 </h2>
 <div class="tickets">
@@ -117,16 +117,18 @@ $javascript->codeBlock($script, array('inline' => false));
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
-			<div id="CommentPreviewWrapper" class="comment" style="display:none">
-				<h3 class="clearfix">Preview</h3>
+			<div class="comments">
+				<div id="CommentPreviewWrapper" class="comment" style="display:none">
+					<h3 class="clearfix">Preview</h3>
 
-				<span class="date">
-					<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
-				</span>
-				<span class="user">
-					by <?php echo $CurrentUser->username;?>
-				</span>
-				<div id="CommentPreview" class="body"></div>
+					<span class="date">
+						<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
+					</span>
+					<span class="user">
+						by <?php echo $CurrentUser->username;?>
+					</span>
+					<div id="CommentPreview" class="body"></div>
+				</div>
 			</div>
 
 			<fieldset class="comments main">

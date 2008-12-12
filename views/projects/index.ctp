@@ -1,6 +1,11 @@
 <?php
 	if (empty($projects)) {
-		echo $html->tag('h2', 'Sorry, no projects are available');
+		if ($this->action == 'forks') {
+			echo $html->tag('h2', 'There are no forks');
+		} else {
+			echo $html->tag('h2', 'Sorry, no projects are available');
+		}
+		return;
 	}
 ?>
 <?php if (empty($this->params['project'])):?>
