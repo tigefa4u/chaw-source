@@ -343,7 +343,7 @@ fieldset.options textarea {
 	width: 65%;
 }
 .wiki form fieldset {
-	padding-left: 0;
+	padding-left: 5px;
 }
 .wiki form #WikiPath {
 	font-size: 180%;
@@ -353,7 +353,7 @@ fieldset.options textarea {
 	font-size: 190%;
 	padding: 4px;
 	color: #300;
-	font-weight: bold;
+	font-weight: normal;
 }
 .wiki .input em {
 	float: right;
@@ -368,7 +368,7 @@ fieldset.options textarea {
 	width: 30%;
 }
 .wiki textarea {
-	font-size: 12px;
+	font-size: 13px;
 	height: 240px;
 }
 .wiki .input {
@@ -440,7 +440,7 @@ fieldset.options textarea {
 	font-size: 120%;
 	color: #333;
 }
-.wiki-navigation .revisions form div input, 
+.wiki-navigation .revisions form div input,
 .wiki-navigation .revisions form div select {
 	font-size: 80%;
 }
