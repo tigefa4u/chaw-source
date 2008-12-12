@@ -14,9 +14,11 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="page-navigation">
-	<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
-	|
-	<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
+	<?php if (!empty($CurrentUser->id)):?>
+		<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
+		|
+		<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
+	<?php endif;?>
 </div>
 
 <div class="breadcrumbs">
@@ -78,7 +80,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php if (!empty($revisions)):?>
 		<div class="revisions">
 		<?php
-			echo $form->create(array('action' => 'index', array('url' => array($path, $slug))));
+			echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
 			echo $form->input('revision', array('value' => $page['Wiki']['id']));
 			echo $html->tag('div',
 				$form->submit('view', array('div' => false, 'name' => 'view'))

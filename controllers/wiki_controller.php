@@ -72,6 +72,7 @@ class WikiController extends AppController {
 			$paths = array_flip($this->Wiki->find('list', array(
 				'fields' => array('Wiki.path', 'Wiki.id'),
 				'conditions' => array(
+					'Wiki.path !=' => '/',
 					'Wiki.project_id' => $this->Project->id,
 					'Wiki.active' => 1
 				)
@@ -98,6 +99,7 @@ class WikiController extends AppController {
 					'Wiki.slug' => $slug,
 					'Wiki.path' => $path,
 					'Wiki.project_id' => $this->Project->id,
+					'User.username !=' => null
 				),
 				'order' => 'Wiki.created DESC'
 			));

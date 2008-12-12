@@ -22,13 +22,13 @@ $javascript->codeBlock($script, array('inline' => false));
 	<div class="breadcrumbs">
 		<?php echo $chaw->breadcrumbs($path);?>
 	</div>
-		
+
 	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>
-		
-		<fieldset>			
+
+		<fieldset>
 		<?php
 			echo $form->hidden('update');
-			
+
 			echo $form->input('path', array('div' => 'input text path',
 				'label' => "use a path to group pages into categories and subcategories. example: /logs/by/{$CurrentUser->username}/",
 			));

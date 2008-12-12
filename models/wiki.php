@@ -68,7 +68,6 @@ class Wiki extends AppModel {
 					$query['fields'][$i] = str_replace('.', '/', $query['fields'][$i]);
 				}
 			}
-
 			return Set::combine($results, '/'.$query['fields'][0], array(
 					'%s' . $query['separator'] . '%s',
 					'/' . $query['fields'][1],
