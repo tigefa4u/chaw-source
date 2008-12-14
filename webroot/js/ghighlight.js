@@ -623,9 +623,8 @@ hljs.initHighlightingOnLoad();
 $(document).ready(function(){
 
 	$("pre").before("<span class=\"plain\"><a href=\"#plain\">plain</a></span>"
-		+ "<span class=\"highlight\"><a href=\"#highlight\">highlight</a></span>"
-		+ "<span class=\"numbers\"><a href=\"#numbers\">line numbers</a></span>"
-		+ "<span class=\"spinner\" style=\"display:none\"><img src=\"/img/spinner.gif\"/></span>");
+		+ " | <span class=\"highlight\"><a href=\"#highlight\">highlight</a></span>"
+		+ " | <span class=\"numbers\"><a href=\"#numbers\">line numbers</a></span>");
 
 	var code = [];
 	$("pre").each(function(i) {
