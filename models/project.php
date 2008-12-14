@@ -206,6 +206,10 @@ class Project extends AppModel {
 			unset($this->data['Project']['repo_type']);
 		}
 
+		if (empty($this->data['Project']['fork'])) {
+			$this->data['Project']['fork'] = null;
+		}
+
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;

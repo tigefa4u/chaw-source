@@ -63,8 +63,12 @@
 					echo $html->link($project['Project']['name'], array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'browser', 'action' => 'index',
-					));?>
+					));
 
+					if (!empty($project['Project']['private'])) :
+						echo $html->image('/css/images/lock.gif', array('height' => 20, 'width' => 20));
+					endif;
+					?>
 			</h3>
 
 			<span class="description">
