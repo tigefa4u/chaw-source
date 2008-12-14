@@ -646,9 +646,8 @@ div.comments {
 	text-decoration: underline;
 }
 
-.browser p.history {
+.browser span.history {
 	float: right;
-	margin-top: -20px;
 }
 
 .browser p.history a {
