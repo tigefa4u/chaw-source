@@ -27,34 +27,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<?php echo $html->charset();?>
 	<title>
-		<?php echo Configure::read('Project.name') .' : ' . $title_for_layout;?>
+		<?php echo $CurrentProject->name .'/' . $title_for_layout;?>
 	</title>
 	<?php
-		echo $html->charset();
 		echo $html->meta('icon');
-
+		if (isset($rssFeed)) {
+			echo $html->meta('rss', $html->url($rssFeed, true));
+		}
 		echo $html->css(array('generic', 'chaw', 'chaw.admin'));
 
-		echo $javascript->link('jquery-1.2.6.min');
+		if (!empty($javascript)) {
+			echo $javascript->link('jquery-1.2.6.min');
+			echo $javascript->link('gshowdown.min');
 
-		echo $javascript->link('gshowdown');
+			$base = $this->webroot;
+			if (!empty($this->params['fork'])) {
+				$base .= 'forks/' . $this->params['fork'] . '/';
+			}
+			$base .= $this->params['project'] . '/';
 
-		//echo $javascript->link('smartarea');
+			echo $javascript->codeBlock('
+				var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");
 
-		//echo $javascript->link('MeatballSocietyCreoleV0.4');
-
-		//echo $javascript->link(array('wiky', 'wiky.lang', 'wiky.math'));
-
+				$(document).ready(function(){
+					$(".wiki-text").each(function () {
+						$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
+					});
+				});
+			');
+		}
 		echo $scripts_for_layout;
-
 	?>
 </head>
 <body class="admin">
 	<div id="container">
+
 		<div id="header">
 
-			<h1><?php echo $html->link(Configure::read('Project.name'), array('admin' => false,'controller' => 'wiki', 'action' => 'index'));?></h1>
+			<h1><?php echo $html->link($CurrentProject->name, array('controller' => 'browser', 'action' => 'index'));?></h1>
 
 			<div id="navigation">
 				<ul>
@@ -66,17 +78,17 @@
 					?></li>
 
 					<li><?php
-						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
-						echo $html->link('Wiki', array(
-							'admin' => false,
-							'controller' => 'wiki', 'action' => 'index'), $options);
-					?></li>
-
-					<li><?php
 						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
 						echo $html->link('Timeline', array(
 							'admin' => false,
 							'controller' => 'timeline', 'action' => 'index'), $options);
+					?></li>
+
+					<li><?php
+						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
+						echo $html->link('Wiki', array(
+							'admin' => false,
+							'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
@@ -92,12 +104,25 @@
 							'admin' => false,
 							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
+
 					<li><?php
 						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
 						echo $html->link('Projects', array(
 							'admin' => false, 'project'=> false, 'fork' => false,
 							'controller' => 'projects', 'action' => 'index'), $options);
 					?></li>
+
+					<?php if (!empty($this->params['isAdmin'])):?>
+
+						<li><?php
+							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
+							echo $html->link('Admin', array(
+								'admin' => true,
+								'controller' => 'dashboard', 'action' => 'index'), $options);
+						?></li>
+
+					<?php endif;?>
+
 				</ul>
 			</div>
 
