@@ -17,17 +17,6 @@ blue: #69C;
   padding:0;
   margin:0;
 }
-.str { color:#181; font-style:italic }
-.kwd { color:#369 }
-.com { color:#666 }
-.typ { color:#c40 }
-.lit { color:#900 }
-.pun { color:#000; font-weight:bold  }
-.pln { color:#333 }
-.tag { color:#369; font-weight:bold  }
-.atn { color:#939; font-weight:bold  }
-.atv { color:#181 }
-.dec { color:#606 }
 
 a {
 	color: #333;
@@ -63,8 +52,9 @@ p {
 	line-height: 18px;
 }
 pre {
-	padding-right: 0;
+	padding: 1em 0 1em 2px;
 }
+
 em a {
 	color: inherit;
 	font-size: 80%;
@@ -603,11 +593,6 @@ div.comments {
 	margin-right: 4px;
 }
 
-.browser table, .diff {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #ccc;
-}
 .browser table th, .browser table td {
   padding: 5px 10px;
 }
@@ -839,4 +824,17 @@ a.project {
 
 .rss {
 	vertical-align: middle;
+}
+#curtain {
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  top: 40%;
+  width: 100%;
+  padding: 40px 0;
+  background: rgb(0,0,0);
+  opacity: 0.8;
+  text-align: center;
+  font-size: 300%;
+  color: #fff;
 }

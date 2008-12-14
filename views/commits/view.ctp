@@ -1,17 +1,6 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-
-$javascript->link('highlight', false);
-
-$script = '
-hljs.initHighlightingOnLoad("diff");
-$(document).ready(function(){
-	$(".message").each(function () {
-		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
-	});
-});
-';
-$javascript->codeBlock($script, array('inline' => false));
+$javascript->link(array('ghighlight'), false);
 ?>
 <div class="page-navigation">
 	<?php echo $html->link('All Commits', array('controller' => 'commits', 'action' => 'index'));?>
@@ -31,7 +20,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<strong>Date:</strong> <?php echo $commit['Commit']['commit_date'];?>
 	</p>
 
-	<p class="message">
+	<p class="message wiki-text">
 		<?php echo $commit['Commit']['message'];?>
 	</p>
 

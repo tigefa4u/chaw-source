@@ -73,3 +73,21 @@ pre code {
 .diff .change {
     background: #bccff9;
 }
+span.highlight {
+	padding: 0 4px;
+}
+span.numbers {
+	padding: 0 4px;
+}
+.rownumber { 
+  border-right: 2px solid #666; 
+  margin-right: 4px;
+  background-color: #EEE;
+  font-weight: bold;
+}
+
+.alternaterow { 
+  width: 100%; 
+  display: block; 
+  background-color: #F9F9F9;
+}
