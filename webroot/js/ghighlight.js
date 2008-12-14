@@ -382,10 +382,18 @@ var hljs = new function() {
 		var environment = block.parentNode.parentNode;
 		environment.replaceChild(container.firstChild, block.parentNode);
 	}
+	function rjust(st,siz) {
+	t = siz - st.length;
+	if (t>0) {st = rspaces(t) + st;}
+	return st;}
+	function rspaces(len) {
+	s = " ";
+	for (i=0;i<len;i++) {s = s + " ";}
+	return s;}
 
 	function insertLines(highlightedText, startAt, alternatingRows) {
 		var counter = startAt + 1 - 1; //make sure it is a number; otherwise Math.log doesn't work right
-		var result = "";
+		var result = "<ol>";
 		//IE does wierd stuff when splitting blank lines, so insert a space
 		highlightedText = highlightedText.replace(/(\r\n|\r|\n)(\r\n|\r|\n)/g, "$1 $2");
 		var lines = highlightedText.split(/\r\n|\r|\n/);
@@ -407,10 +415,8 @@ var hljs = new function() {
 				newline = newline + "\">";
 			}
 			if(startAt != -1) {
-				newline = newline + "<span class=\"rownumber\">";
-				for (i = 0; i < (spaces - (Math.ceil(Math.log(counter + 1) / Math.log(10)))); ++i)
-					newline = newline + " ";
-				newline = newline + counter + " </span>";
+				var paddingLeft = spaces - (Math.ceil(Math.log(counter + 1) / Math.log(10)));
+				newline = newline + "<a href=\"#" + counter + "\" name=\"" + counter + "\" class=\"rownumber\">" + rspaces(paddingLeft) + counter + "</a>";
 			}
 			for(var restartTokenCt = 0; restartTokenCt < tokenArray.length; ++restartTokenCt) {
 				newline = newline + tokenArray[restartTokenCt];
@@ -435,7 +441,7 @@ var hljs = new function() {
 			counter++;
 			result = result + newline;
 		}
-		return result;
+		return result + "</ol>";
 	}
 
 	function langRe(language, value, global) {
@@ -619,12 +625,48 @@ var initHighlightingOnLoad = hljs.initHighlightingOnLoad;
 
 
 hljs.initHighlightingOnLoad();
-
+/**
+ * Chawsomeness
+ *
+ */
 $(document).ready(function(){
 
 	$("pre").before("<span class=\"plain\"><a href=\"#plain\">plain</a></span>"
 		+ " | <span class=\"highlight\"><a href=\"#highlight\">highlight</a></span>"
 		+ " | <span class=\"numbers\"><a href=\"#numbers\">line numbers</a></span>");
+
+	if (location.hash == '#highlight') {
+		$('body').append('<div id="curtain">Can make pretty teh code?</div>');
+		setTimeout(function() {
+			hljs.noAlternatingRows();
+			hljs.noLineNumbers();
+			$(".highlighted").each(function(i) {
+				$(this).html(hljs.highlightBlock(code[i]));
+			});
+			$('#curtain').fadeOut(3, function() {
+				$(this).remove();
+			});
+		}, 0);
+	} else if (location.hash) {
+		$('body').append('<div id="curtain">Can make teh pretty code?</div>');
+		setTimeout(function() {
+			hljs.addAlternatingRows();
+			hljs.addLineNumbers();
+			$(".highlighted").each(function(i) {
+				$(this).html(hljs.highlightBlock(code[i]));
+			});
+			$('#curtain').fadeOut(3, function() {
+				$(this).remove();
+			});
+
+			var line = location.hash.slice(1) - 3;
+			target = $("a[name=" + line +"]");
+			if (target.length) {
+				$("html,body").animate({scrollTop: target.offset().top}, 1000);
+			}
+		}, 0);
+	}
+
 
 	var code = [];
 	$("pre").each(function(i) {
@@ -672,4 +714,3 @@ $(document).ready(function(){
 		}, 0);
 	});
 });
-
