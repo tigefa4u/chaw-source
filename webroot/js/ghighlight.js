@@ -659,7 +659,7 @@ $(document).ready(function(){
 				$(this).remove();
 			});
 
-			var line = location.hash.slice(1) - 3;
+			var line = location.hash.slice(1) - 4;
 			target = $("a[name=" + line +"]");
 			if (target.length) {
 				$("html,body").animate({scrollTop: target.offset().top}, 1000);
