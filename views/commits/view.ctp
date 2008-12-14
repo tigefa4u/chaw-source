@@ -1,6 +1,6 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link(array('ghighlight'), false);
+$javascript->link('ghighlight.pack', false);
 ?>
 <div class="page-navigation">
 	<?php echo $html->link('All Commits', array('controller' => 'commits', 'action' => 'index'));?>
