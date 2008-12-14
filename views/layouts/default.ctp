@@ -37,6 +37,28 @@
 			echo $html->meta('rss', $html->url($rssFeed, true));
 		}
 		echo $html->css(array('generic', 'chaw'));
+
+		if (!empty($javascript)) {
+			echo $javascript->link('jquery-1.2.6.min');
+			echo $javascript->link('gshowdown.min');
+
+			$base = $this->webroot;
+			if (!empty($this->params['fork'])) {
+				$base .= 'forks/' . $this->params['fork'] . '/';
+			}
+			$base .= $this->params['project'] . '/';
+
+			echo $javascript->codeBlock('
+				var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");
+
+				$(document).ready(function(){
+					$(".wiki-text").each(function () {
+						$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
+					});
+				});
+			');
+		}
+		echo $scripts_for_layout;
 	?>
 </head>
 <body>
@@ -147,29 +169,5 @@
 			} catch(err) {}
 		</script>
 	<?php endif;?>
-	<?php
-
-		if (!empty($javascript)) {
-			echo $javascript->link('jquery-1.2.6.min');
-			echo $javascript->link('gshowdown.min');
-
-			$base = $this->webroot;
-			if (!empty($this->params['fork'])) {
-				$base .= 'forks/' . $this->params['fork'] . '/';
-			}
-			$base .= $this->params['project'] . '/';
-
-			echo $javascript->codeBlock('
-				var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");
-
-				$(document).ready(function(){
-					$(".wiki-text").each(function () {
-						$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
-					});
-				});
-			');
-		}
-		echo $scripts_for_layout;
-	?>
 </body>
 </html>
