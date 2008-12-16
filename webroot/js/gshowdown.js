@@ -446,7 +446,12 @@ var _DoSpecialRules = function(text) {
 	//
 	text = text.replace(/(^|[^\w])(\[wiki:(.+?)\s(.+?)\])+/gm,
 			function(wholeMatch, m0, m1, m2, m3) {
-				return hashBlock(m0 + "<a href=\"" + base + "wiki/" + m2 + "\">" + m3 + "</a>");
+				if (m2.substring(1, -1) != '/') {
+					m2 = "wiki/" + m2;
+				} else {
+					m2 = m2.slice(1);
+				}
+				return hashBlock(m0 + "<a href=\"" + base + m2 + "\">" + m3 + "</a>");
 			});
 
 	// get ohloh widgets

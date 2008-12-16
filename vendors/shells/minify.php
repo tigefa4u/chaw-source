@@ -20,7 +20,7 @@ class MinifyShell extends Shell {
 		$result = $folder = null;
 
 		$mainfiles = explode(',', $this->args[0]);
-		$target = (!empty($this->args[2])) ? $this->args[2] : $this->args[0] .'.pack';
+		$target = (!empty($this->params['ext'])) ? $this->params['ext'] : $this->args[0] .'.pack';
 		$jsroot = $this->params['working'] . DS . $this->params['webroot'] . DS . 'js' . DS;
 
 		foreach ((array)$mainfiles as $mainfile) {

@@ -152,7 +152,7 @@ class AccessComponent extends Object {
 		}
 
 		if ($this->check($C, array('admin' => true))) {
-			if (!$loginRequired) {
+			if (!$loginRequired && $C->Auth->authorize == false) {
 				$C->Auth->allow($C->action);
 				return true;
 			}
@@ -164,14 +164,14 @@ class AccessComponent extends Object {
 				$C->redirect($C->referer());
 				return false;
 			}
-			
+
 			$C->Session->setFlash('Select a Project');
 			$C->redirect(array(
 				'admin' => false, 'project' => false, 'fork' => false,
 				'controller' => 'projects', 'action' => 'index'
 			));
 			return false;
-			
+
 		}
 
 		return true;

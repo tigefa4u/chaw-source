@@ -19,6 +19,23 @@ class VersionsController extends AppController {
 	var $name = 'Versions';
 	var $helpers = array('Html', 'Form');
 
+	function beforeFilter() {
+		parent::beforeFilter();
+		if (!empty($this->params['admin'])) {
+			$this->Auth->authorize = 'controller';
+		}
+	}
+
+	function isAuthorized() {
+		if (empty($this->params['isAdmin'])) {
+			if ($this->Access->check($this, array('access' => 'w', 'default' => false)) == false) {
+				$this->Session->setFlash($this->Auth->authError);
+				$this->redirect($this->referer());
+			}
+		}
+		return true;
+	}
+
 	function index() {
 		$this->Version->recursive = 0;
 		$this->paginate = array(
@@ -50,16 +67,6 @@ class VersionsController extends AppController {
 		$this->render('index');
 	}
 
-	function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Version.', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->set('version', $this->Version->read(null, $id));
-
-		$this->render('view');
-	}
-
 	function admin_add() {
 		$this->pageTitle = "New Version";
 
@@ -67,7 +74,7 @@ class VersionsController extends AppController {
 			$this->Version->create(array('project_id' => $this->Project->id));
 			if ($this->Version->save($this->data)) {
 				$this->Session->setFlash(__('The Version has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('admin' => false, 'action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Version could not be saved. Please, try again.', true));
 			}
@@ -75,6 +82,11 @@ class VersionsController extends AppController {
 	}
 
 	function admin_edit($id = null) {
+		$canWrite = $this->Access->check($this, array('access' => 'w', 'default' => false));
+		if (empty($this->params['isAdmin'])) {
+			$this->Session->setFlash(__('Invalid Action.', true));
+			$this->redirect(array('admin' => false, 'action'=>'index'));
+		}
 
 		$this->pageTitle = "Modify Version";
 
@@ -98,7 +110,6 @@ class VersionsController extends AppController {
 		if (!empty($this->params['isAdmin'])) {
 			$this->set('projects', $this->Version->Project->find('list'));
 		}
-
 	}
 }
 ?>

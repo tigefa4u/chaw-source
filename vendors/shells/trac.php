@@ -12,7 +12,8 @@
  * @subpackage		chaw.vendors.shells
  * @since			Chaw 0.1
  * @license			commercial
- *
+ * 
+ * Select id as number, type, milestone as version, reporter, owner, resolution as status, summary as title, description, keywords, time as created, changetime as modified
  */
 class TracShell extends Shell {
 

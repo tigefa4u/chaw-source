@@ -40,7 +40,7 @@
 
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.2.6.min');
-			echo $javascript->link('gshowdown.min');
+			echo $javascript->link('gshowdown');
 
 			$base = $this->webroot;
 			if (!empty($this->params['fork'])) {

@@ -544,7 +544,7 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Session->write('Auth.User', array('id' => 4, 'username' => 'bob'));
 
 		$this->__runStartup();
-		$this->assertTrue(strpos($this->Controller->testRedirect, 'test.php') !== false);
+		$this->assertTrue(strpos($this->Controller->testRedirect, '/') !== false);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
 		$this->Controller->Session->del('Auth.User');
