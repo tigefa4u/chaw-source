@@ -3,7 +3,7 @@ $html->css('highlight/idea', null, null, false);
 $javascript->link('ghighlight.pack', false);
 ?>
 <div class="page-navigation">
-	<?php if (!empty($CurrentUser->id)):?>
+	<?php if (!empty($canWrite)):?>
 		<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
 		|
 		<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
@@ -102,7 +102,7 @@ $javascript->link('ghighlight.pack', false);
 
 			<div class="actions">
 				<?php echo $html->link('View', array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?>
-				<?php if (!empty($CurrentUser->id)):?>
+				<?php if (!empty($canWrite)):?>
 					|
 					<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $content['Wiki']['path'], $content['Wiki']['slug']));?>
 					|

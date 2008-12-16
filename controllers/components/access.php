@@ -159,20 +159,19 @@ class AccessComponent extends Object {
 		}
 
 		if ($this->isPublic === false) {
-			if (!$loginRequired && !$this->user()) {
-				$C->Session->setFlash('Select a Project');
-				$C->redirect(array(
-					'admin' => false, 'project' => false, 'fork' => false,
-					'controller' => 'projects', 'action' => 'index'
-				));
+			if ($this->user()) {
+				$C->Session->setFlash($C->Auth->authError);
+				$C->redirect($C->referer());
 				return false;
 			}
-		}
-
-		if ($this->user()) {
-			$C->Session->setFlash($C->Auth->authError);
-			$C->redirect($C->referer());
+			
+			$C->Session->setFlash('Select a Project');
+			$C->redirect(array(
+				'admin' => false, 'project' => false, 'fork' => false,
+				'controller' => 'projects', 'action' => 'index'
+			));
 			return false;
+			
 		}
 
 		return true;
