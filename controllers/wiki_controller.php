@@ -23,8 +23,12 @@ class WikiController extends AppController {
 	function index() {
 		extract($this->__params());
 
-		$canWrite = $this->Access->check($this, array('access' => 'w'));
-		$canDelete = $this->Access->check($this, array('access' => 'd'));
+		if (!empty($this->params['isAdmin'])) {
+			$canWrite = $canDelete = true;
+		} else {
+			$canWrite = $this->Access->check($this, array('access' => 'w'));
+			$canDelete = $this->Access->check($this, array('access' => 'd'));
+		}
 
 		if (!$slug) {
 			$slug = 'home';
