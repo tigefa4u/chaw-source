@@ -545,7 +545,7 @@ var hljs = new function() {
 
 	function initHighlightingOnLoad() {
 		var original_arguments = arguments;
-		injectScripts(arguments);
+		//injectScripts(arguments);
 		var handler = function(){
 			initHighlighting.apply(null, original_arguments)
 		};
@@ -631,7 +631,7 @@ hljs.initHighlightingOnLoad();
  */
 $(document).ready(function(){
 
-	$("pre").before("<span class=\"plain\"><a href=\"#plain\">plain</a></span>"
+	$("pre > code").parent().before("<span class=\"plain\"><a href=\"#plain\">plain</a></span>"
 		+ " | <span class=\"highlight\"><a href=\"#highlight\">highlight</a></span>"
 		+ " | <span class=\"numbers\"><a href=\"#numbers\">line numbers</a></span>");
 

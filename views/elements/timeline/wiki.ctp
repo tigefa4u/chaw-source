@@ -1,7 +1,13 @@
+<?php
+	if (empty($data['Wiki'])) {
+		return false;
+	}
+
+?>
 <div class="wiki row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		Wiki: <?php 
+		Wiki: <?php
 		$title = ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
 		echo $html->link($title, array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']));?>
 	</h3>
@@ -15,7 +21,7 @@
 			endif;
 		?>
 	</span>
-	
+
 <?php if (!empty($this->params['isAdmin'])):?>
 	<span class="admin">
 		<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>

@@ -187,6 +187,19 @@ class Project extends AppModel {
 		$this->Repo = ClassRegistry::init($this->config['repo']);
 		return true;
 	}
+
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function beforeValidate() {
+		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
+			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
+		}
+		return true;
+	}
 /**
  * undocumented function
  *
@@ -194,18 +207,6 @@ class Project extends AppModel {
  *
  **/
 	function beforeSave() {
-		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
-			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
-		}
-
-		if ($this->id &&
-			!empty($this->data['Project']['repo_type']) &&
-			!empty($this->config['repo_type']) &&
-			$this->data['Project']['repo_type'] == $this->config['repo_type']
-		) {
-			unset($this->data['Project']['repo_type']);
-		}
-
 		if (empty($this->data['Project']['fork'])) {
 			$this->data['Project']['fork'] = null;
 		}
@@ -420,7 +421,7 @@ class Project extends AppModel {
 	function isUnique($data, $options = array()) {
 		if (!empty($data['name'])) {
 			$test = $this->findByUrl(Inflector::slug(strtolower($data['name'])));
-			if (!empty($test) && $test['Project']['id'] !== $this->id) {
+			if (!empty($test) && $test['Project']['id'] != $this->id) {
 				return false;
 			}
 			return true;
@@ -428,7 +429,7 @@ class Project extends AppModel {
 		if (!empty($data['url'])) {
 			$reserved = array('forks');
 			$test = $this->findByUrl($data['url']);
-			if (in_array($test['url'], $reserved) || !empty($test) && $test['Project']['id'] !== $this->id) {
+			if (in_array($test['url'], $reserved) || !empty($test) && $test['Project']['id'] != $this->id) {
 				$this->invalidate('name');
 				return false;
 			}

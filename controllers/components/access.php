@@ -59,19 +59,13 @@ class AccessComponent extends Object {
  **/
 	function initialize(&$C) {
 		$C->params['isAdmin'] = false;
-		$this->isAllowed = false;
-		$this->isPublic = true;
-	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
-	function startup(&$C) {
+
 		if ($C->name == 'CakeError') {
 			return $this->enabled = false;
 		}
+
+		$this->isAllowed = false;
+		$this->isPublic = true;
 
 		$this->url = $C->params['url']['url'];
 
@@ -82,19 +76,17 @@ class AccessComponent extends Object {
 		if ($this->url === 'start') {
 			$C->Session->write('Install', true);
 			$C->Auth->allow('start');
+			$this->allow($C->action);
 			return true;
 		}
 
 		if (empty($C->Project)) {
+			$this->allow($C->action);
 			$C->Auth->allow($C->action);
 			return true;
 		}
 
-		$allowedByAuth = in_array($C->action, $C->Auth->allowedActions);
-		$this->isAllowed = in_array($C->action, $this->allowedActions);
-
 		if ($C->Project->initialize($C->params) === false) {
-
 			if ($C->Session->read('Install') !== true) {
 				$C->Session->setFlash('Chaw needs to be installed');
 				$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'start'));
@@ -114,39 +106,60 @@ class AccessComponent extends Object {
 				return true;
 			}
 
-			if (!$allowedByAuth) {
+			if (!in_array($this->url, array('users/add', 'users/login'))) {
 				$login =  Router::url(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'));
 				$C->Session->setFlash("Chaw needs to be installed. Please <a href='{$login}'>Login</a> or Register");
 				$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'add'));
 				return false;
 			}
+			$this->allow($C->action);
 			$C->Auth->allow('add');
 			return true;
 		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function startup(&$C) {
+		$this->isAllowed = in_array($C->action, $this->allowedActions);
 
-		if ($isOwner = ($this->user('id') == $C->Project->config['user_id'])) {
-			$C->params['isOwner'] = true;
-		}
-
-		$C->Auth->allow('index');
-
-		if ($C->params['controller'] == 'projects' && $C->params['action'] == 'index') {
-			$this->isAllowed = true;
+		if (!empty($C->Project->config) && $this->user('id') == $C->Project->config['user_id']) {
+			return $C->params['isOwner'] = $C->params['isAdmin'] = true;
 		}
 
 		if (!empty($C->Project->config['private'])) {
 			$this->isPublic = false;
 		}
 
-		if ($this->check($C)) {
-			if ($this->isAllowed) {
+		if ($this->isAllowed) {
+			return true;
+		}
+
+		$this->access = 'r';
+		if (!empty($C->Auth->actionMap[$C->action])) {
+			$this->access = $C->Auth->actionMap[$C->action][0];
+		}
+
+		$loginRequired = (empty($this->user) && $this->access !== 'r');
+
+		if ($loginRequired) {
+			$C->Auth->deny($C->action);
+			$C->Auth->authError = "Please login to continue.";
+			return false;
+		}
+
+		if ($this->check($C, array('admin' => true))) {
+			if (!$loginRequired) {
 				$C->Auth->allow($C->action);
 				return true;
 			}
 		}
 
 		if ($this->isPublic === false) {
-			if (!$this->isAllowed && !$allowedByAuth && ($this->access == 'r' && $C->Project->id == 1)) {
+			if (!$loginRequired && !$this->user()) {
 				$C->Session->setFlash('Select a Project');
 				$C->redirect(array(
 					'admin' => false, 'project' => false, 'fork' => false,
@@ -156,13 +169,7 @@ class AccessComponent extends Object {
 			}
 		}
 
-		if (!$this->user() && !$this->isAllowed && !$allowedByAuth) {
-			$C->Auth->deny($C->action);
-			$C->Auth->authError = "Please login to continue.";
-			return false;
-		}
-
-		if ($this->user() && !$this->isAllowed) {
+		if ($this->user()) {
 			$C->Session->setFlash($C->Auth->authError);
 			$C->redirect($C->referer());
 			return false;
@@ -171,59 +178,49 @@ class AccessComponent extends Object {
 		return true;
 	}
 /**
- * undocumented function
+ * Check access against permissions
  *
+ * @param array options
+ *  username, action, access, admin, default
  * @return void
  *
  **/
-	function check(&$C) {
+	function check(&$C, $options = array()) {
+		extract(array_merge(array(
+			'username' => $this->user('username'),
+			'path' => (!empty($C->params['controller'])) ? $C->params['controller'] : false,
+			'access' => $this->access,
+			'admin' => false,
+			'default' => $this->isPublic
+		), $options));
 
-		$crud = $this->access = 'r';
-		if (!empty($C->Auth->actionMap[$C->params['action']])) {
-			$crud = $C->Auth->actionMap[$C->params['action']][0];
-		}
-		if (in_array($crud, array('c', 'u', 'd'))) {
-			$this->access = 'w';
-		}
-
-		$username = $this->user('username');
-
-		if (!empty($username)) {
+		if ($username && $admin === true) {
 			$admin = array(
 				'user' => $username,
-				'access' => array($this->access, $crud),
+				'access' => $access,
 				'default' => false
 			);
 
 			$allowAdmin = $C->Project->Permission->check('admin', $admin);
 
 			if ($allowAdmin === true) {
-				return $C->params['isAdmin'] = $this->isAllowed = true;
+				return $C->params['isAdmin'] = true;
 			}
 		}
 
-		if ($this->isAllowed && $this->access == 'w' && !$username) {
-			return $this->isAllowed = false;
+		if ($path) {
+			$user = array(
+				'user' => $username,
+				'access' => $access,
+				'default' => $default
+			);
+
+			$allowUser = $C->Project->Permission->check($path, $user);
+
+			if ($allowUser === true) {
+				return true;
+			}
 		}
-
-		if ($this->isAllowed) {
-			return true;
-		}
-
-		$default = ((!$username && $this->access == 'w') || !empty($C->params['admin'])) ? false : $this->isPublic;
-
-		$user = array(
-			'user' => $username,
-			'access' => array($this->access, $crud),
-			'default' => $default
-		);
-
-		$allowUser = $C->Project->Permission->check($C->params['controller'], $user);
-
-		if ($allowUser === true) {
-			return $this->isAllowed = true;
-		}
-
 		return false;
 	}
 /**

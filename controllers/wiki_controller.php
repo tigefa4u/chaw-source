@@ -23,6 +23,9 @@ class WikiController extends AppController {
 	function index() {
 		extract($this->__params());
 
+		$canWrite = $this->Access->check($this, array('access' => 'w'));
+		$canDelete = $this->Access->check($this, array('access' => 'd'));
+
 		if (!$slug) {
 			$slug = 'home';
 		}
@@ -39,14 +42,22 @@ class WikiController extends AppController {
 		));
 
 		if (!empty($this->data)) {
+
 			if (!empty($this->params['form']['delete'])) {
- 				$this->Wiki->delete($this->data['Wiki']['revision']);
+				$this->params['action'] = 'delete';
+				if ($canDelete !== true) {
+					$this->Session->setFlash(__('You are not authorized to delete.', true));
+				} else {
+	 				$this->Wiki->delete($this->data['Wiki']['revision']);
+				}
 			} else {
 				$page = $this->Wiki->findById($this->data['Wiki']['revision']);
 			}
 
 			if (!empty($this->params['form']['activate']) && !empty($page)) {
- 				if ($this->Wiki->activate($page)) {
+				if ($canWrite !== true) {
+					$this->Session->setFlash(__('You are not authorized to activate.', true));
+				} else if ($this->Wiki->activate($page)) {
 					$this->Session->setFlash($page['User']['username'] . ' ' . $page['Wiki']['created'] .' is now active');
 				}
 			}
@@ -88,7 +99,7 @@ class WikiController extends AppController {
 			));
 		}
 
-		if(!empty($page) && !empty($this->params['isAdmin'])) {
+		if(!empty($page) && $canWrite) {
 			$this->Wiki->recursive = 0;
 			$revisions = $this->Wiki->find('superList', array(
 				'fields' => array('id', 'User.username', 'created'),
@@ -103,7 +114,8 @@ class WikiController extends AppController {
 			));
 		}
 
-		$this->set(compact('path', 'slug', 'wiki', 'page', 'paths', 'recents', 'revisions'));
+		$this->set(compact('canWrite', 'canDelete', 'path', 'slug', 'wiki', 'page', 'paths', 'recents', 'revisions'));
+		$this->render('index');
 	}
 
 	function add() {

@@ -148,14 +148,21 @@ class Permission extends AppModel {
 					$check .= $perms[$user];
 				}
 
-				if (is_string($access)) {
-					$access = array($access);
-				}
-
-				foreach ($access as $perm) {
-					if ($check && strpos($check, $perm) !== false) {
-						return true;
-						return compact('check', 'perm', 'user', 'group');
+				if ($check) {
+					foreach ((array)$access as $perm) {
+						if (strpos($check, $perm) !== false) {
+							return true;//return compact('check', 'perm', 'user', 'group');
+						}
+						if ($perm == 'c' || $perm == 'd') {
+							if (strpos($check, 'w') !== false) {
+								return true;
+							}
+						}
+						if ($perm == 'w') {
+							if (strpos($check, 'c') !== false || strpos($check, 'u') !== false) {
+								return true;
+							}
+						}
 					}
 				}
 				return false;
@@ -194,48 +201,54 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function rules($project = null) {
+	function rules($project = null, $atomic = array()) {
 		$config = $this->config();
 
 		if ($project === null) {
 			$project = $config['url'];
 		}
 
-		if (!empty($this->__rules[$project])) {
-			return $this->__rules[$project];
-		}
+		if (empty($this->__rules[$project])) {
+			$parent = array($project => array(), 'groups' => array());
 
-		$parent = array($project => array(), 'groups' => array());
+			if ($config['id'] != 1) {
+				if (!empty($this->__rules[1])) {
+					$parent = $this->__rules[1];
+				} else {
+					if ($file = $this->parent()) {
+						$parent = $this->__rules[1] = $this->toArray($file);
+					}
 
-		if ($config['id'] != 1) {
-			if (!empty($this->__rules[1])) {
-				$parent = $this->__rules[1];
-			} else {
-				if ($file = $this->parent()) {
-					$parent = $this->__rules[1] = $this->toArray($file);
-				}
-
-				if ($root = $this->root()) {
-					$root = $this->toArray($root);
-					$parent = $this->__rules[1] = Set::merge($parent, $root);
+					if ($root = $this->root()) {
+						$root = $this->toArray($root);
+						$parent = $this->__rules[1] = Set::merge($parent, $root);
+					}
 				}
 			}
+
+			$rules = $this->toArray($this->file());
+
+			if (empty($rules[$project])) {
+				$rules[$project] = array();
+			}
+
+			if (!empty($parent[$project])) {
+				$rules[$project] = Set::merge($rules[$project], $parent[$project]);
+			}
+
+			if (!empty($rules['groups']) && !empty($parent['groups'])) {
+				$rules['groups'] = array_merge($rules['groups'], $parent['groups']);
+			}
+
+			$this->__rules[$project] = $rules;
 		}
 
-		$rules = $this->toArray($this->file());
+		$rules = $this->__rules[$project];
 
-		if (empty($rules[$project])) {
-			$rules[$project] = array();
+		if (!empty($atomic)) {
+			$this->__rules[$project] = array_merge($this->__rules[$project], array($project => $atomic));
 		}
-		
-		if (!empty($parent[$project])) {
-			$rules[$project] = Set::merge($rules[$project], $parent[$project]);
-		}
-
-		if (!empty($rules['groups']) && !empty($parent['groups'])) {
-			$rules['groups'] = array_merge($rules['groups'], $parent['groups']);
-		}
-		return $this->__rules[$project] = $rules;
+		return $this->__rules[$project];
 	}
 /**
  * undocumented function

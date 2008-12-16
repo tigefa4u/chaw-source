@@ -72,12 +72,12 @@ $javascript->link('ghighlight.pack', false);
 		<?php
 			echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
 			echo $form->input('revision', array('value' => $page['Wiki']['id']));
-			echo $html->tag('div',
-				$form->submit('view', array('div' => false, 'name' => 'view'))
-				. $form->submit('activate', array('div' => false, 'name' => 'activate'))
-				. $form->submit('delete', array('div' => false, 'name' => 'delete')),
-				array('class' => 'submit')
-			);
+
+			$buttons = $form->submit('view', array('div' => false, 'name' => 'view'))
+				. $form->submit('activate', array('div' => false, 'name' => 'activate'));
+			$buttons .= (!empty($canDelete)) ? $form->submit('delete', array('div' => false, 'name' => 'delete')) : null;
+			echo $html->tag('div', $buttons, array('class' => 'submit'));
+
 			echo $form->end();
 		?>
 		</div>

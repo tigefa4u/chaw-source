@@ -236,6 +236,41 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'r')));
 
 		$this->assertTrue($Permission->check("/test/override", array('user' => 'gwoo', 'access' => 'r')));
+	}
+
+	function testCrudCheck() {
+		Configure::write('Project', $this->__projects['Two']);
+		$Permission = new TestPermission();
+
+		$data['Permission']['fine_grained'] = "
+		[wiki]
+		gwoo = cru
+
+		[tickets]
+		gwoo = rw
+
+		[browser]
+		gwoo = r
+
+		[versions]
+		gwoo = crud";
+
+
+		$Permission->saveFile($data);
+
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'permissions.ini'));
+
+		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => array('w', 'c'))));
+		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => array('w', 'd'))));
+
+		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'c'))));
+		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'd'))));
+
+		$this->assertTrue($Permission->check("browser", array('user' => 'gwoo', 'access' => array('r', 'r'))));
+		$this->assertFalse($Permission->check("browser", array('user' => 'gwoo', 'access' => array('w', 'd'))));
+
+		$this->assertTrue($Permission->check("versions", array('user' => 'gwoo', 'access' => array('w', 'c'))));
+		$this->assertTrue($Permission->check("versions", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
 	}
 
