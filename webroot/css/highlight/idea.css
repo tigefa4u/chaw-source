@@ -55,7 +55,8 @@ pre code {
 }
 
 .phpdoc, .javadoctag {
-	text-decoration: underline;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 .variable, .envvar {
