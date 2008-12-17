@@ -168,13 +168,15 @@ class AccessComponent extends Object {
 				return false;
 			}
 		}
-	
-		$C->Session->setFlash($C->Auth->authError);
-		$referer = $C->referer();
-		if ($referer == '/') {
-			$referer = array('admin' => false, 'controller' => 'dashboard');
+		
+		if ($C->Auth->authorize == false) {
+			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
+			$referer = $C->referer();
+			if ($referer == '/') {
+				$referer = array('admin' => false, 'controller' => 'dashboard');
+			}
+			$C->redirect($referer);
 		}
-		$C->redirect($referer);
 		return false;
 	}
 /**

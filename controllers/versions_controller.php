@@ -19,23 +19,6 @@ class VersionsController extends AppController {
 	var $name = 'Versions';
 	var $helpers = array('Html', 'Form');
 
-	function beforeFilter() {
-		parent::beforeFilter();
-		if (!empty($this->params['admin'])) {
-			$this->Auth->authorize = 'controller';
-		}
-	}
-
-	function isAuthorized() {
-		if (empty($this->params['isAdmin'])) {
-			if ($this->Access->check($this, array('access' => 'w', 'default' => false)) == false) {
-				$this->Session->setFlash($this->Auth->authError);
-				$this->redirect($this->referer());
-			}
-		}
-		return true;
-	}
-
 	function index() {
 		$this->Version->recursive = 0;
 		$this->paginate = array(

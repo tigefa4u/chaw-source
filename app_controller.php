@@ -35,6 +35,27 @@ class AppController extends Controller {
 			'modify' => 'update',
 			'remove' => 'delete'
 		));
+		
+		if (!empty($this->params['admin'])) {
+			$this->Auth->authorize = 'controller';
+		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function isAuthorized() {
+		if (!empty($this->params['admin']) && empty($this->params['isAdmin'])) {
+			if ($this->Access->check($this, array('access' => 'w', 'default' => false)) === true) {
+				return true;
+			}
+			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
+			$this->redirect(array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard'));
+			return false;
+		}
+		return true;
 	}
 /**
  * undocumented function
