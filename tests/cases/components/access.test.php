@@ -109,8 +109,11 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->params['controller'] = 'wiki';
 
 		$Access->isPublic = true;
-		$Access->user = array();
-		$this->assertTrue($Access->check($this->Controller, array('access' => 'r')));
+		$this->assertTrue($Access->check($this->Controller, array('username' => 'gwoo', 'access' => 'r')));
+
+		//pr($this->Controller->Project->Permission->rules('chaw', array('*' => 'r')));
+		$this->assertFalse($Access->check($this->Controller, array('username' => 'gwoo', 'access' => 'w')));
+
 	}
 
 	function testCheckPublicAllowed() {
@@ -543,8 +546,15 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Component->initialize($this->Controller);
 		$this->Controller->Session->write('Auth.User', array('id' => 4, 'username' => 'bob'));
 
+		$_SERVER['HTTP_REFERER'] = '/';
+
 		$this->__runStartup();
-		$this->assertTrue(strpos($this->Controller->testRedirect, '/') !== false);
+		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'controller' => 'dashboard'));
+		$this->assertFalse($this->Controller->params['isAdmin']);
+
+		$_SERVER['HTTP_REFERER'] = '/wiki';
+		$this->__runStartup();
+		$this->assertTrue(strpos($this->Controller->testRedirect, '/wiki') !== false);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
 		$this->Controller->Session->del('Auth.User');
