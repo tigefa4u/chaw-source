@@ -52,7 +52,7 @@ class AppController extends Controller {
 				return true;
 			}
 			$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
-			$this->redirect(array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard'));
+			$this->redirect(array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index'));
 			return false;
 		}
 		return true;

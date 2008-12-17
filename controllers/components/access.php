@@ -173,7 +173,7 @@ class AccessComponent extends Object {
 			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
 			$referer = $C->referer();
 			if ($referer == '/') {
-				$referer = array('admin' => false, 'controller' => 'dashboard');
+				$referer = array('admin' => false, 'controller' => 'dashboard', 'action' => 'index');
 			}
 			$C->redirect($referer);
 		}

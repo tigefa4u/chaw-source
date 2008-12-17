@@ -509,7 +509,17 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
+		
+		$this->Controller->testRedirect = null;
+		$this->Controller->params = array(
+			'project' => null,
+			'controller' => 'users',
+			'action' => 'forgotten',
+			'url' => array('url' => 'users/forgotten')
+		);
 
+		$this->__runStartup();
+		$this->assertNull($this->Controller->testRedirect);
 	}
 
 	function testUserAndPrivate() {
@@ -549,7 +559,7 @@ class AccessComponentTest extends CakeTestCase {
 		$_SERVER['HTTP_REFERER'] = '/';
 
 		$this->__runStartup();
-		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'controller' => 'dashboard'));
+		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'controller' => 'dashboard', 'action' => 'index'));
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
 		$_SERVER['HTTP_REFERER'] = '/wiki';
