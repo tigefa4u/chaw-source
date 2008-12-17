@@ -1,6 +1,6 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link('ghighlight.pack', false);
+$javascript->link('ghighlight.min', false);
 ?>
 <div class="page-navigation">
 	<?php if (!empty($canWrite)):?>

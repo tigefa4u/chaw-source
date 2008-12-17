@@ -1,6 +1,6 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link('highlight.pack', false);
+$javascript->link('highlight.min', false);
 
 $script = '
 hljs.initHighlightingOnLoad();

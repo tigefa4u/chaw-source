@@ -20,7 +20,7 @@ class MinifyShell extends Shell {
 		$result = $folder = null;
 
 		$mainfiles = explode(',', $this->args[0]);
-		$target = (!empty($this->params['ext'])) ? $this->params['ext'] : $this->args[0] .'.pack';
+		$target = (!empty($this->params['ext'])) ? $this->args[0] . '.' . $this->params['ext'] : $this->args[0] .'.min';
 		$jsroot = $this->params['working'] . DS . $this->params['webroot'] . DS . 'js' . DS;
 
 		foreach ((array)$mainfiles as $mainfile) {
@@ -42,7 +42,7 @@ class MinifyShell extends Shell {
 
 		$Packed = new File($jsroot . $target .'.js');
 		if ($Packed->write($result, 'w', true)) {
-			$this->out('javascript minified');
+			$this->out($Packed->name() . ' created');
 		}
 	}
 }
