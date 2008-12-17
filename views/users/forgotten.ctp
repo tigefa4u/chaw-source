@@ -1,6 +1,6 @@
 <div class="users form">
 
-	<h2>Forgetten Password</h2>
+	<h2 style="clear:both">Forgetten Password</h2>
 
 	<?php echo $form->create(array('action' => $this->action));?>
 		<fieldset style="float:left;">
