@@ -51,7 +51,7 @@ class AppController extends Controller {
 			if ($this->Access->check($this, array('access' => 'w', 'default' => false)) === true) {
 				return true;
 			}
-			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
+			$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
 			$this->redirect(array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard'));
 			return false;
 		}
