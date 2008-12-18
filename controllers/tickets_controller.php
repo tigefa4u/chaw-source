@@ -94,8 +94,7 @@ class TicketsController extends AppController {
 	}
 
 	function modify($id = null) {
-
-		if (!empty($this->data)) {
+		if (empty($this->params['form']['cancel']) && !empty($this->data)) {
 
 			$this->Ticket->set(array(
 				'user_id' => $this->Auth->user('id'),
@@ -118,9 +117,8 @@ class TicketsController extends AppController {
 				}
 			}
 		}
-
-		$this->view($id);
-		$this->render('view');
+		
+		$this->redirect(array('action' => 'view', $id));
 	}
 }
 ?>

@@ -20,9 +20,11 @@ $(document).ready(function(){
 	});
 	$(".modify").click(function() {
 		$("#modify").show();
+		$(".comments").hide();
 	});
 	$(".close").click(function() {
 		$("#modify").hide();
+		$(".comments").show();
 	});
 	$(".body").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
@@ -144,7 +146,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 				?>
 			</fieldset>
 
-			<?php if (!empty($canEdit)):?>
+			<?php if (!empty($this->params['isAdmin'])):?>
 				<fieldset class="options">
 					<legend>Options</legend>
 					<?php
@@ -157,7 +159,9 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 				</fieldset>
 			<?php endif; ?>
 
-			<?php echo $form->submit('Submit');?>
+			<div class="submit">
+				<input type="submit" value="Submit">
+			</div>
 
 			<?php echo $form->end();?>
 

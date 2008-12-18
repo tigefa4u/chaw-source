@@ -807,7 +807,7 @@ div.comments {
 .projects fieldset.main textarea {
 	height: 200px;
 }
-.fork form div.submit input {
+div.submit input {
 	margin-right: 6px;
 }
 .confirm {

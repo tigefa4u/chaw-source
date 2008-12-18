@@ -1,5 +1,6 @@
-<h4>
-	<?php echo $html->link('Markdown Help', '/markdown_syntax', array('target' => '_blank')); ?>
+<h4 id="markdown_syntax">
+	Markdown Help
+	<?php //echo $html->link('Markdown Help'); ?>
 </h4>
 <div class="markdown">
 	ticket: #1234
