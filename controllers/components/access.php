@@ -193,7 +193,7 @@ class AccessComponent extends Object {
 			'path' => (!empty($C->params['controller'])) ? $C->params['controller'] : false,
 			'access' => $this->access,
 			'admin' => false,
-			'default' => $this->isPublic
+			'default' => (!empty($this->user) || $this->access === 'r') ? $this->isPublic : false
 		), $options));
 
 		if ($username && $admin === true) {
