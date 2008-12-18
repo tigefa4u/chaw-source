@@ -62,7 +62,7 @@ class Ticket extends AppModel {
 			return false;
 		}
 
-		if ($this->id && (!empty($this->data['Ticket']['comment']) || !empty($this->data['Ticket']['status']))) {
+		if ($this->id && (!empty($this->data['Ticket']['comment']) || !empty($this->data['Ticket']['description']))) {
 			$changes = array();
 
 			foreach((array)$this->data['Ticket']['previous'] as $field => $previous) {

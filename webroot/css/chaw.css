@@ -17,7 +17,6 @@ blue: #69C;
   padding:0;
   margin:0;
 }
-
 a {
 	color: #333;
 	font-family: helvetica,arial,sans-serif;
@@ -116,11 +115,13 @@ table.smooth tr.altrow td {
 	position: fixed;
 	width: 100%;
 	padding-right: 6px;
+	margin: 0;
+	border-bottom: 4px solid #f4f4f4;
 }
 
 #content {
 	clear: both;
-	padding-top: 35px;
+	padding-top: 39px;
 	padding-left: 0px;
 	padding-right: 0px;
 	overflow: hidden;
@@ -128,6 +129,7 @@ table.smooth tr.altrow td {
 }
 
 #footer {
+	position: relative;
 	padding: 0 10px;
 }
 
@@ -171,14 +173,14 @@ table.smooth tr.altrow td {
 
 #navigation li a {
 	padding: 10px;
-	color: #fff;
+	color: #f4f4f4;
 	text-decoration: none;
 	font-family: Helvetica;
 	font-weight: bold;
 }
 
 #navigation li a:hover, #navigation li a.on {
-	background-color: #fff;
+	background-color: #f4f4f4;
 	color: #333;
 	text-decoration: none;
 }

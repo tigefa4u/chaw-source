@@ -1,6 +1,6 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link('highlight.min', false);
+$javascript->link('highlight.pack', false);
 
 $script = '
 hljs.initHighlightingOnLoad();
@@ -30,6 +30,8 @@ $(document).ready(function(){
 });
 ';
 $javascript->codeBlock($script, array('inline' => false));
+
+$canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
 <h2>
 	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> Ticket
@@ -41,7 +43,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 		<h3 class="title">
 			<?php echo $ticket['Ticket']['title'];?>
-			<?php if (!empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id'])): ?>
+			<?php if (!empty($canEdit)): ?>
 				<em>(<a href="#modify" class="modify">edit</a>)</em>
 			<?php endif; ?>
 		</h3>
@@ -66,7 +68,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 			<?php echo $form->create(array('action' => 'modify', 'url'=> array($form->value('Ticket.number'), 'id'=> false)));?>
 
-			<?php if (!empty($this->params['isAdmin'])):?>
+			<?php if (!empty($canEdit)):?>
 				<div id="modify" style="display:none">
 					<fieldset class="main">
 						<legend>
@@ -136,15 +138,13 @@ $javascript->codeBlock($script, array('inline' => false));
 					<?php __('Comment');?>
 				</legend>
 				<?php
-					if (!empty($this->params['isAdmin'])):
-						echo $form->input('status');
-					endif;
+					echo $form->input('status');
 					echo $form->input('id');
 					echo $form->textarea('comment');
 				?>
 			</fieldset>
 
-			<?php if (!empty($this->params['isAdmin'])):?>
+			<?php if (!empty($canEdit)):?>
 				<fieldset class="options">
 					<legend>Options</legend>
 					<?php

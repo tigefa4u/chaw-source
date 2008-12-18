@@ -48,6 +48,9 @@ class Tag extends AppModel {
 	}
 
 	function toString($data = array()) {
+		if (empty($data)) {
+			return null;
+		}
 		$cTag = Set::extract($data, '/name');
 		return join(', ', array_reverse((array)$cTag));
 	}

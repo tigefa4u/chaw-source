@@ -1,4 +1,4 @@
-<div class="users form">
+<div class="forgotten">
 
 	<h2 style="clear:both">Forgetten Password</h2>
 
