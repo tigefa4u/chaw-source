@@ -168,7 +168,7 @@ class AccessComponent extends Object {
 				return false;
 			}
 		}
-		
+
 		if ($C->Auth->authorize == false) {
 			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
 			$referer = $C->referer();
@@ -188,10 +188,6 @@ class AccessComponent extends Object {
  *
  **/
 	function check(&$C, $options = array()) {
-		if (empty($this->user) && $this->access !== 'r') {
-			return false;
-		}
-		
 		extract(array_merge(array(
 			'username' => $this->user('username'),
 			'path' => (!empty($C->params['controller'])) ? $C->params['controller'] : false,
@@ -199,6 +195,10 @@ class AccessComponent extends Object {
 			'admin' => false,
 			'default' => $this->isPublic
 		), $options));
+
+		if (empty($this->user) && $access !== 'r') {
+			return false;
+		}
 
 		if ($username && $admin === true) {
 			$admin = array(

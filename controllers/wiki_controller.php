@@ -23,9 +23,9 @@ class WikiController extends AppController {
 	function index() {
 		extract($this->__params());
 
-		if (!empty($this->params['isAdmin'])) {
-			$canWrite = $canDelete = true;
-		} else {
+		$canWrite = $canDelete = true;
+		
+		if (empty($this->params['isAdmin'])) {
 			$canWrite = $this->Access->check($this, array('access' => 'w'));
 			$canDelete = $this->Access->check($this, array('access' => 'd'));
 		}
