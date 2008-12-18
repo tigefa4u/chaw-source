@@ -152,7 +152,7 @@ class AccessComponent extends Object {
 		}
 
 		if ($this->check($C, array('admin' => true))) {
-			if (!$loginRequired && $C->Auth->authorize == false) {
+			if ($C->Auth->authorize == false) {
 				$C->Auth->allow($C->action);
 				return true;
 			}
@@ -188,12 +188,16 @@ class AccessComponent extends Object {
  *
  **/
 	function check(&$C, $options = array()) {
+		if (empty($this->user) && $this->access !== 'r') {
+			return false;
+		}
+		
 		extract(array_merge(array(
 			'username' => $this->user('username'),
 			'path' => (!empty($C->params['controller'])) ? $C->params['controller'] : false,
 			'access' => $this->access,
 			'admin' => false,
-			'default' => (!empty($this->user) || $this->access === 'r') ? $this->isPublic : false
+			'default' => $this->isPublic
 		), $options));
 
 		if ($username && $admin === true) {
