@@ -9,7 +9,7 @@
  *
  * @copyright		Copyright 2008, Garrett J. Woodworth
  * @package			chaw
- * @subpackage		chaw.vendors.sheels
+ * @subpackage		chaw.vendors.shells
  * @since			Chaw 0.1
  * @license			commercial
  *
@@ -35,7 +35,7 @@ class PostCommitShell extends Shell {
 
 		$revision = $this->args[2];
 
-		$this->args[] = 'pre_commit';
+		$this->args[] = 'post_commit';
 		$this->log($this->args, LOG_DEBUG);
 
 		$data = $this->Project->Repo->read($revision, false);
@@ -43,6 +43,7 @@ class PostCommitShell extends Shell {
 		$this->Project->Repo->update();
 
 		if (!empty($data)) {
+			$this->Project->permit($this->params['user']);
 
 			$data['project_id'] = $this->Project->id;
 
@@ -50,7 +51,6 @@ class PostCommitShell extends Shell {
 
 			return $this->Commit->save();
 		}
-
 
 		return true;
 	}

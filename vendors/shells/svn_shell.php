@@ -9,7 +9,7 @@
  *
  * @copyright		Copyright 2008, Garrett J. Woodworth
  * @package			chaw
- * @subpackage		chaw.vendors.sheels
+ * @subpackage		chaw.vendors.shells
  * @since			Chaw 0.1
  * @license			commercial
  *
@@ -42,8 +42,9 @@ class SvnShellShell extends Shell {
 
 		$this->args[] = 'svn_shell';
 		$this->log($this->args, LOG_DEBUG);
+		$this->log($this->params, LOG_DEBUG);
 
-		$this->Project->permit($this->params['user']);
+		//$this->Project->permit($this->params['user']);
 
 		$path = Configure::read('Content.svn');
 		passthru("svnserve -t -r {$path}repo --tunnel-user " . $this->params['user'], $result);

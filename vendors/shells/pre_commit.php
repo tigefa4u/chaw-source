@@ -9,7 +9,7 @@
  *
  * @copyright		Copyright 2008, Garrett J. Woodworth
  * @package			chaw
- * @subpackage		chaw.vendors.sheels
+ * @subpackage		chaw.vendors.shells
  * @since			Chaw 0.1
  * @license			commercial
  *
