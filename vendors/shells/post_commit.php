@@ -37,13 +37,14 @@ class PostCommitShell extends Shell {
 
 		$this->args[] = 'post_commit';
 		$this->log($this->args, LOG_DEBUG);
+		$this->log($this->params, LOG_DEBUG);
 
 		$data = $this->Project->Repo->read($revision, false);
 
 		$this->Project->Repo->update();
 
 		if (!empty($data)) {
-			$this->Project->permit($this->params['user']);
+			$this->Project->permit($data['author']);
 
 			$data['project_id'] = $this->Project->id;
 
