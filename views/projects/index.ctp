@@ -57,7 +57,7 @@
 	?>
 		<div class="project row <?php echo $zebra?>">
 			<?php echo $html->image(strtolower($project['Project']['repo_type']) . '.png', array('height' => 40, 'width' => 40)); ?>
-
+			
 			<h3 class="name">
 				<?php
 					echo $html->link($project['Project']['name'], array(
@@ -70,33 +70,7 @@
 					endif;
 					?>
 			</h3>
-
-			<span class="description">
-				<?php echo $project['Project']['description'];?>
-			</span>
-
-			<?php if (!empty($this->params['isAdmin'])): ?>
-				<span class="admin">
-					<?php
-						echo ' | ';
-						echo $html->link('view', array(
-							'admin' => false, 'project' => $url, 'fork'=> $fork,
-							'controller' => 'projects', 'action' => 'view',
-						));
-						echo ' | ';
-						echo $html->link('edit', array(
-							'admin' => true, 'project' => false, 'fork'=> $fork,
-							'controller' => 'projects', 'action' => 'edit', $project['Project']['id']
-						));
-						echo ' | ';
-						echo $html->link('admin', array(
-							'admin' => true, 'project' => $url, 'fork'=> $fork,
-							'controller' => 'dashboard'
-						));
-					?>
-				</span>
-			<?php endif;?>
-
+			
 			<span class="nav">
 				<?php
 					/*
@@ -120,8 +94,32 @@
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
 					));
+					
+					if (!empty($this->params['isAdmin'])):
+						echo ' | ';
+						echo $html->link('view', array(
+							'admin' => false, 'project' => $url, 'fork'=> $fork,
+							'controller' => 'projects', 'action' => 'view',
+						));
+						echo ' | ';
+						echo $html->link('edit', array(
+							'admin' => true, 'project' => false, 'fork'=> $fork,
+							'controller' => 'projects', 'action' => 'edit', $project['Project']['id']
+						));
+						echo ' | ';
+						echo $html->link('admin', array(
+							'admin' => true, 'project' => $url, 'fork'=> $fork,
+							'controller' => 'dashboard'
+						));
+					endif;
+					
 				?>
 			</span>
+
+			<span class="description">
+				<?php echo $project['Project']['description'];?>
+			</span>
+
 
 		</div>
 

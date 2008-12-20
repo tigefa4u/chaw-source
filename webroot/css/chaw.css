@@ -305,7 +305,7 @@ div.help h4 {
 .row h3.name {
 	margin: 0 0 4px 0;
 	padding: 0;
-	font-size: 120%;
+	font-size: 140%;
 	vertical-align: top;
 }
 .row img {
@@ -324,15 +324,22 @@ div.help h4 {
 	color: #656565;
 }
 .row .description {
-
+	display: block;
+	float: left;
+	width: 90%;
 }
 .row .admin, .row .nav {
 	float: right;
 	font-size: 100%;
 	padding-top: 2px;
 	padding-left: 4px;
+	display:block;
+	vertical-align: bottom;
 }
-
+.row .nav {
+	font-size: 120%;
+	margin-top: -26px;
+}
 fieldset.options select {
 	width: 100%;
 }
