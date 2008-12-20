@@ -185,18 +185,6 @@ class PermissionTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 	}
 
-	function testUserPermissions() {
-		Configure::write('Project', $this->__projects['One']);
-		$Permission = new TestPermission();
-		$Permission->create(array(
-			'project_id' => 1,
-			'user_id' => 1,
-			'username' => 'gwoo',
-		));
-
-
-	}
-
 	function testCheck() {
 		Configure::write('Project', $this->__projects['One']);
 		$Permission = new TestPermission();
@@ -351,6 +339,35 @@ class PermissionTest extends CakeTestCase {
 			)
 		));
 		$this->assertEqual($result, $expected);
+	}
+
+	function testUserPermissions() {
+		Configure::write('Project', $this->__projects['One']);
+		$Permission = new TestPermission();
+		$Permission->create(array(
+			'project_id' => 1,
+			'user_id' => 1,
+			'group' => 'user',
+		));
+		$data['Permission']['fine_grained'] = "
+		[wiki]
+		gwoo = cru
+
+		[tickets]
+		@user = rw
+
+		[browser]
+		gwoo = r
+
+		[versions]
+		gwoo = crud";
+
+		$Permission->saveFile($data);
+
+		$this->assertTrue($Permission->check("tickets", array('group' => 'user', 'access' => 'rw', 'default' => false)));
+
+		$this->assertFalse($Permission->check("tickets", array('group' => 'team', 'access' => 'rw', 'default' => false)));
+		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'group' => 'team', 'access' => 'rw', 'default' => false)));
 	}
 }
 ?>

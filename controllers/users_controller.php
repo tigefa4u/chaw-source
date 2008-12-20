@@ -52,18 +52,20 @@ class UsersController extends AppController {
 				$this->Cookie->write('User', $this->Session->read('Auth.User'));
 			}
 
+			$group = $this->Project->group($id);
+			$this->Session->write('Auth.User.Permission', array('group' => $group));
+
 			$this->User->id = $id;
 			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
 
 			$redirect = $this->Auth->redirect();
 
-			if (strpos($redirect, 'users/add') !== false || $redirect == '/') {
+			if (strpos($redirect, 'login') !== false || strpos($redirect, 'users/add') !== false || $redirect == '/') {
 				$redirect = '/dashboard';
 			}
-
 			$this->redirect($redirect);
 
-		} elseif (!empty($this->data)) {
+		} elseif (strpos($this->referer(), 'users/login') && !empty($this->data['User'])) {
 			$this->Session->del('Message.auth');
 
 			$this->Auth->fields['password'] = 'tmp_pass';
@@ -79,6 +81,8 @@ class UsersController extends AppController {
 				$this->Session->setFlash('You may now change your password');
 				$this->redirect(array('action' => 'change'));
 			}
+		}
+		if (!empty($this->data['User']['username'])) {
 			$this->Session->setFlash('Did you forget your password?');
 			$this->redirect(array('action' => 'forgotten'));
 		}
@@ -158,13 +162,32 @@ class UsersController extends AppController {
 
 
 	function admin_index() {
+		if (!empty($this->data['Permission'])) {
+			foreach ($this->data['Permission'] as $permission) {
+				$this->User->Permission->id = $permission['id'];
+				$this->User->Permission->save($permission);
+			}
+		}
+		if (!empty($this->data['User']['username'])) {
+			if ($id = $this->User->field('id', array('username' => $this->data['User']['username']))) {
+				if ($this->Project->permit($id, $this->data['User']['group'])) {
+					$this->Session->setFlash($this->data['User']['username'] . ' added');
+				}
+			} else {
+				$this->Session->setFlash($this->data['User']['username'] .' was not found');
+			}
+
+		}
+
 		$this->User->recursive = 0;
 		if (empty($this->passedArgs['all'])) {
 			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
 		}
-		$this->paginate['fields'] = array('DISTINCT User.username', 'User.email', 'User.last_login');
+		$this->paginate['fields'] = array('DISTINCT User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+		$users = $this->paginate();
+		$groups = $this->Project->groups();
 
-		$this->set('users', $this->paginate());
+		$this->set(compact('users', 'groups'));
 	}
 
 	function admin_add() {
@@ -184,8 +207,8 @@ class UsersController extends AppController {
 			if ($token = $this->User->forgotten($this->data)) {
 				$from = $this->Project->from();
 				$this->Email->to = $token['User']['email'];
-				$this->Email->from = 'Password Recovery ' . $from;
-				$this->Email->replyTo = 'Password Recovery ' . $from;
+				$this->Email->from = 'Chaw Password Recovery ' . $from;
+				$this->Email->replyTo = 'Chaw Password Recovery ' . $from;
 				$this->Email->return = $from;
 				$this->Email->subject = 'Password Recovery URL';
 
@@ -207,8 +230,8 @@ class UsersController extends AppController {
 			if ($data = $this->User->verify(compact('token'))) {
 				$from = $this->Project->from();
 				$this->Email->to = $data['User']['email'];
-				$this->Email->from = 'New Password ' . $from;
-				$this->Email->from = 'New Password ' . $from;
+				$this->Email->from = 'Chaw New Password ' . $from;
+				$this->Email->replyTo = 'Chaw New Password ' . $from;
 				$this->Email->return = $from;
 				$this->Email->subject = 'New Password';
 

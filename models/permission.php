@@ -306,7 +306,7 @@ class Permission extends AppModel {
  * @return void
  *
  **/
-	function exists() {
+	function fileExists() {
 		$File = $this->__getFile();
 		return $File->exists();
 	}

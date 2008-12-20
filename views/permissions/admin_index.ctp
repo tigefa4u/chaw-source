@@ -13,14 +13,24 @@
 		<p class="rule">
 			r - read<br/>
 			w - write (c, u, d)<br/>
-			c - create<br/>
-			u - update<br/>
-			d - delete<br/>
+			<?php if($CurrentProject->repo->type != 'svn'):?>
+				c - create<br/>
+				u - update<br/>
+				d - delete<br/>
+			<?php endif;?>
 		</p>
 		<p>all users can `cru` wiki</p>
 		<p class="rule">
 			[wiki]<br/>
 			* = cru
+		</pre>
+		<p>use groups from <?php echo $chaw->admin('settings', array('admin' => false, 'controller' => 'project', 'action' => 'edit'))?></p>
+		<p class="rule">
+			<?php echo join(', ', $groups);?>
+		</p>
+		<p class="rule">
+			[tickets]<br/>
+			@<?php echo $groups['user'];?> = cr
 		</pre>
 		<p>create groups</p>
 		<p class="rule">

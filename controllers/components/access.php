@@ -143,7 +143,7 @@ class AccessComponent extends Object {
 			$this->access = $C->Auth->actionMap[$C->action][0];
 		}
 
-		$loginRequired = (empty($this->user) && $this->access !== 'r');
+		$loginRequired = (empty($this->user) && (!empty($C->params['admin']) || $this->access !== 'r'));
 
 		if ($loginRequired) {
 			$C->Auth->deny($C->action);
@@ -159,6 +159,7 @@ class AccessComponent extends Object {
 		}
 
 		if ($this->isPublic === false) {
+			$C->Auth->deny($C->action);
 			if (!$this->user()) {
 				$C->Session->setFlash('Select a Project');
 				$C->redirect(array(
@@ -172,7 +173,7 @@ class AccessComponent extends Object {
 		if ($C->Auth->authorize == false) {
 			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
 			$referer = $C->referer();
-			if ($referer == '/') {
+			if ($referer == '/' || strpos($referer, 'login') !== false) {
 				$referer = array('admin' => false, 'controller' => 'dashboard', 'action' => 'index');
 			}
 			$C->redirect($referer);
@@ -202,6 +203,7 @@ class AccessComponent extends Object {
 
 		if ($username && $admin === true) {
 			$admin = array(
+				'group' => $this->user('Permission.group'),
 				'user' => $username,
 				'access' => $access,
 				'default' => false
@@ -216,6 +218,7 @@ class AccessComponent extends Object {
 
 		if ($path) {
 			$user = array(
+				'group' => $this->user('Permission.group'),
 				'user' => $username,
 				'access' => $access,
 				'default' => $default
@@ -247,6 +250,9 @@ class AccessComponent extends Object {
 
 		if (strpos($key, '.') !== false) {
 			list($key, $field) = explode('.', $key);
+			if (!empty($this->user['User'][$key][$field])) {
+				return $this->user['User'][$key][$field];
+			}
 		} else {
 			$field = $key;
 			$key = 'User';

@@ -281,7 +281,7 @@ class Project extends AppModel {
 			}
 
 			$this->Permission->config($this->config);
-			if ($this->Permission->exists() !== true) {
+			if ($this->Permission->fileExists() !== true) {
 				$this->Permission->saveFile(array('Permission' => array(
 					'username' => @$this->data['Project']['username']
 				)));
@@ -381,9 +381,29 @@ class Project extends AppModel {
  * @return void
  *
  **/
+	function group($user) {
+		$id = $this->id;
+		if (is_array($user)) {
+			extract($user);
+		}
+
+		if (!is_numeric($user)) {
+			$user = $this->Permission->User->field('id', array('username' => $user));
+		}
+		if (!$user || !$id) {
+			return false;
+		}
+
+		return $this->Permission->field('group', array('project_id' => $id, 'user_id' => $user));
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function permit($user, $group = null) {
 		$id = $this->id;
-		$count = 'Project.users_count + 1';
 
 		if (is_array($user)) {
 			extract($user);
@@ -468,7 +488,15 @@ class Project extends AppModel {
 		$Inflector = Inflector::getInstance();
 		$groups = explode(',', $this->config['groups']);
 		$groups = array_map(array($Inflector, 'slug'), $groups, array_fill(0, count($groups), '-'));
-		return array_combine($groups, $groups);
+		$result = array_combine($groups, $groups);
+		if (!isset($result['admin'])) {
+			$result['admin'] = 'admin';
+		}
+		if (!isset($result['user'])) {
+			$result['user'] = 'user';
+		}
+		ksort($result);
+		return $result;
 	}
 /**
  * undocumented function

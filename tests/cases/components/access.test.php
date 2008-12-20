@@ -36,17 +36,27 @@ class AccessComponentTest extends CakeTestCase {
 	function testUser() {
 		$Access = new TestAccess();
 
-		$Access->user = array('User' => array(
-			'id' => 1, 'username' => 'gwoo'
-		));
+		$Access->user = array(
+			'User' => array(
+				'id' => 1, 'username' => 'gwoo',
+				'Permission' => array(
+					'group' => 'user'
+				)
+			), 
+		);
 
 		$result = $Access->user();
-		$expected = array('id' => 1, 'username' => 'gwoo');
+		$expected = array('id' => 1, 'username' => 'gwoo', 'Permission' => array('group' => 'user'));
 		$this->assertEqual($result, $expected);
 
 		$result = $Access->user('username');
 		$expected = 'gwoo';
 		$this->assertEqual($result, $expected);
+		
+		$result = $Access->user('Permission.group');
+		$expected = 'user';
+		$this->assertEqual($result, $expected);
+		
 	}
 
 	function __runStartup() {

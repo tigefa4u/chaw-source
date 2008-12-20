@@ -63,7 +63,7 @@ class GitShellShell extends Shell {
 		if ($this->actionMap[$command] == 'r') {
 			$allowed = $this->Permission->check('refs/heads/master', array(
 				'user' => $this->params['user'],
-				//'group' => @$permissions['Permission']['group'],
+				'group' => $this->Project->group($this->params['user'])),
 				'access' => 'r',
 				'default' => false
 			));
@@ -88,7 +88,7 @@ class GitShellShell extends Shell {
 	function sync() {
 		$project = $this->args[0];
 		$fork = @$this->args[1];
-		
+
 		$this->args[] = 'git_shell';
  		$this->log($this->args, LOG_INFO);
 

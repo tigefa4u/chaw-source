@@ -32,6 +32,9 @@ class PermissionsController extends AppController {
 			}
 		}
 		$this->data['Permission']['fine_grained'] = $this->Permission->file();
+
+		$groups = $this->Project->groups();
+
 		$this->set(compact('users', 'groups'));
 	}
 }
