@@ -63,7 +63,7 @@ class GitShellShell extends Shell {
 		if ($this->actionMap[$command] == 'r') {
 			$allowed = $this->Permission->check('refs/heads/master', array(
 				'user' => $this->params['user'],
-				'group' => $this->Project->group($this->params['user'])),
+				'group' => $this->Project->group($this->params['user']),
 				'access' => 'r',
 				'default' => false
 			));
