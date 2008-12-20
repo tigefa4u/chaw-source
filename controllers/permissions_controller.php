@@ -37,5 +37,18 @@ class PermissionsController extends AppController {
 
 		$this->set(compact('users', 'groups'));
 	}
+
+
+	function admin_remove($id = null) {
+		if (!$id || empty($this->params['isAdmin'])) {
+			$this->Session->setFlash('Invalid request');
+			$this->redirect(array('controller' => 'users', 'action' => 'index'));
+		}
+
+		if ($this->Permission->del($id)) {
+			$this->Session->setFlash('User removed');
+			$this->redirect(array('controller' => 'users', 'action' => 'index'));
+		}
+	}
 }
 ?>

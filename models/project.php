@@ -495,7 +495,7 @@ class Project extends AppModel {
 		if (!isset($result['user'])) {
 			$result['user'] = 'user';
 		}
-		ksort($result);
+		arsort($result);
 		return $result;
 	}
 /**

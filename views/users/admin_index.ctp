@@ -18,6 +18,7 @@ echo $paginator->counter(array(
 	<th><?php echo $paginator->sort('username');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
 	<th><?php echo $paginator->sort('last_login');?></th>
+	<th>&nbsp;</th>
 </tr>
 <?php
 $i = 0;
@@ -42,6 +43,9 @@ foreach ($users as $i => $user):
 		</td>
 		<td>
 			<?php echo $user['User']['last_login']; ?>
+		</td>
+		<td>
+			<?php echo $chaw->admin('remove', array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
