@@ -67,11 +67,9 @@ class WikiTestCase extends CakeTestCase {
 		$this->assertEqual($results[0]['Wiki']['path'], '/');
 		$this->assertEqual($results[1]['Wiki']['path'], '/guides');
 
-
 		$results = $this->Wiki->find('all', array('conditions' => array('Wiki.path' => '/guides')));
-		$this->assertEqual(count($results), 2);
+		$this->assertEqual(count($results), 1);
 		$this->assertEqual($results[0]['Wiki']['path'], '/guides');
-		$this->assertEqual($results[1]['Wiki']['path'], '/guides/ssh');
 
 		$results = $this->Wiki->find('all', array('conditions' => array('Wiki.path' => '/guides/ssh')));
 		$this->assertEqual(count($results), 1);
