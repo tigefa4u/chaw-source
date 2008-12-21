@@ -66,23 +66,31 @@ class DirectoryBehaviorTest extends CakeTestCase {
 			'path' => '/guides/ssh',
 		));
 		$this->assertTrue($this->Directory->save());
+		
+		$this->Directory->create(array(
+			'slug' => 'keygen',
+			'path' => '/guides/ssh/keys',
+		));
+		$this->assertTrue($this->Directory->save());
 
 
 		$results = $this->Directory->find('all', array('conditions' => array('TestDirectory.path' => '/')));
-		$this->assertEqual(count($results), 3);
+		$this->assertEqual(count($results), 2);
 		$this->assertEqual($results[0]['TestDirectory']['path'], '/');
 		$this->assertEqual($results[1]['TestDirectory']['path'], '/guides');
-		$this->assertEqual($results[2]['TestDirectory']['path'], '/guides/ssh');
-
-
+		
+		$this->assertTrue(empty($results[2]['TestDirectory']['path']));
+		
 		$results = $this->Directory->find('all', array('conditions' => array('TestDirectory.path' => '/guides')));
 		$this->assertEqual(count($results), 2);
 		$this->assertEqual($results[0]['TestDirectory']['path'], '/guides');
 		$this->assertEqual($results[1]['TestDirectory']['path'], '/guides/ssh');
 
 		$results = $this->Directory->find('all', array('conditions' => array('TestDirectory.path' => '/guides/ssh')));
-		$this->assertEqual(count($results), 1);
+		$this->assertEqual(count($results), 2);
 		$this->assertEqual($results[0]['TestDirectory']['path'], '/guides/ssh');
+		$this->assertEqual($results[1]['TestDirectory']['path'], '/guides/ssh/keys');
+		
 	}
 }
 ?>

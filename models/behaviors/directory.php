@@ -30,6 +30,8 @@ class DirectoryBehavior extends ModelBehavior {
 		if (!empty($query['conditions'][$field])) {
 			$path = $query['conditions'][$field];
 			$query['conditions']["{$field} LIKE"] = "{$path}%";
+			$not = str_replace('//', '/', $path .'/%/');
+			$query['conditions']["{$field} NOT LIKE"] = "{$not}%";
 		}
 
 		if (!empty($query['conditions']) && array_key_exists($field, $query['conditions'])) {
