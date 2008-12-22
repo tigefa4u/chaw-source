@@ -381,19 +381,39 @@ class Project extends AppModel {
  * @return void
  *
  **/
-	function all($id = null) {
+	function forks() {
+		return Set::extract(
+			$this->find('all', array(
+				'conditions' => array('Project.project_id' => $this->id),
+				'recursive' => -1
+			)),
+			'/Project/id'
+		);
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function all($id = null, $include = true) {
 		if (!$id) {
 			$id = $this->id;
 		}
+
 		if (!empty($this->config['fork'])) {
 			$id = $this->config['project_id'];
 		}
 
-		return $this->find('all', array(
-			'conditions' => array(
+		$conditions = array('Project.project_id' => $id);
+
+		if ($include) {
+			$conditions = array(
 				'OR' => array('Project.id' => $id, 'Project.project_id' => $id)
-			)
-		));
+			);
+		}
+
+		return $this->find('all', compact('conditions'));
 	}
 /**
  * undocumented function

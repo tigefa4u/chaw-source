@@ -17,9 +17,13 @@ if (!empty($commits)):
 		);
 
 	endforeach;
-
+	
+	if (empty($title)) {
+		$title = 'Recent Commits';
+	}
+	
 	echo $html->tag('div',
-		$html->tag('h4', 'Recent Commits') .$html->tag('ul', $li),
+		$html->tag('h4', $title) .$html->tag('ul', $li),
 		array('class' => 'panel', 'escape' => false)
 	);
 

@@ -6,6 +6,8 @@
 	<div class="panels">
 		<?php echo $this->element('recent/commits'); ?>
 
+		<?php echo $this->element('recent/commits', array('commits' => $forkCommits, 'title' => 'Commits in Forks')); ?>
+
 		<?php echo $this->element('recent/tickets'); ?>
 
 		<?php echo $this->element('recent/comments'); ?>

@@ -94,8 +94,18 @@ class DashboardController extends AppController {
 			'limit' => 10, 'order' => 'Commit.created DESC',
 			'recursive' => 0
 		));
-
-		$this->set(compact('wiki', 'tickets', 'comments', 'commits'));
+		
+		$forkCommits = null;
+		if (empty($this->Project->config['fork'])) {
+			$forks = $this->Project->forks();
+			$forkCommits = $this->Project->Commit->find('all', array(
+				'conditions' => array('Commit.project_id' => $forks),
+				'limit' => 10, 'order' => 'Commit.created DESC',
+				'recursive' => 0
+			));
+		}
+		
+		$this->set(compact('wiki', 'tickets', 'comments', 'commits', 'forkCommits'));
 	}
 
 }

@@ -14,11 +14,13 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="page-navigation">
 	<?php echo $html->link('All', array('controller' => 'timeline', 'action' => 'index'));?>
 	|
-	<?php echo $html->link('Commits', array('controller' => 'timeline', 'action' => 'index', 'type' => 'commits'));?>
+	<?php echo $html->link('Forks', array('controller' => 'timeline', 'action' => 'forks'));?>
 	|
-	<?php echo $html->link('Tickets', array('controller' => 'timeline', 'action' => 'index', 'type' => 'tickets'));?>
+	<?php echo $html->link('Commits', array('controller' => 'timeline', 'type' => 'commits'));?>
 	|
-	<?php echo $html->link('Comments', array('controller' => 'timeline', 'action' => 'index', 'type' => 'comments'));?>
+	<?php echo $html->link('Tickets', array('controller' => 'timeline', 'type' => 'tickets'));?>
+	|
+	<?php echo $html->link('Comments', array('controller' => 'timeline', 'type' => 'comments'));?>
 	|
 	<?php echo $html->link('Wiki', array('controller' => 'timeline', 'action' => 'index', 'type' => 'wiki'));?>
 	|

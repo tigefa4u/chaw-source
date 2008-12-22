@@ -325,49 +325,33 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 
-		$data = array('Project' =>array(
-			'id' => 2,
-			'username' => 'gwoo',
-			'fork' => 'gwoo',
-			'name' => 'gwoo\'s fork of test project',
-			'user_id' => 1,
-			'repo_type' => 'Git',
-			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
-			'description' => 'this is a test project',
-			'active' => 1,
-			'approved' => 1,
-			'remote' => 'git@git.chaw'
+		$config = $this->Project->config;
+
+		$this->Project->create(array_merge(
+			$config,
+			array(
+				'user_id' => 1,
+				'fork' => 'gwoo',
+				'approved' => 1,
+			)
 		));
-
-		$this->assertTrue($this->Project->save($data));
-
-		$data = array('Project' =>array(
-			'id' => 3,
-			'username' => 'bob',
-			'fork' => 'bob',
-			'name' => 'bob\'s fork of test project',
-			'user_id' => 2,
-			'repo_type' => 'Git',
-			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
-			'description' => 'this is a test project',
-			'active' => 1,
-			'approved' => 1,
-			'remote' => 'git@git.chaw'
+		$this->assertTrue($data = $this->Project->fork());
+		$this->Project->create(array_merge(
+			$config,
+			array(
+				'user_id' => 2,
+				'fork' => 'bob',
+				'approved' => 1,
+			)
 		));
+		$this->assertTrue($data = $this->Project->fork());
 
-		$this->assertTrue($this->Project->save($data));
+		$results = Set::extract($this->Project->all(3), '/Project/id');
+		$this->assertEqual($results, array('1', '2', '3'));
 
-		$results = $this->Project->all();
+		$results = Set::extract($this->Project->all(1, false), '/Project/id');
+		$this->assertEqual($results, array('2', '3'));
 
-		$this->assertEqual(Set::extract($results, '/Project/id'), array('1', '2', '3'));
 	}
 
 	function __cleanUp() {

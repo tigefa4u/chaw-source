@@ -23,9 +23,15 @@
 
 				if ($this->action !== 'forks'):
 					if (empty($this->params['fork'])):
-						$link = $html->link('view forks', array('controller' => 'projects', 'action' => 'forks'), array('class' => 'detail'));
+						$link = $html->link('view forks', array(
+							'admin' => false, 'fork' => false,
+							'controller' => 'projects', 'action' => 'forks'
+						), array('class' => 'detail'));
 					else:
-						$link = $html->link('view main project', array('fork' => false, 'controller' => 'browser'), array('class' => 'detail'));
+						$link = $html->link('view main project', array(
+							'admin' => false, 'fork' => false,
+							'controller' => 'browser', 'action' => 'index'
+						), array('class' => 'detail'));
 					endif;
 					echo $html->tag('span', $link);
 				endif;

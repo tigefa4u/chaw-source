@@ -4,7 +4,18 @@
 	</h3>
 
 	<h3 class="name">
-		<?php echo (isset($label)) ? $label . ': ' : null;?><?php echo $chaw->commit($data['Commit']['revision']);?>
+		<?php echo (isset($label)) ? $label . ': ' : null;?>
+		<?php
+			echo $chaw->commit($data['Commit']['revision']);
+
+			$project = null;
+			if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
+				$project = ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
+					'admin' => false, 'controller' => 'browser'
+				)), array('class' => 'project'));
+			}
+			echo $project;
+		?>
 	</h3>
 
 	<span class="description">

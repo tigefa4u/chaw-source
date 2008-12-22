@@ -28,16 +28,36 @@ class TimelineController extends AppController {
 	function index() {
 		Router::connectNamed(array('type', 'page'));
 
-		$this->paginate['conditions'] = array('Timeline.project_id' => $this->Project->id);
+		if (empty($this->paginate['conditions'])) {
+			$this->paginate['conditions'] = array(
+				'Timeline.project_id' => $this->Project->id
+			);
+		}
 
 		if (!empty($this->passedArgs['type'])) {
 			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
 		}
+
 		$this->Timeline->recursive = -1;
 		$timeline = $this->paginate();
+
+
 		$this->set('timeline', $this->Timeline->related($timeline));
 
 		$this->set('rssFeed', array('controller' => 'timeline'));
+	}
+
+	function forks() {
+		if (empty($this->Project->config['fork'])) {
+			$forks = $this->Project->forks();
+			$this->paginate['conditions'] = array(
+				'Timeline.project_id' => $forks
+			);
+		}
+		$this->index();
+		$this->set('rssFeed', array('controller' => 'timeline', 'action' => 'forks'));
+
+		$this->render('index');
 	}
 
 	function remove($id = null) {
