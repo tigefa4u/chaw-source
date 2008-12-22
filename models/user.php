@@ -15,11 +15,23 @@
  *
  */
 class User extends AppModel {
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $name = 'User';
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $displayField = 'username';
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $validate = array(
 		'username' => array(
 			'allowedChars' => array(
@@ -50,16 +62,34 @@ class User extends AppModel {
 			'message' => 'Required: Alpha-numeric passwords only'
 		)
 	);
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $hasOne = array('Permission');
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $SshKey = null;
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		$this->SshKey = ClassRegistry::init('SshKey');
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function beforeSave() {
 
 		if (!empty($this->data['SshKey']['content'])) {
@@ -90,31 +120,27 @@ class User extends AppModel {
 
 		return true;
 	}
-
-
-	function isUnique($data, $options = array()) {
-		if (!empty($data['username'])) {
-			$this->recursive = -1;
-			if ($result = $this->findByUsername($data['username'])) {
-				if ($this->id === $result['User']['id']) {
-					return true;
-				}
-				return false;
-			}
-			return true;
-		}
-		if (!empty($data['email'])) {
-			$this->recursive = -1;
-			if ($result = $this->findByEmail($data['email'])) {
-				if ($this->id === $result['User']['id']) {
-					return true;
-				}
-				return false;
-			}
-			return true;
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function projects($user) {
+		if ($user = $this->Permission->user($user)) {
+			$projects = $this->Permission->find('all', array(
+				'conditions' => array('Permission.user_id' => $user, 'Project.name !=' => null)
+			));
+			$ids = array_filter(Set::extract($projects, '/Project/id'));
+			return compact('ids', 'projects');
 		}
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function permit() {
 		if (!empty($this->data['User']['group'])) {
 			$data = array('Permission' => array(
@@ -125,7 +151,12 @@ class User extends AppModel {
 			$this->Permission->save($data);
 		}
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function forgotten($data = array()) {
 		$this->set($data);
 		$this->recursive = -1;
@@ -150,7 +181,12 @@ class User extends AppModel {
 		$this->invalidate('email', 'Email could not be sent');
 		return false;
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function verify($data = array()) {
 		$this->set($data);
 
@@ -180,7 +216,12 @@ class User extends AppModel {
 		$this->invalidate('password', 'Password could not be reset');
 		return false;
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function __generatePassword($length = 10) {
 		srand((double)microtime() * 1000000);
 		$password = '';
@@ -191,10 +232,43 @@ class User extends AppModel {
 		}
 		return substr($password, 0, $length);
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function paginateCount($conditions, $recursive, $extra) {
 		$fields = array('fields' => 'DISTINCT User.username');
 		return count($this->find('all', compact('conditions', 'fields', 'recursive', 'extra')));
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function isUnique($data, $options = array()) {
+		if (!empty($data['username'])) {
+			$this->recursive = -1;
+			if ($result = $this->findByUsername($data['username'])) {
+				if ($this->id === $result['User']['id']) {
+					return true;
+				}
+				return false;
+			}
+			return true;
+		}
+		if (!empty($data['email'])) {
+			$this->recursive = -1;
+			if ($result = $this->findByEmail($data['email'])) {
+				if ($this->id === $result['User']['id']) {
+					return true;
+				}
+				return false;
+			}
+			return true;
+		}
 	}
 }
 ?>

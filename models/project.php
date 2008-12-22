@@ -381,15 +381,34 @@ class Project extends AppModel {
  * @return void
  *
  **/
+	function all($id = null) {
+		if (!$id) {
+			$id = $this->id;
+		}
+		if (!empty($this->config['fork'])) {
+			$id = $this->config['project_id'];
+		}
+
+		return $this->find('all', array(
+			'conditions' => array(
+				'OR' => array('Project.id' => $id, 'Project.project_id' => $id)
+			)
+		));
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function group($user) {
 		$id = $this->id;
 		if (is_array($user)) {
 			extract($user);
 		}
 
-		if (!is_numeric($user)) {
-			$user = $this->Permission->User->field('id', array('username' => $user));
-		}
+		$user = $this->Permission->user($user);
+
 		if (!$user || !$id) {
 			return false;
 		}
@@ -404,14 +423,13 @@ class Project extends AppModel {
  **/
 	function permit($user, $group = null) {
 		$id = $this->id;
+		$count = 'Project.users_count + 1';
 
 		if (is_array($user)) {
 			extract($user);
 		}
 
-		if (!is_numeric($user)) {
-			$user = $this->Permission->User->field('id', array('username' => $user));
-		}
+		$user = $this->Permission->user($user);
 
 		if (!$user || !$id) {
 			return false;

@@ -29,14 +29,8 @@ class DashboardController extends AppController {
 		if (!$this->Auth->user()) {
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
-		$user = $this->Auth->user('id');
 
-		$projects = $this->Project->Permission->find('all', array(
-			'conditions' => array('Permission.user_id' => $user, 'Project.name !=' => null)
-		));
-		$this->set('projects', $projects);
-
-		$ids = array_filter(Set::extract($projects, '/Project/id'));
+		extract($this->Project->User->projects($this->Auth->user('id')));
 
 		$wiki = $this->Timeline->Wiki->find('all', array(
 			'conditions' => array('Wiki.project_id' => $ids, 'Wiki.active' => 1),
@@ -66,7 +60,7 @@ class DashboardController extends AppController {
 			'recursive' => 0
 		));
 
-		$this->set(compact('wiki', 'tickets', 'comments', 'commits'));
+		$this->set(compact('projects', 'wiki', 'tickets', 'comments', 'commits'));
 
 	}
 

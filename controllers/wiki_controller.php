@@ -24,7 +24,7 @@ class WikiController extends AppController {
 		extract($this->__params());
 
 		$canWrite = $canDelete = true;
-		
+
 		if (empty($this->params['isAdmin'])) {
 			$canWrite = $this->Access->check($this, array('access' => 'w'));
 			$canDelete = $this->Access->check($this, array('access' => 'd'));

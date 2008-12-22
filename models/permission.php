@@ -29,6 +29,18 @@ class Permission extends AppModel {
  * @return void
  *
  **/
+	function user($user = null) {
+		if (!is_numeric($user)) {
+			$user = $this->Permission->User->field('id', array('username' => $user));
+		}
+		return $user;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function saveFile($config = array()) {
 		if (empty($config['repo'])) {
 			$this->set($config);

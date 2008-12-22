@@ -305,6 +305,71 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
 	}
 
+	function testAll() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'test project',
+			'username' => 'gwoo',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$data = array('Project' =>array(
+			'id' => 2,
+			'username' => 'gwoo',
+			'fork' => 'gwoo',
+			'name' => 'gwoo\'s fork of test project',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$data = array('Project' =>array(
+			'id' => 3,
+			'username' => 'bob',
+			'fork' => 'bob',
+			'name' => 'bob\'s fork of test project',
+			'user_id' => 2,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$results = $this->Project->all();
+
+		$this->assertEqual(Set::extract($results, '/Project/id'), array('1', '2', '3'));
+	}
+
 	function __cleanUp() {
 		$path = Configure::read('Content.base');
 		$Cleanup = new Folder(TMP . 'tests/git');
