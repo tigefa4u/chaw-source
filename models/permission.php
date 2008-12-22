@@ -31,7 +31,7 @@ class Permission extends AppModel {
  **/
 	function user($user = null) {
 		if (!is_numeric($user)) {
-			$user = $this->Permission->User->field('id', array('username' => $user));
+			$user = $this->User->field('id', array('username' => $user));
 		}
 		return $user;
 	}
