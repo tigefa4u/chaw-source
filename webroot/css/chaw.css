@@ -382,6 +382,7 @@ fieldset.options textarea {
 }
 .wiki form div.wiki-text {
 	padding: 0 0.5em;
+	width: 64%;
 }
 .wiki .single div.checkbox {
 	float: left;
@@ -402,14 +403,18 @@ fieldset.options textarea {
 	clear: none;
 	float: left;
 	width: 64%;
-	height: 340px;
+	height: 360px;
 }
 
 .wiki .textarea .help {
 	clear: none;
 	float: left;
 	width: 30%;
+	margin: 0;
+	padding: 0;
+	margin-left: 1%;
 }
+
 .wiki form .textarea .help div {
 	clear: none;
 	margin: 0;

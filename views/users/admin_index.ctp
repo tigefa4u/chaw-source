@@ -1,6 +1,7 @@
 <div class="users index">
 <h2><?php __('Users');?></h2>
 <h4>
+	<?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all'=>true)) : nuill; ?> 
 	who fork, git clone, svn commit or <?php echo $chaw->admin('added', '#UserAddForm');?>
 </h4>
 <p>
@@ -72,12 +73,3 @@ foreach ($users as $i => $user):
 	endif;
 ?>
 </div>
-
-
-<?php if ($CurrentProject->id == 1):?>
-	<div class="actions">
-		<ul>
-			<li><?php $chaw->admin(__('All Users', true), array('all'=>true)); ?></li>
-		</ul>
-	</div>
-<?php endif;?>
