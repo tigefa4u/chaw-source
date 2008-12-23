@@ -42,7 +42,7 @@ class AccessComponentTest extends CakeTestCase {
 				'Permission' => array(
 					'group' => 'user'
 				)
-			), 
+			),
 		);
 
 		$result = $Access->user();
@@ -52,11 +52,11 @@ class AccessComponentTest extends CakeTestCase {
 		$result = $Access->user('username');
 		$expected = 'gwoo';
 		$this->assertEqual($result, $expected);
-		
+
 		$result = $Access->user('Permission.group');
 		$expected = 'user';
 		$this->assertEqual($result, $expected);
-		
+
 	}
 
 	function __runStartup() {
@@ -519,7 +519,7 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->__runStartup();
 		$this->assertNull($this->Controller->testRedirect);
-		
+
 		$this->Controller->testRedirect = null;
 		$this->Controller->params = array(
 			'project' => null,
@@ -642,6 +642,8 @@ class AccessComponentTest extends CakeTestCase {
 
 
 	function startTest() {
+		unset($_COOKIE);
+
 		$this->__cleanUp();
 
 		$this->Controller = new TestAccessController();
@@ -702,6 +704,11 @@ class AccessComponentTest extends CakeTestCase {
 		$path = Configure::read('Content.base');
 		@unlink($path . 'chaw');
 		@unlink($path . 'permissions.ini');
+	}
+
+	function tearDown() {
+		unset($_SESSION);
+		unset($_COOKIE);
 	}
 }
 ?>

@@ -268,6 +268,12 @@ table.smooth tr.altrow td {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+.page-navigation span.active {
+	color: #363;
+}
+.page-navigation span.not-active {
+	color: #600;
+}
 
 .left {
 	float:left;
@@ -354,15 +360,15 @@ fieldset.options textarea {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-.wiki form {
+.wiki form fieldset {
 	margin-top: 0px;
 	float: left;
 	width: 64%;
-}
-.wiki form fieldset {
 	border: 0;
 	padding-left: 5px;
-	margin-top: 0;
+}
+.wiki form fieldset.content {
+	width: 100%;
 }
 .wiki form #WikiPath {
 	font-size: 180%;
@@ -377,21 +383,43 @@ fieldset.options textarea {
 .wiki form div.wiki-text {
 	padding: 0 0.5em;
 }
+.wiki .single div.checkbox {
+	float: left;
+	clear: none;
+	white-space:nowrap;
+}
 .wiki .input em {
 	float: right;
 	font-size: 10px;
 	font-style: normal;
 	margin-top: 5px;
 }
-.wiki .help {
-	float: left;
-	margin-top: 155px;
-	margin-left: 1%;
-	width: 30%;
-}
 .wiki textarea {
 	font-size: 13px;
 	height: 240px;
+}
+.wiki fieldset.content .textarea textarea {
+	clear: none;
+	float: left;
+	width: 64%;
+	height: 340px;
+}
+
+.wiki .textarea .help {
+	clear: none;
+	float: left;
+	width: 30%;
+}
+.wiki form .textarea .help div {
+	clear: none;
+	margin: 0;
+	font-weight: normal;
+	font-size: 110%;
+}
+.wiki form .textarea .help div em {
+	float: none;
+	font-size: 100%;
+	margin: 0;
 }
 .wiki .input {
 	font-size: 80%;

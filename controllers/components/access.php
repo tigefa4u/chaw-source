@@ -138,6 +138,14 @@ class AccessComponent extends Object {
 			return true;
 		}
 
+		if (!empty($_COOKIE['Chaw']['User']) && !$this->user('id')) {
+			$C->redirect(array(
+				'admin' => false, 'project' => false, 'fork' => false,
+				'controller' => 'users', 'action' => 'login'
+			));
+			return true;
+		}
+
 		$this->access = 'r';
 		if (!empty($C->Auth->actionMap[$C->action])) {
 			$this->access = $C->Auth->actionMap[$C->action][0];

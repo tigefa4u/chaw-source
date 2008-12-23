@@ -144,6 +144,7 @@ class ChawSchema extends CakeSchema {
 			'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 			'path' => array('type' => 'string', 'null' => false, 'default' => '/', 'length' => 200),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+			'read_only' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'last_changed_by' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'content' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),

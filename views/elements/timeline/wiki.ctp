@@ -15,9 +15,9 @@
 	<span class="description">
 		<?php
 			if ($data['Wiki']['created'] != $data['Wiki']['modified']):
-				echo 'modifed';
+				echo 'current revision modified';
 			else :
-				echo 'created';
+				echo 'new revision created';
 			endif;
 		?>
 	</span>

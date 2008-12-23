@@ -27,7 +27,8 @@ $javascript->codeBlock($script, array('inline' => false));
 
 		<fieldset>
 		<?php
-			echo $form->hidden('update');
+
+			echo $html->tag('div',$form->input('active') . $form->input('read_only'), array('class' => 'single'));
 
 			echo $form->input('path', array('div' => 'input text path',
 				'label' => "use a path to group pages into categories and subcategories. example: /logs/by/{$CurrentUser->username}/",
@@ -39,24 +40,18 @@ $javascript->codeBlock($script, array('inline' => false));
 			} else {
 				echo $form->input('title', array('label' => false, 'value' => 'new title'));
 			}
-			echo '<div id="Preview" class="wiki-text"></div>';
-
-			echo $form->input('content', array('label' => false));
-
-			/*if ($form->value('path')) {
-				echo $form->input('path', array('div' => 'input text path',
-					'between' => '<em>group pages</em>',
-					'after' => "use paths to group pages into categories and subcategories. example: blog/{$CurrentUser->username}",
-				));
-			}*/
 		?>
 		</fieldset>
+		<fieldset class="content">
+			<?php
+				echo '<div id="Preview" class="wiki-text"></div>';
 
+				echo $form->input('content', array(
+					'label' => false, 'after' => $html->tag('div', $this->element('markdown_help'), array('class' => 'help'))
+				));
+			?>
+		</fieldset>
 
 	<?php echo $form->end('Submit');?>
-
-	<div class="help">
-		<?php echo $this->element('markdown_help'); ?>
-	</div>
 
 </div>

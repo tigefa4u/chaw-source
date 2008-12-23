@@ -3,10 +3,21 @@ $html->css('highlight/idea', null, null, false);
 $javascript->link('ghighlight.min', false);
 ?>
 <div class="page-navigation">
+
 	<?php if (!empty($canWrite)):?>
-		<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
-		|
-		<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
+		<?php if (!empty($page['Wiki']['active'])):?>
+			<span class="active">Active</span>
+		<?php else: ?>
+			<span class="not-active">Not Active</span>
+		<?php endif;?>
+
+		<?php if ((empty($content['Wiki']['read_only']) || $CurrentUser->id == $page['Wiki']['last_changed_by'])):?>
+			|
+			<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
+			|
+			<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
+		<?php endif;?>
+
 	<?php endif;?>
 </div>
 
@@ -102,7 +113,7 @@ $javascript->link('ghighlight.min', false);
 
 			<div class="actions">
 				<?php echo $html->link('View', array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?>
-				<?php if (!empty($canWrite)):?>
+				<?php if (!empty($canWrite) && (empty($content['Wiki']['read_only']) || $CurrentUser->id == $content['Wiki']['last_changed_by'])):?>
 					|
 					<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $content['Wiki']['path'], $content['Wiki']['slug']));?>
 					|

@@ -84,7 +84,7 @@ class Wiki extends AppModel {
 			return false;
 		}
 
-		if (!empty($this->data['Wiki']['update'])) {
+		if (!empty($this->data['Wiki']['active'])) {
 			$this->recursive = -1;
 			$this->updateAll(array(
 					'Wiki.active' => 0,
@@ -96,14 +96,14 @@ class Wiki extends AppModel {
 				'Wiki.project_id' => $this->data['Wiki']['project_id'],
 			));
 		}
-		$this->data['Wiki']['active'] = 1;
+
 		return true;
 	}
 
 	function afterSave($created) {
 		$Timeline = ClassRegistry::init('Timeline');
 
-		if ($created) {
+		if ($created && !empty($this->data['Wiki']['active'])) {
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Wiki']['project_id'],
 				'model' => 'Wiki',
@@ -117,7 +117,7 @@ class Wiki extends AppModel {
 
 	function activate($data = array()) {
 		$this->set($data);
-		$this->data['Wiki']['update'] = 1;
+		$this->data['Wiki']['active'] = 1;
 		return $this->save();
 	}
 }

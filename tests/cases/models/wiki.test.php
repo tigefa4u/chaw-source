@@ -109,6 +109,9 @@ class WikiTestCase extends CakeTestCase {
 		$data = $this->Wiki->find('first');
 		$results = $this->Wiki->activate($data);
 		$this->assertEqual($results, true);
+
+		$data = $this->Wiki->find('first');
+		$this->assertEqual($results['Wiki']['active'], 1);
 	}
 
 	function testSlug() {
