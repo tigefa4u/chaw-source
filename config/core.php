@@ -40,7 +40,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 2);
+	Configure::write('debug', 0);
 /**
  * Application wide charset encoding
  */
@@ -124,7 +124,7 @@
  * Session time out time (in seconds).
  * Actual value depends on 'Security.level' setting.
  */
-	Configure::write('Session.timeout', '120');
+	Configure::write('Session.timeout', '320');
 /**
  * If set to false, sessions are not automatically started.
  */
@@ -146,7 +146,7 @@
  * CakePHP session IDs are also regenerated between requests if
  * 'Security.level' is set to 'high'.
  */
-	Configure::write('Security.level', 'high');
+	Configure::write('Security.level', 'medium');
 /**
  * A random string used in security hashing methods.
  */
@@ -170,8 +170,8 @@
  * The classname and database used in CakePHP's
  * access control lists.
  */
-	Configure::write('Acl.classname', 'DB_ACL');
-	Configure::write('Acl.database', 'default');
+//	Configure::write('Acl.classname', 'DB_ACL');
+//	Configure::write('Acl.database', 'default');
 /**
  * Cache Engine Configuration
  *
