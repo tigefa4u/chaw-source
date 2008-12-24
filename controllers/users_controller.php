@@ -176,14 +176,17 @@ class UsersController extends AppController {
 			} else {
 				$this->Session->setFlash($this->data['User']['username'] .' was not found');
 			}
-
 		}
 
-		$this->User->recursive = 0;
+		$this->User->unbindModel(array('hasOne' => array('Permission')), false);
+		$this->User->bindModel(array('hasOne' => array('Permission' => array(
+			'conditions' => array('Permission.project_id' => $this->Project->id)))), false);
+
 		if (empty($this->passedArgs['all'])) {
 			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
+			$this->paginate['fields'] = array('User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
 		}
-		$this->paginate['fields'] = array('DISTINCT User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+
 		$users = $this->paginate();
 		$groups = $this->Project->groups();
 

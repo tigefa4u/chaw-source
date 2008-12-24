@@ -121,6 +121,9 @@ table.smooth td {
 table.smooth tr.altrow td {
 	background-color: #fff;
 }
+input[type=hidden] {
+	display: none;
+}
 #header {
 	position: fixed;
 	width: 100%;
