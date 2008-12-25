@@ -139,6 +139,7 @@ class AccessComponent extends Object {
 		}
 
 		if (!empty($_COOKIE['Chaw']['User']) && !$this->user('id')) {
+			$C->Session->write('Auth.redirect', $C->here);
 			$C->redirect(array(
 				'admin' => false, 'project' => false, 'fork' => false,
 				'controller' => 'users', 'action' => 'login'

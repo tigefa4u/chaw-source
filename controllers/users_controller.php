@@ -181,10 +181,11 @@ class UsersController extends AppController {
 		$this->User->unbindModel(array('hasOne' => array('Permission')), false);
 		$this->User->bindModel(array('hasOne' => array('Permission' => array(
 			'conditions' => array('Permission.project_id' => $this->Project->id)))), false);
-
+		
+		$this->paginate['conditions'] = array('User.active' => 1);
 		if (empty($this->passedArgs['all'])) {
 			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
-			$this->paginate['fields'] = array('User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+			$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
 		}
 
 		$users = $this->paginate();
@@ -264,12 +265,12 @@ class UsersController extends AppController {
 			}
 		}
 	}
-	
+
 	function admin_remove($id = null) {
 		if ($id && $this->Project->id == 1 && !empty($this->params['isAdmin'])) {
-			$data = array('active' => 0);
 			$this->User->id = $id;
-			if ($this->User->save($data, false, array('active'))) {
+			if ($this->User->save(array('active' => 0), false, array('active'))) {
+				$this->User->Permission->deleteAll(array('Permission.user_id' => $id));
 				$this->Session->setFlash('User was removed');
 			} else {
 				$this->Session->setFlash('User was NOT changed');

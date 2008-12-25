@@ -1,7 +1,7 @@
 <div class="users index">
 <h2><?php __('Users');?></h2>
 <h4>
-	<?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all'=>true)) : nuill; ?> 
+	<?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all'=>true)) : null; ?> 
 	who fork, git clone, svn commit or <?php echo $chaw->admin('added', '#UserAddForm');?>
 </h4>
 <p>
@@ -45,10 +45,10 @@ foreach ($users as $i => $user):
 		<td>
 			<?php echo $user['User']['last_login']; ?>
 		</td>
-		<td>
-			<?php echo $chaw->admin('edit', array('controller' => 'users', 'action' => 'edit', $user['User']['id'])); ?>
+		<td class="actions">
 			<?php 
-				if (!empty($this->passedArgs['all'])) {
+				if (!empty($this->passedArgs['all']) && !empty($this->params['isAdmin'])) {
+					echo $chaw->admin('edit', array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
 					echo $chaw->admin('remove', array('controller' => 'users', 'action' => 'remove', $user['User']['id'])); 
 				} else {
 					echo $chaw->admin('remove', array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id'])); 

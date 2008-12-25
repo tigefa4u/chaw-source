@@ -114,6 +114,7 @@ class ChawSchema extends CakeSchema {
 		);
 	var $users = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'active' => array('type' => 'boolean', 'null' => true, 'default' => 1),
 			'username' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
 			'password' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
 			'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
