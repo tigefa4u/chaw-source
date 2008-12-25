@@ -46,7 +46,14 @@ foreach ($users as $i => $user):
 			<?php echo $user['User']['last_login']; ?>
 		</td>
 		<td>
-			<?php echo $chaw->admin('remove', array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id'])); ?>
+			<?php echo $chaw->admin('edit', array('controller' => 'users', 'action' => 'edit', $user['User']['id'])); ?>
+			<?php 
+				if (!empty($this->passedArgs['all'])) {
+					echo $chaw->admin('remove', array('controller' => 'users', 'action' => 'remove', $user['User']['id'])); 
+				} else {
+					echo $chaw->admin('remove', array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id'])); 
+				}
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>

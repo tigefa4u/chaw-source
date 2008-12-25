@@ -264,5 +264,18 @@ class UsersController extends AppController {
 			}
 		}
 	}
+	
+	function admin_remove($id = null) {
+		if ($id && $this->Project->id == 1 && !empty($this->params['isAdmin'])) {
+			$data = array('active' => 0);
+			$this->User->id = $id;
+			if ($this->User->save($data, false, array('active'))) {
+				$this->Session->setFlash('User was removed');
+			} else {
+				$this->Session->setFlash('User was NOT changed');
+			}
+		}
+		$this->redirect($this->referer());
+	}
 }
 ?>

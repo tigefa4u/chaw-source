@@ -124,6 +124,9 @@ table.smooth tr.altrow td {
 input[type=hidden] {
 	display: none;
 }
+.index td select {
+	font-size: 80%;
+}
 #header {
 	position: fixed;
 	width: 100%;
