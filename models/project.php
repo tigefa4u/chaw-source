@@ -352,7 +352,7 @@ class Project extends AppModel {
 			return false;
 		}
 
-		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['remote']))) {
+		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['repo']['remote']))) {
 			$this->__created = true;
 			$this->data['Project']['project_id'] = $this->id;
 			$this->data['Project']['name'] = $this->data['Project']['fork'] . "'s fork of " . $this->data['Project']['name'];
