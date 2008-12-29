@@ -141,6 +141,20 @@ class User extends AppModel {
  * @return void
  *
  **/
+	function groups($user) {
+		if ($user = $this->Permission->user($user)) {
+			$results = $this->Permission->find('all', array(
+				'conditions' => array('Permission.user_id' => $user, 'Project.id !=' => null)
+			));
+			return array_filter(Set::combine($results, '/Project/id', '/Permission/group'));
+		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function permit() {
 		if (!empty($this->data['User']['group'])) {
 			$data = array('Permission' => array(

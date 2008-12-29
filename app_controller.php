@@ -16,7 +16,10 @@
  */
 class AppController extends Controller {
 
-	var $components = array('Access', 'Auth', 'RequestHandler');
+	var $components = array(
+		'Access', 'Auth', 'RequestHandler',
+		//'DebugKit.Toolbar'
+	);
 
 	var $helpers = array(
 		'Html', 'Form', 'Javascript', 'Chaw'
@@ -35,7 +38,7 @@ class AppController extends Controller {
 			'modify' => 'update',
 			'remove' => 'delete'
 		));
-		
+
 		if (!empty($this->params['admin'])) {
 			$this->Auth->authorize = 'controller';
 		}
@@ -65,7 +68,7 @@ class AppController extends Controller {
  **/
 	function beforeRender() {
 		if ($this->params['isAdmin'] !== true) {
-			//$this->params['admin'] = false;
+			$this->params['admin'] = false;
 		}
 		if (!empty($this->params['admin'])) {
 			$this->layout = 'admin';

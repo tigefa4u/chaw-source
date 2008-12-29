@@ -35,7 +35,40 @@ class UserTestCase extends CakeTestCase {
 	function testUserInstance() {
 		$this->assertTrue(is_a($this->User, 'User'));
 	}
-	
+
+	function testUserGroups() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->User->Permission->Project->save($data));
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($path . 'permissions.ini'));
+		$this->assertFalse(file_exists($this->User->Permission->Project->Repo->path . DS . 'permissions.ini'));
+
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->User->save();
+
+		$this->User->set(array('project_id' => 1, 'group' => 'developer'));
+		$this->User->permit();
+
+		$results = $this->User->groups(1);
+		$this->assertEqual($results, array(1 => 'developer'));
+	}
+
 	function testUserSave() {
 		/*
 		$result = $this->User->saveKey('gwoo', 'ssh-dss something something else');

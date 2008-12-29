@@ -133,7 +133,7 @@ class AccessComponent extends Object {
 		if (!empty($C->Project->config['private'])) {
 			$this->isPublic = false;
 		}
-
+		
 		if ($this->isAllowed) {
 			return true;
 		}
@@ -183,7 +183,7 @@ class AccessComponent extends Object {
 			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
 			$referer = $C->referer();
 			if ($referer == '/' || strpos($referer, 'login') !== false) {
-				$referer = array('admin' => false, 'controller' => 'dashboard', 'action' => 'index');
+				$referer = array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index');
 			}
 			$C->redirect($referer);
 		}
@@ -205,14 +205,16 @@ class AccessComponent extends Object {
 			'admin' => false,
 			'default' => $this->isPublic
 		), $options));
-
+	
 		if (empty($this->user) && $access !== 'r') {
 			return false;
 		}
-
+		
+		$group = $this->user("Permission.{$C->Project->id}");
+		
 		if ($username && $admin === true) {
 			$admin = array(
-				'group' => $this->user('Permission.group'),
+				'group' => $group,
 				'user' => $username,
 				'access' => $access,
 				'default' => false
@@ -227,7 +229,7 @@ class AccessComponent extends Object {
 
 		if ($path) {
 			$user = array(
-				'group' => $this->user('Permission.group'),
+				'group' => $group,
 				'user' => $username,
 				'access' => $access,
 				'default' => $default

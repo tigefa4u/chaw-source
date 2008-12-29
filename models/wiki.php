@@ -71,7 +71,6 @@ class Wiki extends AppModel {
 					'/' . $query['fields'][1],
 					'/' . $query['fields'][2]
 			));
-			return $results;
 		}
 	}
 

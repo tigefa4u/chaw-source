@@ -52,8 +52,8 @@ class UsersController extends AppController {
 				$this->Cookie->write('User', $this->Session->read('Auth.User'));
 			}
 
-			$group = $this->Project->group($id);
-			$this->Session->write('Auth.User.Permission', array('group' => $group));
+			$group = $this->User->groups($id);
+			$this->Session->write('Auth.User.Permission', $this->User->groups($id));
 
 			$this->User->id = $id;
 			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
@@ -180,8 +180,9 @@ class UsersController extends AppController {
 
 		$this->User->unbindModel(array('hasOne' => array('Permission')), false);
 		$this->User->bindModel(array('hasOne' => array('Permission' => array(
-			'conditions' => array('Permission.project_id' => $this->Project->id)))), false);
-		
+			'conditions' => array('Permission.project_id' => $this->Project->id
+		)))), false);
+
 		$this->paginate['conditions'] = array('User.active' => 1);
 		if (empty($this->passedArgs['all'])) {
 			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
