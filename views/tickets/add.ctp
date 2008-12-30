@@ -47,6 +47,7 @@ $javascript->codeBlock($script, array('inline' => false));
 			if (!empty($versions)) {
 				echo $form->input('version_id');
 			}
+			echo $form->input('owner');
 			echo $form->input('type');
 			echo $form->input('priority');
 		?>

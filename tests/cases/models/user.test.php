@@ -68,43 +68,5 @@ class UserTestCase extends CakeTestCase {
 		$results = $this->User->groups(1);
 		$this->assertEqual($results, array(1 => 'developer'));
 	}
-
-	function testUserSave() {
-		/*
-		$result = $this->User->saveKey('gwoo', 'ssh-dss something something else');
-		$this->assertTrue($result);
-
-		$result = trim($this->AuthorizedKeys->read());
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$this->assertEqual($result, $expected);
-
-		$result = $this->User->saveKey('gwoo', 'ssh-dss something something else');
-		$this->assertTrue($result);
-
-		$result = trim($this->AuthorizedKeys->read());
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$this->assertEqual($result, $expected);
-
-		$result = $this->User->saveKey('nate', 'ssh-dss something else');
-		$this->assertTrue($result);
-
-		$result = trim($this->AuthorizedKeys->read());
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$expected .= "\n";
-		$expected .= 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user nate",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something else';
-		$this->assertEqual($result, $expected);
-
-		$result = $this->User->saveKey('nate', 'ssh-dss something else');
-		$this->assertTrue($result);
-
-		$result = trim($this->AuthorizedKeys->read());
-
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$expected .= "\n";
-		$expected .= 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user nate",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something else';
-		$this->assertEqual($result, $expected);
-		*/
-
-	}
 }
 ?>

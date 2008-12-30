@@ -27,7 +27,6 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php echo $chaw->rss('Timeline Feed', $rssFeed);?>
 </div>
 <div class="timeline index">
-	<table class="smooth">
 	<?php $i = 0;
 		foreach ((array)$timeline as $event):
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
@@ -35,7 +34,6 @@ $javascript->codeBlock($script, array('inline' => false));
 			echo $this->element('timeline/' . strtolower($type), array('label' => ucwords($type), 'data' => $event, 'zebra' => $zebra));
 		endforeach;
 	?>
-	</table>
 </div>
 <div class="paging">
 	<?php

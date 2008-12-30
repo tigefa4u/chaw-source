@@ -52,8 +52,10 @@ class Ticket extends AppModel {
 	}
 
 	function beforeSave() {
+		$owner = null;
 		if (!empty($this->data['Ticket']['owner']) && !is_numeric($this->data['Ticket']['owner'])) {
-			$this->data['Ticket']['owner'] = $this->Owner->field('id', array('username' => $this->data['Ticket']['owner']));
+			$owner = $this->data['Ticket']['owner'];
+			$this->data['Ticket']['owner'] = $this->Owner->field('id', array('username' => $owner));
 		}
 		if (!empty($this->data['Ticket']['tags'])) {
 			if (empty($this->data['Ticket']['previous']) || !empty($this->data['Ticket']['previous']) && $this->data['Ticket']['tags'] != $this->data['Ticket']['previous']['tags']) {
@@ -72,10 +74,15 @@ class Ticket extends AppModel {
 				if (in_array($field, array('id', 'created', 'modified'))) {
 					continue;
 				}
-				if (isset($this->data['Ticket'][$field]) && $previous !== $this->data['Ticket'][$field]) {
+
+				if (isset($this->data['Ticket'][$field]) && $previous != $this->data['Ticket'][$field]) {
 					$change = "- **" . $field . "** was changed\n";
 					if ($field !== 'description' && !empty($this->data['Ticket'][$field])) {
-						$change .= "*" . $this->data['Ticket'][$field] . "*";
+						if ($field == 'owner' && $owner) {
+							$change .= "_" . $owner . "_";
+						} else {
+							$change .= "_" . $this->data['Ticket'][$field] . "_";
+						}
 					}
 					$changes[] = $change;
 				}

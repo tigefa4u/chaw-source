@@ -118,7 +118,7 @@ class Project extends AppModel {
 			if (!empty($params['fork'])) {
 				$conditions['fork'] = $params['fork'];
 			}
-			$key = join('_', $conditions);
+			$key = join('_', array_filter(array_values($conditions)));
 			$project = Cache::read($key);
 			if (empty($project)) {
 				$project = $this->find($conditions);
@@ -292,6 +292,15 @@ class Project extends AppModel {
 				'group' => 'admin',
 				'count' => 1
 			));
+		}
+
+
+		if (!$this->__created) {
+			$conditions = array($this->data['Project']['url']);
+			$conditions[] = (!empty($this->data['Project']['fork'])) ? $this->data['Project']['fork'] : false;
+			$key = join('_', array_filter($conditions));
+			Cache::set(array('prefix' => 'config_', 'path' => CACHE . 'persistent'));
+			Cache::delete($key);
 		}
 
 		$this->__created = false;

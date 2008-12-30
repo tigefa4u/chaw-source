@@ -19,25 +19,38 @@ class TicketsController extends AppController {
 	var $name = 'Tickets';
 
 	var $helpers = array('Time');
-	
+
 	var $paginate = array('order' => 'Ticket.number DESC');
 
 	function index() {
-		Router::connectNamed(array('status', 'page'));
+		Router::connectNamed(array('status', 'page', 'user'));
 
 		$this->Ticket->recursive = 0;
 		$statuses = array_values($this->Project->ticket('statuses'));
 
 		$conditions = array('Ticket.project_id' => $this->Project->id);
-
-		if (empty($this->passedArgs['status'])) {
-			$this->passedArgs['status'] = $statuses[0];
+		/*
+		if (!empty($this->Project->config['fork'])) {
+			$conditions = array('OR' => array(
+				array('Ticket.project_id' => $this->Project->id),
+				array('Ticket.project_id' => $this->Project->config['project_id'])
+			));
 		}
+		*/
+		$current = $statuses[0];
+		if (empty($this->passedArgs['status'])) {
+			$this->passedArgs['status'] = $current;
+		}
+		
 		$conditions['Ticket.status'] = $this->passedArgs['status'];
-
-		$this->set('current', $this->passedArgs['status']);
-		$this->set('statuses', $statuses);
-		$this->set('tickets', $this->paginate('Ticket', $conditions));
+		
+		if (!empty($this->passedArgs['user'])) {
+			$current = $this->passedArgs['user'];
+			$conditions['Owner.username'] = $this->passedArgs['user'];
+		}
+		
+		$tickets = $this->paginate('Ticket', $conditions);
+		$this->set(compact('current', 'statuses', 'tickets'));
 	}
 
 	function view($id = null) {
@@ -46,7 +59,7 @@ class TicketsController extends AppController {
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
 
-		$this->Ticket->contain(array('Reporter', 'Tag', 'Comment', 'Comment.User'));
+		$this->Ticket->contain(array('Reporter', 'Owner', 'Tag', 'Comment', 'Comment.User'));
 		$ticket = $this->data = $this->Ticket->find(array(
 			'Ticket.number' => $id,
 			'Ticket.project_id' => $this->Project->id
@@ -66,6 +79,8 @@ class TicketsController extends AppController {
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
+
+		$this->data['Ticket']['owner'] = $ticket['Owner']['username'];
 
 		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities'));
 	}
@@ -117,7 +132,7 @@ class TicketsController extends AppController {
 				}
 			}
 		}
-		
+
 		$this->redirect(array('action' => 'view', $id));
 	}
 }

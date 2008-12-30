@@ -153,6 +153,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 						if (!empty($versions)) {
 							echo $form->input('version_id');
 						}
+						echo $form->input('owner');
 						echo $form->input('type');
 						echo $form->input('priority');
 					?>
