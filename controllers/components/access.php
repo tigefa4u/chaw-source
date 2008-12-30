@@ -124,6 +124,10 @@ class AccessComponent extends Object {
  *
  **/
 	function startup(&$C) {
+		if ($C->action === 'login') {
+			return;
+		}
+
 		$this->isAllowed = in_array($C->action, $this->allowedActions);
 
 		if (!empty($C->Project->config) && $this->user('id') == $C->Project->config['user_id']) {
@@ -133,17 +137,17 @@ class AccessComponent extends Object {
 		if (!empty($C->Project->config['private'])) {
 			$this->isPublic = false;
 		}
-		
-		if ($this->isAllowed) {
-			return true;
-		}
 
 		if (!empty($_COOKIE['Chaw']['User']) && !$this->user('id')) {
-			$C->Session->write('Auth.redirect', $C->here);
+			$C->Session->write('Access.redirect', '/' . $this->url);
 			$C->redirect(array(
 				'admin' => false, 'project' => false, 'fork' => false,
 				'controller' => 'users', 'action' => 'login'
 			));
+			return true;
+		}
+
+		if ($this->isAllowed) {
 			return true;
 		}
 
@@ -205,13 +209,13 @@ class AccessComponent extends Object {
 			'admin' => false,
 			'default' => $this->isPublic
 		), $options));
-	
+
 		if (empty($this->user) && $access !== 'r') {
 			return false;
 		}
-		
+
 		$group = $this->user("Permission.{$C->Project->id}");
-		
+
 		if ($username && $admin === true) {
 			$admin = array(
 				'group' => $group,

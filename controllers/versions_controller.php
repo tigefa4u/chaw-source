@@ -39,7 +39,7 @@ class VersionsController extends AppController {
 	function admin_index() {
 		$this->Version->recursive = 0;
 
-		if (empty($this->params['isAdmin'])) {
+		if ($this->Project->id == 1 && empty($this->params['isAdmin'])) {
 			$this->paginate = array(
 				'conditions' => array('Project.id' => $this->Project->id)
 			);
@@ -89,8 +89,7 @@ class VersionsController extends AppController {
 			$this->data = $this->Version->read(null, $id);
 		}
 
-
-		if (!empty($this->params['isAdmin'])) {
+		if ($this->Project->id == 1 && !empty($this->params['isAdmin'])) {
 			$this->set('projects', $this->Version->Project->find('list'));
 		}
 	}

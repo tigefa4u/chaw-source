@@ -58,13 +58,16 @@ class UsersController extends AppController {
 			$this->User->id = $id;
 			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
 
-			$redirect = $this->Auth->redirect();
-
+			if ($redirect = $this->Session->read('Access.redirect')) {
+				$this->Session->del('Access.redirect');
+				$this->Session->del('Auth.redirect');
+			} else {
+				$redirect = $this->Auth->redirect();
+			}
 			if (strpos($redirect, 'login') !== false || strpos($redirect, 'users/add') !== false || $redirect == '/') {
 				$redirect = '/dashboard';
 			}
 			$this->redirect($redirect);
-
 		} elseif (strpos($this->referer(), 'users/login') && !empty($this->data['User'])) {
 			$this->Session->del('Message.auth');
 

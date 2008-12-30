@@ -26,11 +26,11 @@ echo $paginator->counter(array(
 <tr>
 	<th><?php echo $paginator->sort('#', 'number');?></th>
 	<th><?php echo $paginator->sort('version_id');?></th>
-	<?php if(empty($this->passedArgs['type'])): ?>
-		<th><?php echo $paginator->sort('type');?></th>
-	<?php endif; ?>
+	<th><?php echo $paginator->sort('type');?></th>
 	<th><?php echo $paginator->sort('priority');?></th>
+	<?php if(empty($this->passedArgs['status'])): ?>
 	<th><?php echo $paginator->sort('status');?></th>
+	<?php endif; ?>
 	<th class="left"><?php echo $paginator->sort('title');?></th>
 </tr>
 <?php
@@ -54,19 +54,20 @@ foreach ($tickets as $ticket):
 			<?php endif;?>
 		</td>
 
-		<?php if(empty($this->passedArgs['type'])): ?>
-			<td>
-				<?php echo $ticket['Ticket']['type']; ?>
-			</td>
-		<?php endif; ?>
+		<td>
+			<?php echo $ticket['Ticket']['type']; ?>
+		</td>
 
 		<td>
 			<?php echo $ticket['Ticket']['priority']; ?>
 		</td>
-
-		<td>
-			<?php echo $ticket['Ticket']['status']; ?>
-		</td>
+		
+		<?php if(empty($this->passedArgs['status'])): ?>
+			<td>
+				<?php echo $ticket['Ticket']['status']; ?>
+			</td>
+		<?php endif; ?>
+		
 		<td class="title left">
 			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])); ?>
 		</td>
