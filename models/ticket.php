@@ -43,15 +43,18 @@ class Ticket extends AppModel {
 		'description' => array('notEmpty'),
 		'project_id' => 'numeric'
 	);
-	
+
 	function beforeValidate() {
 		if (!empty($this->data['Ticket']['project'])) {
 			$this->data['Ticket']['project_id'] = $this->Project->field('id', array('url' => $this->data['Ticket']['project']));
 		}
 		return true;
 	}
-	
+
 	function beforeSave() {
+		if (!empty($this->data['Ticket']['owner']) && !is_numeric($this->data['Ticket']['owner'])) {
+			$this->data['Ticket']['owner'] = $this->Owner->field('id', array('username' => $this->data['Ticket']['owner']));
+		}
 		if (!empty($this->data['Ticket']['tags'])) {
 			if (empty($this->data['Ticket']['previous']) || !empty($this->data['Ticket']['previous']) && $this->data['Ticket']['tags'] != $this->data['Ticket']['previous']['tags']) {
 				$this->data['Tag']['Tag'] = $this->Tag->generate($this->data['Ticket']['tags']);
@@ -70,11 +73,11 @@ class Ticket extends AppModel {
 					continue;
 				}
 				if (isset($this->data['Ticket'][$field]) && $previous !== $this->data['Ticket'][$field]) {
-					if ($field === 'description') {
-						$changes[] = "- __" . $field . "__ was changed\n";
-					} else {
-						$changes[] = "- __" . $field . "__ was changed to _" . $this->data['Ticket'][$field] . "_\n";
+					$change = "- **" . $field . "** was changed\n";
+					if ($field !== 'description' && !empty($this->data['Ticket'][$field])) {
+						$change .= "*" . $this->data['Ticket'][$field] . "*";
 					}
+					$changes[] = $change;
 				}
 			}
 
