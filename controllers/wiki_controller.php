@@ -156,7 +156,7 @@ class WikiController extends AppController {
 			if (!empty($this->data)) {
 				$this->data['Wiki']['active'] = 1;
 			}
-			$canEdit = !empty($this->params['isAdmin']) || $this->Auth->user('id') === $this->data['Wiki']['last_change_by'];
+			$canEdit = !empty($this->params['isAdmin']) || $this->Auth->user('id') === $this->data['Wiki']['last_changed_by'];
 			if (!empty($this->data['Wiki']['read_only']) && !$canEdit) {
 				$this->redirect(array('controller' => 'wiki', 'action' => 'index', $path, $slug));
 			}
