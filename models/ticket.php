@@ -53,9 +53,13 @@ class Ticket extends AppModel {
 
 	function beforeSave() {
 		$owner = null;
-		if (!empty($this->data['Ticket']['owner']) && !is_numeric($this->data['Ticket']['owner'])) {
-			$owner = $this->data['Ticket']['owner'];
-			$this->data['Ticket']['owner'] = $this->Owner->field('id', array('username' => $owner));
+		if (!empty($this->data['Ticket']['owner'])) {
+			if (!is_numeric($this->data['Ticket']['owner'])) {
+				$owner = $this->data['Ticket']['owner'];
+				$this->data['Ticket']['owner'] = $this->Owner->field('id', array('username' => $owner));
+			}
+		} else {
+			unset($this->data['Ticket']['owner']);
 		}
 		if (!empty($this->data['Ticket']['tags'])) {
 			if (empty($this->data['Ticket']['previous']) || !empty($this->data['Ticket']['previous']) && $this->data['Ticket']['tags'] != $this->data['Ticket']['previous']['tags']) {

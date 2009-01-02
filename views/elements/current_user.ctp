@@ -12,11 +12,17 @@
 		<span class="username">
 			<?php echo $html->link($CurrentUser->username.'', array(
 				'admin' => false, 'project' => false, 'fork' => false,
-				'controller' => 'users', 'action' => 'account'
-				), array('title' => 'edit your account')); ?>
+				'controller' => 'dashboard', 'action' => 'index'
+				), array('title' => 'view your dashboard')); ?>
 		</span>
 
 		<div class="links">
+			<span class="account link">
+				<?php echo $html->link('account', array(
+					'admin' => false, 'project' => false, 'fork' => false,
+					'controller' => 'users', 'action' => 'account'
+					), array('title' => 'edit your account')); ?>
+			</span>
 			<span class="dashboard link">
 				<?php echo $html->link('dashboard', array(
 					'admin' => false, 'project' => false, 'fork' => false,
