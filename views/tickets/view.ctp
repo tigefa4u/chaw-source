@@ -35,6 +35,12 @@ $javascript->codeBlock($script, array('inline' => false));
 
 $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
+<?php
+	if ($session->check('Ticket.back')) {
+		echo $html->tag('div', $html->link('back', $session->read('Ticket.back')), array('class' => 'page-navigation'));
+	}
+
+?>
 <h2>
 	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> Ticket
 	(<em><?php echo $ticket['Ticket']['status'];?></em>)

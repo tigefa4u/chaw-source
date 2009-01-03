@@ -41,16 +41,18 @@ class TicketsController extends AppController {
 		if (empty($this->passedArgs['status'])) {
 			$this->passedArgs['status'] = $current;
 		}
-		
+
 		$conditions['Ticket.status'] = $this->passedArgs['status'];
-		
+
 		if (!empty($this->passedArgs['user'])) {
 			$current = $this->passedArgs['user'];
 			$conditions['Owner.username'] = $this->passedArgs['user'];
 		}
-		
+
 		$tickets = $this->paginate('Ticket', $conditions);
 		$this->set(compact('current', 'statuses', 'tickets'));
+		
+		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
 	}
 
 	function view($id = null) {
@@ -71,7 +73,6 @@ class TicketsController extends AppController {
 		}
 
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
-		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 
 		$versions = $this->Ticket->Version->find('list', array(
 			'conditions' => array('Version.project_id' => $this->Project->id
@@ -83,6 +84,8 @@ class TicketsController extends AppController {
 		$this->data['Ticket']['owner'] = $ticket['Owner']['username'];
 
 		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities'));
+		
+		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 	}
 
 	function add() {
@@ -123,7 +126,7 @@ class TicketsController extends AppController {
 				} else {
 					$this->Session->setFlash('Ticket updated');
 				}
-				$this->Session->delete('Ticket.previous');
+				$this->Session->del('Ticket.previous');
 			} else {
 				if (!empty($data['Ticket']['comment'])) {
 					$this->Session->setFlash('Comment was NOT saved');
