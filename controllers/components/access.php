@@ -139,12 +139,8 @@ class AccessComponent extends Object {
 		}
 
 		if (!empty($_COOKIE['Chaw']['User']) && !$this->user('id')) {
-			$C->Session->write('Access.redirect', '/' . $this->url);
-			$C->redirect(array(
-				'admin' => false, 'project' => false, 'fork' => false,
-				'controller' => 'users', 'action' => 'login'
-			));
-			return true;
+			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
+			$C->redirect('/users/login');
 		}
 
 		$this->access = 'r';

@@ -79,7 +79,7 @@
 	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
-		'action' => 'history|view|add|edit|modify|delete|remove')
+		'action' => 'history|fast_forward|view|add|edit|modify|delete|remove')
 	);
 	Router::connect('/forks/:fork/:project/:controller/*', array(), array(
 		'controller' => 'commits|tickets|timeline|versions|users|projects',
@@ -92,7 +92,7 @@
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
-		'action' => 'history|view|add|edit|modify|delete|remove|forks')
+		'action' => 'history|merge|view|add|edit|modify|delete|remove|forks')
 	);
 	Router::connect('/:project/:controller/*', array(), array(
 		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',

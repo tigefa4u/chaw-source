@@ -98,13 +98,6 @@ class Project extends AppModel {
 		$this->recursive = -1;
 		$this->config = Configure::read('Project');
 
-		$duration = '+99 days';
-		if (Configure::read() > 1) {
-			$duration = '+15 seconds';
-		}
-
-		Cache::set(array('prefix' => 'config_', 'duration' => $duration, 'path' => CACHE . 'persistent'));
-
 		if (!empty($this->data['Project']['url'])) {
 			$params['project'] = $this->data['Project']['url'];
 		}
@@ -119,21 +112,21 @@ class Project extends AppModel {
 				$conditions['fork'] = $params['fork'];
 			}
 			$key = join('_', array_filter(array_values($conditions)));
-			$project = Cache::read($key);
+			$project = Cache::read($key, 'project');
 			if (empty($project)) {
 				$project = $this->find($conditions);
 				if (!empty($project)) {
-					Cache::write($key, $project);
+					Cache::write($key, $project, 'project');
 				}
 			}
 		}
 		if (empty($project)) {
 			$key = Configure::read('App.dir');
-			$project = Cache::read($key);
+			$project = Cache::read($key, 'project');
 			if (empty($project)) {
 				$project = $this->find('first');
 				if (!empty($project)) {
-					Cache::write($key, $project);
+					Cache::write($key, $project, 'project');
 				}
 			}
 		}
@@ -300,7 +293,7 @@ class Project extends AppModel {
 			$conditions[] = (!empty($this->data['Project']['fork'])) ? $this->data['Project']['fork'] : false;
 			$key = join('_', array_filter($conditions));
 			Cache::set(array('prefix' => 'config_', 'path' => CACHE . 'persistent'));
-			Cache::delete($key);
+			Cache::delete($key, 'project');
 		}
 
 		$this->__created = false;

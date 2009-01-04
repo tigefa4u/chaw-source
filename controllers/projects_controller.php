@@ -86,8 +86,39 @@ class ProjectsController extends AppController {
 		$this->set('project', $project);
 	}
 
+	function fast_forward() {
+		if ($this->Project->Repo->type != 'git') {
+			$this->Session->setFlash('You cannot fork an svn project yet');
+			$this->redirect($this->referer());
+		}
+		if ($this->Project->Repo->merge($this->Project->config['url'])) {
+			$this->Session->setFlash('Fast Forward successfull!');
+		} else {
+			$this->Session->setFlash('Fast Forward failed!');
+		}
+		//$this->redirect($this->referer());
+	}
+
+	function merge($fork = null) {
+		if ($this->Project->Repo->type != 'git') {
+			$this->Session->setFlash('You cannot fork an svn project yet');
+			$this->redirect($this->referer());
+		}
+		if (!$fork) {
+			$this->Session->setFlash('Invalid Fork');
+			$this->redirect($this->referer());
+		}
+
+		if ($this->Project->Repo->merge($this->Project->config['url'], $fork)) {
+			$this->Session->setFlash('Fast Forward successfull!');
+		} else {
+			$this->Session->setFlash('Fast Forward failed!');
+		}
+		//$this->redirect($this->referer());
+	}
+
 	function fork() {
-		if ($this->Project->Repo->type == 'svn') {
+		if ($this->Project->Repo->type != 'git') {
 			$this->Session->setFlash('You cannot fork an svn project yet');
 			$this->redirect($this->referer());
 		}

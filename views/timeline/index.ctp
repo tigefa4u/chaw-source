@@ -14,8 +14,8 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="page-navigation">
 	<?php echo $html->link('All', array('controller' => 'timeline', 'action' => 'index'));?>
 	|
-	<?php echo $html->link('Forks', array('controller' => 'timeline', 'action' => 'forks'));?>
-	|
+	<?php echo (empty($CurrentProject->fork)) ? $html->link('Forks', array('controller' => 'timeline', 'action' => 'forks')) .' | ' : null;?>
+
 	<?php echo $html->link('Commits', array('controller' => 'timeline', 'type' => 'commits'));?>
 	|
 	<?php echo $html->link('Tickets', array('controller' => 'timeline', 'type' => 'tickets'));?>

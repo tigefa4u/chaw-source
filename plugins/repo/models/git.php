@@ -118,6 +118,14 @@ class Git extends Repo {
 			'working' => $fork
 		));
 
+		if (is_dir($this->config['working'])) {
+			$this->config(array(
+				'path' => $fork,
+				'working' => dirname($working) . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
+			));
+			return true;
+		}
+
 		if ($this->pull('master', array('--bare'))) {
 			if (!empty($options['remote'])) {
 				$remote = $options['remote'];
@@ -169,9 +177,9 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function update($remote = 'origin', $branch = 'master') {
+	function update($remote = 'origin', $branch = 'master', $params = array()) {
 		$this->before(array("cd {$this->working}"));
- 		return $this->response[] = $this->run('pull', array($remote, $branch), 'capture');
+ 		return $this->response[] = $this->run('pull', array_merge($params, array($remote, $branch)), 'capture');
 	}
 /**
  * undocumented function
@@ -194,11 +202,39 @@ class Git extends Repo {
 		if (is_dir($working)) {
 			$this->before(array("cd {$working}"));
 			$this->response[] = $this->run('checkout', array($branch));
-			$this->response[] = $this->update($branch);
+			$this->response[] = $this->update('origin', $branch);
 			return $this->response;
 		}
 
 		return false;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function merge($project, $fork = false) {
+		$this->update('origin', 'master');
+
+		$remote = 'parent';
+		if (strpos($project, '.git') === false) {
+			$project = "{$project}.git";
+		}
+		if ($fork) {
+			$remote = $fork;
+			$project = "forks/{$fork}/{$project}";
+		}
+
+		$this->before(array("cd {$this->working}"));
+		$this->remote(array('add', $remote, Configure::read('Content.git') . 'repo' . DS . $project));
+
+		$this->update($remote, 'master', array('--squash'));
+
+		$this->commit(array("-m", "'Merge from {$project}'"));
+		$this->push('origin', 'master');
+
+		return $this->response;
 	}
 /**
  * find all revisions and return contents of read.

@@ -26,10 +26,6 @@ class DashboardController extends AppController {
 	}
 
 	function index() {
-		if (!$this->Auth->user()) {
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));
-		}
-
 		extract($this->Project->User->projects($this->Auth->user('id')));
 
 		$wiki = $this->Timeline->Wiki->find('all', array(
@@ -94,7 +90,7 @@ class DashboardController extends AppController {
 			'limit' => 10, 'order' => 'Commit.created DESC',
 			'recursive' => 0
 		));
-		
+
 		$forkCommits = null;
 		if (empty($this->Project->config['fork'])) {
 			$forks = $this->Project->forks();
@@ -104,7 +100,7 @@ class DashboardController extends AppController {
 				'recursive' => 0
 			));
 		}
-		
+
 		$this->set(compact('wiki', 'tickets', 'comments', 'commits', 'forkCommits'));
 	}
 

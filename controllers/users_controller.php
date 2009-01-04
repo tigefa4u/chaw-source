@@ -42,6 +42,7 @@ class UsersController extends AppController {
 	}
 
 	function login() {
+
 		if ($cookie = $this->Cookie->read('User')) {
 			$this->Session->write('Auth.User', $cookie);
 		}
@@ -52,23 +53,27 @@ class UsersController extends AppController {
 				$this->Cookie->write('User', $this->Session->read('Auth.User'));
 			}
 
-			$group = $this->User->groups($id);
 			$this->Session->write('Auth.User.Permission', $this->User->groups($id));
 
 			$this->User->id = $id;
 			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
 
 			if ($redirect = $this->Session->read('Access.redirect')) {
-				$this->Session->del('Access.redirect');
+				$this->Session->del('Access');
 				$this->Session->del('Auth.redirect');
+				//$message = "access:$redirect";
 			} else {
 				$redirect = $this->Auth->redirect();
+				//$message = "auth:$redirect";
 			}
 			if (strpos($redirect, 'login') !== false || strpos($redirect, 'users/add') !== false || $redirect == '/') {
 				$redirect = '/dashboard';
 			}
 			$this->redirect($redirect);
+			//$this->flash($message, $redirect);
+			//return;
 		} elseif (strpos($this->referer(), 'users/login') && !empty($this->data['User'])) {
+
 			$this->Session->del('Message.auth');
 
 			$this->Auth->fields['password'] = 'tmp_pass';
@@ -85,15 +90,19 @@ class UsersController extends AppController {
 				$this->redirect(array('action' => 'change'));
 			}
 		}
+
 		if (!empty($this->data['User']['username'])) {
+			$this->Session->del('Message.auth');
 			$this->Session->setFlash('Did you forget your password?');
-			$this->redirect(array('action' => 'forgotten'));
+			$this->redirect(array('action' => 'forgotten'), 401);
 		}
 	}
 
 	function logout() {
-		$this->Cookie->del('User');
+		$this->Cookie->destroy('User');
 		$this->Auth->logout();
+		$this->Session->del('Access');
+		$this->Session->del('Auth.redirect');
 		$this->redirect('/');
 	}
 
@@ -130,13 +139,15 @@ class UsersController extends AppController {
 			$this->data = $this->User->read(null, $id);
 		}
 
-		$isAllowed = ($this->params['isAdmin']
-			|| ($this->data['User']['id'] == $this->Auth->user('id'))
-			&& $this->data['User']['username'] == $this->Auth->user('username'));
+		$isAllowed = (
+			($this->params['isAdmin'] && $this->Project->id == 1) ||
+			($this->data['User']['id'] == $this->Auth->user('id') &&
+			$this->data['User']['username'] == $this->Auth->user('username'))
+		);
 
 		if (!$isAllowed) {
-			$this->render('view');
-			return;
+			echo $this->render('view');
+			exit;
 		}
 
 		if ($isGet === false) {
@@ -163,7 +174,6 @@ class UsersController extends AppController {
 		$this->render('edit');
 	}
 
-
 	function admin_index() {
 		if (!empty($this->data['Permission'])) {
 			foreach ($this->data['Permission'] as $permission) {
@@ -186,10 +196,11 @@ class UsersController extends AppController {
 			'conditions' => array('Permission.project_id' => $this->Project->id
 		)))), false);
 
-		$this->paginate['conditions'] = array('User.active' => 1);
-		if (empty($this->passedArgs['all'])) {
-			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
-			$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+		$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id, 'User.active' => 1);
+
+		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
+			$this->paginate['conditions'] = array('User.active' => 1);
 		}
 
 		$users = $this->paginate();

@@ -323,6 +323,17 @@ div.help h4 {
 	font-size: 140%;
 	vertical-align: top;
 }
+.row h3.name em {
+	display: inline;
+	float: none;
+	clear: none;
+	margin: 0;
+	font-size: 70%;
+	font-style: normal;
+}
+.row h3.name em a {
+	color: #69C;
+}
 .row img {
 	display: block;
 	float: left;
@@ -330,15 +341,22 @@ div.help h4 {
 	padding: 0 10px 0 0;
 	background: #fff;
 }
-.row h3.subtitle {
-	margin: 0px 10px 4px 0;
-	padding: 0;
+.row span.subtitle {
 	float: right;
-	font-weight: bold;
-	font-size: 12px;
+	padding: 0;
+	margin: -20px 120px 4px 0;	
 	color: #656565;
 }
-.row span.subtitle {
+.row .description {
+	clear: both;
+	display: block;
+	float: left;
+	width: 70%;
+}
+.row .footer {
+	margin-top: 4px;
+}
+.row .admin {
 	margin: -20px 10px 4px 0;
 	padding: 0;
 	float: right;
@@ -346,12 +364,7 @@ div.help h4 {
 	font-size: 12px;
 	color: #656565;
 }
-.row .description {
-	display: block;
-	float: left;
-	width: 90%;
-}
-.row .admin, .row .nav {
+.row .nav {
 	float: right;
 	font-size: 100%;
 	padding-top: 2px;
@@ -363,6 +376,7 @@ div.help h4 {
 	font-size: 120%;
 	margin-top: -26px;
 }
+
 fieldset.options select {
 	width: 100%;
 }
@@ -528,7 +542,6 @@ fieldset.options textarea {
 	margin-right: 0%;
 	border-bottom: 1px solid #ccc;
 }
-
 .timeline .name {
 	width: 100%;
 }
@@ -536,6 +549,10 @@ fieldset.options textarea {
 	clear: both;
 	margin: 0;
 	width: 40%;
+}
+.timeline .author {
+	float: right;
+	font-weight: bold;
 }
 .timeline .author {
 	float: right;
