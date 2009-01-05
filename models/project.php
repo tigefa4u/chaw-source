@@ -221,7 +221,7 @@ class Project extends AppModel {
 			}
 		}
 
-		if ($this->__created && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
+		if ($this->__created && !$this->id && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
 			$this->invalidate('user', 'Invalid user');
 			return false;
 		}
