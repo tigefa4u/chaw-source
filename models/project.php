@@ -289,10 +289,9 @@ class Project extends AppModel {
 
 
 		if (!$this->__created) {
-			$conditions = array($this->data['Project']['url']);
-			$conditions[] = (!empty($this->data['Project']['fork'])) ? $this->data['Project']['fork'] : false;
+			$conditions = array($this->config['url']);
+			$conditions[] = (!empty($this->config['fork'])) ? $this->config['fork'] : false;
 			$key = join('_', array_filter($conditions));
-			Cache::set(array('prefix' => 'config_', 'path' => CACHE . 'persistent'));
 			Cache::delete($key, 'project');
 		}
 

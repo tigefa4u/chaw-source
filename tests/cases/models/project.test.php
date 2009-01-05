@@ -114,6 +114,55 @@ class ProjectTestCase extends CakeTestCase {
 
 	}
 
+	function testProjectEdit() {
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'new project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		$this->__cleanUp();
+
+		$this->assertFalse(file_exists($this->Project->Repo->path));
+
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'new project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+		$this->assertTrue(file_exists($this->Project->Repo->path));
+
+
+	}
+
 	function testProjectFork() {
 		$this->__cleanUp();
 
