@@ -422,19 +422,13 @@ class Project extends AppModel {
  * @return void
  *
  **/
-	function group($user) {
-		$id = $this->id;
-		if (is_array($user)) {
-			extract($user);
-		}
+	function users($type = 'list') {
 
-		$user = $this->Permission->user($user);
-
-		if (!$user || !$id) {
-			return false;
-		}
-
-		return $this->Permission->field('group', array('project_id' => $id, 'user_id' => $user));
+		$users = $this->Permission->find('all', array(
+			'fields' => array('User.id', 'User.username'),
+			'conditions' => array('Permission.project_id' => $this->id, 'User.username !=' => null)
+		));
+		return array_filter(Set::combine($users, '/User/id', '/User/username'));
 	}
 /**
  * undocumented function

@@ -50,7 +50,7 @@ class PreReceiveShell extends Shell {
 		
 		$allowed = $this->Permission->check($refname, array(
 			'user' => $user,
-			//'group' => @$permissions['Permission']['group'],
+			'group' => $this->Permission->group($this->Project->id, $this->params['user']),
 			'access' => 'w',
 			'default' => false
 		));
@@ -61,7 +61,7 @@ class PreReceiveShell extends Shell {
 
 		$master = $this->Permission->check('refs/heads/master', array(
 			'user' => $user,
-			//'group' => @$permissions['Permission']['group'],
+			'group' => $this->Permission->group($this->Project->id, $this->params['user']),
 			'access' => 'w',
 			'default' => false
 		));

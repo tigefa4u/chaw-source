@@ -4,6 +4,7 @@
 App::import('Model', 'Permission');
 class TestPermission extends Permission {
 
+	var $useDbConfig = 'test_suite';
 	var $cacheSources = false;
 }
 
@@ -368,6 +369,33 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertFalse($Permission->check("tickets", array('group' => 'team', 'access' => 'rw', 'default' => false)));
 		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'group' => 'team', 'access' => 'rw', 'default' => false)));
+	}
+
+	function testPermissionGroup() {
+		$Permission = new TestPermission();
+		$Permission->create(array(
+			'project_id' => 1,
+			'user_id' => 1,
+			'group' => 'user',
+		));
+		$Permission->save();
+
+		$Permission->create(array(
+			'project_id' => 1,
+			'user_id' => 2,
+			'group' => 'admin',
+		));
+		$Permission->save();
+
+		$result = $Permission->group(array(
+			'project' => 1,
+			'user' => 1,
+		));
+		$this->assertEqual($result, 'user');
+
+
+		$result = $Permission->group(1, 2);
+		$this->assertEqual($result, 'admin');
 	}
 }
 ?>

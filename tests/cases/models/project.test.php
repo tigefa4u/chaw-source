@@ -9,8 +9,7 @@ class ProjectTestCase extends CakeTestCase {
 		'app.tag', 'app.tags_tickets', 'app.commit'
 	);
 
-	function start() {
-		parent::start();
+	function startTest() {
 		Configure::write('Content', array(
 			'base' => TMP . 'tests' . DS,
 			'git' => TMP . 'tests' . DS . 'git' . DS,
@@ -22,8 +21,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->Project = ClassRegistry::init('Project');
 	}
 
-	function end() {
-		parent::end();
+	function endTest() {
 		$Cleanup = new Folder(TMP . 'tests/git');
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
@@ -401,6 +399,61 @@ class ProjectTestCase extends CakeTestCase {
 		$results = Set::extract($this->Project->all(1, false), '/Project/id');
 		$this->assertEqual($results, array('2', '3'));
 
+	}
+	
+	function NotGetTests() {
+		return array('start', 'startTest', 'testProjectUsers', 'endTest', 'end');
+	}
+	
+	function testProjectUsers() {
+		$this->Project->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.org'));
+		$this->assertTrue($this->Project->User->save());
+		$this->Project->User->create(array('username' => 'bob', 'email' => 'bob@test.org'));
+		$this->assertTrue($this->Project->User->save(array('username' => 'bob', 'email' => 'bob@test.org')));
+		
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'test project',
+			'username' => 'gwoo',
+			'user_id' => 1,
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$config = $this->Project->config;
+
+		$this->Project->create(array_merge(
+			$config,
+			array(
+				'user_id' => 1,
+				'fork' => 'gwoo',
+				'approved' => 1,
+			)
+		));
+		$this->assertTrue($data = $this->Project->fork());
+		$this->Project->create(array_merge(
+			$config,
+			array(
+				'user_id' => 2,
+				'fork' => 'bob',
+				'approved' => 1,
+			)
+		));
+		$this->assertTrue($this->Project->save());
+		
+		$results = $this->Project->users(1);
+		$this->assertEqual($results, array('1'=> 'gwoo', '2' => 'bob'));
+		
 	}
 
 	function __cleanUp() {
