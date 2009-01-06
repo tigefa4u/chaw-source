@@ -117,6 +117,13 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 					<span class="user">
 						by <?php echo $comment['User']['username'];?>
 					</span>
+				
+				<?php if(!empty($this->params['isAdmin'])):?>
+					<span class="admin">
+						<?php echo $chaw->admin('delete', array('controller' => 'comments', 'action' => 'delete', $comment['id']))?>
+					</span>
+				<?php endif; ?>
+				
 					<div class="body">
 						<?php echo $html->clean($comment['body']);?>
 					</div>
@@ -156,10 +163,11 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 				<fieldset class="options">
 					<legend>Options</legend>
 					<?php
+						echo $form->input('owner');
+
 						if (!empty($versions)) {
 							echo $form->input('version_id');
 						}
-						echo $form->input('owner');
 						echo $form->input('type');
 						echo $form->input('priority');
 					?>

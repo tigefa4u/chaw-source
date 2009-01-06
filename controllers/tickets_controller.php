@@ -25,10 +25,22 @@ class TicketsController extends AppController {
 	function index() {
 		Router::connectNamed(array('status', 'page', 'user'));
 
-		$this->Ticket->recursive = 0;
 		$statuses = array_values($this->Project->ticket('statuses'));
 
+		$current = $statuses[0];
+		if (!empty($this->passedArgs['status'])) {
+			$current = $this->passedArgs['status'];
+		}
+				
 		$conditions = array('Ticket.project_id' => $this->Project->id);
+		
+		$conditions['Ticket.status'] = $current;
+
+		if (!empty($this->passedArgs['user'])) {
+			$current = $this->passedArgs['user'];
+			$conditions['Owner.username'] = $this->passedArgs['user'];
+		}
+		
 		/*
 		if (!empty($this->Project->config['fork'])) {
 			$conditions = array('OR' => array(
@@ -37,21 +49,12 @@ class TicketsController extends AppController {
 			));
 		}
 		*/
-		$current = $statuses[0];
-		if (empty($this->passedArgs['status'])) {
-			$this->passedArgs['status'] = $current;
-		}
-
-		$conditions['Ticket.status'] = $this->passedArgs['status'];
-
-		if (!empty($this->passedArgs['user'])) {
-			$current = $this->passedArgs['user'];
-			$conditions['Owner.username'] = $this->passedArgs['user'];
-		}
-
+		
+		$this->pageTitle = 'Tickets/Status/' . Inflector::humanize($current);
+		
 		$tickets = $this->paginate('Ticket', $conditions);
 		$this->set(compact('current', 'statuses', 'tickets'));
-		
+
 		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
 	}
 
@@ -80,11 +83,10 @@ class TicketsController extends AppController {
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
+		$owners = $this->Project->users();
 
-		$this->data['Ticket']['owner'] = $ticket['Owner']['username'];
+		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities', 'owners'));
 
-		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities'));
-		
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 	}
 

@@ -60,16 +60,16 @@
 
 	/* General Routes */
 	Router::connect('/:controller', array(), array(
-		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index', 'project' => false)
 	);
 	Router::connect('/:controller/:action/*', array(), array(
-		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'history|view|add|edit|modify|delete|remove|forgotten|verify|change|login|account|logout|forks',
 		'project' => false)
 	);
 	Router::connect('/:controller/*', array(), array(
-		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index', 'project' => false)
 	);
 
@@ -78,11 +78,11 @@
 	Router::connect('/forks/:fork/:project/', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array(
-		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'history|fast_forward|view|add|edit|modify|delete|remove')
 	);
 	Router::connect('/forks/:fork/:project/:controller/*', array(), array(
-		'controller' => 'commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index')
 	);
 
@@ -91,10 +91,10 @@
 	Router::connect('/:project', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller/:action/*', array(), array(
-		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'history|merge|view|add|edit|modify|delete|remove|forks')
 	);
 	Router::connect('/:project/:controller/*', array(), array(
-		'controller' => 'wiki|commits|tickets|timeline|versions|users|projects',
+		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index')
 	);

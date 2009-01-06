@@ -344,14 +344,14 @@ div.help h4 {
 .row span.subtitle {
 	float: right;
 	padding: 0;
-	margin: -20px 120px 4px 0;	
+	margin: -20px 120px 4px 0;
 	color: #656565;
 }
 .row .description {
-	clear: both;
 	display: block;
 	float: left;
 	width: 70%;
+	line-height: 120%;
 }
 .row .footer {
 	margin-top: 4px;
@@ -545,6 +545,10 @@ fieldset.options textarea {
 .timeline .name {
 	width: 100%;
 }
+.timeline .description {
+	clear: both;
+}
+
 .timeline .message {
 	clear: both;
 	margin: 0;
@@ -652,6 +656,10 @@ div.comments {
 .comments .comment .date {
 	font-weight: bold;
 	color: #633;
+}
+.comments .comment .admin a {
+	font-size: 80%;
+	color: #ccc;
 }
 .comments .comment .body {
 	border: 1px solid #ccc;
@@ -882,6 +890,11 @@ div.comments {
 	padding: 8px 0;
 	list-style-type: none;
 }
+.project .description {
+	clear: none;
+	line-height: 120%;
+}
+
 .projects {
 	border-bottom: 1px #ccc solid;
 	margin-right: 0%;
