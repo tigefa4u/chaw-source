@@ -136,7 +136,7 @@ class WikiController extends AppController {
 		if (!empty($this->data)) {
 			$this->Wiki->create(array(
 				'project_id' => $this->Project->id,
-				'last_changed_by' => $this->Auth->user('id')
+				'last_changed_by' => $this->Auth->user('id'),
 			));
 			if ($data = $this->Wiki->save($this->data)) {
 				$this->Session->setFlash($data['Wiki']['slug'] . ' saved');
@@ -151,9 +151,9 @@ class WikiController extends AppController {
 				'Wiki.slug' => $slug,
 				'Wiki.path' => $path,
 				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
+				//'Wiki.active' => 1
 			));
-			if (!empty($this->data)) {
+			if (empty($this->data)) {
 				$this->data['Wiki']['active'] = 1;
 			}
 			$canEdit = !empty($this->params['isAdmin']) || $this->Auth->user('id') === $this->data['Wiki']['last_changed_by'];

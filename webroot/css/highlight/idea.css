@@ -9,6 +9,7 @@ pre code {
 	display: block;
 	color: #000;
 	background: #fff;
+	white-space: normal;
 }
 
 .subst, .title {
