@@ -3,7 +3,10 @@
 	Tickets
 </h2>
 <?php
-	$links = array($html->link('mine', array('user' => $CurrentUser->username)));
+	$links = array();
+	if (!empty($CurrentUser->username)) {
+		$links[] = $html->link('mine', array('user' => $CurrentUser->username));
+	}
 
 	foreach ($statuses as $status) {
 		$links[] = $html->link($status, array('status' => $status));
@@ -61,13 +64,13 @@ foreach ($tickets as $ticket):
 		<td>
 			<?php echo $ticket['Ticket']['priority']; ?>
 		</td>
-		
+
 		<?php if(empty($this->passedArgs['status'])): ?>
 			<td>
 				<?php echo $ticket['Ticket']['status']; ?>
 			</td>
 		<?php endif; ?>
-		
+
 		<td class="title left">
 			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])); ?>
 		</td>

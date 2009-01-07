@@ -66,7 +66,7 @@ class GitShellShell extends Shell {
 				'user' => $this->params['user'],
 				'group' => $this->Permission->group($this->Project->id, $this->params['user']),
 				'access' => 'r',
-				'default' => false
+				'default' => (empty($this->Project->config['private'])) ? true : false
 			));
 
 			if ($allowed !== true) {
