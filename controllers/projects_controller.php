@@ -214,7 +214,7 @@ class ProjectsController extends AppController {
 	}
 
 	function admin_index() {
-		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
+		if ($this->Project->id != 1 || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
 		}
 		if ($this->params['isAdmin'] === true) {

@@ -201,10 +201,11 @@ class UsersController extends AppController {
 
 		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
 			$this->paginate['conditions'] = array('User.active' => 1);
+		} else {
+			$groups = $this->Project->groups();
 		}
 
 		$users = $this->paginate();
-		$groups = $this->Project->groups();
 
 		$this->set(compact('users', 'groups'));
 	}

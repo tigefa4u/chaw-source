@@ -42,12 +42,12 @@ class PreReceiveShell extends Shell {
 
 		$conditions = $this->Project->Repo->find(array('commit' => $newrev), array('email', 'author', 'hash'));
 		$this->log($conditions, LOG_INFO);
-		
+
 		$user = $this->Project->User->field('username', array('OR' => array(
 			'email' => $conditions['email'],
 			'username' => $conditions['author']
 		)));
-		
+
 		$allowed = $this->Permission->check($refname, array(
 			'user' => $user,
 			'group' => $this->Permission->group($this->Project->id, $user),

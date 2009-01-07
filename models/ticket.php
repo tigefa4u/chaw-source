@@ -103,7 +103,9 @@ class Ticket extends AppModel {
 					}
 				}
 			}
-			$this->data['Ticket']['comment'] = trim($this->data['Ticket']['comment']);
+			if (!empty($this->data['Ticket']['comment'])) {
+				$this->data['Ticket']['comment'] = trim($this->data['Ticket']['comment']);
+			}
 			if (!empty($changes) || !empty($this->data['Ticket']['comment'])) {
 				$data = array('Comment' => array(
 					'ticket_id' => $this->id,
