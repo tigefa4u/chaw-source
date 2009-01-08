@@ -147,13 +147,15 @@ class WikiController extends AppController {
 		}
 
 		if (empty($this->data) && $slug !== '1') {
-			$this->data = $this->Wiki->find(array(
-				'Wiki.slug' => $slug,
-				'Wiki.path' => $path,
-				'Wiki.project_id' => $this->Project->id,
-				//'Wiki.active' => 1
+			$this->data = $this->Wiki->find('first', array(
+				'conditions' => array(
+					'Wiki.slug' => $slug,
+					'Wiki.path' => $path,
+					'Wiki.project_id' => $this->Project->id,
+				), 'order' => 'Wiki.id DESC', 'limit' => 1
 			));
-			if (empty($this->data)) {
+
+			if (empty($this->data['Wiki']['active'])) {
 				$this->data['Wiki']['active'] = 1;
 			}
 			$canEdit = !empty($this->params['isAdmin']) || $this->Auth->user('id') === $this->data['Wiki']['last_changed_by'];
