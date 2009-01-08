@@ -2,22 +2,24 @@
 if (!empty($wiki)):
 
 	$li = null;
-	foreach ($wiki as $wik) :
+	foreach ($wiki as $data) :
 
 		$url = array('admin' => false,
-			'controller' => 'wiki', 'action' => 'index', $wik['Wiki']['slug']
+			'controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']
 		);
 
 		$project = null;
-		if (!emptY($wik['Project']) && $wik['Project']['id'] !== $CurrentProject->id) {
-			$url = $chaw->url($wik['Project'], $url);
-			$project = ' in '. $html->link($wik['Project']['name'], $chaw->url($wik['Project'], array(
-				'admin' => false, 'controller' => 'browser'
+		if (!emptY($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
+			$url = $chaw->url($data['Project'], $url);
+			$project = ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
+				'admin' => false, 'controller' => 'wiki'
 			)), array('class' => 'project'));
 		}
 
+		$title = ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
+
 		$li .= $html->tag('li',
-			$html->link($wik['Wiki']['slug'], $url) . ' updated by ' . $wik['User']['username']
+			$html->link($title, $url) . ' updated by ' . $data['User']['username']
 			. $project
 		);
 
