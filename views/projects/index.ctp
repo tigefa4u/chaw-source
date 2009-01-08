@@ -15,9 +15,16 @@
 	</h2>
 
 	<div class="page-navigation">
+		<?php
+			$type = null;
+			if (!empty($CurrentUser->username) && !empty($CurrentUser->Permission)) {
+				$type = 'public';
+				echo $html->link('Mine', array()) . ' | ';
+			}
+		?>
 		<?php echo $html->link('All', array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
 		|
-		<?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index'));?>
+		<?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index', 'type' => $type));?>
 		|
 		<?php echo $html->link('Forks', array('controller' => 'projects', 'action' => 'index', 'type' => 'fork'));?>
 		|
@@ -57,7 +64,7 @@
 	?>
 		<div class="project row <?php echo $zebra?>">
 			<?php echo $html->image(strtolower($project['Project']['repo_type']) . '.png', array('height' => 40, 'width' => 40)); ?>
-			
+
 			<h3 class="name">
 				<?php
 					echo $html->link($project['Project']['name'], array(
@@ -70,7 +77,7 @@
 					endif;
 					?>
 			</h3>
-			
+
 			<span class="nav">
 				<?php
 					/*
@@ -94,7 +101,7 @@
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
 					));
-					
+
 					if (!empty($this->params['isAdmin'])):
 						echo ' | ';
 						echo $html->link('view', array(
@@ -112,7 +119,7 @@
 							'controller' => 'dashboard'
 						));
 					endif;
-					
+
 				?>
 			</span>
 

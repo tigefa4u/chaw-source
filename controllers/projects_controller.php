@@ -37,31 +37,41 @@ class ProjectsController extends AppController {
 			));
 
 			$this->render('package');
+			return;
 		}
-
 		Router::connectNamed(array('type', 'page'));
 
-		$this->Project->recursive = 0;
+		$projects = $this->Access->user('Permission');
 
-		$this->paginate['conditions'] = array(
-			'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
-		);
+		if (empty($projects) || !empty($this->passedArgs['type'])) {
 
-		if ($this->params['isAdmin'] === true) {
-			$this->paginate['conditions'] = array();
-			$this->paginate['order'] = 'Project.id ASC';
-		}
+			$this->Project->recursive = 0;
 
-		$this->paginate['conditions']['Project.fork'] = null;
+			$this->paginate['conditions'] = array(
+				'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
+			);
 
-		if(!empty($this->passedArgs['type'])) {
-			if ($this->passedArgs['type'] == 'fork') {
-				$this->paginate['conditions']['Project.fork !='] = null;
+			if ($this->params['isAdmin'] === true) {
+				$this->paginate['conditions'] = array();
+				$this->paginate['order'] = 'Project.id ASC';
 			}
-			unset($this->paginate['conditions']['Project.fork']);
+
+			$this->paginate['conditions']['Project.fork'] = null;
+
+			if(!empty($this->passedArgs['type'])) {
+				if ($this->passedArgs['type'] == 'fork') {
+					$this->paginate['conditions']['Project.fork !='] = null;
+				}
+				unset($this->paginate['conditions']['Project.fork']);
+			}
+
+			$projects  = $this->paginate();
+		} else {
+			$this->passedArgs['type'] = null;
+			$projects = $this->paginate(array('Project.id' => array_keys($projects)));
 		}
 
-		$this->set('projects', $this->paginate());
+		$this->set('projects', $projects);
 
 		$this->set('rssFeed', array('controller' => 'projects'));
 	}
