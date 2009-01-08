@@ -109,8 +109,8 @@ class UsersController extends AppController {
 	function add() {
 		if (!empty($this->data)) {
 			$this->User->create();
-			if ($this->User->save($this->data)) {
-				$this->Session->setFlash('User added');
+			if ($data = $this->User->save($this->data)) {
+				$this->Session->setFlash(sprintf('%1$s is now registered', $data['User']['username']));
 				$this->redirect(array('action' => 'login'));
 			} else {
 				$this->Session->setFlash('User NOT added');

@@ -27,7 +27,10 @@ class DashboardController extends AppController {
 
 	function index() {
 		extract($this->Project->User->projects($this->Auth->user('id')));
-
+		
+		if (empty($ids)) {
+			return;
+		}
 		$wiki = $this->Timeline->Wiki->find('all', array(
 			'conditions' => array('Wiki.project_id' => $ids, 'Wiki.active' => 1),
 			'limit' => 10, 'order' => 'Wiki.created DESC',
