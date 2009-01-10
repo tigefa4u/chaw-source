@@ -1,17 +1,17 @@
 <h2><?php __('Dashboard');?></h2>
 
 <div class="page-navigation">
-	<?php echo $html->link('View Account', array('controller' => 'users', 'action' => 'accout'));?>
-	<?php
-		/*
+	<?php 
+		echo $html->link('View Account', array('controller' => 'users', 'action' => 'accout')) .' | ';
+		
 		echo $html->link(
 			$html->image('feed-icon.png', array(
 				'width' => 14, 'height' => 14
 			)),
 			$rssFeed, array(
-			'title' => 'Projects Feed', 'class' => 'rss', 'escape'=> false
+			'title' => "{$CurrentUser->username}'s Feed", 'class' => 'rss', 'escape'=> false
 		));
-		*/?>
+	?>
 </div>
 
 <div class="dashboard index">

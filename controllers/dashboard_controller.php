@@ -58,8 +58,10 @@ class DashboardController extends AppController {
 			'limit' => 10, 'order' => 'Commit.created DESC',
 			'recursive' => 0
 		));
-
+		
 		$this->set(compact('projects', 'wiki', 'tickets', 'comments', 'commits'));
+		
+		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 	}
 
 	function feed() {
