@@ -45,6 +45,14 @@ class Timeline extends AppModel {
 		foreach ($data as $key => $timeline) {
 			$type = $timeline['Timeline']['model'];
 			$this->{$type}->recursive = 0;
+			
+			if ($type == 'Comment') {
+				$this->{$type}->recursive = 2;
+				$this->{$type}->Ticket->unbindModel(array(
+					'hasMany' => array('Comment'),
+				));
+			}
+			
 			$related = $this->{$type}->findById($timeline['Timeline']['foreign_key']);
 			$data[$key] = array_merge($timeline, (array)$related);
 		}

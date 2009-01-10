@@ -19,7 +19,8 @@ if (!empty($wiki)):
 		$title = ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
 
 		$li .= $html->tag('li',
-			$html->link($title, $url) . ' updated by ' . $data['User']['username']
+			$html->link($title, $url) 
+			. ' updated by ' . $data['User']['username']
 			. $project
 		);
 

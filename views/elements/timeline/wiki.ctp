@@ -7,9 +7,23 @@
 <div class="wiki row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		Wiki: <?php
-		$title = ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
-		echo $html->link($title, array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']));?>
+		Wiki:
+		<?php
+			$url = array('admin' => false,
+				'controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']
+			);
+
+			$project = null;
+			if (!emptY($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
+				$url = $chaw->url($data['Project'], $url);
+				if (!empty($data['Project']['fork'])) {
+					$project = "forks/{$data['Project']['fork']}/";
+				}
+				$project .= $data['Project']['url'] . '/';
+			}
+			$title = $project . ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
+			echo $html->link($title, $url);
+		?>
 	</h3>
 
 	<span class="description">
