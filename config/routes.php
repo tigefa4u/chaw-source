@@ -80,7 +80,7 @@
 	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects|repo',
-		'action' => 'history|fast_forward|view|add|edit|modify|delete|remove')
+		'action' => 'history|fast_forward|view|add|edit|modify|delete|remove|parent')
 	);
 	Router::connect('/forks/:fork/:project/:controller/*', array(), array(
 		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',

@@ -43,10 +43,21 @@ class TimelineController extends AppController {
 		$this->Timeline->recursive = -1;
 		$timeline = $this->paginate();
 
-
 		$this->set('timeline', $this->Timeline->related($timeline));
 
 		$this->set('rssFeed', array('controller' => 'timeline'));
+	}
+
+	function parent() {
+		if (!empty($this->Project->config['fork'])) {
+			$this->paginate['conditions'] = array(
+				'Timeline.project_id' => $this->Project->config['project_id']
+			);
+		}
+		$this->index();
+		$this->set('rssFeed', array('controller' => 'timeline', 'action' => 'parent'));
+
+		$this->render('index');
 	}
 
 	function forks() {

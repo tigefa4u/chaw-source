@@ -14,13 +14,16 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="page-navigation">
 	<?php
 		$active = ($this->action == 'index') ? array('class' => 'active') : null;
-		echo $chaw->type(array('title' => 'Project', 'type' => null), array(
+		echo $html->link('Project', array(
 			'controller' => 'timeline', 'action' => 'index',
 		), $active) . ' | ';
 
 		if (empty($CurrentProject->fork)) {
 			$active = ($this->action == 'forks') ? array('class' => 'active') : null;
 			echo $html->link('Forks', array('controller' => 'timeline', 'action' => 'forks'), $active) .' | ';
+		} else {
+			$active = ($this->action == 'parent') ? array('class' => 'active') : null;
+			echo $html->link('Parent', array('controller' => 'timeline', 'action' => 'parent'), $active) .' | ';
 		}
 
 		echo $chaw->type('commits', array(
