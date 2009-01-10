@@ -51,7 +51,7 @@ class ProjectsController extends AppController {
 				$this->passedArgs['type'] = 'public';
 			}
 
-			if ($this->passedArgs['type'] == 'fork') {
+			if ($this->passedArgs['type'] == 'forks') {
 				$this->paginate['conditions']['Project.fork !='] = null;
 			} else if ($this->passedArgs['type'] == 'public') {
 				$this->paginate['conditions']['Project.fork ='] = null;
@@ -61,7 +61,7 @@ class ProjectsController extends AppController {
 			$this->passedArgs['type'] = null;
 			$this->paginate['conditions'] = array('Project.id' => array_keys($projects));
 		}
-		
+
 		$projects  = $this->paginate();
 		$this->set('projects', $projects);
 

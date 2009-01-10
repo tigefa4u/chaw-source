@@ -35,7 +35,7 @@
 							'controller' => 'projects', 'action' => 'forks'
 						), array('class' => 'detail'));
 					else:
-						$link = $html->link('view main project', array(
+						$link = $html->link('view parent', array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'browser', 'action' => 'index'
 						), array('class' => 'detail'));

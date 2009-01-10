@@ -36,6 +36,8 @@ class TimelineController extends AppController {
 
 		if (!empty($this->passedArgs['type'])) {
 			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
+		} else if ($this->action !== 'forks'){
+			$this->passedArgs['type'] = null;
 		}
 
 		$this->Timeline->recursive = -1;

@@ -1,9 +1,3 @@
-<?php
-	if (empty($data['Wiki'])) {
-		return false;
-	}
-
-?>
 <div class="wiki row <?php echo $zebra;?>">
 
 	<h3 class="name">
@@ -19,7 +13,7 @@
 				if (!empty($data['Project']['fork'])) {
 					$project = "forks/{$data['Project']['fork']}/";
 				}
-				$project .= $data['Project']['url'] . '/';
+				$project = $data['Project']['url'] . '/';
 			}
 			$title = $project . ltrim($data['Wiki']['path'] . '/' . $data['Wiki']['slug'], '/');
 			echo $html->link($title, $url);

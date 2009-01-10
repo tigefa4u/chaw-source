@@ -16,26 +16,20 @@
 
 	<div class="page-navigation">
 		<?php
-			if (!empty($CurrentUser->username) && !empty($CurrentUser->Permission)) {
-				$active = ($this->passedArgs['type'] == null) ? array('class' => 'active') : null;
-				echo $html->link('Mine', array(), $active) . ' | ';
-			}
+			echo $chaw->type(array('title' => 'Mine', 'type' => null)) . ' | ';
 
-			$active = ($this->passedArgs['type'] == 'both') ? array('class' => 'active') : null;
-			echo $html->link('All', array(
-				'controller' => 'projects', 'action' => 'index', 'type' => 'both'
-			), $active) . ' | ';
+			echo $chaw->type('all', array(
+				'controller' => 'projects', 'action' => 'index',
+			)) . ' | ';
 
-			$active = ($this->passedArgs['type'] == 'public') ? array('class' => 'active') : null;
-			echo $html->link('Public', array(
-				'controller' => 'projects', 'action' => 'index', 'type' => 'public'
-			), $active) . ' | ';
+			echo $chaw->type('public', array(
+				'controller' => 'projects', 'action' => 'index',
+			)) . ' | ';
 
-			$active = ($this->passedArgs['type'] == 'fork') ? array('class' => 'active') : null;
-			echo $html->link('Forks', array(
-				'controller' => 'projects', 'action' => 'index', 'type' => 'fork'
-			), $active) . ' | ';
-
+			echo $chaw->type('forks', array(
+				'controller' => 'projects', 'action' => 'index',
+			)) . ' | ';
+		
 			echo $html->link(
 				$html->image('feed-icon.png', array(
 					'width' => 14, 'height' => 14
