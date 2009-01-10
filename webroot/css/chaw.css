@@ -283,7 +283,10 @@ input[type=hidden] {
 .page-navigation span.not-active {
 	color: #600;
 }
-
+a.active {
+	color: #363;
+	font-weight: bold;
+}
 .left {
 	float:left;
 	margin-right: 20px;

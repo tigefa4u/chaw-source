@@ -47,21 +47,22 @@ class ProjectsController extends AppController {
 				$this->paginate['order'] = 'Project.id ASC';
 			}
 
-			$this->paginate['conditions']['Project.fork'] = null;
-
-			if(!empty($this->passedArgs['type'])) {
-				if ($this->passedArgs['type'] == 'fork') {
-					$this->paginate['conditions']['Project.fork !='] = null;
-				}
-				unset($this->paginate['conditions']['Project.fork']);
+			if(empty($this->passedArgs['type'])) {
+				$this->passedArgs['type'] = 'public';
 			}
 
-			$projects  = $this->paginate();
+			if ($this->passedArgs['type'] == 'fork') {
+				$this->paginate['conditions']['Project.fork !='] = null;
+			} else if ($this->passedArgs['type'] == 'public') {
+				$this->paginate['conditions']['Project.fork ='] = null;
+			}
+
 		} else {
 			$this->passedArgs['type'] = null;
-			$projects = $this->paginate(array('Project.id' => array_keys($projects)));
+			$this->paginate['conditions'] = array('Project.id' => array_keys($projects));
 		}
-
+		
+		$projects  = $this->paginate();
 		$this->set('projects', $projects);
 
 		$this->set('rssFeed', array('controller' => 'projects'));

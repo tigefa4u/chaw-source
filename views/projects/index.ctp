@@ -16,19 +16,26 @@
 
 	<div class="page-navigation">
 		<?php
-			$type = null;
 			if (!empty($CurrentUser->username) && !empty($CurrentUser->Permission)) {
-				$type = 'public';
-				echo $html->link('Mine', array()) . ' | ';
+				$active = ($this->passedArgs['type'] == null) ? array('class' => 'active') : null;
+				echo $html->link('Mine', array(), $active) . ' | ';
 			}
-		?>
-		<?php echo $html->link('All', array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
-		|
-		<?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index', 'type' => $type));?>
-		|
-		<?php echo $html->link('Forks', array('controller' => 'projects', 'action' => 'index', 'type' => 'fork'));?>
-		|
-		<?php
+
+			$active = ($this->passedArgs['type'] == 'both') ? array('class' => 'active') : null;
+			echo $html->link('All', array(
+				'controller' => 'projects', 'action' => 'index', 'type' => 'both'
+			), $active) . ' | ';
+
+			$active = ($this->passedArgs['type'] == 'public') ? array('class' => 'active') : null;
+			echo $html->link('Public', array(
+				'controller' => 'projects', 'action' => 'index', 'type' => 'public'
+			), $active) . ' | ';
+
+			$active = ($this->passedArgs['type'] == 'fork') ? array('class' => 'active') : null;
+			echo $html->link('Forks', array(
+				'controller' => 'projects', 'action' => 'index', 'type' => 'fork'
+			), $active) . ' | ';
+
 			echo $html->link(
 				$html->image('feed-icon.png', array(
 					'width' => 14, 'height' => 14
