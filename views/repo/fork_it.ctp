@@ -8,12 +8,12 @@
 			. "<p>Otherwise, you can always <strong>git clone</strong> {$CurrentProject->remote->git}:{$CurrentProject->url}.git</p>"
 		 	. $form->hidden('project_id', array('value' => $CurrentProject->id))
 		);
-		
+
 		echo '<div class="submit">';
 		echo '<input type="submit" value="Go For It">';
 		echo '<input type="submit" value="Cancel" name="cancel">';
 		echo '</div>';
-		
+
 		echo $form->end();
 	?>
 </div>

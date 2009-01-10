@@ -17,17 +17,17 @@
 				if (empty($CurrentProject->fork) && !empty($CurrentUser->id)):
 					echo $html->tag('span', $html->link('fork it', array(
 						'admin' => false, 'fork' => false,
-						'controller' => 'projects', 'action' => 'fork'
-					), array('class' => 'detail')));					
+						'controller' => 'repo', 'action' => 'fork_it'
+					), array('class' => 'detail')));
 				endif;
-				
+
 				if (!empty($CurrentProject->fork) && !empty($this->params['isAdmin'])):
 					echo $html->tag('span', $html->link('fast forward', array(
 						'admin' => false,
-						'controller' => 'projects', 'action' => 'fast_forward'
+						'controller' => 'repo', 'action' => 'fast_forward'
 					), array('class' => 'detail')));
 				endif;
-								
+
 				if ($this->action !== 'forks'):
 					if (empty($this->params['fork'])):
 						$link = $html->link('view forks', array(
