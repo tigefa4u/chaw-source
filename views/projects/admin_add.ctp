@@ -2,18 +2,17 @@
 	echo $chaw->messages($messages);
 ?>
 <div class="projects form">
-<?php echo $form->create(array('action' => $this->action,
-		'url' => array('id' => false)
-));?>
+<?php echo $form->create(array('action' => $this->action));?>
 	<fieldset class="main">
  		<legend><?php echo $this->pageTitle; ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('repo_type', array('disabled' => true));
-		echo $form->input('name', array('disabled' => true));
-		echo $form->hidden('url');
-		echo $form->hidden('fork');
+		echo $form->input('repo_type');
+		echo $form->input('name', array(
+			'error' => array('unique' => 'The project name must be unique.')
+		));
 		echo $form->input('description');
+		echo $form->input('private');
 	?>
 	</fieldset>
 	<fieldset class="options">

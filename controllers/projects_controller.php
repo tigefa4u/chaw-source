@@ -161,6 +161,39 @@ class ProjectsController extends AppController {
 		$this->set('projects', $this->paginate());
 	}
 
+	function admin_add() {
+
+		$this->pageTitle = 'Project Setup';
+
+		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
+			$this->redirect($this->referer());
+		}
+
+		if (!empty($this->data)) {
+			$this->Project->create(array(
+				'user_id' => $this->Auth->user('id'),
+				'username' => $this->Auth->user('username'),
+			));
+			if ($data = $this->Project->save($this->data)) {
+				$this->Session->setFlash('Project was created');
+				$this->redirect(array('project' => $data['Project']['url'], 'controller' => 'timeline', 'action' => 'index'));
+			} else {
+				$this->Session->setFlash('Project was NOT created');
+			}
+		}
+
+		if (empty($this->data)) {
+			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->config));
+			if (!empty($this->data['Project']['id'])) {
+				unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
+			}
+		}
+
+		$this->set('repoTypes', $this->Project->repoTypes());
+
+		$this->set('messages', $this->Project->messages);
+	}
+
 	function admin_edit($id = null) {
 		if (!$id) {
 			$this->Session->setFlash('The project was invalid');
@@ -189,8 +222,6 @@ class ProjectsController extends AppController {
 		$this->set('repoTypes', $this->Project->repoTypes());
 
 		$this->set('messages', $this->Project->messages);
-
-		$this->render('edit');
 	}
 
 	function admin_approve($id = null) {

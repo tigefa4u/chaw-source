@@ -170,7 +170,7 @@
 					<?php
 						if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
 							echo $html->link('New Project', array(
-								'admin' => false, 'project' => false, 'fork' => false,
+								'admin' => true, 'project' => false, 'fork' => false,
 								'controller' => 'projects', 'action' => 'add'
 							));
 						endif;
