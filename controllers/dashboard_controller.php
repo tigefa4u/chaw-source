@@ -89,7 +89,8 @@ class DashboardController extends AppController {
 		$data = $this->paginate();
 
 		$this->set('feed', $this->Timeline->related($data));
-
+		
+		$this->helpers[] = 'Text';
 		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 	}
 
