@@ -2,11 +2,6 @@
 Configure::write('debug', 0);
 
 function format($data) {
-	$type = $data['Timeline']['model'];
-
-	if (empty($data[$type])) {
-		return array();
-	}
 
 	switch ($type) {
 		case 'Commit':

@@ -126,10 +126,10 @@ class User extends AppModel {
  * @return void
  *
  **/
-	function projects($user) {
+	function projects($user, $conditions = array()) {
 		if ($user = $this->Permission->user($user)) {
 			$projects = $this->Permission->find('all', array(
-				'conditions' => array('Permission.user_id' => $user, 'Project.name !=' => null)
+				'conditions' => array_merge($conditions, array('Permission.user_id' => $user, 'Project.name !=' => null))
 			));
 			$ids = array();
 			if (!empty($projects)) {

@@ -22,7 +22,7 @@
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 	Router::connect('/start', array('controller' => 'pages', 'action' => 'start'));
 	Router::connect('/dashboard', array('controller' => 'dashboard', 'action' => 'index'));
-
+	Router::connect('/feed', array('controller' => 'dashboard', 'action' => 'feed'));
 	/* Admin Routes */
 	Router::connect('/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'), array('admin' => true));
 	Router::connect('/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'), array('admin' => true));
