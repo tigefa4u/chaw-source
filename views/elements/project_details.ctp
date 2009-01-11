@@ -1,7 +1,7 @@
 <?php if (!empty($CurrentProject)):?>
 <div class="project-details">
 	<?php
-		if (empty($project['Project']['approved'])) {
+		if (empty($CurrentProject->approved)) {
 			echo $html->tag('span', 'Awaiting Approval', array('class' => 'inactive'));
 		}
 	?>
