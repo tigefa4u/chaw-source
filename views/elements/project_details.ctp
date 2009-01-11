@@ -1,5 +1,10 @@
 <?php if (!empty($CurrentProject)):?>
 <div class="project-details">
+	<?php
+		if (empty($project['Project']['approved'])) {
+			echo $html->tag('span', 'Awaiting Approval', array('class' => 'inactive'));
+		}
+	?>
 	<p class="description">
 		<strong>Description:</strong> <?php echo $CurrentProject->description;?>
 	</p>

@@ -318,6 +318,9 @@ div.message {
 	font-weight: bold;
 	margin: 0.5em 0;
 }
+#flashMessage p {
+	margin: 0;
+}
 div.error-message {
 	color: #69C;
 	font-weight: bold;

@@ -8,7 +8,7 @@ $javascript->link('ghighlight.min', false);
 		<?php if (!empty($page['Wiki']['active'])):?>
 			<span class="active">Active</span>
 		<?php else: ?>
-			<span class="not-active">Not Active</span>
+			<span class="inactive">Not Active</span>
 		<?php endif;?>
 
 		<?php if ((empty($content['Wiki']['read_only']) || $CurrentUser->id == $page['Wiki']['last_changed_by'])):?>

@@ -23,6 +23,13 @@ App::import('Model', 'repo.Repo');
  **/
 class Git extends Repo {
 /**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	var $gitDir = null;
+/**
  * available commands for magic methods
  *
  * @var array
@@ -62,15 +69,17 @@ class Git extends Repo {
 		}
 
 		$project = basename($path);
-		$this->response[] = $this->remote(array('add', 'origin', "{$remote}:{$project}"));
+		//$this->response[] = $this->remote(array('add', 'origin', "{$remote}:{$project}"));
 
-		$this->before(array(
-			"cd {$working}", "touch .gitignore"
-		));
-		$this->response[] = $this->commit(array("-m", "'Initial Project Commit'"));
-		$this->response[] = $this->run("--bare", array('update-server-info'));
-		$this->response[] = $this->push();
-		$this->response[] = $this->update();
+		if (is_dir($working) && !file_exists($working . DS . '.gitignore')) {
+			$this->before(array(
+				"cd {$working}", "touch .gitignore"
+			));
+			$this->response[] = $this->commit(array("-m", "'Initial Project Commit'"));
+			//$this->response[] = $this->run("--bare", array('update-server-info'));
+			$this->response[] = $this->update();
+			$this->response[] = $this->push();
+		}
 
 		if (is_dir($path) && is_dir($working)) {
 			return true;
@@ -126,6 +135,11 @@ class Git extends Repo {
 			return true;
 		}
 
+		$userDir = dirname($this->config['working']);;
+		if (!is_dir($userDir)) {
+			$Fork = new Folder($userDir, true, $chmod);
+		}
+
 		if ($this->pull('master', array('--bare'))) {
 			if (!empty($options['remote'])) {
 				$remote = $options['remote'];
@@ -137,7 +151,7 @@ class Git extends Repo {
 				'path' => $fork,
 				'working' => dirname($working) . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
 			));
-			$this->response[] = $this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
+			//$this->response[] = $this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
 			$this->response[] = $this->pull();
 		}
 
@@ -195,8 +209,12 @@ class Git extends Repo {
 		}
 
 		if (!is_dir($working)) {
-			$this->response[] = $this->run('clone', array_merge($params, array($path, $working)));
-			chmod($working, $chmod);
+			$base = dirname($working);
+			if (!is_dir($base)) {
+				$clone = new Folder($base, true, $chmod);
+			}
+			$this->before(array("cd {$base}"));
+			$this->response[] = $this->run('clone', array_merge($params, array($path)));
 		}
 
 		if (is_dir($working)) {
@@ -401,11 +419,13 @@ class Git extends Repo {
  **/
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
-		$before = null;
-		if (empty($this->_before)) {
-			$before = "GIT_DIR={$this->path} ";
+
+		$gitDir = null;
+		if (empty($this->_before) && empty($this->gitDir)) {
+			$gitDir = "--git-dir={$this->path} ";
 		}
-		return $this->execute("{$before}{$type} {$command}", $args, $return);
+
+		return $this->execute("{$type} {$gitDir}{$command}", $args, $return);
 	}
 }
 ?>

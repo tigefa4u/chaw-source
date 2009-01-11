@@ -25,19 +25,23 @@ class Timeline extends AppModel {
 	var $belongsTo = array(
 		'Comment' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('Timeline.model = \'Comment\'')
+			'conditions' => array('Timeline.model = \'Comment\''),
+			'dependent' => true
 		),
 		'Commit' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('Timeline.model = \'Commit\'')
+			'conditions' => array('Timeline.model = \'Commit\''),
+			'dependent' => true
 		),
 		'Ticket' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('Timeline.model = \'Ticket\'')
+			'conditions' => array('Timeline.model = \'Ticket\''),
+			'dependent' => true
 		),
 		'Wiki' => array(
 			'foreignKey' => 'foreign_key',
-			'conditions' => array('Timeline.model = \'Wiki\'')
+			'conditions' => array('Timeline.model = \'Wiki\''),
+			'dependent' => true
 		)
 	);
 
@@ -45,14 +49,14 @@ class Timeline extends AppModel {
 		foreach ($data as $key => $timeline) {
 			$type = $timeline['Timeline']['model'];
 			$this->{$type}->recursive = 0;
-			
+
 			if ($type == 'Comment') {
 				$this->{$type}->recursive = 2;
 				$this->{$type}->Ticket->unbindModel(array(
 					'hasMany' => array('Comment'),
 				));
 			}
-			
+
 			$related = $this->{$type}->findById($timeline['Timeline']['foreign_key']);
 			$data[$key] = array_merge($timeline, (array)$related);
 		}

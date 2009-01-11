@@ -365,7 +365,7 @@ class Permission extends AppModel {
 	function root() {
 		$path = Configure::read("Content.base");
 		$File = new File($path . 'permissions.ini');
-		if ($File->readable()) {
+		if (!$File->readable()) {
 			return null;
 		}
 		return $File->read();

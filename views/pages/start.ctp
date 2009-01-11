@@ -19,6 +19,12 @@
 				__('Check that your database exists and the proper settings are in APP/config/database.php');
 			echo '</span>';
 			return;
+		else :
+			$Project = ClassRegistry::init('Project');
+			if ($Project->find('first')) {
+				echo $html->tag('h3', __('Finished', true));
+				return;
+			}
 		endif;
 	endif;
 

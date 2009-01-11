@@ -159,6 +159,7 @@ input[type=hidden] {
 }
 
 #page-content {
+	padding-top: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -205,6 +206,8 @@ input[type=hidden] {
 }
 
 #current-user {
+	position: fixed;
+	right: 0;
 	clear: both;
 	float: right;
 	margin: 0px;
@@ -277,14 +280,14 @@ input[type=hidden] {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-.page-navigation span.active {
+span.active {
 	color: #363;
 }
-.page-navigation span.not-active {
+span.inactive {
 	color: #600;
 }
 a.active {
-	color: #363;
+	color: #69C;
 	font-weight: bold;
 }
 .left {
@@ -582,7 +585,7 @@ fieldset.options textarea {
 	color: #990;
 }
 .timeline .wiki h3 {
-	color: #69C;
+	color: #996;
 }
 
 .tickets h3 em {
@@ -684,7 +687,12 @@ div.comments {
 	font-size: 12px;
 	height: 200px;
 }
-
+.browser {
+	margin-top: 50px;
+}
+.browser h2 {
+	margin-bottom: 4px;
+}
 .browser .forks {
 	float: right;
 	margin-top: -20px;
@@ -901,6 +909,9 @@ div.comments {
 .projects {
 	border-bottom: 1px #ccc solid;
 	margin-right: 0%;
+}
+.form {
+	border-bottom: 0px;
 }
 .projects td.actions a {
 	font-weight: normal;

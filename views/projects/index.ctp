@@ -8,7 +8,7 @@
 		return;
 	}
 ?>
-<?php if (empty($this->params['project'])):?>
+<?php if ($this->action != 'forks'):?>
 
 	<h2>
 		Projects
@@ -29,7 +29,7 @@
 			echo $chaw->type('forks', array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
-		
+
 			echo $html->link(
 				$html->image('feed-icon.png', array(
 					'width' => 14, 'height' => 14

@@ -16,7 +16,6 @@
  */
 	Router::parseExtensions('rss', 'tar');
 
-
 	/* Base Routes */
 	Router::connect('/', array('controller' => 'wiki', 'action' => 'index'));
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
@@ -34,6 +33,7 @@
 	Router::connect('/:project/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
 
 	/* Specific Routes */
+	Router::connect('/fork/it', array('controller' => 'repo', 'action' => 'fork_it'), array('action' => 'fork_it'));
 	Router::connect('/:project/fork/it', array('controller' => 'repo', 'action' => 'fork_it'), array('action' => 'fork_it'));
 	Router::connect('/download/:project', array('controller' => 'repo', 'action' => 'download', 'ext' => 'tar'), array('ext' => 'tar'));
 	Router::connect('/download/forks/:fork/:project', array('controller' => 'repo', 'action' => 'download', 'ext' => 'tar'), array('ext' => 'tar'));
@@ -66,7 +66,7 @@
 	);
 	Router::connect('/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
-		'action' => 'history|view|add|edit|modify|delete|remove|forgotten|verify|change|login|account|logout|forks',
+		'action' => 'history|view|start|add|edit|modify|delete|remove|forgotten|verify|change|login|account|logout|forks',
 		'project' => false)
 	);
 	Router::connect('/:controller/*', array(), array(

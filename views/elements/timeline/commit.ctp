@@ -23,8 +23,13 @@
 						'controller' => 'repo', 'action' => 'merge', $data['Project']['fork']
 					)) . ' | '
 				: null;
+
+				if ($this->name == 'Timeline') {
+					echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));
+				} else if ($this->name == 'Commits') {
+					echo $chaw->admin('remove', array('controller' => 'commits', 'action' => 'remove', $data['Commit']['id']));
+				}
 			?>
-			<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 		</span>
 	<?php endif;?>
 

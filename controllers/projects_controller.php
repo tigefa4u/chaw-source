@@ -26,7 +26,7 @@ class ProjectsController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->mapActions(array('fork' => 'create'));
 		$this->Auth->allow('index');
-		$this->Access->allow('index');
+		$this->Access->allow('index', 'start');
 	}
 
 	function index() {
@@ -88,6 +88,13 @@ class ProjectsController extends AppController {
 		$this->set('project', $project);
 	}
 
+	function start($type = null) {
+		if ($type || !empty($this->data)) {
+			$this->add();
+			return;
+		}
+	}
+
 	function add() {
 
 		$this->pageTitle = 'Project Setup';
@@ -101,10 +108,17 @@ class ProjectsController extends AppController {
 			if ($data = $this->Project->save($this->data)) {
 				if (empty($data['Project']['approved'])) {
 					$this->Session->setFlash('Project is awaiting approval');
+					$this->redirect(array(
+						'project' => $data['Project']['url'],
+						'controller' => 'projects', 'action' => 'view'
+					));
 				} else {
 					$this->Session->setFlash('Project was created');
+					$this->redirect(array(
+						'project' => $data['Project']['url'],
+						'controller' => 'timeline', 'action' => 'index'
+					));
 				}
-				$this->redirect(array('project' => $data['Project']['url'], 'controller' => 'timeline', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash('Project was NOT created');
 			}
@@ -115,6 +129,11 @@ class ProjectsController extends AppController {
 			if (!empty($this->data['Project']['id'])) {
 				unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
 			}
+		}
+
+		if (!empty($this->passedArgs[0])) {
+			$this->pageTitle = Inflector::humanize($this->passedArgs[0]) . ' Project Setup';
+			$this->data['Project']['private'] = ($this->passedArgs[0] == 'public') ? 0 : 1;
 		}
 
 		$this->set('repoTypes', $this->Project->repoTypes());

@@ -89,7 +89,10 @@ class AccessComponent extends Object {
 		if ($C->Project->initialize($C->params) === false) {
 			if ($C->Session->read('Install') !== true) {
 				$C->Session->setFlash('Chaw needs to be installed');
-				$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'pages', 'action'=> 'start'));
+				$C->redirect(array(
+					'admin' => false, 'project' => null,
+					'controller' => 'pages', 'action'=> 'start'
+				));
 				return false;
 			}
 
@@ -107,9 +110,14 @@ class AccessComponent extends Object {
 			}
 
 			if (!in_array($this->url, array('users/add', 'users/login'))) {
-				$login =  Router::url(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'));
+				$login =  Router::url(array(
+					'admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'
+				));
 				$C->Session->setFlash("Chaw needs to be installed. Please <a href='{$login}'>Login</a> or Register");
-				$C->redirect(array('admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'add'));
+				$C->redirect(array(
+					'admin' => false, 'project' => null,
+					'controller' => 'users', 'action'=> 'add'
+				));
 				return false;
 			}
 			$this->allow($C->action);
@@ -176,11 +184,14 @@ class AccessComponent extends Object {
 		}
 
 		if ($C->Auth->authorize == false) {
-			$C->Session->setFlash($C->Auth->authError, 'default', array(), 'auth');
 			$referer = $C->referer();
 			if ($referer == '/' || strpos($referer, 'login') !== false) {
-				$referer = array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index');
+				$referer = array(
+					'admin' => false, 'project' => false, 'fork' => false,
+					'controller' => 'dashboard', 'action' => 'index'
+				);
 			}
+			$C->Session->setFlash($C->Auth->authError);
 			$C->redirect($referer);
 		}
 		return false;
