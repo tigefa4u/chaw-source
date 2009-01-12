@@ -687,10 +687,9 @@ div.comments {
 	font-size: 12px;
 	height: 200px;
 }
-.browser {
-	margin-top: 50px;
-}
+
 .browser h2 {
+	margin-top: 50px;
 	margin-bottom: 4px;
 }
 .browser .forks {
