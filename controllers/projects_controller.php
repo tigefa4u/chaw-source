@@ -89,6 +89,7 @@ class ProjectsController extends AppController {
 	}
 
 	function start($type = null) {
+		$this->pageTitle = 'Projects/Start';
 		if ($type || !empty($this->data)) {
 			$this->add();
 			return;
@@ -96,8 +97,6 @@ class ProjectsController extends AppController {
 	}
 
 	function add() {
-
-		$this->pageTitle = 'Project Setup';
 
 		if (!empty($this->data)) {
 			$this->Project->create(array(
@@ -132,7 +131,7 @@ class ProjectsController extends AppController {
 		}
 
 		if (!empty($this->passedArgs[0])) {
-			$this->pageTitle = Inflector::humanize($this->passedArgs[0]) . ' Project Setup';
+			$this->pageTitle = Inflector::humanize($this->passedArgs[0]) . '/Project/Setup';
 			$this->data['Project']['private'] = ($this->passedArgs[0] == 'public') ? 0 : 1;
 		}
 

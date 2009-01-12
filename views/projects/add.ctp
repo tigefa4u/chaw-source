@@ -4,7 +4,7 @@
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action));?>
 	<fieldset class="main">
- 		<legend><?php echo $this->pageTitle; ?></legend>
+ 		<legend><?php __('Project Setup') ?></legend>
 	<?php
 		echo $form->input('id');
 		echo $form->input('repo_type');

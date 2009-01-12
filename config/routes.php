@@ -66,7 +66,7 @@
 	);
 	Router::connect('/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
-		'action' => 'history|view|start|add|edit|modify|delete|remove|forgotten|verify|change|login|account|logout|forks',
+		'action' => 'history|view|start|add|edit|modify|delete|remove|activate|forgotten|verify|change|login|account|logout|forks',
 		'project' => false)
 	);
 	Router::connect('/:controller/*', array(), array(

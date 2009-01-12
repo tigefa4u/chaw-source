@@ -17,6 +17,15 @@
 		</span>
 
 		<div class="links">
+			<?php if (empty($CurrentUser->active)): ?>
+				<span class="activate link">
+					<?php echo $html->link('activate', array(
+						'admin' => false, 'project' => false, 'fork' => false,
+						'controller' => 'users', 'action' => 'activate'
+						), array('title' => 'activate your account')); ?>
+				</span>
+			<?php endif?>
+
 			<span class="account link">
 				<?php echo $html->link('account', array(
 					'admin' => false, 'project' => false, 'fork' => false,

@@ -26,8 +26,8 @@ class UsersController extends AppController {
 		$this->Auth->mapActions(array(
 			'account' => 'update', 'change' => 'update'
 		));
-		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
-		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout', 'account', 'edit', 'change');
+		$this->Auth->allow('forgotten', 'verify', 'add', 'logout');
+		$this->Access->allow('forgotten', 'verify', 'activate', 'add', 'login', 'logout', 'account', 'edit', 'change');
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
@@ -42,12 +42,15 @@ class UsersController extends AppController {
 	}
 
 	function login() {
-
 		if ($cookie = $this->Cookie->read('User')) {
 			$this->Session->write('Auth.User', $cookie);
 		}
 
 		if ($id = $this->Auth->user('id')) {
+			if (!empty($cookie)) {
+				die(debug($_SESSION));
+				die(debug($_COOKIE));
+			}
 
 			if (!empty($this->data['User']['remember_me'])) {
 				$this->Cookie->write('User', $this->Session->read('Auth.User'));
@@ -61,10 +64,10 @@ class UsersController extends AppController {
 			if ($redirect = $this->Session->read('Access.redirect')) {
 				$this->Session->del('Access');
 				$this->Session->del('Auth.redirect');
-				//$message = "access:$redirect";
+				$message = "access:$redirect";
 			} else {
 				$redirect = $this->Auth->redirect();
-				//$message = "auth:$redirect";
+				$message = "auth:$redirect";
 			}
 			if (strpos($redirect, 'login') !== false || strpos($redirect, 'users/add') !== false || $redirect == '/') {
 				$redirect = '/dashboard';
@@ -219,12 +222,47 @@ class UsersController extends AppController {
 		$this->render('edit');
 	}
 
+	function activate($token = null) {
+		if (empty($token)) {
+			if ($data = $this->User->setToken($this->Auth->user())) {
+				$from = $this->Project->from();
+				$this->Email->to = $data['User']['email'];
+				$this->Email->from = 'Chaw Activation ' . $from;
+				$this->Email->replyTo = 'Chaw Activation ' . $from;
+				$this->Email->return = $from;
+				$this->Email->subject = 'Activate your Chaw account';
+
+				$content[] = "Please click on the link below to activate your account.\n";
+				$content[] = Router::url(array('controller' => 'users', 'action' => 'activate', $data['User']['token']), true);
+
+				$this->Email->lineLength = 120;
+				if ($this->Email->send($content)) {
+					$this->Session->setFlash('Check your email.');
+				} else {
+					$this->Session->setFlash('Email was not sent');
+				}
+			} else {
+				$this->Session->setFlash('User could not be found');
+			}
+			$this->redirect($this->referer());
+		} else {
+			if ($data = $this->User->activate($token)) {
+				$this->Session->write('Auth.User.active', $data['User']['active']);
+				$this->Session->setFlash('Your Account was activated');
+			} else {
+				$this->Session->setFlash('Your Account could not be activated');
+			}
+		}
+
+		$this->redirect('/dashboard');
+	}
+
 	function forgotten() {
 		if ($this->Auth->user()) {
 			$this->redirect(array('action' => 'account'));
 		}
 		if (!empty($this->data)) {
-			if ($token = $this->User->forgotten($this->data)) {
+			if ($token = $this->User->setToken($this->data)) {
 				$from = $this->Project->from();
 				$this->Email->to = $token['User']['email'];
 				$this->Email->from = 'Chaw Password Recovery ' . $from;
@@ -247,7 +285,7 @@ class UsersController extends AppController {
 
 	function verify($token = null) {
 		if (!empty($token)) {
-			if ($data = $this->User->verify(compact('token'))) {
+			if ($data = $this->User->setTempPassword(compact('token'))) {
 				$from = $this->Project->from();
 				$this->Email->to = $data['User']['email'];
 				$this->Email->from = 'Chaw New Password ' . $from;

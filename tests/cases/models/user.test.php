@@ -37,6 +37,82 @@ class UserTestCase extends CakeTestCase {
 	}
 
 	function testUserGroups() {
+		$this->__addProject();
+
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+
+		$this->User->set(array('project_id' => 1, 'group' => 'developer'));
+		$this->User->permit();
+
+		$results = $this->User->groups(1);
+		$this->assertEqual($results, array(1 => 'developer'));
+	}
+
+	function testUseProjects() {
+		$this->__addProject();
+
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+
+		$this->User->set(array('project_id' => 1, 'group' => 'developer'));
+		$this->User->permit();
+
+		$results = $this->User->projects(1);
+		$this->assertEqual($results['ids'], array(1));
+	}
+
+	function testActivate() {
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$results = $this->User->setToken(array('id' => 1));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$results = $this->User->activate($results['User']['token']);
+		$this->assertEqual($results['User']['active'], 1);
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+	}
+
+	function testSetToken() {
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$this->User->id = null;
+		$this->User->data = array();
+		$results = $this->User->setToken(array('username' => 'gwoo'));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$this->User->id = null;
+		$this->User->data = array();
+		$results = $this->User->setToken(array('email' => 'gwoo@test.com'));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+	}
+
+	function testSetTempPassword() {
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$results = $this->User->setToken(array('email' => 'gwoo@test.com'));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+
+		$results = $this->User->setTempPassword(array('token' => $results['User']['token']));
+		$this->assertEqual(strlen($results['User']['tmp_pass']), 10);
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+	}
+
+	function __addProject() {
 		$data = array('Project' =>array(
 			'id' => 1,
 			'name' => 'original project',
@@ -58,15 +134,7 @@ class UserTestCase extends CakeTestCase {
 		$path = Configure::read('Content.base');
 		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->User->Permission->Project->Repo->path . DS . 'permissions.ini'));
-
-		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
-		$this->User->save();
-
-		$this->User->set(array('project_id' => 1, 'group' => 'developer'));
-		$this->User->permit();
-
-		$results = $this->User->groups(1);
-		$this->assertEqual($results, array(1 => 'developer'));
 	}
+
 }
 ?>
