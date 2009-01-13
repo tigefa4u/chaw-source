@@ -47,11 +47,6 @@ class UsersController extends AppController {
 		}
 
 		if ($id = $this->Auth->user('id')) {
-			if (!empty($cookie)) {
-				die(debug($_SESSION));
-				die(debug($_COOKIE));
-			}
-
 			if (!empty($this->data['User']['remember_me'])) {
 				$this->Cookie->write('User', $this->Session->read('Auth.User'));
 			}
@@ -79,7 +74,7 @@ class UsersController extends AppController {
 			}
 			$this->redirect($redirect);
 			//$this->flash($message, $redirect);
-			//return;
+			// /return;
 		}
 
 		if (!empty($this->data['User'])) {
