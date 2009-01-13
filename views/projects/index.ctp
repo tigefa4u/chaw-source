@@ -16,7 +16,9 @@
 
 	<div class="page-navigation">
 		<?php
-			echo $chaw->type(array('title' => 'Mine', 'type' => null)) . ' | ';
+			if (!empty($CurrentUser->Permission)) {
+				echo $chaw->type(array('title' => 'Mine', 'type' => null)) . ' | ';
+			}
 
 			echo $chaw->type('all', array(
 				'controller' => 'projects', 'action' => 'index',
