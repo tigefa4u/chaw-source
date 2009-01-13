@@ -26,6 +26,8 @@ class DashboardController extends AppController {
 	}
 
 	function index() {
+		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
+
 		extract($this->Project->User->projects($this->Auth->user('id')));
 
 		if (empty($ids)) {
@@ -58,13 +60,15 @@ class DashboardController extends AppController {
 			'limit' => 10, 'order' => 'Commit.created DESC',
 			'recursive' => 0
 		));
-		
+
 		$this->set(compact('projects', 'wiki', 'tickets', 'comments', 'commits'));
-		
-		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
+
 	}
 
 	function feed() {
+		$this->helpers[] = 'Text';
+		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
+
 		extract($this->Project->User->projects($this->Auth->user('id')));
 
 		if (empty($ids)) {
@@ -89,9 +93,6 @@ class DashboardController extends AppController {
 		$data = $this->paginate();
 
 		$this->set('feed', $this->Timeline->related($data));
-		
-		$this->helpers[] = 'Text';
-		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 	}
 
 	function admin_index() {
