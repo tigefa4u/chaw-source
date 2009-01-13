@@ -80,20 +80,23 @@ class UsersController extends AppController {
 			$this->redirect($redirect);
 			//$this->flash($message, $redirect);
 			//return;
-		} elseif (strpos($this->referer(), 'users/login') && !empty($this->data['User'])) {
+		}
 
+		if (!empty($this->data['User'])) {
 			$this->Session->del('Message.auth');
 
 			$this->Auth->fields['password'] = 'tmp_pass';
 			$this->data['User']['tmp_pass'] = $this->Auth->data['User']['password'];
+
 			if ($this->Auth->login($this->data)) {
 				$this->User->id = $this->Auth->user('id');
 				$this->User->save(array(
+					'id' => $id,
+					'username' => $this->Auth->user('username'),
+					'email' => $this->Auth->user('email'),
 					'last_login' => date('Y-m-d H:i:s'),
 					'tmp_pass' => null,
-					),
-					false, array('last_login', 'tmp_pass')
-				);
+				));
 				$this->Session->setFlash('You may now change your password');
 				$this->redirect(array('action' => 'change'));
 			}

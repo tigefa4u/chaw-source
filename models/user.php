@@ -298,8 +298,9 @@ class User extends AppModel {
 		for ($i = 0; $i < $length; $i++) {
 			$password .= $cons[mt_rand(0, 31)] . $vowels[mt_rand(0, 4)];
 		}
+		$password = substr($password, 0, $length);
 		App::import('Core', 'Security');
-		return array(substr($password, 0, $length), Security::hash($password, null, true));
+		return array($password, Security::hash($password, null, true));
 	}
 /**
  * undocumented function
