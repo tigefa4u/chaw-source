@@ -59,7 +59,12 @@ class UsersController extends AppController {
 			$this->Session->write('Auth.User.Permission', $this->User->groups($id));
 
 			$this->User->id = $id;
-			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
+			$this->User->save(array(
+				'id' => $id,
+				'username' => $this->Auth->user('username'),
+				'email' => $this->Auth->user('email'),
+				'last_login' => date('Y-m-d H:i:s')
+			));
 
 			if ($redirect = $this->Session->read('Access.redirect')) {
 				$this->Session->del('Access');
@@ -84,7 +89,7 @@ class UsersController extends AppController {
 			if ($this->Auth->login($this->data)) {
 				$this->User->id = $this->Auth->user('id');
 				$this->User->save(array(
-					'last_login' => date('Y-m-d H:m:s'),
+					'last_login' => date('Y-m-d H:i:s'),
 					'tmp_pass' => null,
 					),
 					false, array('last_login', 'tmp_pass')
@@ -294,6 +299,7 @@ class UsersController extends AppController {
 				$this->Email->subject = 'New Password';
 
 				$content[] = "The request to reset your password has been verifed.\n";
+				$content[] = "Username: " . $data['User']['username'] ."\n";
 				$content[] = "Your temporary password: " . $data['User']['tmp_pass'] ."\n";
 				$content[] = "Please Login with your temporary password.";
 				$content[] = Router::url(array('controller' => 'users', 'action' => 'login'), true);

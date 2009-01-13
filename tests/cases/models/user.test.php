@@ -62,6 +62,16 @@ class UserTestCase extends CakeTestCase {
 		$this->assertEqual($results['ids'], array(1));
 	}
 
+	function testUserValidation() {
+		$this->User->create(array('username' => 'gwoo'));
+		$this->assertFalse($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array('email' => 'Required: Email must be unique'));
+
+		$this->User->create(array('email' => 'gwoo@test.com'));
+		$this->assertFalse($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array('username' => 'Required: Username must be unique'));
+	}
+
 	function testActivate() {
 		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
 		$this->assertTrue($this->User->save());
@@ -108,6 +118,7 @@ class UserTestCase extends CakeTestCase {
 
 		$results = $this->User->setTempPassword(array('token' => $results['User']['token']));
 		$this->assertEqual(strlen($results['User']['tmp_pass']), 10);
+		$this->assertEqual($results['User']['username'], 'gwoo');
 		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
 		$this->assertEqual($this->User->validationErrors, array());
 	}
