@@ -327,7 +327,6 @@ class User extends AppModel {
 				}
 				return false;
 			}
-			return true;
 		}
 		if (!empty($data['email'])) {
 			$this->recursive = -1;
@@ -337,8 +336,8 @@ class User extends AppModel {
 				}
 				return false;
 			}
-			return true;
 		}
+		return true;
 	}
 }
 ?>

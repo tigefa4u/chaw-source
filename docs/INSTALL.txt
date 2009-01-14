@@ -1,3 +1,11 @@
+Getting Started
+git clone git@thechaw.com:chaw.git
+cd chaw
+cake bake db_config
+cake schema run create
+visit, http://localhost/chaw/
+
+
 FOR GIT
 make sure "git" is in $PATH
 

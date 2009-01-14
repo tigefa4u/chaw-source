@@ -66,7 +66,11 @@
 
 		<div id="header">
 
-			<h1><?php echo $html->link($CurrentProject->name, array('controller' => 'browser', 'action' => 'index'));?></h1>
+			<h1><?php echo $html->link($CurrentProject->name, array(
+					'admin' => false,
+					'controller' => 'browser', 'action' => 'index'
+				));
+			?></h1>
 
 			<div id="navigation">
 				<ul>

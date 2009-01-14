@@ -55,7 +55,10 @@ class AppController extends Controller {
 				return true;
 			}
 			$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
-			$this->redirect(array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index'));
+			$this->redirect(array(
+				'admin' => false, 'project' => false, 'fork' => false, 
+				'controller' => 'dashboard', 'action' => 'index'
+			));
 			return false;
 		}
 		return true;
@@ -107,6 +110,15 @@ class AppController extends Controller {
 			}
 		}
 		parent::redirect($url, $status, $exit);
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function referer($default = null, $local = true) {
+		return parent::referer($default, $local);
 	}
 }
 ?>
