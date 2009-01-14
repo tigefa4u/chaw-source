@@ -191,10 +191,14 @@ class ProjectsController extends AppController {
 			$this->Project->create(array(
 				'user_id' => $this->Auth->user('id'),
 				'username' => $this->Auth->user('username'),
+				'approved' => 1
 			));
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was created');
-				$this->redirect(array('project' => $data['Project']['url'], 'controller' => 'timeline', 'action' => 'index'));
+				$this->redirect(array(
+					'admin' => false, 'project' => $data['Project']['url'], 
+					'controller' => 'timeline', 'action' => 'index'
+				));
 			} else {
 				$this->Session->setFlash('Project was NOT created');
 			}
