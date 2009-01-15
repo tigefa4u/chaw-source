@@ -203,10 +203,10 @@ class UsersController extends AppController {
 		)))), false);
 
 		$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
-		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id, 'User.active' => 1);
+		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
 
 		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
-			$this->paginate['conditions'] = array('User.active' => 1);
+			$this->paginate['conditions'] = array();
 		} else {
 			$groups = $this->Project->groups();
 		}
