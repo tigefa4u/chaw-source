@@ -36,6 +36,8 @@ class BranchTestCase extends CakeTestCase {
 
 		$this->Branch->create($data);
 		$this->assertTrue($this->Branch->save());
+		$this->assertEqual($this->Branch->id, 1);
+		
 
 		$this->Branch->recursive = -1;
 		$results = $this->Branch->find('all');
@@ -57,6 +59,7 @@ class BranchTestCase extends CakeTestCase {
 			));
 		$this->Branch->create($data);
 		$this->assertFalse($this->Branch->save($data));
+		$this->assertEqual($this->Branch->id, 1);
 
 		$this->Branch->recursive = -1;
 		$results = $this->Branch->find('all');

@@ -31,12 +31,12 @@ class Branch extends AppModel {
 		$ref = explode('/', $this->data['Branch']['name']);
 		$this->data['Branch']['name'] = array_pop($ref);
 		$this->data['Branch']['ref'] = join('/', $ref);
-		$result = $this->field('id', array(
+		$this->id = $this->field('id', array(
 			'name' => $this->data['Branch']['name'],
 			'ref' => $this->data['Branch']['ref'],
 			'project_id' => $this->data['Branch']['project_id']
 		));
-		return empty($result);
+		return $this->id == false;
 	}
 }
 ?>
