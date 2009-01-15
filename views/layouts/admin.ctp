@@ -68,17 +68,17 @@
 
 			<h1><?php echo $html->link($CurrentProject->name, array(
 					'admin' => false,
-					'controller' => 'browser', 'action' => 'index'
+					'controller' => 'source', 'action' => 'index'
 				));
 			?></h1>
 
 			<div id="navigation">
 				<ul>
 					<li><?php
-						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
+						$options = ($this->name == 'source') ? array('class' => 'on') : null;
 						echo $html->link('Source', array(
 							'admin' => false,
-							'controller' => 'browser', 'action' => 'index'), $options);
+							'controller' => 'source', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php

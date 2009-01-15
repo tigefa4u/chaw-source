@@ -42,7 +42,7 @@
 					else:
 						$link = $html->link('view parent', array(
 							'admin' => false, 'fork' => false,
-							'controller' => 'browser', 'action' => 'index'
+							'controller' => 'source', 'action' => 'index'
 						), array('class' => 'detail'));
 					endif;
 					echo $html->tag('span', $link);

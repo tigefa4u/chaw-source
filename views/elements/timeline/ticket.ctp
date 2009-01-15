@@ -11,7 +11,7 @@
 			if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
 				$url = $chaw->url($data['Project'], $url);
 				$project = ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
-					'admin' => false, 'controller' => 'browser'
+					'admin' => false, 'controller' => 'source'
 				)), array('class' => 'project'));
 			}
 

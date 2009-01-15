@@ -72,7 +72,7 @@
 				<?php
 					echo $html->link($project['Project']['name'], array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'browser', 'action' => 'index',
+						'controller' => 'source', 'action' => 'index',
 					));
 
 					if (!empty($project['Project']['private'])) :
@@ -86,7 +86,7 @@
 					/*
 					echo $html->link('source', array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'browser', 'action' => 'index',
+						'controller' => 'source', 'action' => 'index',
 					));
 					echo ' | ';
 					*/

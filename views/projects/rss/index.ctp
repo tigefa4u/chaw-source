@@ -14,7 +14,7 @@ function format($project) {
 	        'title' => $project['Project']['name'],
 	        'link'  => array(
 				'admin' => false, 'project' => $url, 'fork'=> $fork,
-				'controller' => 'browser', 'action' => 'index',
+				'controller' => 'source', 'action' => 'index',
 			),
 			'description' => $project['Project']['description'],
 	        'author' => $project['User']['username'],

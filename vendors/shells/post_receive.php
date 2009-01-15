@@ -51,7 +51,12 @@ class PostReceiveShell extends Shell {
 
 			$data['project_id'] = $this->Project->id;
 			$data['branch'] = $refname;
-
+			
+			$this->Commit->Branch->save(array(
+				'name' => $refname, 'project_id' => $this->Project->id
+			));
+			$data['branch_id'] = $this->Commit->Branch->id;
+			
 			$this->Commit->create($data);
 
 			if (!$this->Commit->save()) {

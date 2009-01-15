@@ -193,7 +193,7 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Project = ClassRegistry::init('Project');
 
 		$this->Controller->params = array(
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
 			'url' => array('url' => '/')
 		);
@@ -378,9 +378,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->Controller->Component->init($this->Controller);
@@ -420,9 +420,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->__runStartup();
@@ -491,9 +491,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->__runStartup();
@@ -562,9 +562,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->Controller->Component->init($this->Controller);

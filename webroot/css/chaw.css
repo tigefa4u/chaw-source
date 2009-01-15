@@ -688,20 +688,20 @@ div.comments {
 	height: 200px;
 }
 
-.browser h2 {
+.source h2 {
 	margin-top: 50px;
 	margin-bottom: 4px;
 }
-.browser .forks {
+.source .forks {
 	float: right;
 	margin-top: -20px;
 	margin-right: 4px;
 }
 
-.browser table th, .browser table td {
+.source table th, .source table td {
   padding: 5px 10px;
 }
-.browser table th {
+.source table th {
   color: #888;
   text-align: left;
   background: #CBCBCB;
@@ -713,7 +713,7 @@ div.comments {
   border-top: 1px solid #ccc;
 */
 }
-.browser table td {
+.source table td {
   text-align: left;
   background: #f7f7f7;
   padding: 5px 10px 5px 4px;
@@ -724,42 +724,42 @@ div.comments {
   border-left: 0px solid #ddd;
 */
 }
-.browser .message, .browser .date {
+.source .message, .source .date {
 	font-size: 80%;
 	padding-top: 6px;
 	vertical-align: middle;
 }
 
-.browser a.folder {
+.source a.folder {
 	background: url('images/folder.gif') no-repeat left;
 	color: #333;
 	text-decoration: none;
 	padding-left: 24px;
 }
-.browser a.folder:hover {
+.source a.folder:hover {
 	color: #000;
 	text-decoration: underline;
 }
-.browser a.file {
+.source a.file {
 	background: url('images/file.gif') no-repeat left;
 	color: #999;
 	text-decoration: none;
 	padding-left: 24px;
 }
-.browser a.file:hover {
+.source a.file:hover {
 	color: #bbb;
 	text-decoration: underline;
 }
 
-.browser span.history {
+.source span.history {
 	float: right;
 }
 
-.browser p.history a {
+.source p.history a {
 	font-size: 100%;
 	text-decoration: underline;
 }
-.browser p.history a:hover {
+.source p.history a:hover {
 	text-decoration: none;
 }
 
@@ -867,7 +867,7 @@ div.comments {
 	padding-left: 20px;
 }
 
-.browser .project-details {
+.source .project-details {
 	margin-right: 0;
 }
 

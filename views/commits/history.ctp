@@ -18,7 +18,7 @@ $javascript->codeBlock($script, array('inline' => false));
 				$title = "forks / {$CurrentProject->fork} / ";
 			}
 			$title .= $CurrentProject->url;
-			echo $html->link($title, array('controller' => 'browser', 'action' => 'index'));
+			echo $html->link($title, array('controller' => 'source', 'action' => 'index'));
 		?>
 		<?php
 			$path = '/';
@@ -26,7 +26,7 @@ $javascript->codeBlock($script, array('inline' => false));
 				$path .= $part . '/';
 				echo '/' . $html->link(' ' . $part . ' ', array($path));
 			endforeach;
-			echo '/ ' . $html->link($current, array('controller' => 'browser', 'action' => 'index', $path, $current));
+			echo '/ ' . $html->link($current, array('controller' => 'source', 'action' => 'index', $path, $current));
 		?>
 	</h2>
 	<?php foreach ((array)$commits as $commit):?>

@@ -14,43 +14,36 @@
  * @license			commercial
  *
  */
-class Browser extends Object {
+class Source extends Object {
 
 	var $useTable = false;
 
-/**
- * The Current Repo object
- *
- * @var object
- *
- **/
-	var $Repo = null;
 /**
  * undocumented function
  *
  * @return void
  *
  **/
-	function read($path = null) {
+	function read(&$Repo, $path) {
 		$data = null;
 
-		if (!is_dir($this->Repo->working)) {
+		if (!is_dir($Repo->working)) {
 			return false;
 		}
 
-		if (is_file($this->Repo->working . DS . $path)) {
-			$File = new File($this->Repo->working . DS .$path);
+		if (is_file($Repo->working . DS . $path)) {
+			$File = new File($Repo->working . DS .$path);
 			return array('Content' => $File->read());
 		}
 
 		$wwwPath = join('/', explode(DS, $path)) . '/';
 
-		$Folder = new Folder($this->Repo->working . DS . $path);
+		$Folder = new Folder($Repo->working . DS . $path);
 
 		$path = $Folder->slashTerm($Folder->pwd());
 
-		if ($path === $Folder->slashTerm($this->Repo->working)) {
-			$this->Repo->update();
+		if ($path === $Folder->slashTerm($Repo->working)) {
+			$Repo->update();
 		}
 
 		list($dirs, $files) = $Folder->read(true, array('.git', '.svn'));
@@ -64,7 +57,7 @@ class Browser extends Object {
 			$dir[$i]['md5'] = null;
 			$dir[$i]['size'] = $this->__size($path . $dirs[$i]);
 			$dir[$i]['icon'] = '/icons/dir.gif';
-			$dir[$i]['info'] = $this->Repo->pathInfo($path . $dirs[$i]);
+			$dir[$i]['info'] = $Repo->pathInfo($path . $dirs[$i]);
 		}
 
 		$count = count($files);
@@ -74,7 +67,7 @@ class Browser extends Object {
 			$file[$i]['icon'] = $this->__icon($files[$i]);
 			$file[$i]['path'] = $wwwPath . $files[$i];
 			$file[$i]['md5'] = md5($Folder->pwd() . $files[$i]);
-			$file[$i]['info'] = $this->Repo->pathInfo($path . $files[$i]);
+			$file[$i]['info'] = $Repo->pathInfo($path . $files[$i]);
 		}
 
 		return array('Folder' => $dir, 'File' => $file);

@@ -14,9 +14,9 @@
  * @license			commercial
  *
  */
-class BrowserController extends AppController {
+class SourceController extends AppController {
 
-	var $name = 'Browser';
+	var $name = 'Source';
 
 	function index() {
 		$args = func_get_args();
@@ -28,9 +28,8 @@ class BrowserController extends AppController {
 			$current = array_pop($args);
 		}
 
-		$this->Browser->Repo = $this->Project->Repo;
-		$data = $this->Browser->read($path);
-		
+		$data = $this->Source->read($this->Project->Repo, $path);
+
 		if ($path && $current) {
 			$this->pageTitle = $path;
 		} else {
@@ -38,6 +37,10 @@ class BrowserController extends AppController {
 		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
+	}
+
+	function branches() {
+
 	}
 }
 ?>

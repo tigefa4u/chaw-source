@@ -8,7 +8,7 @@
 			if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
 				$project = ' in '.
 					$html->link($data['Project']['name'], $chaw->url($data['Project'], array(
-						'admin' => false, 'controller' => 'browser'
+						'admin' => false, 'controller' => 'source'
 					)), array('class' => 'project'));
 			}
 			echo $project;
@@ -34,7 +34,14 @@
 	<?php endif;?>
 
 	<span class="subtitle">
-		<?php echo $data['Commit']['branch'];?>
+		<?php //echo $data['Commit']['branch'];?>
+	</span>
+
+	<span class="subtitle">
+		<?php echo $html->link($data['Branch']['name'], array(
+				'controller' => 'source', 'action' => 'branches',
+				$data['Branch']['name']
+			));?>
 	</span>
 
 	<span class="description footer">

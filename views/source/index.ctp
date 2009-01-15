@@ -1,4 +1,4 @@
-<div class="browser index">
+<div class="source index">
 
 <h2>
 	<?php

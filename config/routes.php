@@ -39,6 +39,9 @@
 	Router::connect('/download/forks/:fork/:project', array('controller' => 'repo', 'action' => 'download', 'ext' => 'tar'), array('ext' => 'tar'));
 
 	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
+	Router::connect('/source/branches/*', array('controller' => 'source', 'action' => 'branches'));
+	Router::connect('/source/*', array('controller' => 'source', 'action' => 'index'));
+	
 	/*
 	Router::connect('/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
 	Router::connect('/wiki/edit/*', array('controller' => 'wiki', 'action' => 'edit'), array('action' => 'edit'));
@@ -46,6 +49,9 @@
 	*/
 
 	Router::connect('/forks/:fork/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
+	Router::connect('/forks/:fork/:project/source/branches/*', array('controller' => 'source', 'action' => 'branches'));
+	Router::connect('/forks/:fork/:project/source/*', array('controller' => 'source', 'action' => 'index'));
+	
 	/*
 	Router::connect('/forks/:fork/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
 	Router::connect('/forks/:fork/:project/wiki/edit/*', array('controller' => 'wiki', 'action' => 'edit'), array('action' => 'edit'));
@@ -53,6 +59,9 @@
 	*/
 
 	Router::connect('/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
+	Router::connect('/:project/source/branches/*', array('controller' => 'source', 'action' => 'branches'));
+	Router::connect('/:project/source/*', array('controller' => 'source', 'action' => 'index'));
+	
 	/*
 	Router::connect('/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
 	Router::connect('/:project/wiki/edit/*', array('controller' => 'wiki', 'action' => 'edit'), array('action' => 'edit'));

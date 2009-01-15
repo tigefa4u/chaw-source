@@ -13,7 +13,7 @@ if (!empty($comments)):
 		if (!empty($comment['Ticket']['Project']) && $comment['Ticket']['Project']['id'] !== $CurrentProject->id) {
 			$url = $chaw->url($comment['Ticket']['Project'], $url);
 			$project = ' in '. $html->link($comment['Ticket']['Project']['name'], $chaw->url($comment['Ticket']['Project'], array(
-				'admin' => false, 'controller' => 'browser'
+				'admin' => false, 'controller' => 'source'
 			)), array('class' => 'project'));
 		}
 

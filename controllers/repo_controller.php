@@ -42,7 +42,7 @@ class RepoController extends AppController {
 		}
 
 		if (!empty($this->params['form']['cancel'])) {
-			$this->redirect(array('controller' => 'browser'));
+			$this->redirect(array('controller' => 'source'));
 		}
 
 		if (!empty($this->data)) {
@@ -62,7 +62,7 @@ class RepoController extends AppController {
 				}
 				$this->redirect(array(
 					'fork' => $data['Project']['fork'],
-					'controller' => 'browser', 'action' => 'index',
+					'controller' => 'source', 'action' => 'index',
 				));
 			} else {
 				$this->Session->setFlash('Project was NOT created');

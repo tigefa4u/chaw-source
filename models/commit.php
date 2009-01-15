@@ -18,8 +18,6 @@ class Commit extends AppModel {
 
 	var $name = 'Commit';
 
-	var $belongsTo = array('User', 'Project');
-
 	var $validate = array(
 		'project_id' => array('notEmpty'),
 		'revision' => array('notEmpty'),
@@ -27,6 +25,10 @@ class Commit extends AppModel {
 		'commit_date' => array('notEmpty'),
 		'message' =>array('notEmpty'),
 
+	);
+
+	var $belongsTo = array(
+		'User', 'Project', 'Branch'
 	);
 /*
 	var $hasOne = array(

@@ -56,7 +56,7 @@ class AppController extends Controller {
 			}
 			$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
 			$this->redirect(array(
-				'admin' => false, 'project' => false, 'fork' => false, 
+				'admin' => false, 'project' => false, 'fork' => false,
 				'controller' => 'dashboard', 'action' => 'index'
 			));
 			return false;
