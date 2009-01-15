@@ -90,11 +90,11 @@ class Ticket extends AppModel {
 				if (!empty($this->data['Ticket']['previous'][$field]) && $this->data['Ticket']['previous'][$field] != $value) {
 					$change = null;
 					if ($field == 'description') {
-						$change = "- **" . $field . "** was changed";
+						$change = "- **{$field}** was changed";
 					} elseif ($field == 'owner' && $owner) {
-						$change = "- **owner* was changed to _" . $owner . "_";
+						$change = "- **owner** was changed to _{$owner}_";
 					} elseif ($field == 'version_id' && $version) {
-						$change = "- **version** was changed to _" . $version . "_";
+						$change = "- **version** was changed to _{$version}_";
 					} else {
 						$change = "- **{$field}** was changed to _{$value}_";
 					}
