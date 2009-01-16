@@ -251,6 +251,7 @@ class Git extends Repo {
  *
  **/
 	function merge($project, $fork = false) {
+		$this->branch('master', true);
 		$this->update('origin', 'master');
 
 		$remote = 'parent';
@@ -262,7 +263,7 @@ class Git extends Repo {
 			$project = "forks/{$fork}/{$project}";
 		}
 
-		$this->before(array("cd {$this->working}/master"));
+		$this->before(array("cd {$this->working}"));
 		$this->remote(array('add', $remote, Configure::read('Content.git') . 'repo' . DS . $project));
 
 		$this->update($remote, 'master', array('--squash'));
