@@ -382,6 +382,23 @@ class Project extends AppModel {
  * @return void
  *
  **/
+	function branches($id = null) {
+		if (!$id) {
+			$id = $this->id;
+		}
+
+		$Branch = ClassRegistry::init('Branch');
+		$Branch->recursive = -1;
+		return $Branch->find('all', array('conditions' =>
+			array('project_id' => $this->id)
+		));
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function forks() {
 		return Set::extract(
 			$this->find('all', array(

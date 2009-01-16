@@ -36,38 +36,56 @@ class Source extends Object {
 			return array('Content' => $File->read());
 		}
 
-		$wwwPath = join('/', explode(DS, $path)) . '/';
+		$isRoot = false;
+		$wwwPath = $base = join('/', explode(DS, $path)) . '/';
 
 		$Folder = new Folder($Repo->working . DS . $path);
 
-		$path = $Folder->slashTerm($Folder->pwd());
+		$path = Folder::slashTerm($Folder->pwd());
 
-		if ($path === $Folder->slashTerm($Repo->working)) {
-			$Repo->update();
+		if ($Repo->type == 'git') {
+			if (basename(dirname($Repo->working)) == 'working') {
+				$isRoot = true;
+			} else {
+				$branch = basename($Repo->working);
+				if ($branch != 'master') {
+					$wwwPath = 'branches/' . $branch . '/'. $wwwPath;
+				}
+			}
 		}
+
 
 		list($dirs, $files) = $Folder->read(true, array('.git', '.svn'));
 
 		$dir = $file = array();
-
 		$count = count($dirs);
+
 		for ($i = 0; $i < $count; $i++) {
 			$dir[$i]['name'] = $dirs[$i];
-			$dir[$i]['path'] = $wwwPath . $dirs[$i];
-			$dir[$i]['md5'] = null;
-			$dir[$i]['size'] = $this->__size($path . $dirs[$i]);
-			$dir[$i]['icon'] = '/icons/dir.gif';
-			$dir[$i]['info'] = $Repo->pathInfo($path . $dirs[$i]);
+			$lookup = $path . $dirs[$i];
+			$here = $wwwPath . $dirs[$i];
+			if ($isRoot) {
+				$Repo->working = $path . $dirs[$i];
+				$here = $base . 'branches/' . $dirs[$i];
+				if ($dirs[$i] == 'master') {
+					$here = $base;
+				}
+			}
+			$dir[$i]['path'] = $here;
+			$dir[$i]['info'] = $Repo->pathInfo($lookup . DS);
+			//$dir[$i]['md5'] = null;
+			//$dir[$i]['size'] = $this->__size($path . $dirs[$i]);
+			//$dir[$i]['icon'] = '/icons/dir.gif';
 		}
 
 		$count = count($files);
 		for ($i = 0; $i < $count; $i++) {
 			$file[$i]['name'] = $files[$i];
-			$file[$i]['size'] = $this->__size($path . $files[$i]);
-			$file[$i]['icon'] = $this->__icon($files[$i]);
 			$file[$i]['path'] = $wwwPath . $files[$i];
-			$file[$i]['md5'] = md5($Folder->pwd() . $files[$i]);
 			$file[$i]['info'] = $Repo->pathInfo($path . $files[$i]);
+			//$file[$i]['md5'] = md5($Folder->pwd() . $files[$i]);
+			//$file[$i]['size'] = $this->__size($path . $files[$i]);
+			//$file[$i]['icon'] = $this->__icon($files[$i]);
 		}
 
 		return array('Folder' => $dir, 'File' => $file);
@@ -139,5 +157,6 @@ class Source extends Object {
 			return $exts['^^UNKOWN^^'];
 		}
 	}
+
 }
 ?>

@@ -1,4 +1,19 @@
 <?php
+/**
+ * Short description
+ *
+ * Long description
+ *
+ * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
+ * Redistributions not permitted
+ *
+ * @copyright		Copyright 2008, Garrett J. Woodworth
+ * @package			chaw
+ * @subpackage		chaw.controllers
+ * @since			Chaw 0.1
+ * @license			commercial
+ *
+ */
 class RepoController extends AppController {
 
 	var $name = 'Repo';
@@ -28,9 +43,9 @@ class RepoController extends AppController {
 		}
 
 		if ($this->Project->Repo->merge($this->Project->config['url'], $fork)) {
-			$this->Session->setFlash('Fast Forward successfull!');
+			$this->Session->setFlash('Merge successfull!');
 		} else {
-			$this->Session->setFlash('Fast Forward failed!');
+			$this->Session->setFlash('Merge failed!');
 		}
 		$this->redirect($this->referer());
 	}

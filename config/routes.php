@@ -85,7 +85,7 @@
 
 
 	/* Genral Fork Routes */
-	Router::connect('/forks/:fork/:project/', array('controller' => 'browser', 'action' => 'index'));
+	Router::connect('/forks/:fork/:project/', array('controller' => 'source', 'action' => 'index'));
 	Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects|repo',
@@ -98,7 +98,7 @@
 
 
 	/* Genral Project Routes */
-	Router::connect('/:project', array('controller' => 'browser', 'action' => 'index'));
+	Router::connect('/:project', array('controller' => 'source', 'action' => 'index'));
 	Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
 	Router::connect('/:project/:controller/:action/*', array(), array(
 		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects|repo',

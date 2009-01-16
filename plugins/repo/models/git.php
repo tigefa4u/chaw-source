@@ -168,11 +168,29 @@ class Git extends Repo {
  *
  **/
 	function branch($name, $switch = false) {
-		$this->before(array("cd {$this->working}"));
-		$response = $this->response[] = $this->run('branch', array($name), 'capture');
+		if (!$name) {
+			return false;
+		}
+		extract($this->config);
+		
+		$path = $this->working;
+		if ($name != basename($this->working)) {
+			$path = $this->working . DS . $name;
+			if (!is_dir($path)) {
+				$base = dirname($path);
+				if (!is_dir($path)) {
+					$clone = new Folder($base, true, $chmod);
+				}
+				$this->response[] = $this->run('clone', array($this->path, $path));
+			}
+		}
+
+		//$this->before(array("cd {$path}"));
+		//$this->response[] = $this->run('branch', array($name), 'capture');
 		if ($switch === true) {
-			$this->before(array("cd {$this->working}"));
-			$this->checkout('new');
+			$this->before(array("cd {$path}"));
+			$this->checkout(array('-b', $name, 'origin/' . $name));
+			$this->config(array('working' => $path));
 		}
 	}
 /**
@@ -219,7 +237,7 @@ class Git extends Repo {
 
 		if (is_dir($working)) {
 			$this->before(array("cd {$working}"));
-			$this->response[] = $this->run('checkout', array($branch));
+			$this->response[] = $this->run('checkout', array('-b', $branch));
 			$this->response[] = $this->update('origin', $branch);
 			return $this->response;
 		}
@@ -402,7 +420,10 @@ class Git extends Repo {
  **/
 	function pathInfo($path = null) {
 		$this->before(array("cd {$this->working}"));
-		$info = $this->run('log', array("--pretty=format:%H%x00%an%x00%ai%x00%s", '-1', '--', str_replace($this->working . '/', '', $path)));
+		if ($path) {
+			$path = str_replace($this->working . DS, '', $path);
+		}
+		$info = $this->run('log', array("--pretty=format:%H%x00%an%x00%ai%x00%s", '-1', '--', escapeshellarg($path)));
 
 		if (empty($info)) {
 			return null;

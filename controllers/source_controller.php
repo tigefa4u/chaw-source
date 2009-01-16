@@ -22,9 +22,17 @@ class SourceController extends AppController {
 		$args = func_get_args();
 		$path = join(DS, $args);
 
-		$current = null;
+		if (empty($path)) {
+			$this->Project->Repo->update();
+		}
 
-		if ($args > 0) {
+		if ($this->Project->Repo->type == 'git') {
+			array_unshift($args, 'branches', 'master');
+			$this->Project->Repo->branch('master', true);
+		}
+
+		$current = null;
+		if (count($args) > 0) {
 			$current = array_pop($args);
 		}
 
@@ -40,7 +48,61 @@ class SourceController extends AppController {
 	}
 
 	function branches() {
+		$args = func_get_args();
+		$path = join(DS, $args);
 
+		$branch = $branchPath = null;
+		if ($this->Project->Repo->type == 'git') {
+			$branch = array_shift($args);
+			$branchPath = join(DS, $args);
+		}
+
+		if ($branch) {
+			array_unshift($args, 'branches', $branch);
+		} else {
+			array_unshift($args, 'branches');
+		}
+
+		if ($this->Project->Repo->type == 'svn') {
+			$path = join(DS, $args);
+			if (empty($path)) {
+				$this->Project->Repo->update();
+			}
+			$data = $this->Source->read($this->Project->Repo, $path);
+		}
+
+		$current = null;
+		if (count($args) > 0) {
+			$current = array_pop($args);
+ 		}
+
+		if ($this->Project->Repo->type == 'git') {
+			if ($branch === null) {
+				$branches = $this->Project->branches();
+				foreach ($branches as $branch) {
+					$this->Project->Repo->branch($branch['Branch']['name']);
+				}
+			} else {
+				if (empty($branchPath)) {
+					$this->Project->Repo->branch($branch, true);
+					$this->Project->Repo->before(array("cd {$this->Project->Repo->working}"));
+					$this->Project->Repo->run('pull');
+				}
+				$this->Project->Repo->branch($branch, true);
+			}
+
+			$data = $this->Source->read($this->Project->Repo, $branchPath);
+		}
+
+		if ($path && $current) {
+			$this->pageTitle = $path;
+		} else {
+			$this->pageTitle = 'Source';
+		}
+
+		$this->set(compact('data', 'path', 'args', 'current'));
+
+		$this->render('index');
 	}
 }
 ?>

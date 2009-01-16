@@ -41,15 +41,14 @@ class GitTest extends CakeTestCase {
 
 	function testRead() {
 		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
 		$result = $Git->read();
 		$this->assertEqual($result['message'], 'Initial Project Commit');
-
-		//pr($Git->debug);
-		//pr($Git->response);
 	}
 
 	function testFork() {
 		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
 		$result = $Git->fork("gwoo");
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/gwoo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test'));
@@ -148,16 +147,18 @@ class GitTest extends CakeTestCase {
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/.git'));
 
-		$File = new File(TMP . 'tests/git/working/test/.gitignore');
-		$File->write('this is something new');
-
 		$Git->branch('new', true);
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/new/.git'));
 
-		$Git->commit(array("-m", "'Updating git ignore'"));
+		$File = new File(TMP . 'tests/git/working/test/new/a.txt');
+		$this->assertTrue($File->write('this is something new'));
+
+		$Git->commit(array("-m", "'Adding a.txt'"));
 		$Git->push('origin', 'new');
 
 		//pr($Git->debug);
 		//pr($Git->response);
+		// /die();
 	}
 
 	function testFastForward() {
@@ -185,15 +186,15 @@ class GitTest extends CakeTestCase {
 		$Git->push('origin', 'master');
 
 		$Git->fork("gwoo");
-		pr($Git->merge("test"));
-		
+		$Git->merge("test");
+
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test/new.text'));
-		
-		pr($Git->debug);
+
+		//pr($Git->debug);
 		//pr($Git->response);
 		//die();
 	}
-	
+
 	function testMergeFromFork() {
 		$Cleanup = new Folder(TMP . 'tests/git');
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
@@ -207,32 +208,75 @@ class GitTest extends CakeTestCase {
 		$result = $Git->fork("gwoo");
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/gwoo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test'));
-		
+
 		$File = new File(TMP . 'tests/git/working/forks/gwoo/test/new.text', true);
 		$File->write('this is something new');
 		$Git->commit(array("-m", "'Pushing to fork'"));
 		$Git->push('origin', 'master');
-		
+
 		$Git = ClassRegistry::init($this->__repos[1]);
-		
+
 		$File = new File(TMP . 'tests/git/working/test/other.text', true);
 		$File->write('this is something elese is new');
 		$Git->commit(array("-m", "'Pushing to parent'"));
 		$Git->push('origin', 'master');
-		
+
 		$Git->update('origin', 'master');
 		$Git->before(array("cd {$Git->working}"));
 		$Git->remote(array('add', 'gwoo', TMP . 'tests/git/repo/forks/gwoo/test.git'));
 		$Git->update('gwoo', 'master');
 		$Git->push('origin', 'master');
-		
+
 		$data = $Git->read();
 		$this->assertTrue($data['message'], 'Pushing to fork');
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/new.text'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/other.text'));
-		
-		pr($Git->debug);
-		pr($Git->response);
+
+		//pr($Git->debug);
+		//pr($Git->response);
+	}
+
+	function testMultipleCommitsInSinglePush() {
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/.git'));
+
+		$File = new File(TMP . 'tests/git/working/test/new.text', true);
+		$File->write('this is something new');
+		$Git->commit(array("-m", "'Pushing to fork'"));
+
+		$File = new File(TMP . 'tests/git/working/test/new.text', true);
+		$File->write('this is something new again');
+		$Git->commit(array("-m", "'Pushing to fork again'"));
+		$Git->push('origin', 'master');
+
+		$data = $Git->read();
+		$this->assertTrue($data['message'], 'Pushing to fork again');
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/new.text'));
+
+		$File = new File(TMP . 'tests/git/working/test/new.text', true);
+		$File->write('this is something new again');
+		$Git->commit(array("-m", "'Pushing to fork again again'"));
+		$Git->push('origin', 'master');
+
+		$data = $Git->read();
+		$this->assertTrue($data['message'], 'Pushing to fork again again');
+
+
+		//pr($Git->run('log', array('--pretty=oneline')));
+		//$info = $Git->run('log', array("--pretty=format:%P%x00%H%x00%an%x00%ai%x00%s"), 'capture');
+		//list($parent, $revision, $author, $commit_date, $message) = explode(chr(0), $info[0]);
+
+		//pr($Git->run('rev-list', array($parent, $revision)));
+
+		//pr($Git->run('log', array($revision, "--pretty=format:%P%x00%H%x00%an%x00%ai%x00%s"), 'capture'));
+		//pr($Git->debug);
+
 	}
 
 	function testPathInfo() {
@@ -266,7 +310,5 @@ class GitTest extends CakeTestCase {
 	function testTree() {
 	//	pr($Git->tree('master'));
 	}
-
-
 }
 ?>

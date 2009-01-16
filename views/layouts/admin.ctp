@@ -75,7 +75,7 @@
 			<div id="navigation">
 				<ul>
 					<li><?php
-						$options = ($this->name == 'source') ? array('class' => 'on') : null;
+						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
 						echo $html->link('Source', array(
 							'admin' => false,
 							'controller' => 'source', 'action' => 'index'), $options);
