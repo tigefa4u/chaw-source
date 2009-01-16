@@ -64,6 +64,9 @@ class Source extends Object {
 			$dir[$i]['name'] = $dirs[$i];
 			$lookup = $path . $dirs[$i];
 			$here = $wwwPath . $dirs[$i];
+			if ($dirs[$i] == 'master') {
+				$isRoot = true;
+			}
 			if ($isRoot) {
 				$Repo->working = $path . $dirs[$i];
 				$here = $base . 'branches/' . $dirs[$i];
