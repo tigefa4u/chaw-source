@@ -3,9 +3,9 @@
 
 		<span class="gravatar">
 			<?php
-				//$gravatar = "http://www.gravatar.com/avatar/" . md5($CurrentUser->email). "?"
-				// 	. "size=22";
-				//echo "<img src=\"{$gravatar}\" />";
+				$gravatar = "http://www.gravatar.com/avatar/" . md5($CurrentUser->email). "?"
+				 	. "size=22";
+				echo "<img src=\"{$gravatar}\" />";
 			?>
 		</span>
 
