@@ -262,7 +262,7 @@ class Git extends Repo {
 			$project = "forks/{$fork}/{$project}";
 		}
 
-		$this->before(array("cd {$this->working}"));
+		$this->before(array("cd {$this->working}/master"));
 		$this->remote(array('add', $remote, Configure::read('Content.git') . 'repo' . DS . $project));
 
 		$this->update($remote, 'master', array('--squash'));
