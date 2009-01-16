@@ -29,6 +29,8 @@ class RepoController extends AppController {
 		} else {
 			$this->Session->setFlash('Fast Forward failed!');
 		}
+		$this->log($this->Project->Repo->debug, LOG_DEBUG);
+		$this->log($this->Project->Repo->response, LOG_DEBUG);
 		$this->redirect($this->referer());
 	}
 
@@ -80,7 +82,29 @@ class RepoController extends AppController {
 					'controller' => 'source', 'action' => 'index',
 				));
 			} else {
+				if (!empty($this->Project->data)) {
+					$this->Session->setFlash('You already have a fork');
+					$this->redirect(array(
+						'fork' => $this->Project->data['Project']['fork'],
+						'controller' => 'source', 'action' => 'index',
+					));
+
+				}
 				$this->Session->setFlash('Project was NOT created');
+			}
+		}
+
+		if (empty($this->data)) {
+			$hasFork = $this->Project->find(array(
+				'fork' => $this->Auth->user('username'),
+				'url' => $this->Project->config['url']
+			));
+			if ($hasFork) {
+				$this->Session->setFlash('You already have a fork');
+				$this->redirect(array(
+					'fork' => $this->Auth->user('username'),
+					'controller' => 'source', 'action' => 'index',
+				));
 			}
 		}
 	}

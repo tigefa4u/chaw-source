@@ -1,5 +1,25 @@
 <div class="projects index">
 <h2><?php __('Projects');?></h2>
+<div class="page-navigation">
+	<?php
+		echo $chaw->type('pending', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+		
+		echo $chaw->type('all', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+
+		echo $chaw->type('public', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+
+		echo $chaw->type('forks', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+	
+	?>
+</div>
 <p>
 <?php
 $paginator->options(array('url'=> $this->passedArgs));

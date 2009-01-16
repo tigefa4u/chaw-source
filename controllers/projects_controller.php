@@ -171,10 +171,26 @@ class ProjectsController extends AppController {
 		if ($this->Project->id != 1 || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
 		}
+
 		if ($this->params['isAdmin'] === true) {
 			$this->paginate['conditions'] = array();
 			$this->paginate['order'] = 'Project.id ASC';
 		}
+
+		if(empty($this->passedArgs['type'])) {
+			$this->passedArgs['type'] = 'public';
+		}
+
+		if ($this->passedArgs['type'] == 'forks') {
+			$this->paginate['conditions']['Project.fork !='] = null;
+		} else if ($this->passedArgs['type'] == 'public') {
+			$this->paginate['conditions']['Project.fork ='] = null;
+		}
+
+		if ($this->passedArgs['type'] == 'pending') {
+			$this->paginate['conditions']['Project.approved'] = 0;
+		}
+
 		$this->Project->recursive = 0;
 		$this->set('projects', $this->paginate());
 	}
@@ -196,7 +212,7 @@ class ProjectsController extends AppController {
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash('Project was created');
 				$this->redirect(array(
-					'admin' => false, 'project' => $data['Project']['url'], 
+					'admin' => false, 'project' => $data['Project']['url'],
 					'controller' => 'timeline', 'action' => 'index'
 				));
 			} else {
