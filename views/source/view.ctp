@@ -1,6 +1,6 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link('ghighlight', false);
+$javascript->link('ghighlight.min', false);
 ?>
 <div class="source view">
 	<span class="history">
