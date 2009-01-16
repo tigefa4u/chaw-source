@@ -22,15 +22,15 @@ class SourceController extends AppController {
 		$args = func_get_args();
 		$path = join(DS, $args);
 
-		if (empty($path)) {
-			$this->Project->Repo->update();
-		}
-
 		if ($this->Project->Repo->type == 'git') {
 			array_unshift($args, 'branches', 'master');
 			$this->Project->Repo->branch('master', true);
 		}
-
+		
+		if (empty($path)) {
+			$this->Project->Repo->update();
+		}
+		
 		$current = null;
 		if (count($args) > 0) {
 			$current = array_pop($args);
