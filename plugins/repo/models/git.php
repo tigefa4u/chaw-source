@@ -178,6 +178,7 @@ class Git extends Repo {
 				$clone = new Folder($base, true, $chmod);
 			}
 			$this->run('clone', array($this->path, $path));
+			chmod($path, $chmod);
 		}
 
 		$this->cd($path);
@@ -296,6 +297,7 @@ class Git extends Repo {
 
 		$this->commit("Merge from {$project}");
 		$this->push('origin', 'master');
+		$this->execute("env - {$this->path}/hooks/post-receive refs/heads/master");
 		$this->pull('origin', 'master');
 		return $response;
 	}
@@ -470,10 +472,9 @@ class Git extends Repo {
  *
  **/
 	function delete() {
-		$this->logResponse = true;
-		if ($this->branch !== 'master') {
-			$branch = $this->branch;
-			$working = $this->working;
+		$branch = $this->branch;
+		$working = $this->working;
+		if ($branch !== 'master') {
 			$this->branch('master', true);
 			$this->run('branch -D', array($branch));
 			$this->cd();
