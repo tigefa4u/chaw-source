@@ -72,20 +72,21 @@ class SourceTestCase extends CakeTestCase {
 	}
 
 	function testInitialize() {
+		$this->Git->branch = null;
 		$result = $this->Source->initialize($this->Git, array('master'));
 		$this->assertEqual($result, array(
 			array('branches'),
 			'',
 			'master'
 		));
-
+		$this->Git->branch = null;
 		$result = $this->Source->initialize($this->Git, array('master', 'app', 'config'));
 		$this->assertEqual($result, array(
 			array('branches', 'master', 'app'),
 			'app/config',
 			'config'
 		));
-
+		$this->Git->branch = null;
 		$result = $this->Source->initialize($this->Git, array('master', 'app', 'config', 'core.php'));
 		$this->assertEqual($result, array(
 			array('branches', 'master', 'app', 'config'),
@@ -101,7 +102,7 @@ class SourceTestCase extends CakeTestCase {
 		$this->Source->initialize($this->Git);
 		$result = $this->Source->read();
 		$this->assertEqual($result['Folder'][0]['name'], 'master');
-		$this->assertEqual($result['Folder'][0]['path'], '/');
+		$this->assertEqual($result['Folder'][0]['path'], '');
 		$this->assertEqual($result['Folder'][0]['info']['message'], 'Merge from forks/gwoo/test.git');
 	}
 }

@@ -149,8 +149,8 @@ class SourceControllerTest extends CakeTestCase {
 		$this->Source->branches('new');
 
 		$data = $this->Source->viewVars['data'];
-
 		$this->assertEqual($data['Folder'][0]['name'], 'folder');
+		$this->assertEqual($data['Folder'][0]['path'], 'branches/new/folder');
 		$this->assertEqual($data['Folder'][0]['info']['message'], 'Merge from forks/gwoo/test.git');
 		unset($this->Source->viewVars['data']);
 
@@ -160,7 +160,7 @@ class SourceControllerTest extends CakeTestCase {
 			'current' => 'new',
 		));
 
-		//$this->Source->Project->Repo->branch = null;
+		$this->Source->Project->Repo->branch = null;
 		$this->Source->branches('new', 'test.txt');
 
 		$data = $this->Source->viewVars['data'];

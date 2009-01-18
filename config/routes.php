@@ -40,7 +40,6 @@
 
 	Router::connect('/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/source/branches/*', array('controller' => 'source', 'action' => 'branches'));
-	Router::connect('/source/*', array('controller' => 'source', 'action' => 'index'));
 	
 	/*
 	Router::connect('/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
@@ -50,7 +49,6 @@
 
 	Router::connect('/forks/:fork/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/forks/:fork/:project/source/branches/*', array('controller' => 'source', 'action' => 'branches'));
-	Router::connect('/forks/:fork/:project/source/*', array('controller' => 'source', 'action' => 'index'));
 	
 	/*
 	Router::connect('/forks/:fork/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
@@ -60,7 +58,6 @@
 
 	Router::connect('/:project/browser/*', array('controller' => 'browser', 'action' => 'index'));
 	Router::connect('/:project/source/branches/*', array('controller' => 'source', 'action' => 'branches'));
-	Router::connect('/:project/source/*', array('controller' => 'source', 'action' => 'index'));
 	
 	/*
 	Router::connect('/:project/wiki/add/*', array('controller' => 'wiki', 'action' => 'add'), array('action' => 'add'));
@@ -79,7 +76,7 @@
 		'project' => false)
 	);
 	Router::connect('/:controller/*', array(), array(
-		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
+		'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index', 'project' => false)
 	);
 
@@ -92,7 +89,7 @@
 		'action' => 'history|fast_forward|view|add|edit|modify|delete|remove|parent')
 	);
 	Router::connect('/forks/:fork/:project/:controller/*', array(), array(
-		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
+		'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index')
 	);
 
@@ -105,6 +102,6 @@
 		'action' => 'history|merge|view|add|edit|modify|delete|remove|forks')
 	);
 	Router::connect('/:project/:controller/*', array(), array(
-		'controller' => 'wiki|commits|tickets|comments|timeline|versions|users|projects',
+		'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects',
 		'action' => 'index')
 	);

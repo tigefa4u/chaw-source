@@ -39,7 +39,7 @@ class Source extends Object {
 		$path = join(DS, $args);
 
 		if ($this->Repo->type == 'git') {
-			if (!empty($args)) {
+			if (!empty($args) && !$this->Repo->branch) {
 				$branch = array_shift($args);
 				$path = join(DS, $args);
 				$this->Repo->branch($branch, true);
@@ -68,7 +68,14 @@ class Source extends Object {
  *
  **/
 	function rebuild() {
-
+		if ($this->Repo->working) {
+			$path = dirname($this->Repo->working);
+		}
+		$Cleanup = new Folder($path);
+		if ($Cleanup->pwd() == $path) {
+			$Cleanup->delete();
+		}
+		return $this->Repo->pull();
 	}
 /**
  * undocumented function
@@ -89,7 +96,11 @@ class Source extends Object {
 		}
 
 		$isRoot = false;
-		$wwwPath = $base = join('/', explode(DS, $path)) . '/';
+
+		$wwwPath = $base = null;
+		if ($path) {
+			$wwwPath = $base = join('/', explode(DS, $path)) . '/';
+		}
 
 		$Folder = new Folder($this->Repo->working . DS . $path);
 		$path = Folder::slashTerm($Folder->pwd());
@@ -101,7 +112,7 @@ class Source extends Object {
 			} else {
 				$branch = basename($this->Repo->working);
 				if ($branch != 'master') {
-					$wwwPath = 'branches/' . $branch . $wwwPath;
+					$wwwPath = 'branches/' . $branch . '/' . $base;
 				}
 			}
 		}
