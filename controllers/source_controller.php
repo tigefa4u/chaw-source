@@ -119,7 +119,7 @@ class SourceController extends AppController {
 				$this->Session->setFlash('Oops, delete failed try again');
 			}
 		}
-		$this->redirect($this->referer());
+		$this->redirect(array('action' => 'branches'));
 	}
 }
 ?>
