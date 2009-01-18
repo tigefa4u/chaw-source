@@ -88,7 +88,7 @@ class Source extends Object {
  * @return void
  *
  **/
-	function rebuild() {
+	function rebase() {
 		if ($this->Repo->working) {
 			$path = dirname($this->Repo->working);
 		}

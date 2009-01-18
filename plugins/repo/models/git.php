@@ -181,11 +181,11 @@ class Git extends Repo {
 		}
 
 		$this->cd($path);
-
+		/*
 		$this->before(array(
 			$this->run('pull', null, true)
 		));
-
+		*/
 		$this->checkout(array('-b', $name));
 
 		//$this->before(array("cd {$path}"));
@@ -462,6 +462,28 @@ class Git extends Repo {
 		}
 		list($revision, $author, $date, $message) = explode(chr(0), $info);
 		return compact('revision', 'author', 'date', 'message');
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function delete() {
+		$this->logResponse = true;
+		if ($this->branch !== 'master') {
+			$branch = $this->branch;
+			$working = $this->working;
+			$this->branch('master', true);
+			$this->run('branch -D', array($branch));
+			$this->cd();
+			$this->run('remote prune origin');
+		}
+		$this->execute("rm -rf {$working}");
+		if (!is_dir($working)) {
+			return true;
+		}
+		return false;
 	}
 /**
  * Run a command specific to this type of repo

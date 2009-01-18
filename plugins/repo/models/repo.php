@@ -208,20 +208,22 @@ class Repo extends Overloadable {
  *
  **/
 	function execute($command, $args = array(), $return = false) {
-		$before = (!empty($this->_before)) ? trim(join(' && ', $this->_before)) . ' && ' : null;
-		$this->_before = array();
-
+		$before = null;
+		if ($return !== true) {
+			$before = (!empty($this->_before)) ? trim(join(' && ', $this->_before)) . ' && ' : null;
+			$this->_before = array();
+		}
 		if (is_string($args)) {
 			$args = array($args);
 		}
 		$args = array_map('escapeshellcmd', (array)$args);
 
 		$c = trim("{$before}{$command} " . join(' ', (array)$args) . " " . $this->_credentials());
-		
+
 		if ($return === true) {
 			return $c;
 		}
-		
+
 		if ($this->logDebug == true) {
 			$this->debug[] = $c;
 		}

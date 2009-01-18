@@ -220,7 +220,7 @@ class GitTest extends CakeTestCase {
 		//pr($Git->response);
 		//die();
 	}
-	
+
 	function testMerge() {
 		Configure::write('Content.git', TMP . 'tests/git/');
 		$Git =& ClassRegistry::init(array(
@@ -339,6 +339,44 @@ class GitTest extends CakeTestCase {
 		//pr($Git->run('log', array($revision, "--pretty=format:%P%x00%H%x00%an%x00%ai%x00%s"), 'capture'));
 		//pr($Git->debug);
 
+	}
+
+	function testFindBranches() {
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
+
+		$Git->run('branch new');
+		$Git->update();
+
+
+		$results = $Git->find('branches');
+		$this->assertEqual($results, array('master', 'new'));
+
+		//pr($Git->debug);
+	}
+
+	function testDelete() {
+		$Git->logReponse = true;
+		$Git = ClassRegistry::init($this->__repos[1]);
+		$this->assertTrue($Git->create());
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
+
+		$Git->run('branch new');
+		$Git->update();
+		$Git->branch('new', true);
+		$this->assertTrue($Git->delete());
+
+		$Git->branch('master', true);
+		$results = $Git->find('branches');
+		$this->assertEqual($results, array('master'));
+
+		//pr($Git->debug);
+		//pr($Git->response);
+
+		//die();
 	}
 
 	function testPathInfo() {

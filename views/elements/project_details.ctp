@@ -47,6 +47,12 @@
 					endif;
 					echo $html->tag('span', $link);
 				endif;
+				if (!empty($this->params['isAdmin']) && !empty($branch)):
+					echo $html->tag('span', $html->link('remove branch', array(
+						'admin' => false,
+						'controller' => 'source', 'action' => 'delete', $branch
+					), array('class' => 'detail')));
+				endif;
 			else:
 				echo '<strong>svn checkout</strong> ';
 				echo "{$CurrentProject->remote->svn}/$remote{$CurrentProject->url}";

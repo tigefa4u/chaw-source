@@ -31,7 +31,7 @@ class SourceController extends AppController {
 		parent::beforeFilter();
 		$this->Auth->mapActions(array(
 			'branches' => 'read',
-			'rebuild' => 'update'
+			'rebase' => 'update'
 		));
 	}
 /**
@@ -71,6 +71,7 @@ class SourceController extends AppController {
 
 		if($current == 'branches' && $this->Project->Repo->type == 'git') {
 			$this->Source->branches();
+			$this->Project->Repo->branch = null;
 		}
 
 		$data = $this->Source->read($path);
@@ -80,7 +81,8 @@ class SourceController extends AppController {
 			$this->pageTitle = join('/', $args) . '/' . $current;
 		}
 
-		$this->set(compact('data', 'path', 'args', 'current'));
+		$branch = $this->Project->Repo->branch;
+		$this->set(compact('data', 'path', 'args', 'current', 'branch'));
 
 		$this->render('index');
 	}
@@ -90,12 +92,31 @@ class SourceController extends AppController {
  * @return void
  *
  **/
-	function rebuild() {
+	function rebase() {
 		if (!empty($this->params['isAdmin'])) {
-			if ($this->Source->rebuild()) {
+			if ($this->Source->rebase()) {
 				$this->Session->setFlash('You should have a nice clean working copy');
 			} else {
 				$this->Session->setFlash('Oops, rebuild failed try again');
+			}
+		}
+		$this->redirect($this->referer());
+	}
+
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function delete($branch = null) {
+		$this->autoRender = false;
+		if (!empty($branch) && !empty($this->params['isAdmin'])) {
+			$this->Source->initialize($this->Project->Repo, array($branch));
+			if ($this->Project->Repo->delete()) {
+				$this->Session->setFlash($branch .' was deleted');
+			} else {
+				$this->Session->setFlash('Oops, delete failed try again');
 			}
 		}
 		$this->redirect($this->referer());
