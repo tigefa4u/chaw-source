@@ -17,7 +17,7 @@
 class RepoController extends AppController {
 
 	var $name = 'Repo';
-	var $uses = array();
+	var $uses = array('Commit');
 
 	function fast_forward() {
 		if ($this->Project->Repo->type != 'git') {
@@ -28,7 +28,7 @@ class RepoController extends AppController {
 		if ($this->Project->Repo->merge($this->Project->config['url'])) {
 			$this->Session->setFlash('Fast Forward successfull!');
 		} else {
-			$this->Session->setFlash('Fast Forward failed!');
+			$this->Session->setFlash('Fast Forward failed. Time to merge manually?');
 		}
 		$this->log($this->Project->Repo->debug, LOG_DEBUG);
 		$this->log($this->Project->Repo->response, LOG_DEBUG);
@@ -45,11 +45,16 @@ class RepoController extends AppController {
 			$this->redirect($this->referer());
 		}
 		$this->Project->Repo->logResponse = true;
-		
 		if ($this->Project->Repo->merge($this->Project->config['url'], $fork)) {
+			$data = $this->Project->Repo->read(null, false);
+			$this->Commit->create(array(
+				'project_id' =>  $this->Project->id,
+				'branch' => 'refs/heads/master'
+			));
+			$this->Commit->save($data);
 			$this->Session->setFlash('Merge successfull!');
 		} else {
-			$this->Session->setFlash('Merge failed!');
+			$this->Session->setFlash('Merge failed. Time to merge manually?');
 		}
 		$this->log($this->Project->Repo->debug, LOG_DEBUG);
 		$this->log($this->Project->Repo->response, LOG_DEBUG);
