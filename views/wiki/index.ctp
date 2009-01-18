@@ -138,7 +138,7 @@ $javascript->link('ghighlight.min', false);
 	<?php endif; ?>
 </div>
 
-<?php if (empty($revisions)):?>
+<?php if (empty($revisions) && !empty($page)):?>
 <div class="wiki-footer">
 	<p class="author">
 		last revision by
