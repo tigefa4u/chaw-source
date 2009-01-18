@@ -299,7 +299,7 @@ class Git extends Repo {
 		$this->push('origin', 'master');
 		$this->execute("env - {$this->path}/hooks/post-receive refs/heads/master");
 		$this->pull('origin', 'master');
-		return $response;
+		return true;
 	}
 /**
  * find all revisions and return contents of read.

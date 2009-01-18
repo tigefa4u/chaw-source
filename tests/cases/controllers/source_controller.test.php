@@ -124,6 +124,7 @@ class SourceControllerTest extends CakeTestCase {
 			'path' => 'branches',
 			'args' => array(),
 			'current' => 'branches',
+			'branch' => null
 		));
 
 	}
@@ -140,6 +141,7 @@ class SourceControllerTest extends CakeTestCase {
 			'path' => null,
 			'args' => array(),
 			'current' => 'branches',
+			'branch' => null
 		));
 	}
 
@@ -158,6 +160,7 @@ class SourceControllerTest extends CakeTestCase {
 			'path' => '',
 			'args' => array('branches'),
 			'current' => 'new',
+			'branch' => 'new'
 		));
 
 		$this->Source->Project->Repo->branch = null;
@@ -171,6 +174,7 @@ class SourceControllerTest extends CakeTestCase {
 			'path' => 'test.txt',
 			'args' => array('branches', 'new'),
 			'current' => 'test.txt',
+			'branch' => 'new'
 		));
 
 		$this->assertEqual($data['Folder'], array());

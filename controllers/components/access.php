@@ -125,7 +125,7 @@ class AccessComponent extends Object {
 			return true;
 		}
 
-		if ($C->action != 'login' && !empty($_COOKIE['Chaw']['User']) && !$this->user('id')) {
+		if ($C->action != 'login' && !empty($_COOKIE['Chaw']['User']) && empty($this->user)) {
 			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
 			$C->redirect('/users/login');
 		}

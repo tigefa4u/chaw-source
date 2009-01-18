@@ -56,6 +56,12 @@ class Repo extends Overloadable {
  **/
 	var $working = null;
 /**
+ *  branch name used mostly by Git
+ *
+ * @var string
+ **/
+	var $branch = null;
+/**
  * undocumented class variable
  *
  * @var string

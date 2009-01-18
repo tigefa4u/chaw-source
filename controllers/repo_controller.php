@@ -24,6 +24,7 @@ class RepoController extends AppController {
 			$this->Session->setFlash('You cannot fork an svn project yet');
 			$this->redirect($this->referer());
 		}
+		$this->Project->Repo->logResponse = true;
 		if ($this->Project->Repo->merge($this->Project->config['url'])) {
 			$this->Session->setFlash('Fast Forward successfull!');
 		} else {
@@ -43,12 +44,15 @@ class RepoController extends AppController {
 			$this->Session->setFlash('Invalid Fork');
 			$this->redirect($this->referer());
 		}
-
+		$this->Project->Repo->logResponse = true;
+		
 		if ($this->Project->Repo->merge($this->Project->config['url'], $fork)) {
 			$this->Session->setFlash('Merge successfull!');
 		} else {
 			$this->Session->setFlash('Merge failed!');
 		}
+		$this->log($this->Project->Repo->debug, LOG_DEBUG);
+		$this->log($this->Project->Repo->response, LOG_DEBUG);
 		$this->redirect($this->referer());
 	}
 
