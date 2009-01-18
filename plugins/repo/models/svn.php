@@ -136,8 +136,13 @@ class Svn extends Repo {
 		if (preg_match_all('/[\\s+](\\d+)[\\s+]/', $data, $matches)) {
 			$data = array_filter($matches[1]);
 		}
+		if ($type == 'count') {
+			return count($data);
+		}
 
-		return parent::_findAll($data, compact('limit', 'page'));
+		if ($type == 'all') {
+			return parent::_findAll($data, compact('limit', 'page'));
+		}
 	}
 /**
  * Read the author, data, messages, changes, and diff for a revision
@@ -238,7 +243,6 @@ class Svn extends Repo {
 			$result['date'] = $bits[0] . ' ' . @$bits[1];
 		}
 		$result['message'] = (!empty($lines[3])) ? trim($lines[3]) : null;
-
 		return $result;
 	}
 /**
