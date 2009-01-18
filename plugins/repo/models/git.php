@@ -203,12 +203,9 @@ class Git extends Repo {
  *
  **/
 	function commit($options = array()) {
-		extract($this->config);
-
 		$path = '.';
 		if (is_string($options)) {
 			$options = array('-m', escapeshellarg($options));
-
 		} else {
 			if (!empty($options['path'])) {
 				$path = $options['path'];
@@ -221,7 +218,9 @@ class Git extends Repo {
 		}
 
 		$this->cd();
-		$this->before(array("{$type} add {$path}"));
+		$this->before(array(
+			$this->run('add', array($path), true)
+		));
 		return $this->run('commit', $options);
 	}
 /**
@@ -251,9 +250,7 @@ class Git extends Repo {
  *
  **/
 	function pull($remote ='origin', $branch = 'master', $params = array()) {
-		extract($this->config);
-
-		if (!is_dir($path)) {
+		if (!is_dir($this->path)) {
 			return false;
 		}
 
@@ -297,7 +294,7 @@ class Git extends Repo {
 
 		$this->commit("Merge from {$project}");
 		$this->push('origin', 'master');
-		$this->pull('origin', 'master');
+		$this->update('origin', 'master');
 		$this->execute("env - {$this->path}/hooks/post-receive refs/heads/master");
 		return true;
 	}

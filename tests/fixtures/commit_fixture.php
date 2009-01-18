@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* SVN FILE: $Id$ */
 /* Commit Fixture generated on: 2008-10-16 22:10:35 : 1224221135*/
 
@@ -8,6 +8,7 @@ class CommitFixture extends CakeTestFixture {
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'branch_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'branch' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'revision' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
 			'author' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),

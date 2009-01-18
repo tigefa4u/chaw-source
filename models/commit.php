@@ -46,6 +46,13 @@ class Commit extends AppModel {
 		if (!empty($this->data['Commit']['changes'])) {
 			$this->data['Commit']['changes'] = serialize($this->data['Commit']['changes']);
 		}
+
+		if (!empty($this->data['Commit']['branch'])) {
+			$branch = $this->Branch->save(array(
+				'name' => $this->data['Commit']['branch'], 'project_id' => $this->data['Commit']['project_id']
+			));
+			$this->data['Commit']['branch_id'] = $this->Branch->id;
+		}
 		return true;
 	}
 
