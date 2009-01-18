@@ -30,6 +30,13 @@ class Git extends Repo {
  **/
 	var $gitDir = null;
 /**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	var $branch = null;
+/**
  * available commands for magic methods
  *
  * @var array
@@ -53,13 +60,11 @@ class Git extends Repo {
 		}
 
 		if (is_dir($path) && !file_exists($path . DS . 'config')) {
-			$this->before(array("cd {$path}"));
-			$this->response[] = $this->run("--bare init");
+			$this->cd($path);
+			$this->run("--bare init");
 		}
 
-		if (!is_dir($working)) {
-			$this->response[] = $this->pull();
-		}
+		$this->pull();
 
 		if (!empty($options['remote'])) {
 			$remote = $options['remote'];
@@ -69,44 +74,22 @@ class Git extends Repo {
 		}
 
 		$project = basename($path);
-		//$this->response[] = $this->remote(array('add', 'origin', "{$remote}:{$project}"));
+		//$this->remote(array('add', 'origin', "{$remote}:{$project}"));
 
-		if (is_dir($working) && !file_exists($working . DS . '.gitignore')) {
-			$this->before(array(
-				"cd {$working}", "touch .gitignore"
-			));
-			$this->response[] = $this->commit(array("-m", "'Initial Project Commit'"));
-			//$this->response[] = $this->run("--bare", array('update-server-info'));
-			$this->response[] = $this->update();
-			$this->response[] = $this->push();
+		if (is_dir($this->working) && !file_exists($this->working . DS . '.gitignore')) {
+			$this->cd();
+			$this->before(array("touch .gitignore"));
+			$this->commit("Initial Project Commit");
+			//$this->run("--bare", array('update-server-info'));
+			$this->update();
+			$this->push();
 		}
 
-		if (is_dir($path) && is_dir($working)) {
+		if (is_dir($path) && is_dir($this->working)) {
 			return true;
 		}
 
 		return false;
-	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
-	function commit($options = array()) {
-		extract($this->config);
-
-		$path = '.';
-		if (!empty($options['path'])) {
-			$path = $options['path'];
-			unset($options['path']);
-		}
-
-		$this->before(array(
-			"cd {$working}", "{$type} add {$path}"
-		));
-
-		$this->response[] = $this->run('commit', $options);
 	}
 /**
  * undocumented function
@@ -119,7 +102,8 @@ class Git extends Repo {
 			return false;
 		}
 		extract($this->config);
-
+		$this->branch = null;
+		$working = dirname(dirname($working));
 		$project = basename($path);
 		$fork = dirname($path) . DS . 'forks' . DS . $user . DS . $project;
 
@@ -127,20 +111,23 @@ class Git extends Repo {
 			'working' => $fork
 		));
 
-		if (is_dir($this->config['working'])) {
+		if (is_dir($this->working)) {
 			$this->config(array(
-				'path' => $fork,
-				'working' => dirname($working) . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
+				'path' => $this->working,
+				'working' => $working . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
 			));
+			$this->pull();
 			return true;
 		}
 
-		$userDir = dirname($this->config['working']);;
+		$userDir = dirname($this->working);;
 		if (!is_dir($userDir)) {
 			$Fork = new Folder($userDir, true, $chmod);
 		}
 
-		if ($this->pull('master', array('--bare'))) {
+		$this->clone(array('--bare', $this->path, $this->working));
+
+		if (is_dir($this->working)) {
 			if (!empty($options['remote'])) {
 				$remote = $options['remote'];
 				unset($options['remote']);
@@ -148,14 +135,14 @@ class Git extends Repo {
 				$remote = "git@git.chaw";
 			}
 			$this->config(array(
-				'path' => $fork,
-				'working' => dirname($working) . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
+				'path' => $this->working,
+				'working' => $working . DS . 'forks' . DS . $user . DS . str_replace('.git', '', $project)
 			));
-			//$this->response[] = $this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
-			$this->response[] = $this->pull();
+			//$this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
+			$this->pull();
 		}
 
-		if (is_dir($this->config['path']) && is_dir($this->config['working'])) {
+		if (is_dir($this->path) && is_dir($this->working)) {
 			return true;
 		}
 
@@ -172,26 +159,62 @@ class Git extends Repo {
 			return false;
 		}
 		extract($this->config);
-		
+
 		$path = $this->working;
-		if ($name != basename($this->working)) {
-			$path = $this->working . DS . $name;
+		$branch = basename($path);
+
+		if ($name !== $branch) {
+			if ($this->branch == $branch) {
+				$path = dirname($this->working);
+			}
+			$path = $path . DS . $name;
 			if (!is_dir($path)) {
 				$base = dirname($path);
-				if (!is_dir($path)) {
+				if (!is_dir($base)) {
 					$clone = new Folder($base, true, $chmod);
 				}
-				$this->response[] = $this->run('clone', array($this->path, $path));
+				$this->run('clone', array($this->path, $path));
 			}
 		}
 
 		//$this->before(array("cd {$path}"));
-		//$this->response[] = $this->run('branch', array($name), 'capture');
+		//$this->run('branch', array($name), 'capture');
 		if ($switch === true) {
-			$this->before(array("cd {$path}"));
-			$this->checkout(array('-b', $name, 'origin/' . $name));
+			$this->cd($path);
+			$this->checkout(array('-b', $name));
 			$this->config(array('working' => $path));
+			return $this->branch = $name;
 		}
+
+		return $this->branch;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function commit($options = array()) {
+		extract($this->config);
+
+		$path = '.';
+		if (is_string($options)) {
+			$options = array('-m', escapeshellarg($options));
+
+		} else {
+			if (!empty($options['path'])) {
+				$path = $options['path'];
+				unset($options['path']);
+			}
+		}
+
+		if (!$this->branch) {
+			$this->pull();
+		}
+
+		$this->cd();
+		$this->before(array("{$type} add {$path}"));
+		return $this->run('commit', $options);
 	}
 /**
  * undocumented function
@@ -200,8 +223,8 @@ class Git extends Repo {
  *
  **/
 	function push($remote = 'origin', $branch = 'master') {
-		$this->before(array("cd {$this->working}"));
-		return $this->response[] = $this->run('push', array($remote, $branch), 'capture');
+		$this->cd();
+		return $this->run('push', array($remote, $branch), 'capture');
 	}
 /**
  * undocumented function
@@ -210,8 +233,8 @@ class Git extends Repo {
  *
  **/
 	function update($remote = 'origin', $branch = 'master', $params = array()) {
-		$this->before(array("cd {$this->working}"));
- 		return $this->response[] = $this->run('pull', array_merge($params, array($remote, $branch)), 'capture');
+		$this->cd();
+ 		return $this->run('pull', array_merge($params, array($remote, $branch)), 'capture');
 	}
 /**
  * undocumented function
@@ -219,27 +242,17 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function pull($branch = 'master', $params = array()) {
+	function pull($remote ='origin', $branch = 'master', $params = array()) {
 		extract($this->config);
 
 		if (!is_dir($path)) {
 			return false;
 		}
 
-		if (!is_dir($working)) {
-			$base = dirname($working);
-			if (!is_dir($base)) {
-				$clone = new Folder($base, true, $chmod);
-			}
-			$this->before(array("cd {$base}"));
-			$this->response[] = $this->run('clone', array_merge($params, array($path)));
-		}
-
-		if (is_dir($working)) {
-			$this->before(array("cd {$working}"));
-			$this->response[] = $this->run('checkout', array('-b', $branch));
-			$this->response[] = $this->update('origin', $branch);
-			return $this->response;
+		$this->branch($branch, true);
+		if (is_dir($this->working)) {
+			$this->update($remote, $branch);
+			return true;
 		}
 
 		return false;
@@ -252,7 +265,7 @@ class Git extends Repo {
  **/
 	function merge($project, $fork = false) {
 		$this->branch('master', true);
-		$this->update('origin', 'master');
+		//$this->update('origin', 'master');
 
 		$remote = 'parent';
 		if (strpos($project, '.git') === false) {
@@ -263,15 +276,21 @@ class Git extends Repo {
 			$project = "forks/{$fork}/{$project}";
 		}
 
-		$this->before(array("cd {$this->working}"));
+		$this->cd();
 		$this->remote(array('add', $remote, Configure::read('Content.git') . 'repo' . DS . $project));
 
-		$this->update($remote, 'master', array('--squash'));
+		$response = $this->update($remote, 'master', array('--squash'));
 
-		$this->commit(array("-m", "'Merge from {$project}'"));
+		if (!empty($response[3])) {
+			if (strpos($response[3], 'failed') !== false) {
+				return false;
+			}
+		}
+
+		$this->commit("Merge from {$project}");
 		$this->push('origin', 'master');
-
-		return $this->response;
+		$this->pull('origin', 'master');
+		return $response;
 	}
 /**
  * find all revisions and return contents of read.
@@ -420,7 +439,7 @@ class Git extends Repo {
  *
  **/
 	function pathInfo($path = null) {
-		$this->before(array("cd {$this->working}"));
+		$this->cd();
 		if ($path) {
 			$path = str_replace($this->working . DS, '', $path);
 		}
@@ -447,7 +466,7 @@ class Git extends Repo {
 			$gitDir = "--git-dir={$this->path} ";
 		}
 
-		return $this->execute("{$type} {$gitDir}{$command}", $args, $return);
+		return parent::run("{$gitDir}{$command}", $args, $return);
 	}
 }
 ?>

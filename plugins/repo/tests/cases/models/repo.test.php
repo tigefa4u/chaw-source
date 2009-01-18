@@ -63,7 +63,7 @@ class RepoTest extends CakeTestCase {
 	function testmagicMethods() {
 		$Repo = ClassRegistry::init($this->__repos['Git']);
 		$result = $Repo->checkout(array('somthing', 'else'), true);
-		$expected = "GIT_DIR={$Repo->path} git checkout somthing else";
+		$expected = "git --git-dir={$Repo->path} checkout somthing else";
 		$this->assertEqual($result, $expected);
 	}
 }

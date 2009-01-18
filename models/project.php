@@ -353,6 +353,14 @@ class Project extends AppModel {
 			return false;
 		}
 
+		$hasFork = $this->find(array(
+			'fork' => $this->data['Project']['fork'],
+			'url' => $this->config['url']
+		));
+		if (!empty($hasFork)) {
+			return false;
+		}
+
 		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['repo']['remote']))) {
 			$this->__created = true;
 			$this->data['Project']['project_id'] = $this->id;
@@ -496,10 +504,15 @@ class Project extends AppModel {
 			}
 			return true;
 		}
+
 		if (!empty($data['url'])) {
 			$reserved = array('forks');
+			if (in_array($data['url'], $reserved)) {
+				$this->invalidate('name');
+				return false;
+			}
 			$test = $this->findByUrl($data['url']);
-			if (in_array($test['url'], $reserved) || !empty($test) && $test['Project']['id'] != $this->id) {
+			if (in_array($data['url'], $reserved) || !empty($test) && $test['Project']['id'] != $this->id) {
 				$this->invalidate('name');
 				return false;
 			}

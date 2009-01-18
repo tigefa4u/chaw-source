@@ -91,6 +91,18 @@ class Repo extends Overloadable {
  * @var string
  **/
 	var $alias = null;
+/**
+ * should the command be logged
+ *
+ * @var boolean
+ **/
+	var $logDebug = true;
+/**
+ * should the response be logged
+ *
+ * @var boolean
+ **/
+	var $logResponse = false;
 
 /**
  * undocumented function
@@ -146,6 +158,19 @@ class Repo extends Overloadable {
  * @return void
  *
  **/
+	function cd($dir = null) {
+		if (is_null($dir)) {
+			$dir = $this->working;
+		}
+		$this->_before[0] = "cd {$dir}";
+	}
+/**
+ * Set multiple commands to be run before will be joined with &&
+ *
+ * @param mixed command single command string or array of commands
+ * @return void
+ *
+ **/
 	function before($command = array()) {
 		if (is_string($command)) {
 			$command = array($command);
@@ -161,7 +186,11 @@ class Repo extends Overloadable {
  **/
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
-		return $this->execute("{$type} {$command}", $args, $return);
+		$response = $this->execute("{$type} {$command}", $args, $return);
+		if ($this->logResponse === true) {
+			$this->response[] = $response;
+		}
+		return $response;
 	}
 /**
  * Executes given command with results based on return type
@@ -188,11 +217,14 @@ class Repo extends Overloadable {
 		$args = array_map('escapeshellcmd', (array)$args);
 
 		$c = trim("{$before}{$command} " . join(' ', (array)$args) . " " . $this->_credentials());
-
+		
 		if ($return === true) {
 			return $c;
 		}
-		$this->debug[] = $c;
+		
+		if ($this->logDebug == true) {
+			$this->debug[] = $c;
+		}
 
 		umask(0);
 		switch ($return) {

@@ -15,41 +15,93 @@
  *
  */
 class Source extends Object {
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $useTable = false;
-
+/**
+ * the current uri
+ *
+ * @var string
+ **/
+	var $Repo = null;
 /**
  * undocumented function
  *
  * @return void
  *
  **/
-	function read(&$Repo, $path) {
+	function initialize(&$Repo, $args = array()) {
+		$this->Repo =& $Repo;
+
+		$path = join(DS, $args);
+
+		if ($this->Repo->type == 'git') {
+			if (!empty($args)) {
+				$branch = array_shift($args);
+				$path = join(DS, $args);
+				$this->Repo->branch($branch, true);
+			}
+
+			if ($this->Repo->branch) {
+				array_unshift($args, $this->Repo->branch);
+			}
+			array_unshift($args, 'branches');
+		}
+
+		if (empty($path)) {
+			$this->Repo->update();
+		}
+
+		$current = null;
+		if (count($args) > 0) {
+			$current = array_pop($args);
+ 		}
+		return array($args, $path, $current);
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function rebuild() {
+
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function read($path = null) {
 		$data = null;
 
-		if (!is_dir($Repo->working)) {
+		if (!is_dir($this->Repo->working)) {
 			return false;
 		}
 
-		if (is_file($Repo->working . DS . $path)) {
-			$File = new File($Repo->working . DS .$path);
+		if (is_file($this->Repo->working . DS . $path)) {
+			$File = new File($this->Repo->working . DS .$path);
 			return array('Content' => $File->read());
 		}
 
 		$isRoot = false;
 		$wwwPath = $base = join('/', explode(DS, $path)) . '/';
 
-		$Folder = new Folder($Repo->working . DS . $path);
-
+		$Folder = new Folder($this->Repo->working . DS . $path);
 		$path = Folder::slashTerm($Folder->pwd());
 
-		if ($Repo->type == 'git') {
-			if (basename(dirname($Repo->working)) == 'working') {
+
+		if ($this->Repo->type == 'git') {
+			if (basename(dirname($this->Repo->working)) == 'working') {
 				$isRoot = true;
 			} else {
-				$branch = basename($Repo->working);
+				$branch = basename($this->Repo->working);
 				if ($branch != 'master') {
-					$wwwPath = 'branches/' . $branch . '/'. $wwwPath;
+					$wwwPath = 'branches/' . $branch . $wwwPath;
 				}
 			}
 		}
@@ -68,14 +120,14 @@ class Source extends Object {
 				$isRoot = true;
 			}
 			if ($isRoot) {
-				$Repo->working = $path . $dirs[$i];
+				$this->Repo->working = $path . $dirs[$i];
 				$here = $base . 'branches/' . $dirs[$i];
 				if ($dirs[$i] == 'master') {
 					$here = $base;
 				}
 			}
 			$dir[$i]['path'] = $here;
-			$dir[$i]['info'] = $Repo->pathInfo($lookup . DS);
+			$dir[$i]['info'] = $this->Repo->pathInfo($lookup . DS);
 			//$dir[$i]['md5'] = null;
 			//$dir[$i]['size'] = $this->__size($path . $dirs[$i]);
 			//$dir[$i]['icon'] = '/icons/dir.gif';
@@ -85,7 +137,7 @@ class Source extends Object {
 		for ($i = 0; $i < $count; $i++) {
 			$file[$i]['name'] = $files[$i];
 			$file[$i]['path'] = $wwwPath . $files[$i];
-			$file[$i]['info'] = $Repo->pathInfo($path . $files[$i]);
+			$file[$i]['info'] = $this->Repo->pathInfo($path . $files[$i]);
 			//$file[$i]['md5'] = md5($Folder->pwd() . $files[$i]);
 			//$file[$i]['size'] = $this->__size($path . $files[$i]);
 			//$file[$i]['icon'] = $this->__icon($files[$i]);
@@ -93,7 +145,12 @@ class Source extends Object {
 
 		return array('Folder' => $dir, 'File' => $file);
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function __size($file = null, $ext = 'B', $size = '0') {
 		$size_ext = array('','K','M','G','T');
 
@@ -111,8 +168,12 @@ class Source extends Object {
 			return array('num' => 0,'ext' => '');
 		}
 	}
-
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function __icon($file) {
 		$array = explode('.', $file);
 		$ext = '';
@@ -160,6 +221,5 @@ class Source extends Object {
 			return $exts['^^UNKOWN^^'];
 		}
 	}
-
 }
 ?>

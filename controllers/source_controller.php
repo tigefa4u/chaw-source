@@ -15,94 +15,87 @@
  *
  */
 class SourceController extends AppController {
-
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $name = 'Source';
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->mapActions(array(
+			'branches' => 'read',
+			'rebuild' => 'update'
+		));
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function index() {
 		$args = func_get_args();
-		$path = join(DS, $args);
-
 		if ($this->Project->Repo->type == 'git') {
-			array_unshift($args, 'branches', 'master');
 			$this->Project->Repo->branch('master', true);
 		}
-		
-		if (empty($path)) {
-			$this->Project->Repo->update();
-		}
-		
-		$current = null;
-		if (count($args) > 0) {
-			$current = array_pop($args);
-		}
+		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
-		$data = $this->Source->read($this->Project->Repo, $path);
 
+		$data = $this->Source->read($path);
+
+		$this->pageTitle = 'Source';
 		if ($path && $current) {
 			$this->pageTitle = $path;
-		} else {
-			$this->pageTitle = 'Source';
 		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function branches() {
 		$args = func_get_args();
-		$path = join(DS, $args);
-
-		$branch = $branchPath = null;
-		if ($this->Project->Repo->type == 'git') {
-			$branch = array_shift($args);
-			$branchPath = join(DS, $args);
-		}
-
-		if ($branch) {
-			array_unshift($args, 'branches', $branch);
-		} else {
+		if ($this->Project->Repo->type == 'svn') {
 			array_unshift($args, 'branches');
 		}
+		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
-		if ($this->Project->Repo->type == 'svn') {
-			$path = join(DS, $args);
-			if (empty($path)) {
-				$this->Project->Repo->update();
-			}
-			$data = $this->Source->read($this->Project->Repo, $path);
-		}
+		$data = $this->Source->read($path);
 
-		$current = null;
-		if (count($args) > 0) {
-			$current = array_pop($args);
- 		}
-
-		if ($this->Project->Repo->type == 'git') {
-			if ($branch === null) {
-				$branches = $this->Project->branches();
-				foreach ($branches as $branch) {
-					$this->Project->Repo->branch($branch['Branch']['name']);
-				}
-			} else {
-				if (empty($branchPath)) {
-					$this->Project->Repo->branch($branch, true);
-					$this->Project->Repo->before(array("cd {$this->Project->Repo->working}"));
-					$this->Project->Repo->run('pull');
-				}
-				$this->Project->Repo->branch($branch, true);
-			}
-
-			$data = $this->Source->read($this->Project->Repo, $branchPath);
-		}
-
+		$this->pageTitle = 'Source';
 		if ($path && $current) {
 			$this->pageTitle = $path;
-		} else {
-			$this->pageTitle = 'Source';
 		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
 
 		$this->render('index');
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function rebuild() {
+		if (!empty($this->params['isAdmin'])) {
+			if ($this->Source->rebuild()) {
+				$this->Session->setFlash('You should have a nice clean working copy');
+			} else {
+				$this->Session->setFlash('Oops, rebuild failed try again');
+			}
+		}
+		$this->redirect($this->referer());
 	}
 }
 ?>
