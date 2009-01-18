@@ -297,8 +297,8 @@ class Git extends Repo {
 
 		$this->commit("Merge from {$project}");
 		$this->push('origin', 'master');
-		$this->execute("env - {$this->path}/hooks/post-receive refs/heads/master");
 		$this->pull('origin', 'master');
+		$this->execute("env - {$this->path}/hooks/post-receive refs/heads/master");
 		return true;
 	}
 /**
