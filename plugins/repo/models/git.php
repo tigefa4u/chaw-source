@@ -163,30 +163,37 @@ class Git extends Repo {
 		$path = $this->working;
 		$branch = basename($path);
 
-		if ($name !== $branch) {
-			if ($this->branch == $branch) {
-				$path = dirname($this->working);
-			}
-			$path = $path . DS . $name;
-			if (!is_dir($path)) {
-				$base = dirname($path);
-				if (!is_dir($base)) {
-					$clone = new Folder($base, true, $chmod);
-				}
-				$this->run('clone', array($this->path, $path));
-			}
+		if ($name === $branch) {
+			return $this->branch = $name;
 		}
+
+		if ($this->branch == $branch) {
+			$path = dirname($this->working);
+		}
+
+		$path = $path . DS . $name;
+		if (!is_dir($path)) {
+			$base = dirname($path);
+			if (!is_dir($base)) {
+				$clone = new Folder($base, true, $chmod);
+			}
+			$this->run('clone', array($this->path, $path));
+		}
+
+		$this->cd($path);
+
+		$this->before(array(
+			$this->run('pull', null, true)
+		));
+
+		$this->checkout(array('-b', $name));
 
 		//$this->before(array("cd {$path}"));
 		//$this->run('branch', array($name), 'capture');
 		if ($switch === true) {
-			$this->cd($path);
-			$this->checkout(array('-b', $name));
 			$this->config(array('working' => $path));
 			return $this->branch = $name;
 		}
-
-		return $this->branch;
 	}
 /**
  * undocumented function
@@ -232,7 +239,7 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function update($remote = 'origin', $branch = 'master', $params = array()) {
+	function update($remote = null, $branch = null, $params = array()) {
 		$this->cd();
  		return $this->run('pull', array_merge($params, array($remote, $branch)), 'capture');
 	}
@@ -294,11 +301,17 @@ class Git extends Repo {
 	}
 /**
  * find all revisions and return contents of read.
+ * type: all, count, array()
  *
  * @return array
  *
  **/
 	function find($type = 'all', $options = array()) {
+		if ($type == 'branches') {
+			$this->cd();
+			$result = $this->run('remote show origin', null, 'capture');
+			return array_values(array_filter(explode(" ", array_pop($result))));
+		}
 
 		if (is_array($type)) {
 			extract(array_merge(array('commit' => null), $type));
@@ -444,7 +457,6 @@ class Git extends Repo {
 			$path = str_replace($this->working . DS, '', $path);
 		}
 		$info = $this->run('log', array("--pretty=format:%H%x00%an%x00%ai%x00%s", '-1', '--', escapeshellarg($path)));
-
 		if (empty($info)) {
 			return null;
 		}

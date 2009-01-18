@@ -49,10 +49,10 @@ class Source extends Object {
 				array_unshift($args, $this->Repo->branch);
 			}
 			array_unshift($args, 'branches');
-		}
 
-		if (empty($path)) {
-			$this->Repo->update();
+			if (empty($path) && $this->Repo->branch) {
+				$this->Repo->update('origin', $this->Repo->branch);
+			}
 		}
 
 		$current = null;
@@ -60,6 +60,27 @@ class Source extends Object {
 			$current = array_pop($args);
  		}
 		return array($args, $path, $current);
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function branches() {
+		$this->Repo->logResponse = true;
+		$config = $this->Repo->config;
+		$this->Repo->branch('master', true);
+		$branches = $this->Repo->find('branches');
+		foreach ($branches as $branch) {
+			if ($branch == 'master') {
+				continue;
+			}
+			$this->Repo->branch($branch, true);
+			//$this->Repo->update('origin', $branch);
+		}
+		$this->Repo->config($config);
+		return true;
 	}
 /**
  * undocumented function

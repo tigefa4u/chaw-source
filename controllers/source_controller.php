@@ -47,12 +47,11 @@ class SourceController extends AppController {
 		}
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
-
 		$data = $this->Source->read($path);
 
-		$this->pageTitle = 'Source';
-		if ($path && $current) {
-			$this->pageTitle = $path;
+		$this->pageTitle = $current;
+		if (!empty($args)) {
+			$this->pageTitle = join('/', $args) . '/' . $current;
 		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
@@ -70,11 +69,15 @@ class SourceController extends AppController {
 		}
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
+		if($current == 'branches' && $this->Project->Repo->type == 'git') {
+			$this->Source->branches();
+		}
+
 		$data = $this->Source->read($path);
 
-		$this->pageTitle = 'Source';
-		if ($path && $current) {
-			$this->pageTitle = $path;
+		$this->pageTitle = $current;
+		if (!empty($args)) {
+			$this->pageTitle = join('/', $args) . '/' . $current;
 		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
