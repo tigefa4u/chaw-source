@@ -36,15 +36,6 @@ class WikiController extends AppController {
 
 		$this->pageTitle = 'Wiki/' . ltrim($path . '/' . $slug, '/');
 
-		$wiki = $this->Wiki->find('all', array(
-			'conditions' => array(
-				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
-				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
-			),
-			'order' => 'Wiki.created DESC'
-		));
-
 		if (!empty($this->data)) {
 
 			if (!empty($this->params['form']['delete'])) {
@@ -66,6 +57,15 @@ class WikiController extends AppController {
 				}
 			}
 		}
+
+		$wiki = $this->Wiki->find('all', array(
+			'conditions' => array(
+				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
+				'Wiki.project_id' => $this->Project->id,
+				'Wiki.active' => 1
+			),
+			'order' => 'Wiki.created DESC'
+		));
 
 		if (empty($page)) {
 			$page = $this->Wiki->find(array(

@@ -486,6 +486,13 @@ fieldset.options textarea {
 .wiki-content .actions {
 	font-size: 100%;
 }
+.wiki-footer {
+	clear: both;
+}
+.wiki-footer .author, .wiki-footer .date {
+	font-size: 80%;
+	margin-top: 0px;
+}
 .wiki-navigation {
 	float: right;
 	padding-top: 20px;

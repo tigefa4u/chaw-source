@@ -78,9 +78,10 @@ $javascript->link('ghighlight.min', false);
 		?>
 	<?php endif;?>
 
-	<?php if (!empty($revisions)):?>
 		<div class="revisions">
+
 		<?php
+		if (!empty($revisions)):
 			echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
 			echo $form->input('revision', array('value' => $page['Wiki']['id']));
 
@@ -90,9 +91,9 @@ $javascript->link('ghighlight.min', false);
 			echo $html->tag('div', $buttons, array('class' => 'submit'));
 
 			echo $form->end();
+		endif;
 		?>
 		</div>
-	<?php endif;?>
 
 </div>
 <?php endif; ?>
@@ -136,3 +137,13 @@ $javascript->link('ghighlight.min', false);
 
 	<?php endif; ?>
 </div>
+
+<?php if (empty($revisions)):?>
+<div class="wiki-footer">
+	<p class="author">
+		last revision by
+		<strong><?php echo $page['User']['username']?></strong>
+		on <?php echo date('Y-m-d', strtotime($page['User']['created']));?>
+	</p>
+</div>
+<?php endif;?>
