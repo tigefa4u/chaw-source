@@ -109,8 +109,9 @@ class TicketsController extends AppController {
 		)));
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
+		$owners = $this->Project->users();
 
-		$this->set(compact('versions', 'types', 'priorities'));
+		$this->set(compact('versions', 'types', 'priorities', 'owners'));
 	}
 
 	function modify($id = null) {
