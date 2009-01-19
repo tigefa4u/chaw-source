@@ -77,7 +77,7 @@ class Source extends Object {
 				continue;
 			}
 			$this->Repo->branch($branch, true);
-			//$this->Repo->update('origin', $branch);
+			$this->Repo->update('origin', $branch);
 		}
 		$this->Repo->config($config);
 		return true;
