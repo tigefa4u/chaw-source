@@ -187,7 +187,7 @@ class Git extends Repo {
 			$this->run('pull', null, true)
 		));
 		*/
-		$this->checkout(array('-b', $name));
+		$this->checkout(array($name));
 
 		//$this->before(array("cd {$path}"));
 		//$this->run('branch', array($name), 'capture');
