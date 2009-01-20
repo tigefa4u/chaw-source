@@ -204,6 +204,12 @@ class Project extends AppModel {
 			$this->data['Project']['fork'] = null;
 		}
 
+		if (empty($this->data['Project']['url'])) {
+			$this->invalidate('name', 'the project could not be created');
+			return false;
+		}
+
+
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
@@ -288,7 +294,7 @@ class Project extends AppModel {
 		}
 
 
-		if (!$this->__created) {
+		if (!empty($this->config['url'])) {
 			$conditions = array($this->config['url']);
 			$conditions[] = (!empty($this->config['fork'])) ? $this->config['fork'] : false;
 			$key = join('_', array_filter($conditions));

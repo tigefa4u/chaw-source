@@ -262,60 +262,52 @@ class ProjectsController extends AppController {
 		$this->set('messages', $this->Project->messages);
 	}
 
-	function admin_approve($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('approved' => 1))) {
-				$this->Session->setFlash('The project was approved');
-			} else {
-				$this->Session->setFlash('The project was NOT approved');
-			}
-		} else {
-			$this->Session->setFlash('The project was invalid');
-		}
-		$this->redirect(array('action' => 'index'));
+	function admin_approve($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'approved', 'value' => 1, 'action' => 'approved'
+		));
 	}
 
-	function admin_reject($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('approved' => 0))) {
-				$this->Session->setFlash('The project was rejected');
-			} else {
-				$this->Session->setFlash('The project was NOT rejected');
-			}
-		} else {
-			$this->Session->setFlash('The project was invalid');
-		}
-		$this->redirect(array('action' => 'index'));
+	function admin_reject($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'approved', 'value' => 0, 'action' => 'rejected'
+		));
+
 	}
 
-	function admin_activate($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('active' => 1))) {
-				$this->Session->setFlash('The project was activated');
-			} else {
-				$this->Session->setFlash('The project was NOT activated');
-			}
-		} else {
-			$this->Session->setFlash('The project was invalid');
-		}
-		$this->redirect(array('action' => 'index'));
+	function admin_activate($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'active', 'value' => 1, 'action' => 'activated'
+		));
 	}
 
-	function admin_deactivate($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('active' => 0))) {
-				$this->Session->setFlash('The project was deactivated');
+	function admin_deactivate($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'active', 'value' => 0, 'action' => 'deactivated'
+		));
+	}
+
+	function _toggle($project, $options = array()) {
+		$options = array_merge(array('field' => null, 'value' => null, 'action' => null), $options);
+
+		$isValid = $project && !empty($options['field']) && !empty($options['action']) &&
+			$this->Project->id == 1 && !empty($this->params['isAdmin']);
+
+		if ($isValid) {
+			if ($this->Project->initialize(compact('project'))) {
+				$this->Project->set($this->Project->config);
+				if ($this->Project->save(array($options['field'] => $options['value']))) {
+					$this->Session->setFlash('The project was ' . $options['action']);
+				} else {
+					$this->Session->setFlash('The project was NOT ' . $options['action']);
+				}
 			} else {
-				$this->Session->setFlash('The project was NOT deactivated');
+				$this->Session->setFlash('The project was invalid');
 			}
 		} else {
 			$this->Session->setFlash('The project was invalid');
 		}
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('project' => false, 'fork' => false, 'action' => 'index'));
 	}
 }
 ?>
