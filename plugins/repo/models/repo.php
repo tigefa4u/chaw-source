@@ -29,7 +29,7 @@ class Repo extends Overloadable {
  **/
 	var $config = array(
 		'class' => 'Git', 'type' => 'git', 'path' => null, 'working' => null,
-		'username' => '', 'password' => '', 'chmod' => 0755, 'user' => 'chawbacca'
+		'username' => '', 'password' => '', 'chmod' => 0755, 'chawuser' => 'chawbacca'
 	);
 /**
  * Type of Repo
@@ -114,7 +114,7 @@ class Repo extends Overloadable {
  *
  * @var boolean
  **/
-	var $user = 'chawbacca';
+	var $chawuser = 'chawbacca';
 
 /**
  * undocumented function
@@ -140,7 +140,7 @@ class Repo extends Overloadable {
 		$this->type = $config['type'] = strtolower($config['type']);
 		$this->path = $config['path'] = rtrim($config['path'], '\/');
 		$this->working = $config['working'] = rtrim($config['working'], '\/');
-		$this->user = $config['user'];
+		$this->chawuser = $config['chawuser'];
 		return $this->config = $config;
 	}
 /**
@@ -242,7 +242,7 @@ class Repo extends Overloadable {
 		}
 
 		umask(0);
-		putenv("PHP_CHAWUSER={$this->user}");
+		putenv("PHP_CHAWUSER={$this->chawuser}");
 		switch ($return) {
 			case 'capture':
 				exec($c, $response);
