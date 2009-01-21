@@ -218,9 +218,8 @@ class Git extends Repo {
 		}
 
 		$this->cd();
-		$this->before(array(
-			$this->run('add', array($path), true)
-		));
+		$this->run('add', array($path));
+		$this->cd();
 		return $this->run('commit', $options);
 	}
 /**
