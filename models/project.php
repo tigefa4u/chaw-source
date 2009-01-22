@@ -274,7 +274,7 @@ class Project extends AppModel {
 					'slug' => 'home', 'active' => 1,
 					'project_id' => $this->id,
 					'last_changed_by' => $this->config['user_id'],
-					'content' => "##The home page for " . $this->config['name']
+					'content' => sprintf(__("##The home page for %s",true),$this->config['name'])
 						. "\n\n" . $this->config['description']
 				));
 				$Wiki->save();
