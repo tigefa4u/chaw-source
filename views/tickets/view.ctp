@@ -36,7 +36,7 @@ $javascript->codeBlock($script, array('inline' => false));
 $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
 <h2>
-	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> Ticket
+	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> <?php __('Ticket') ?>
 	(<em><?php echo $ticket['Ticket']['status'];?></em>)
 </h2>
 <div class="tickets">
@@ -46,7 +46,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 		<h3 class="title">
 			<?php echo $ticket['Ticket']['title'];?>
 			<?php if (!empty($canEdit)): ?>
-				<em>(<a href="#modify" class="modify">edit</a>)</em>
+				<em>(<a href="#modify" class="modify"><?php __('edit') ?></a>)</em>
 			<?php endif; ?>
 		</h3>
 
@@ -59,7 +59,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 		</span>
 
 		<span class="reporter">
-			<strong>reported by:</strong> <?php echo $ticket['Reporter']['username'];?>
+			<strong><?php __('reported by') ?>:</strong> <?php echo $ticket['Reporter']['username'];?>
 		</span>
 
 	</div>
@@ -79,17 +79,17 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 						</legend>
 
 						<?php
-							echo $form->input('title');
-							echo $form->input('description');
+							echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
+							echo $form->input('description',array('label'=>array('labeltext' => __('Description',true))));
 						?>
 					</fieldset>
 
 					<fieldset class="tags options">
-						<legend>Tags</legend>
+						<legend><? __('Tags') ?></legend>
 						<?php
 							echo $form->textarea('tags');
 						?>
-						comma separated
+						<?php __('comma separated') ?>
 					</fieldset>
 
 					<div class="help">
@@ -123,7 +123,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 
 			<div class="comments">
 				<div id="CommentPreviewWrapper" class="comment" style="display:none">
-					<h3 class="clearfix">Preview</h3>
+					<h3 class="clearfix"><?php __('Preview') ?></h3>
 
 					<span class="date">
 						<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
@@ -140,7 +140,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 					<?php __('Comment');?>
 				</legend>
 				<?php
-					echo $form->input('status');
+					echo $form->input('status',array('label'=>array('labeltext' => __('Status',true))));
 					echo $form->input('id');
 					echo $form->textarea('comment');
 				?>
@@ -148,7 +148,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 
 			<?php if (!empty($this->params['isAdmin'])):?>
 				<fieldset class="options">
-					<legend>Options</legend>
+					<legend><?php __('Options') ?></legend>
 					<?php
 						if (!empty($versions)) {
 							echo $form->input('version_id');
@@ -160,7 +160,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 			<?php endif; ?>
 
 			<div class="submit">
-				<input type="submit" value="Submit">
+				<input type="submit" value="<?php __('Submit') ?>">
 			</div>
 
 			<?php echo $form->end();?>

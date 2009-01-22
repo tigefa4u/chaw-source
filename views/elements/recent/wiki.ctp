@@ -24,7 +24,7 @@ if (!empty($wiki)):
 	endforeach;
 
 	echo $html->tag('div',
-		$html->tag('h4', 'Wiki Updates') .$html->tag('ul', $li),
+		$html->tag('h4', __('Wiki Updates',true)) .$html->tag('ul', $li),
 		array('class' => 'panel', 'escape' => false)
 	);
 

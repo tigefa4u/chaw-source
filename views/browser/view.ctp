@@ -4,7 +4,7 @@ $javascript->link('ghighlight.min', false);
 ?>
 <div class="browser view">
 	<span class="history">
-		<?php echo $html->link('history', array('controller' => 'commits', 'action' => 'history', $path));?>
+		<?php echo $html->link(__('history',true), array('controller' => 'commits', 'action' => 'history', $path));?>
 	</span>
 
 <?php

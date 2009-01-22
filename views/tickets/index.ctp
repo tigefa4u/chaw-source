@@ -1,11 +1,11 @@
 <h2>
-	<?php echo Inflector::humanize($current)?>
-	Tickets
+	<?php __(Inflector::humanize($current)) ?>
+	<?php __('Tickets') ?>
 </h2>
 <?php
 	$links = array();
 	foreach ($statuses as $status) {
-		$links[] = $html->link($status, array('status' => $status));
+		$links[] = $html->link(__($status,true), array('status' => $status));
 	}
 	echo join(' | ', $links);
 ?>
@@ -24,12 +24,12 @@ echo $paginator->counter(array(
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('#', 'number');?></th>
-	<th><?php echo $paginator->sort('status');?></th>
-	<th><?php echo $paginator->sort('title');?></th>
-	<th><?php echo $paginator->sort('type');?></th>
-	<th><?php echo $paginator->sort('priority');?></th>
-	<th><?php echo $paginator->sort('version_id');?></th>
-	<th><?php echo $paginator->sort('created');?></th>
+	<th><?php echo $paginator->sort(__('Status',true),'status');?></th>
+	<th><?php echo $paginator->sort(__('Title',true),'title');?></th>
+	<th><?php echo $paginator->sort(__('Type',true),'type');?></th>
+	<th><?php echo $paginator->sort(__('Priority',true),'priority');?></th>
+	<th><?php echo $paginator->sort(__('Version',true),'version_id');?></th>
+	<th><?php echo $paginator->sort(__('Created',true),'created');?></th>
 </tr>
 <?php
 $i = 0;
@@ -75,4 +75,4 @@ foreach ($tickets as $ticket):
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 
-<?php echo $html->link('New Ticket', array('controller' => 'tickets', 'action'=>'add')); ?>
+<?php echo $html->link(__('New Ticket',true), array('controller' => 'tickets', 'action'=>'add')); ?>

@@ -1,7 +1,7 @@
 <?php if (!empty($CurrentProject)):?>
 <div class="project-details">
 	<p class="description">
-		<strong>Description:</strong> <?php echo $CurrentProject->description;?>
+		<strong><?php __('Description') ?>:</strong> <?php echo $CurrentProject->description;?>
 	</p>
 
 	<p class="path">
@@ -15,7 +15,7 @@
 				echo "{$CurrentProject->remote->git}:$remote{$CurrentProject->url}.git";
 
 				if (empty($CurrentProject->fork) && !empty($CurrentUser->id)):
-					echo $html->tag('span', $html->link('fork it', array(
+					echo $html->tag('span', $html->link(__('fork it',true), array(
 						'admin' => false, 'fork' => false,
 						'controller' => 'projects', 'action' => 'fork'
 					), array('class' => 'detail')));
@@ -23,12 +23,12 @@
 
 				if ($this->action !== 'forks'):
 					if (empty($this->params['fork'])):
-						$link = $html->link('view forks', array(
+						$link = $html->link(__('view forks',true), array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'projects', 'action' => 'forks'
 						), array('class' => 'detail'));
 					else:
-						$link = $html->link('view main project', array(
+						$link = $html->link(__('view main project',true), array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'browser', 'action' => 'index'
 						), array('class' => 'detail'));
@@ -47,7 +47,7 @@
 			), array('class' => 'detail')));
 			*/
 
-			echo $html->tag('span', $html->link('view history', array(
+			echo $html->tag('span', $html->link(__('view history',true), array(
 				'admin' => false,
 				'controller' => 'commits', 'action' => 'index'
 			), array('class' => 'history')));

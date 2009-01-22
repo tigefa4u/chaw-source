@@ -19,7 +19,7 @@ if (!empty($commits)):
 	endforeach;
 	
 	if (empty($title)) {
-		$title = 'Recent Commits';
+		$title = __('Recent Commits',true);
 	}
 	
 	echo $html->tag('div',

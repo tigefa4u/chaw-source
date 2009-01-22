@@ -1,7 +1,7 @@
 <h2><?php __('Dashboard');?></h2>
 
 <div class="page-navigation">
-	<?php echo $html->link('View Account', array('controller' => 'users', 'action' => 'accout'));?>
+	<?php echo $html->link(__('View Account',true), array('controller' => 'users', 'action' => 'accout'));?>
 	<?php
 		/*
 		echo $html->link(

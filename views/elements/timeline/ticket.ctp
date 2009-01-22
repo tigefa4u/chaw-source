@@ -1,7 +1,7 @@
 <div class="ticket row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:
+		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> <?php __('Ticket')?>:
 		<?php echo $html->link($data['Ticket']['title'], array('controller' => 'tickets', 'action' => 'view', $data['Ticket']['number']));?>
 	</h3>
 
@@ -11,7 +11,7 @@
 
 <?php if (!empty($this->params['isAdmin'])):?>
 	<span class="admin">
-		<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
+		<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
 

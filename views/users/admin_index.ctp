@@ -2,7 +2,7 @@
 <h2><?php __('Users');?></h2>
 <h4>
 	<?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all'=>true)) : null; ?> 
-	who fork, git clone, svn commit or <?php echo $chaw->admin('added', '#UserAddForm');?>
+	<?php __('who fork, git clone, svn commit or') ?> <?php echo $chaw->admin(__('add new user',true), '#UserAddForm');?>
 </h4>
 <p>
 <?php
@@ -16,9 +16,9 @@ echo $paginator->counter(array(
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th class="left"><?php echo $paginator->sort('Group', 'Permission.group');?></th>
-	<th><?php echo $paginator->sort('username');?></th>
-	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('last_login');?></th>
+	<th><?php echo $paginator->sort(__('Username',true),'username');?></th>
+	<th><?php echo $paginator->sort(__('Email',true),'email');?></th>
+	<th><?php echo $paginator->sort(__('Last Login',true),'last_login');?></th>
 	<th>&nbsp;</th>
 </tr>
 <?php
@@ -48,10 +48,10 @@ foreach ($users as $i => $user):
 		<td class="actions">
 			<?php 
 				if (!empty($this->passedArgs['all']) && !empty($this->params['isAdmin'])) {
-					echo $chaw->admin('edit', array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
-					echo $chaw->admin('remove', array('controller' => 'users', 'action' => 'remove', $user['User']['id'])); 
+					echo $chaw->admin(__('edit',true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
+					echo $chaw->admin(__('remove',true), array('controller' => 'users', 'action' => 'remove', $user['User']['id'])); 
 				} else {
-					echo $chaw->admin('remove', array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id'])); 
+					echo $chaw->admin(__('remove',true), array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id'])); 
 				}
 			?>
 		</td>
@@ -59,9 +59,9 @@ foreach ($users as $i => $user):
 <?php endforeach; ?>
 </table>
 <p>
-	groups are an easy way to setup <?php echo $chaw->admin('permissions', array('controller' => 'permissions'));?>
+	<?php __('groups are an easy way to setup') ?> <?php echo $chaw->admin('permissions', array('controller' => 'permissions'));?>
 </p>
-<?php echo $form->end('update');?>
+<?php echo $form->end(__('update',true));?>
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
@@ -72,11 +72,11 @@ foreach ($users as $i => $user):
 <?php
 	if (!empty($this->params['isAdmin'])):
 		echo $form->create(array('action' => 'index', 'id' => 'UserAddForm'));
-		echo '<fieldset><legend>Add User</legend>';
-		echo $form->input('group');
-		echo $form->input('username');
+		echo '<fieldset><legend>'.__('Add User',true).'</legend>';
+		echo $form->input('group',array('label'=>array('labeltext'=>__('Group',true))));
+		echo $form->input('username',array('label'=>array('labeltext'=>__('Username',true))));
 		echo '</fieldset>';
-		echo $form->end('add');
+		echo $form->end(__('add',true));
 	endif;
 ?>
 </div>

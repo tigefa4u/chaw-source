@@ -9,15 +9,15 @@
 	</p>
 	
 	<p class="ticket-types">
-		Ticket Types: <?php echo $project['Project']['ticket_types'];?>
+		<?php __('Ticket Types') ?>: <?php echo $project['Project']['ticket_types'];?>
 	</p>
 	
 	<p class="ticket-priorities">
-		Ticket Priorites: <?php echo $project['Project']['ticket_priorities'];?>
+		<?php __('Ticket Priorites')?>: <?php echo $project['Project']['ticket_priorities'];?>
 	</p>
 	
 	<p class="ticket-statuses">
-		Ticket Statuses: <?php echo $project['Project']['ticket_statuses'];?>
+		<?php __('Ticket Statuses')?>: <?php echo $project['Project']['ticket_statuses'];?>
 	</p>
 	
 </div>

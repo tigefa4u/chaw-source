@@ -18,14 +18,14 @@
 
 		<div class="links">
 			<span class="dashboard link">
-				<?php echo $html->link('dashboard', array(
+				<?php echo $html->link(__('dashboard',true), array(
 					'admin' => false, 'project' => false, 'fork' => false,
 					'controller' => 'dashboard', 'action' => 'index'
 				), array('title' => 'view your dashboard'))?>
 			</span>
 
 			<span class="logout link">
-				<?php echo $html->link('logout', array(
+				<?php echo $html->link(__('logout',true), array(
 					'admin' => false, 'project' => false, 'fork' => false,
 					'controller' => 'users', 'action' => 'logout'
 				))?>
@@ -33,12 +33,12 @@
 		</div>
 	<?php else:?>
 		<span class="login">
-			<?php echo $html->link('Login', array(
+			<?php echo $html->link(__('Login',true), array(
 				'admin' => false, 'project' => false, 'fork' => false,
 				'controller' => 'users', 'action' => 'login'
 			)); ?>
 			or
-			<?php echo $html->link('Register', array(
+			<?php echo $html->link(__('Register',true), array(
 				'admin' => false, 'project' => false, 'fork' => false,
 				'controller' => 'users', 'action' => 'add'
 			)); ?>

@@ -1,9 +1,9 @@
 <?php
 	if (empty($projects)) {
 		if ($this->action == 'forks') {
-			echo $html->tag('h2', 'There are no forks');
+			echo $html->tag('h2', __('There are no forks',true));
 		} else {
-			echo $html->tag('h2', 'Sorry, no projects are available');
+			echo $html->tag('h2', __('Sorry, no projects are available',true));
 		}
 		return;
 	}
@@ -15,11 +15,11 @@
 	</h2>
 
 	<div class="page-navigation">
-		<?php echo $html->link('All', array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
+		<?php echo $html->link(__('All',true), array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
 		|
-		<?php echo $html->link('Projects', array('controller' => 'projects', 'action' => 'index'));?>
+		<?php echo $html->link(__('Projects',true), array('controller' => 'projects', 'action' => 'index'));?>
 		|
-		<?php echo $html->link('Forks', array('controller' => 'projects', 'action' => 'index', 'type' => 'fork'));?>
+		<?php echo $html->link(__('Forks',true), array('controller' => 'projects', 'action' => 'index', 'type' => 'fork'));?>
 		|
 		<?php
 			echo $html->link(
@@ -36,7 +36,7 @@
 
 	<?php if ($this->action == 'forks'):?>
 		<h2>
-			Forks
+			<?php __('Forks') ?>
 		</h2>
 		<?php echo $this->element('project_details'); ?>
 	<?php endif;?>
@@ -80,34 +80,34 @@
 					));
 					echo ' | ';
 					*/
-					echo $html->link('timeline', array(
+					echo $html->link(__('timeline',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'timeline', 'action' => 'index'
 					));
 					echo ' | ';
-					echo $html->link('wiki', array(
+					echo $html->link(__('wiki',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'wiki', 'action' => 'index'
 					));
 					echo ' | ';
-					echo $html->link('tickets', array(
+					echo $html->link(__('tickets',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
 					));
 					
 					if (!empty($this->params['isAdmin'])):
 						echo ' | ';
-						echo $html->link('view', array(
+						echo $html->link(__('view',true), array(
 							'admin' => false, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'projects', 'action' => 'view',
 						));
 						echo ' | ';
-						echo $html->link('edit', array(
+						echo $html->link(__('edit',true), array(
 							'admin' => true, 'project' => false, 'fork'=> $fork,
 							'controller' => 'projects', 'action' => 'edit', $project['Project']['id']
 						));
 						echo ' | ';
-						echo $html->link('admin', array(
+						echo $html->link(__('admin',true), array(
 							'admin' => true, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'dashboard'
 						));

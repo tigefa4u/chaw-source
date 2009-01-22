@@ -9,7 +9,7 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 
-<h2>Versions</h2>
+<h2><?php __('Versions') ?></h2>
 
 <div class="versions index">
 	<?php foreach ((array)$versions as $version):?>
@@ -20,17 +20,17 @@ $javascript->codeBlock($script, array('inline' => false));
 			</h3>
 
 			<p>
-				<?php echo $chaw->admin('edit', array('admin' => true, 'controller' => 'versions', 'action' => 'edit', $version['Version']['id']));?>
+				<?php echo $chaw->admin(__('edit',true), array('admin' => true, 'controller' => 'versions', 'action' => 'edit', $version['Version']['id']));?>
 			</p>
 
 			<p class="summary">
 				<?php echo $version['Version']['description'];?>
 			</p>
 			<p class="created">
-				<strong>Created:</strong> <?php echo date('Y-m-d', strtotime($version['Version']['created']));?>
+				<strong><?php __('Created') ?>:</strong> <?php echo date('Y-m-d', strtotime($version['Version']['created']));?>
 			</p>
 			<p class="created">
-				<strong>Due by:</strong> <?php echo $version['Version']['due_date'];?>
+				<strong><?php __('Due by') ?>:</strong> <?php echo $version['Version']['due_date'];?>
 			</p>
 		</div>
 
@@ -44,5 +44,5 @@ $javascript->codeBlock($script, array('inline' => false));
 
 </div>
 <div class="actions">
-	<?php echo $chaw->admin('New Version', array('admin' => true, 'controller' => 'versions', 'action' => 'add'));?>
+	<?php echo $chaw->admin(__('New Version',true), array('admin' => true, 'controller' => 'versions', 'action' => 'add'));?>
 </div>

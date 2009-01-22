@@ -21,9 +21,9 @@ $javascript->codeBlock($script, array('inline' => false));
 	<fieldset class="main">
  		<legend><?php __('Add Ticket');?></legend>
 		<?php
-			echo $form->input('title');
+			echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
 			echo $form->input('description', array(
-				'value' => "###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n"
+				'value' => __("###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n",true)
 			));
 		?>
 
@@ -33,22 +33,22 @@ $javascript->codeBlock($script, array('inline' => false));
 
 
 	<fieldset class="options">
-		<legend>Tags</legend>
+		<legend><?php __('Tags') ?></legend>
 		<?php
 			echo $form->textarea('tags');
 		?>
-		comma separated
+		<? __('comma separated') ?>
 	</fieldset>
 
 
 	<fieldset class="options">
-		<legend>Options</legend>
+		<legend><?php __('Options') ?></legend>
 		<?php
 			if (!empty($versions)) {
 				echo $form->input('version_id');
 			}
-			echo $form->input('type');
-			echo $form->input('priority');
+			echo $form->input('type',array('label'=>array('labeltext' => __('Type',true))));
+			echo $form->input('priority',array('label'=>array('labeltext' => __('Priority',true))));
 		?>
 	</fieldset>
 
@@ -56,7 +56,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
 
-	<?php echo $form->submit('Submit')?>
+	<?php echo $form->submit(__('Submit',true))?>
 
 
 <?php echo $form->end();?>
