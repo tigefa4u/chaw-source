@@ -88,7 +88,7 @@ class ProjectsController extends AppController {
 
 	function fork() {
 		if ($this->Project->Repo->type == 'svn') {
-			$this->Session->setFlash('You cannot fork an svn project yet');
+			$this->Session->setFlash(__('You cannot fork an svn project yet',true));
 			$this->redirect($this->referer());
 		}
 
@@ -107,16 +107,16 @@ class ProjectsController extends AppController {
 			));
 			if ($data = $this->Project->fork()) {
 				if (empty($data['Project']['approved'])) {
-					$this->Session->setFlash('Project is awaiting approval');
+					$this->Session->setFlash(__('Project is awaiting approval',true));
 				} else {
-					$this->Session->setFlash('Project was created');
+					$this->Session->setFlash(__('Project was created',true));
 				}
 				$this->redirect(array(
 					'fork' => $data['Project']['fork'],
 					'controller' => 'browser', 'action' => 'index',
 				));
 			} else {
-				$this->Session->setFlash('Project was NOT created');
+				$this->Session->setFlash(__('Project was NOT created',true));
 			}
 		}
 	}
@@ -133,13 +133,13 @@ class ProjectsController extends AppController {
 			));
 			if ($data = $this->Project->save($this->data)) {
 				if (empty($data['Project']['approved'])) {
-					$this->Session->setFlash('Project is awaiting approval');
+					$this->Session->setFlash(__('Project is awaiting approval',true));
 				} else {
-					$this->Session->setFlash('Project was created');
+					$this->Session->setFlash(__('Project was created',true));
 				}
 				$this->redirect(array('project' => $data['Project']['url'], 'controller' => 'timeline', 'action' => 'index'));
 			} else {
-				$this->Session->setFlash('Project was NOT created');
+				$this->Session->setFlash(__('Project was NOT created',true));
 			}
 		}
 
@@ -200,7 +200,7 @@ class ProjectsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->pageTitle = 'Project Admin';
+		$this->pageTitle = __('Project Admin',true);
 
 		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
@@ -210,10 +210,10 @@ class ProjectsController extends AppController {
 
 		if (!empty($this->data)) {
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was updated');
+				$this->Session->setFlash(__('Project was updated',true));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('Project was NOT updated');
+				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
 		}
 
@@ -230,12 +230,12 @@ class ProjectsController extends AppController {
 		if ($id) {
 			$this->Project->id = $id;
 			if ($this->Project->save(array('approved' => 1))) {
-				$this->Session->setFlash('The project was approved');
+				$this->Session->setFlash(__('The project was approved',true));
 			} else {
-				$this->Session->setFlash('The project was NOT approved');
+				$this->Session->setFlash(__('The project was NOT approved',true));
 			}
 		} else {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
@@ -244,12 +244,12 @@ class ProjectsController extends AppController {
 		if ($id) {
 			$this->Project->id = $id;
 			if ($this->Project->save(array('approved' => 0))) {
-				$this->Session->setFlash('The project was rejected');
+				$this->Session->setFlash(__('The project was rejected',true));
 			} else {
-				$this->Session->setFlash('The project was NOT rejected');
+				$this->Session->setFlash(__('The project was NOT rejected',true));
 			}
 		} else {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
@@ -258,12 +258,12 @@ class ProjectsController extends AppController {
 		if ($id) {
 			$this->Project->id = $id;
 			if ($this->Project->save(array('active' => 1))) {
-				$this->Session->setFlash('The project was activated');
+				$this->Session->setFlash(__('The project was activated',true));
 			} else {
-				$this->Session->setFlash('The project was NOT activated');
+				$this->Session->setFlash(__('The project was NOT activated',true));
 			}
 		} else {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
@@ -272,12 +272,12 @@ class ProjectsController extends AppController {
 		if ($id) {
 			$this->Project->id = $id;
 			if ($this->Project->save(array('active' => 0))) {
-				$this->Session->setFlash('The project was deactivated');
+				$this->Session->setFlash(__('The project was deactivated',true));
 			} else {
-				$this->Session->setFlash('The project was NOT deactivated');
+				$this->Session->setFlash(__('The project was NOT deactivated',true));
 			}
 		} else {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
