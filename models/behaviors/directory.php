@@ -46,10 +46,9 @@ class DirectoryBehavior extends ModelBehavior {
 	}
 
 	function beforeSave(&$Model) {
+
 		if (!empty($Model->data[$Model->alias]['path'])) {
-			if ($Model->data[$Model->alias]['path'][0] !== '/') {
-				$Model->data[$Model->alias]['path'] = '/' . $Model->data[$Model->alias]['path'];
-			}
+			$Model->data[$Model->alias]['path'] = str_replace('//', '/', '/' . $Model->data[$Model->alias]['path']);
 		} else {
 			$Model->data[$Model->alias]['path'] = '/';
 		}
