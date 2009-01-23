@@ -417,6 +417,12 @@ fieldset.options textarea {
 	color: #300;
 	font-weight: normal;
 }
+div.wiki-text pre {
+	white-space: normal;
+}
+div.wiki-text code {
+	white-space: normal;
+}
 .wiki form div.wiki-text {
 	padding: 0 0.5em;
 	width: 64%;
@@ -529,26 +535,30 @@ fieldset.options textarea {
 .wiki-navigation .paths li a {
 	color: #656565;
 }
-.wiki-navigation .revisions {
-	margin-top: 30px;
-}
-.wiki-navigation .revisions form {
+.revisions form {
+	clear: both;
 	float: left;
 }
-.wiki-navigation .revisions form div label {
+.revisions form div {
+	clear: none;
+	float: left;
+	padding: 0;
+	margin: 6px;
+}
+.revisions form div label {
 	font-weight: normal;
 	font-size: 120%;
 	color: #333;
 }
-.wiki-navigation .revisions form div input,
-.wiki-navigation .revisions form div select {
+.revisions form div input,
+.revisions form div select {
 	font-size: 80%;
 }
-.wiki-navigation .revisions form div {
-	padding: 0;
-	margin: 6px 0;
+
+.revisions form div.submit {
+	margin-top: 26px;
 }
-.wiki-navigation .revisions form div.submit input {
+.revisions form div.submit input {
 	margin-right: 6px;
 }
 .timeline {
