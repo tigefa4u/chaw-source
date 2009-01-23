@@ -148,7 +148,7 @@ $javascript->link('ghighlight.min', false);
 <?php endif;?>
 
 <?php if (!empty($revisions) && !empty($page)):?>
-<div class="revisions">
+<div class="wiki-footer revisions">
 	<?php
 		echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
 		echo $form->input('revision', array('value' => $page['Wiki']['id']));

@@ -488,16 +488,10 @@ div.wiki-text code {
 .wiki-content {
 	margin-right: 4%;
 	width: 56%;
+	margin-bottom: 40px;
 }
 .wiki-content .actions {
 	font-size: 100%;
-}
-.wiki-footer {
-	clear: both;
-}
-.wiki-footer .author, .wiki-footer .date {
-	font-size: 80%;
-	margin-top: 0px;
 }
 .wiki-navigation {
 	float: right;
@@ -535,6 +529,15 @@ div.wiki-text code {
 .wiki-navigation .paths li a {
 	color: #656565;
 }
+.wiki-footer {
+	clear: both;
+	width: 56%;
+	border-top: 0px solid #ccc;
+}
+.wiki-footer .author, .wiki-footer .date {
+	font-size: 80%;
+	margin-top: 0px;
+}
 .revisions form {
 	clear: both;
 }
@@ -542,13 +545,14 @@ div.wiki-text code {
 	clear: none;
 	float: left;
 	padding: 0;
-	margin: 6px;
+	margin: 6px 0;
 }
 .revisions form div label {
 	font-weight: normal;
-	font-size: 120%;
+	font-size: 100%;
 	color: #333;
 	line-height: 120%;
+	height: 120%;
 }
 .revisions form div input,
 .revisions form div select {
@@ -557,7 +561,7 @@ div.wiki-text code {
 
 .revisions form div.submit {
 	padding: 2px;
-	margin-top: 1.7em;
+	margin-top: 1.5em;
 	margin-left: 6px;
 }
 .revisions form div.submit input {
