@@ -69,7 +69,7 @@ class WikiController extends AppController {
 
 		$subpath = str_replace('//', '/', $path . '/' . $slug);
 
-		if (empty($page)) {
+		if (empty($page) || $this->RequestHandler->isRss() == true) {
 			$wiki = $this->Wiki->find('all', array(
 				'conditions' => array(
 					'Wiki.path' => $subpath,
