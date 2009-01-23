@@ -537,7 +537,6 @@ div.wiki-text code {
 }
 .revisions form {
 	clear: both;
-	float: left;
 }
 .revisions form div {
 	clear: none;
@@ -549,6 +548,7 @@ div.wiki-text code {
 	font-weight: normal;
 	font-size: 120%;
 	color: #333;
+	line-height: 120%;
 }
 .revisions form div input,
 .revisions form div select {
@@ -556,7 +556,9 @@ div.wiki-text code {
 }
 
 .revisions form div.submit {
-	margin-top: 26px;
+	padding: 2px;
+	margin-top: 1.7em;
+	margin-left: 6px;
 }
 .revisions form div.submit input {
 	margin-right: 6px;
