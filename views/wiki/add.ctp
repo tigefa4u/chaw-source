@@ -38,7 +38,7 @@ $javascript->codeBlock($script, array('inline' => false));
 				echo $form->hidden('slug');
 				echo $form->input('slug', array('label' => false, 'disabled' => true));
 			} else {
-				echo $form->input('title', array('label' => false, 'value' => 'new title'));
+				echo $form->input('title', array('label' => false, 'value' => 'new-page'));
 			}
 		?>
 		</fieldset>

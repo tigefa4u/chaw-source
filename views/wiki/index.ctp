@@ -16,7 +16,7 @@ $javascript->link('ghighlight.min', false);
 			|
 			<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
 			|
-			<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
+			<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 'new-page'));?>
 		<?php endif;?>
 
 	<?php endif;?>
@@ -127,7 +127,7 @@ $javascript->link('ghighlight.min', false);
 					|
 					<?php echo $html->link('New', array(
 							'controller' => 'wiki', 'action' => 'add',
-							$content['Wiki']['path'], $content['Wiki']['slug'], 1));
+							$content['Wiki']['path'], $content['Wiki']['slug'], 'new-page'));
 					?>
 				<?php endif; ?>
 			</div>

@@ -34,7 +34,9 @@ class WikiController extends AppController {
 			$slug = 'home';
 		}
 
-		$this->pageTitle = 'Wiki/' . ltrim($path . '/' . $slug, '/');
+		$fullpath = str_replace('//', '/', $path . '/' . $slug);
+
+		$this->pageTitle = 'Wiki' . $fullpath;
 
 		if (!empty($this->data)) {
 
@@ -66,13 +68,10 @@ class WikiController extends AppController {
 				'Wiki.active' => 1
 			));
 		}
-
-		$subpath = str_replace('//', '/', $path . '/' . $slug);
-
 		if (empty($page) || $this->RequestHandler->isRss() == true) {
 			$wiki = $this->Wiki->find('all', array(
 				'conditions' => array(
-					'Wiki.path' => $subpath,
+					'Wiki.path' => $fullpath,
 					'Wiki.project_id' => $this->Project->id,
 					'Wiki.active' => 1
 				),
@@ -82,7 +81,7 @@ class WikiController extends AppController {
 
 		if (empty($wiki) && empty($page)) {
 			$this->passedArgs[] = $slug;
-			$this->redirect(array('action' => 'add', $path));
+			$this->redirect(array('action' => 'add', $fullpath));
 		}
 
 		if ($this->RequestHandler->isRss() !== true) {
@@ -91,7 +90,7 @@ class WikiController extends AppController {
 				$subNav = $this->Wiki->find('all', array(
 					'fields' => array('Wiki.path', 'Wiki.slug'),
 					'conditions' => array(
-						'Wiki.path' => $subpath,
+						'Wiki.path' => $fullpath,
 						'Wiki.project_id' => $this->Project->id,
 						'Wiki.active' => 1
 					),
@@ -147,12 +146,13 @@ class WikiController extends AppController {
 
 		extract($this->__params());
 
-		if ($slug == '1') {
-			$slug = null;
-			$this->pageTitle = 'Wiki/add/';
-		}
+		$fullpath = str_replace('//', '/', $path . '/' . $slug);
 
-		$this->pageTitle .= ltrim($path . '/' . $slug, '/');
+		$this->pageTitle = 'Wiki/add' . $fullpath;
+
+		if ($slug === 'new-page') {
+			$slug = null;
+		}
 
 		if (!empty($this->data)) {
 			$this->Wiki->create(array(

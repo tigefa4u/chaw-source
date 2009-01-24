@@ -19,7 +19,17 @@ class ChawHelper extends AppHelper {
 		}
 		return null;
 	}
-
+/**
+ * undocumented function
+ *
+ * @param string $title
+ * @param string $url
+ * @param string $htmlAttributes
+ * @param string $confirmMessage
+ * @param string $escapeTitle
+ * @return void
+ *
+ **/
 	function type($type, $url = array(), $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		$view = ClassRegistry::getObject('view');
 		$passedArgs = $view->passedArgs;
@@ -164,15 +174,16 @@ class ChawHelper extends AppHelper {
 		$rss = null;
 		if ($path && $slug !== 'home') {
 			$out[] = $this->Html->link('home', array('controller' => 'wiki', 'action' => 'index', '/'));
-			$rss = ' . ' . $this->rss('home', array('controller' => 'wiki', 'action' => 'index', '/', 'ext' => 'rss'));
-		}
-
-		foreach ($parts as $key => $part) {
-			$parts['action'] = 'index';
-			$out[] = $this->Html->link($part, $parts);
+			$rss = ' . ' . $this->rss('home', array('controller' => 'wiki', 'action' => 'index', '/', $path, 'ext' => 'rss'));
 		}
 
 		if ($slug) {
+
+			foreach ($parts as $key => $part) {
+				$parts['action'] = 'index';
+				$out[] = $this->Html->link($part, $parts);
+			}
+
 			$out[] = $slug;
 			$parts[] = $slug;
 			$parts['action'] = 'index';
