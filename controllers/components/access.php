@@ -124,11 +124,6 @@ class AccessComponent extends Object {
 			$C->Auth->allow('add');
 			return true;
 		}
-
-		if ($C->action != 'login' && !empty($_COOKIE['Chaw']['User']) && empty($this->user)) {
-			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
-			$C->redirect('/users/login');
-		}
 	}
 /**
  * undocumented function
@@ -149,6 +144,11 @@ class AccessComponent extends Object {
 
 		if ($this->isAllowed) {
 			return true;
+		}
+
+		if (!empty($_COOKIE['Chaw']['User']) && empty($this->user)) {
+			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
+			$C->redirect('/users/login');
 		}
 
 		$this->access = 'r';

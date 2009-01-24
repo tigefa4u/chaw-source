@@ -178,6 +178,7 @@ input[type=hidden] {
 	color: #222;
 }
 #authMessage {
+	margin-top: -10px;
 	margin-left: -20px;
 }
 
@@ -750,6 +751,7 @@ div.comments {
 .source .message, .source .date {
 	font-size: 80%;
 	padding-top: 6px;
+	margin: 0.5em 0;
 	vertical-align: middle;
 }
 
