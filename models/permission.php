@@ -41,6 +41,25 @@ class Permission extends AppModel {
  * @return void
  *
  **/
+	function group($project, $user = null) {
+		if (is_array($project)) {
+			extract($project);
+		}
+
+		$user = $this->user($user);
+
+		if (!$user || !$project) {
+			return false;
+		}
+
+		return $this->field('group', array('project_id' => $project, 'user_id' => $user));
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function saveFile($config = array()) {
 		if (empty($config['repo'])) {
 			$this->set($config);
@@ -346,6 +365,9 @@ class Permission extends AppModel {
 	function root() {
 		$path = Configure::read("Content.base");
 		$File = new File($path . 'permissions.ini');
+		if (!$File->readable()) {
+			return null;
+		}
 		return $File->read();
 	}
 /**

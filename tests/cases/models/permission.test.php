@@ -4,6 +4,7 @@
 App::import('Model', 'Permission');
 class TestPermission extends Permission {
 
+	var $useDbConfig = 'test_suite';
 	var $cacheSources = false;
 }
 
@@ -237,7 +238,7 @@ class PermissionTest extends CakeTestCase {
 		[tickets]
 		gwoo = rw
 
-		[browser]
+		[source]
 		gwoo = r
 
 		[versions]
@@ -254,8 +255,8 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'c'))));
 		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
-		$this->assertTrue($Permission->check("browser", array('user' => 'gwoo', 'access' => array('r', 'r'))));
-		$this->assertFalse($Permission->check("browser", array('user' => 'gwoo', 'access' => array('w', 'd'))));
+		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'))));
+		$this->assertFalse($Permission->check("source", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
 		$this->assertTrue($Permission->check("versions", array('user' => 'gwoo', 'access' => array('w', 'c'))));
 		$this->assertTrue($Permission->check("versions", array('user' => 'gwoo', 'access' => array('w', 'd'))));
@@ -293,9 +294,9 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
 
-		$this->assertTrue($Permission->check("browser", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
+		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
 
-		$this->assertTrue($Permission->check("browser", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
+		$this->assertTrue($Permission->check("source", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
 
 	}
 
@@ -356,7 +357,7 @@ class PermissionTest extends CakeTestCase {
 		[tickets]
 		@user = rw
 
-		[browser]
+		[source]
 		gwoo = r
 
 		[versions]
@@ -368,6 +369,33 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertFalse($Permission->check("tickets", array('group' => 'team', 'access' => 'rw', 'default' => false)));
 		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'group' => 'team', 'access' => 'rw', 'default' => false)));
+	}
+
+	function testPermissionGroup() {
+		$Permission = new TestPermission();
+		$Permission->create(array(
+			'project_id' => 1,
+			'user_id' => 1,
+			'group' => 'user',
+		));
+		$Permission->save();
+
+		$Permission->create(array(
+			'project_id' => 1,
+			'user_id' => 2,
+			'group' => 'admin',
+		));
+		$Permission->save();
+
+		$result = $Permission->group(array(
+			'project' => 1,
+			'user' => 1,
+		));
+		$this->assertEqual($result, 'user');
+
+
+		$result = $Permission->group(1, 2);
+		$this->assertEqual($result, 'admin');
 	}
 }
 ?>

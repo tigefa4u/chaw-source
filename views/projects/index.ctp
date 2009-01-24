@@ -8,20 +8,30 @@
 		return;
 	}
 ?>
-<?php if (empty($this->params['project'])):?>
+<?php if ($this->action != 'forks'):?>
 
 	<h2>
 		Projects
 	</h2>
 
 	<div class="page-navigation">
-		<?php echo $html->link(__('All',true), array('controller' => 'projects', 'action' => 'index', 'type' => 'both'));?>
-		|
-		<?php echo $html->link(__('Projects',true), array('controller' => 'projects', 'action' => 'index'));?>
-		|
-		<?php echo $html->link(__('Forks',true), array('controller' => 'projects', 'action' => 'index', 'type' => 'fork'));?>
-		|
 		<?php
+			if (!empty($CurrentUser->Permission)) {
+				echo $chaw->type(array('title' => 'Mine', 'type' => null)) . ' | ';
+			}
+
+			echo $chaw->type('all', array(
+				'controller' => 'projects', 'action' => 'index',
+			)) . ' | ';
+
+			echo $chaw->type('public', array(
+				'controller' => 'projects', 'action' => 'index',
+			)) . ' | ';
+
+			echo $chaw->type('forks', array(
+				'controller' => 'projects', 'action' => 'index',
+			)) . ' | ';
+
 			echo $html->link(
 				$html->image('feed-icon.png', array(
 					'width' => 14, 'height' => 14
@@ -57,12 +67,12 @@
 	?>
 		<div class="project row <?php echo $zebra?>">
 			<?php echo $html->image(strtolower($project['Project']['repo_type']) . '.png', array('height' => 40, 'width' => 40)); ?>
-			
+
 			<h3 class="name">
 				<?php
 					echo $html->link($project['Project']['name'], array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'browser', 'action' => 'index',
+						'controller' => 'source', 'action' => 'index',
 					));
 
 					if (!empty($project['Project']['private'])) :
@@ -70,13 +80,13 @@
 					endif;
 					?>
 			</h3>
-			
+
 			<span class="nav">
 				<?php
 					/*
 					echo $html->link('source', array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'browser', 'action' => 'index',
+						'controller' => 'source', 'action' => 'index',
 					));
 					echo ' | ';
 					*/
@@ -94,7 +104,7 @@
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
 					));
-					
+
 					if (!empty($this->params['isAdmin'])):
 						echo ' | ';
 						echo $html->link(__('view',true), array(
@@ -112,7 +122,7 @@
 							'controller' => 'dashboard'
 						));
 					endif;
-					
+
 				?>
 			</span>
 

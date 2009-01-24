@@ -47,8 +47,9 @@ $javascript->codeBlock($script, array('inline' => false));
 			if (!empty($versions)) {
 				echo $form->input('version_id');
 			}
-			echo $form->input('type',array('label'=>array('labeltext' => __('Type',true))));
-			echo $form->input('priority',array('label'=>array('labeltext' => __('Priority',true))));
+			echo $form->input('owner');
+			echo $form->input('type');
+			echo $form->input('priority');
 		?>
 	</fieldset>
 

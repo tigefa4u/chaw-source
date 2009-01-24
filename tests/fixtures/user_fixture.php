@@ -6,6 +6,7 @@ class UserFixture extends CakeTestFixture {
 	var $name = 'User';
 	var $fields = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'active' => array('type' => 'boolean', 'null' => false, 'default' => 0),
 			'username' => array('type' => 'string', 'null' => false, 'length' => 40),
 			'password' => array('type' => 'string', 'null' => false, 'length' => 40),
 			'email' => array('type' => 'string', 'null' => false, 'length' => 200),

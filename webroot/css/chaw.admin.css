@@ -10,6 +10,7 @@
 }
 #admin-content {
 	width:75%;
+	margin-top: 20px;
 	margin-left: 20px;
 	margin-right: 20px;
 }
@@ -17,8 +18,10 @@
 #admin-navigation {
 	clear: right;
 	float: right;
+	position: fixed;
+	right: 0;
 	width: 20%;
-	margin-top: 30px;
+	margin-top: 60px;
 	margin-left: 20px;
 	overflow: hidden;
 }

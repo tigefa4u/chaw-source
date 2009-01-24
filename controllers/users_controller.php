@@ -26,8 +26,8 @@ class UsersController extends AppController {
 		$this->Auth->mapActions(array(
 			'account' => 'update', 'change' => 'update'
 		));
-		$this->Auth->allow('forgotten', 'verify', 'add', 'login', 'logout');
-		$this->Access->allow('forgotten', 'verify', 'add', 'login', 'logout', 'account', 'edit', 'change');
+		$this->Auth->allow('forgotten', 'verify', 'add', 'logout');
+		$this->Access->allow('forgotten', 'verify', 'activate', 'add', 'login', 'logout', 'account', 'edit', 'change');
 
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['confirm_password'] = $this->data['User']['password'];
@@ -47,58 +47,76 @@ class UsersController extends AppController {
 		}
 
 		if ($id = $this->Auth->user('id')) {
-
 			if (!empty($this->data['User']['remember_me'])) {
 				$this->Cookie->write('User', $this->Session->read('Auth.User'));
 			}
 
-			$group = $this->Project->group($id);
-			$this->Session->write('Auth.User.Permission', array('group' => $group));
+			$this->Session->write('Auth.User.Permission', $this->User->groups($id));
 
 			$this->User->id = $id;
-			$this->User->save(array('last_login' => date('Y-m-d H:m:s')), false, array('last_login'));
+			$this->User->save(array(
+				'id' => $id,
+				'username' => $this->Auth->user('username'),
+				'email' => $this->Auth->user('email'),
+				'last_login' => date('Y-m-d H:i:s')
+			));
 
-			$redirect = $this->Auth->redirect();
-
+			if ($redirect = $this->Session->read('Access.redirect')) {
+				$this->Session->del('Access');
+				$this->Session->del('Auth.redirect');
+				$message = "access:$redirect";
+			} else {
+				$redirect = $this->Auth->redirect();
+				$message = "auth:$redirect";
+			}
 			if (strpos($redirect, 'login') !== false || strpos($redirect, 'users/add') !== false || $redirect == '/') {
 				$redirect = '/dashboard';
 			}
 			$this->redirect($redirect);
+			//$this->flash($message, $redirect);
+			// /return;
+		}
 
-		} elseif (strpos($this->referer(), 'users/login') && !empty($this->data['User'])) {
+		if (!empty($this->data['User'])) {
 			$this->Session->del('Message.auth');
 
 			$this->Auth->fields['password'] = 'tmp_pass';
 			$this->data['User']['tmp_pass'] = $this->Auth->data['User']['password'];
+
 			if ($this->Auth->login($this->data)) {
 				$this->User->id = $this->Auth->user('id');
 				$this->User->save(array(
-					'last_login' => date('Y-m-d H:m:s'),
+					'id' => $id,
+					'username' => $this->Auth->user('username'),
+					'email' => $this->Auth->user('email'),
+					'last_login' => date('Y-m-d H:i:s'),
 					'tmp_pass' => null,
-					),
-					false, array('last_login', 'tmp_pass')
-				);
+				));
 				$this->Session->setFlash('You may now change your password');
 				$this->redirect(array('action' => 'change'));
 			}
 		}
+
 		if (!empty($this->data['User']['username'])) {
+			$this->Session->del('Message.auth');
 			$this->Session->setFlash('Did you forget your password?');
-			$this->redirect(array('action' => 'forgotten'));
+			$this->redirect(array('action' => 'forgotten'), 401);
 		}
 	}
 
 	function logout() {
-		$this->Cookie->del('User');
+		$this->Cookie->destroy('User');
 		$this->Auth->logout();
+		$this->Session->del('Access');
+		$this->Session->del('Auth.redirect');
 		$this->redirect('/');
 	}
 
 	function add() {
 		if (!empty($this->data)) {
 			$this->User->create();
-			if ($this->User->save($this->data)) {
-				$this->Session->setFlash('User added');
+			if ($data = $this->User->save($this->data)) {
+				$this->Session->setFlash(sprintf('%1$s is now registered', $data['User']['username']));
 				$this->redirect(array('action' => 'login'));
 			} else {
 				$this->Session->setFlash('User NOT added');
@@ -127,13 +145,15 @@ class UsersController extends AppController {
 			$this->data = $this->User->read(null, $id);
 		}
 
-		$isAllowed = ($this->params['isAdmin']
-			|| ($this->data['User']['id'] == $this->Auth->user('id'))
-			&& $this->data['User']['username'] == $this->Auth->user('username'));
+		$isAllowed = (
+			($this->params['isAdmin'] && $this->Project->id == 1) ||
+			($this->data['User']['id'] == $this->Auth->user('id') &&
+			$this->data['User']['username'] == $this->Auth->user('username'))
+		);
 
 		if (!$isAllowed) {
-			$this->render('view');
-			return;
+			echo $this->render('view');
+			exit;
 		}
 
 		if ($isGet === false) {
@@ -160,7 +180,6 @@ class UsersController extends AppController {
 		$this->render('edit');
 	}
 
-
 	function admin_index() {
 		if (!empty($this->data['Permission'])) {
 			foreach ($this->data['Permission'] as $permission) {
@@ -180,16 +199,19 @@ class UsersController extends AppController {
 
 		$this->User->unbindModel(array('hasOne' => array('Permission')), false);
 		$this->User->bindModel(array('hasOne' => array('Permission' => array(
-			'conditions' => array('Permission.project_id' => $this->Project->id)))), false);
-		
-		$this->paginate['conditions'] = array('User.active' => 1);
-		if (empty($this->passedArgs['all'])) {
-			$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
-			$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+			'conditions' => array('Permission.project_id' => $this->Project->id
+		)))), false);
+
+		$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
+		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
+
+		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
+			$this->paginate['conditions'] = array();
+		} else {
+			$groups = $this->Project->groups();
 		}
 
 		$users = $this->paginate();
-		$groups = $this->Project->groups();
 
 		$this->set(compact('users', 'groups'));
 	}
@@ -203,12 +225,47 @@ class UsersController extends AppController {
 		$this->render('edit');
 	}
 
+	function activate($token = null) {
+		if (empty($token)) {
+			if ($data = $this->User->setToken($this->Auth->user())) {
+				$from = $this->Project->from();
+				$this->Email->to = $data['User']['email'];
+				$this->Email->from = 'Chaw Activation ' . $from;
+				$this->Email->replyTo = 'Chaw Activation ' . $from;
+				$this->Email->return = $from;
+				$this->Email->subject = 'Activate your Chaw account';
+
+				$content[] = "Please click on the link below to activate your account.\n";
+				$content[] = Router::url(array('controller' => 'users', 'action' => 'activate', $data['User']['token']), true);
+
+				$this->Email->lineLength = 120;
+				if ($this->Email->send($content)) {
+					$this->Session->setFlash('Check your email.');
+				} else {
+					$this->Session->setFlash('Email was not sent');
+				}
+			} else {
+				$this->Session->setFlash('User could not be found');
+			}
+			$this->redirect($this->referer());
+		} else {
+			if ($data = $this->User->activate($token)) {
+				$this->Session->write('Auth.User.active', $data['User']['active']);
+				$this->Session->setFlash('Your Account was activated');
+			} else {
+				$this->Session->setFlash('Your Account could not be activated');
+			}
+		}
+
+		$this->redirect('/dashboard');
+	}
+
 	function forgotten() {
 		if ($this->Auth->user()) {
 			$this->redirect(array('action' => 'account'));
 		}
 		if (!empty($this->data)) {
-			if ($token = $this->User->forgotten($this->data)) {
+			if ($token = $this->User->setToken($this->data)) {
 				$from = $this->Project->from();
 				$this->Email->to = $token['User']['email'];
 				$this->Email->from = 'Chaw Password Recovery ' . $from;
@@ -231,7 +288,7 @@ class UsersController extends AppController {
 
 	function verify($token = null) {
 		if (!empty($token)) {
-			if ($data = $this->User->verify(compact('token'))) {
+			if ($data = $this->User->setTempPassword(compact('token'))) {
 				$from = $this->Project->from();
 				$this->Email->to = $data['User']['email'];
 				$this->Email->from = 'Chaw New Password ' . $from;
@@ -240,6 +297,7 @@ class UsersController extends AppController {
 				$this->Email->subject = 'New Password';
 
 				$content[] = "The request to reset your password has been verifed.\n";
+				$content[] = "Username: " . $data['User']['username'] ."\n";
 				$content[] = "Your temporary password: " . $data['User']['tmp_pass'] ."\n";
 				$content[] = "Please Login with your temporary password.";
 				$content[] = Router::url(array('controller' => 'users', 'action' => 'login'), true);

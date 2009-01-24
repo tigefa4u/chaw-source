@@ -29,7 +29,7 @@ class Repo extends Overloadable {
  **/
 	var $config = array(
 		'class' => 'Git', 'type' => 'git', 'path' => null, 'working' => null,
-		'username' => '', 'password' => '', 'chmod' => 0755
+		'username' => '', 'password' => '', 'chmod' => 0755, 'chawuser' => 'chawbacca'
 	);
 /**
  * Type of Repo
@@ -55,6 +55,12 @@ class Repo extends Overloadable {
  * @var string
  **/
 	var $working = null;
+/**
+ *  branch name used mostly by Git
+ *
+ * @var string
+ **/
+	var $branch = null;
 /**
  * undocumented class variable
  *
@@ -91,6 +97,24 @@ class Repo extends Overloadable {
  * @var string
  **/
 	var $alias = null;
+/**
+ * should the command be logged
+ *
+ * @var boolean
+ **/
+	var $logDebug = true;
+/**
+ * should the response be logged
+ *
+ * @var boolean
+ **/
+	var $logResponse = false;
+/**
+ * should the response be logged
+ *
+ * @var boolean
+ **/
+	var $chawuser = 'chawbacca';
 
 /**
  * undocumented function
@@ -116,6 +140,7 @@ class Repo extends Overloadable {
 		$this->type = $config['type'] = strtolower($config['type']);
 		$this->path = $config['path'] = rtrim($config['path'], '\/');
 		$this->working = $config['working'] = rtrim($config['working'], '\/');
+		$this->chawuser = $config['chawuser'];
 		return $this->config = $config;
 	}
 /**
@@ -146,6 +171,19 @@ class Repo extends Overloadable {
  * @return void
  *
  **/
+	function cd($dir = null) {
+		if (is_null($dir)) {
+			$dir = $this->working;
+		}
+		$this->_before[0] = "cd {$dir}";
+	}
+/**
+ * Set multiple commands to be run before will be joined with &&
+ *
+ * @param mixed command single command string or array of commands
+ * @return void
+ *
+ **/
 	function before($command = array()) {
 		if (is_string($command)) {
 			$command = array($command);
@@ -161,7 +199,11 @@ class Repo extends Overloadable {
  **/
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
-		return $this->execute("{$type} {$command}", $args, $return);
+		$response = $this->execute("{$type} {$command}", $args, $return);
+		if ($this->logResponse === true) {
+			$this->response[] = $response;
+		}
+		return $response;
 	}
 /**
  * Executes given command with results based on return type
@@ -179,9 +221,11 @@ class Repo extends Overloadable {
  *
  **/
 	function execute($command, $args = array(), $return = false) {
-		$before = (!empty($this->_before)) ? trim(join(' && ', $this->_before)) . ' && ' : null;
-		$this->_before = array();
-
+		$before = null;
+		if ($return !== true) {
+			$before = (!empty($this->_before)) ? trim(join(' && ', $this->_before)) . ' && ' : null;
+			$this->_before = array();
+		}
 		if (is_string($args)) {
 			$args = array($args);
 		}
@@ -192,9 +236,13 @@ class Repo extends Overloadable {
 		if ($return === true) {
 			return $c;
 		}
-		$this->debug[] = $c;
+
+		if ($this->logDebug == true) {
+			$this->debug[] = $c;
+		}
 
 		umask(0);
+		putenv("PHP_CHAWUSER={$this->chawuser}");
 		switch ($return) {
 			case 'capture':
 				exec($c, $response);

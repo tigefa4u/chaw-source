@@ -20,7 +20,7 @@
 			$li .= $html->tag('li',
 				$html->link($project['Project']['name'], array(
 					'admin' => false, 'project' => $url, 'fork'=> $fork,
-					'controller' => 'browser', 'action' => 'index',
+					'controller' => 'source', 'action' => 'index',
 				))
 			);
 

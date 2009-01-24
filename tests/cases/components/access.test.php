@@ -40,22 +40,27 @@ class AccessComponentTest extends CakeTestCase {
 			'User' => array(
 				'id' => 1, 'username' => 'gwoo',
 				'Permission' => array(
-					'group' => 'user'
-				)
+			      2 => 'developer',
+			      1 => 'admin',
+			    )
 			),
 		);
 
 		$result = $Access->user();
-		$expected = array('id' => 1, 'username' => 'gwoo', 'Permission' => array('group' => 'user'));
+		$expected = array('id' => 1, 'username' => 'gwoo', 'Permission' => array(2 => 'developer', 1 => 'admin'));
 		$this->assertEqual($result, $expected);
 
 		$result = $Access->user('username');
 		$expected = 'gwoo';
 		$this->assertEqual($result, $expected);
 
-		$result = $Access->user('Permission.group');
-		$expected = 'user';
+		$result = $Access->user("Permission.1");
+		$expected = 'admin';
 		$this->assertEqual($result, $expected);
+		$result = $Access->user("Permission.2");
+		$expected = 'developer';
+		$this->assertEqual($result, $expected);
+		
 
 	}
 
@@ -188,7 +193,7 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Project = ClassRegistry::init('Project');
 
 		$this->Controller->params = array(
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
 			'url' => array('url' => '/')
 		);
@@ -373,9 +378,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->Controller->Component->init($this->Controller);
@@ -415,9 +420,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->__runStartup();
@@ -486,9 +491,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->__runStartup();
@@ -557,9 +562,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->params = array(
 			'project' => null,
-			'controller' => 'browser',
+			'controller' => 'source',
 			'action' => 'index',
-			'url' => array('url' => 'browser')
+			'url' => array('url' => 'source')
 		);
 
 		$this->Controller->Component->init($this->Controller);
@@ -569,7 +574,7 @@ class AccessComponentTest extends CakeTestCase {
 		$_SERVER['HTTP_REFERER'] = '/';
 
 		$this->__runStartup();
-		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'controller' => 'dashboard', 'action' => 'index'));
+		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index'));
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
 		$_SERVER['HTTP_REFERER'] = '/wiki';

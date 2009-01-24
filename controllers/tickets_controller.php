@@ -19,25 +19,43 @@ class TicketsController extends AppController {
 	var $name = 'Tickets';
 
 	var $helpers = array('Time');
-	
+
 	var $paginate = array('order' => 'Ticket.number DESC');
 
 	function index() {
-		Router::connectNamed(array('status', 'page'));
+		Router::connectNamed(array('status', 'page', 'user'));
 
-		$this->Ticket->recursive = 0;
 		$statuses = array_values($this->Project->ticket('statuses'));
 
-		$conditions = array('Ticket.project_id' => $this->Project->id);
-
-		if (empty($this->passedArgs['status'])) {
-			$this->passedArgs['status'] = $statuses[0];
+		$current = $statuses[0];
+		if (!empty($this->passedArgs['status'])) {
+			$current = $this->passedArgs['status'];
 		}
-		$conditions['Ticket.status'] = $this->passedArgs['status'];
+				
+		$conditions = array('Ticket.project_id' => $this->Project->id);
+		
+		$conditions['Ticket.status'] = $current;
 
-		$this->set('current', $this->passedArgs['status']);
-		$this->set('statuses', $statuses);
-		$this->set('tickets', $this->paginate('Ticket', $conditions));
+		if (!empty($this->passedArgs['user'])) {
+			$current = $this->passedArgs['user'];
+			$conditions['Owner.username'] = $this->passedArgs['user'];
+		}
+		
+		/*
+		if (!empty($this->Project->config['fork'])) {
+			$conditions = array('OR' => array(
+				array('Ticket.project_id' => $this->Project->id),
+				array('Ticket.project_id' => $this->Project->config['project_id'])
+			));
+		}
+		*/
+		
+		$this->pageTitle = 'Tickets/Status/' . Inflector::humanize($current);
+		
+		$tickets = $this->paginate('Ticket', $conditions);
+		$this->set(compact('current', 'statuses', 'tickets'));
+
+		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
 	}
 
 	function view($id = null) {
@@ -46,7 +64,7 @@ class TicketsController extends AppController {
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
 
-		$this->Ticket->contain(array('Reporter', 'Tag', 'Comment', 'Comment.User'));
+		$this->Ticket->contain(array('Reporter', 'Owner', 'Tag', 'Comment', 'Comment.User'));
 		$ticket = $this->data = $this->Ticket->find(array(
 			'Ticket.number' => $id,
 			'Ticket.project_id' => $this->Project->id
@@ -58,7 +76,6 @@ class TicketsController extends AppController {
 		}
 
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
-		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 
 		$versions = $this->Ticket->Version->find('list', array(
 			'conditions' => array('Version.project_id' => $this->Project->id
@@ -66,8 +83,11 @@ class TicketsController extends AppController {
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
+		$owners = $this->Project->users();
 
-		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities'));
+		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities', 'owners'));
+
+		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 	}
 
 	function add() {
@@ -89,8 +109,9 @@ class TicketsController extends AppController {
 		)));
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
+		$owners = $this->Project->users();
 
-		$this->set(compact('versions', 'types', 'priorities'));
+		$this->set(compact('versions', 'types', 'priorities', 'owners'));
 	}
 
 	function modify($id = null) {
@@ -108,7 +129,7 @@ class TicketsController extends AppController {
 				} else {
 					$this->Session->setFlash('Ticket updated');
 				}
-				$this->Session->delete('Ticket.previous');
+				$this->Session->del('Ticket.previous');
 			} else {
 				if (!empty($data['Ticket']['comment'])) {
 					$this->Session->setFlash('Comment was NOT saved');
@@ -117,7 +138,7 @@ class TicketsController extends AppController {
 				}
 			}
 		}
-		
+
 		$this->redirect(array('action' => 'view', $id));
 	}
 }

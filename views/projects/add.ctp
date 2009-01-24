@@ -4,7 +4,7 @@
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action));?>
 	<fieldset class="main">
- 		<legend><?php echo $this->pageTitle; ?></legend>
+ 		<legend><?php __('Project Setup') ?></legend>
 	<?php
 		echo $form->input('id');
 		echo $form->input('repo_type',array('label' => array('labeltext' => __('Repo Type',true))));
@@ -12,7 +12,14 @@
 			'error' => array('unique' => __('The project name must be unique.',true))
 		));
 		echo $form->input('description');
-		echo $form->input('private',array('label' => array('labeltext' => __('Private',true))));
+
+		if (empty($this->passedArgs[0])) {
+			echo $form->input('private');
+		} else if ($this->passedArgs[0] == 'public'){
+			echo $form->input('ohloh_project', array(
+				'after' => '<small>the url for the project on <a href="http://ohloh.net">ohloh.net</a></small>'
+			));
+		}
 	?>
 	</fieldset>
 	<fieldset class="options">

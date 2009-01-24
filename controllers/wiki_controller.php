@@ -36,15 +36,6 @@ class WikiController extends AppController {
 
 		$this->pageTitle = 'Wiki/' . ltrim($path . '/' . $slug, '/');
 
-		$wiki = $this->Wiki->find('all', array(
-			'conditions' => array(
-				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
-				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
-			),
-			'order' => 'Wiki.created DESC'
-		));
-
 		if (!empty($this->data)) {
 
 			if (!empty($this->params['form']['delete'])) {
@@ -66,6 +57,15 @@ class WikiController extends AppController {
 				}
 			}
 		}
+
+		$wiki = $this->Wiki->find('all', array(
+			'conditions' => array(
+				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
+				'Wiki.project_id' => $this->Project->id,
+				'Wiki.active' => 1
+			),
+			'order' => 'Wiki.created DESC'
+		));
 
 		if (empty($page)) {
 			$page = $this->Wiki->find(array(
@@ -136,7 +136,7 @@ class WikiController extends AppController {
 		if (!empty($this->data)) {
 			$this->Wiki->create(array(
 				'project_id' => $this->Project->id,
-				'last_changed_by' => $this->Auth->user('id')
+				'last_changed_by' => $this->Auth->user('id'),
 			));
 			if ($data = $this->Wiki->save($this->data)) {
 				$this->Session->setFlash($data['Wiki']['slug'] . ' saved');
@@ -147,16 +147,18 @@ class WikiController extends AppController {
 		}
 
 		if (empty($this->data) && $slug !== '1') {
-			$this->data = $this->Wiki->find(array(
-				'Wiki.slug' => $slug,
-				'Wiki.path' => $path,
-				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
+			$this->data = $this->Wiki->find('first', array(
+				'conditions' => array(
+					'Wiki.slug' => $slug,
+					'Wiki.path' => $path,
+					'Wiki.project_id' => $this->Project->id,
+				), 'order' => 'Wiki.id DESC', 'limit' => 1
 			));
-			if (!empty($this->data)) {
+
+			if (empty($this->data['Wiki']['active'])) {
 				$this->data['Wiki']['active'] = 1;
 			}
-			$canEdit = !empty($this->params['isAdmin']) || $this->Auth->user('id') === $this->data['Wiki']['last_change_by'];
+			$canEdit = !empty($this->params['isAdmin']) || !empty($this->data['Wiki']['last_changed_by']) && $this->Auth->user('id') === $this->data['Wiki']['last_changed_by'];
 			if (!empty($this->data['Wiki']['read_only']) && !$canEdit) {
 				$this->redirect(array('controller' => 'wiki', 'action' => 'index', $path, $slug));
 			}

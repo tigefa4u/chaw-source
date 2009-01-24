@@ -8,7 +8,7 @@ $javascript->link('ghighlight.min', false);
 		<?php if (!empty($page['Wiki']['active'])):?>
 			<span class="active"><?php __('Active') ?></span>
 		<?php else: ?>
-			<span class="not-active"><?php __('Not Active') ?></span>
+			<span class="inactive"><?php __('Not Active') ?></span>
 		<?php endif;?>
 
 		<?php if ((empty($content['Wiki']['read_only']) || $CurrentUser->id == $page['Wiki']['last_changed_by'])):?>
@@ -78,9 +78,10 @@ $javascript->link('ghighlight.min', false);
 		?>
 	<?php endif;?>
 
-	<?php if (!empty($revisions)):?>
 		<div class="revisions">
+
 		<?php
+		if (!empty($revisions)):
 			echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
 			echo $form->input('revision', array('value' => $page['Wiki']['id'],'label'=>array('labeltext'=>__('Revision',true))));
 
@@ -90,9 +91,9 @@ $javascript->link('ghighlight.min', false);
 			echo $html->tag('div', $buttons, array('class' => 'submit'));
 
 			echo $form->end();
+		endif;
 		?>
 		</div>
-	<?php endif;?>
 
 </div>
 <?php endif; ?>
@@ -136,3 +137,13 @@ $javascript->link('ghighlight.min', false);
 
 	<?php endif; ?>
 </div>
+
+<?php if (empty($revisions) && !empty($page)):?>
+<div class="wiki-footer">
+	<p class="author">
+		last revision by
+		<strong><?php echo $page['User']['username']?></strong>
+		on <?php echo date('Y-m-d', strtotime($page['User']['created']));?>
+	</p>
+</div>
+<?php endif;?>

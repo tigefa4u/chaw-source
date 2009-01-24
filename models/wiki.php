@@ -71,7 +71,6 @@ class Wiki extends AppModel {
 					'/' . $query['fields'][1],
 					'/' . $query['fields'][2]
 			));
-			return $results;
 		}
 	}
 
@@ -88,7 +87,7 @@ class Wiki extends AppModel {
 			$this->recursive = -1;
 			$this->updateAll(array(
 					'Wiki.active' => 0,
-					'Wiki.modified' => "'" . date('Y-m-d H:m:s') . "'"
+					'Wiki.modified' => "'" . date('Y-m-d H:i:s') . "'"
 				),
 				array(
 				'Wiki.slug' => $this->data['Wiki']['slug'],

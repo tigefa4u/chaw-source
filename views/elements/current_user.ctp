@@ -12,11 +12,26 @@
 		<span class="username">
 			<?php echo $html->link($CurrentUser->username.'', array(
 				'admin' => false, 'project' => false, 'fork' => false,
-				'controller' => 'users', 'action' => 'account'
-				), array('title' => 'edit your account')); ?>
+				'controller' => 'dashboard', 'action' => 'index'
+				), array('title' => 'view your dashboard')); ?>
 		</span>
 
 		<div class="links">
+			<?php if (empty($CurrentUser->active)): ?>
+				<span class="activate link">
+					<?php echo $html->link('activate', array(
+						'admin' => false, 'project' => false, 'fork' => false,
+						'controller' => 'users', 'action' => 'activate'
+						), array('title' => 'activate your account')); ?>
+				</span>
+			<?php endif?>
+
+			<span class="account link">
+				<?php echo $html->link('account', array(
+					'admin' => false, 'project' => false, 'fork' => false,
+					'controller' => 'users', 'action' => 'account'
+					), array('title' => 'edit your account')); ?>
+			</span>
 			<span class="dashboard link">
 				<?php echo $html->link(__('dashboard',true), array(
 					'admin' => false, 'project' => false, 'fork' => false,

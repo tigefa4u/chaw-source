@@ -40,7 +40,7 @@
 
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.2.6.min');
-			echo $javascript->link('gshowdown');
+			echo $javascript->link('gshowdown.min');
 
 			$base = $this->webroot;
 			if (!empty($this->params['fork'])) {
@@ -66,15 +66,19 @@
 
 		<div id="header">
 
-			<h1><?php echo $html->link($CurrentProject->name, array('controller' => 'browser', 'action' => 'index'));?></h1>
+			<h1><?php echo $html->link($CurrentProject->name, array(
+					'admin' => false,
+					'controller' => 'source', 'action' => 'index'
+				));
+			?></h1>
 
 			<div id="navigation">
 				<ul>
 					<li><?php
-						$options = ($this->name == 'Browser') ? array('class' => 'on') : null;
-						echo $html->link(__('Source',true), array(
+						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
+						echo $html->link('Source', array(
 							'admin' => false,
-							'controller' => 'browser', 'action' => 'index'), $options);
+							'controller' => 'source', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
@@ -157,17 +161,6 @@
 			</p>
 		</div>
 	</div>
-	<?php if(Configure::read('debug') == 0):?>
-		<script type="text/javascript">
-			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-		</script>
-		<script type="text/javascript">
-			try {
-				var pageTracker = _gat._getTracker("UA-743287-5");
-				pageTracker._trackPageview();
-			} catch(err) {}
-		</script>
-	<?php endif;?>
+
 </body>
 </html>

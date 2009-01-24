@@ -49,12 +49,12 @@ class PostReceiveShell extends Shell {
 
 		if (!empty($data)) {
 
-			$data['project_id'] = $this->Project->id;
-			$data['branch'] = $refname;
+			$this->Commit->create(array(
+				'project_id' =>  $this->Project->id,
+				'branch' => $refname
+			));
 
-			$this->Commit->create($data);
-
-			if (!$this->Commit->save()) {
+			if (!$this->Commit->save($data)) {
 				$this->out($this->Commit->validationErrors, false);
 				return false;
 			}

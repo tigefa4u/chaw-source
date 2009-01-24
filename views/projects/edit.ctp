@@ -3,7 +3,7 @@
 ?>
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action,
-		'url' => (empty($this->params['admin'])) ? array('id' => false) : array()
+		'url' => array('id' => false)
 ));?>
 	<fieldset class="main">
  		<legend><?php echo $this->pageTitle; ?></legend>
@@ -14,12 +14,6 @@
 		echo $form->hidden('url');
 		echo $form->hidden('fork');
 		echo $form->input('description');
-
-		if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
-			echo $form->input('private',array('label' => array('labeltext' => __('Private',true))));
-			echo $form->input('active',array('label' => array('labeltext' => __('Active',true))));
-			echo $form->input('approved',array('label' => array('labeltext' => __('Approved',true))));
-		endif;
 	?>
 	</fieldset>
 	<fieldset class="options">

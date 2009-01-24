@@ -19,6 +19,27 @@ class ChawHelper extends AppHelper {
 		}
 		return null;
 	}
+
+	function type($type, $url = array(), $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
+		$view = ClassRegistry::getObject('view');
+		$passedArgs = $view->passedArgs;
+
+		if (is_array($type)) {
+			extract($type);
+		}
+		if (!empty($type)) {
+			$type = Inflector::underscore($type);
+			$url['type'] = $type;
+		}
+		if (empty($title)) {
+			$title = Inflector::humanize($type);
+		}
+
+		if (array_key_exists('type', $passedArgs) && $passedArgs['type'] == $type) {
+			$htmlAttributes['class'] = 'active';
+		}
+		return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
+	}
 /**
  * undocumented function
  *

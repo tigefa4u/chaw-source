@@ -1,11 +1,22 @@
-<div class="comment row <?php echo $zebra;?>">
+<div class="data row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> <?php __('Ticket')?>:
-		<?php echo $html->link($data['Ticket']['title'], array(
-			'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
-			'#' => 'c' . $data['Comment']['id']
-		));?>
+		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:
+		<?php
+			$url = array('admin' => false,
+				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
+				'#' => 'c' . $data['Comment']['id']
+			);
+
+			$project = null;
+			if (!empty($data['Ticket']['Project']) && $data['Ticket']['Project']['id'] !== $CurrentProject->id) {
+				$url = $chaw->url($data['Ticket']['Project'], $url);
+				$project = ' in '. $html->link($data['Ticket']['Project']['name'], $chaw->url($data['Ticket']['Project'], array(
+					'admin' => false, 'controller' => 'source'
+				)), array('class' => 'project'));
+			}
+
+			echo $html->link($data['Ticket']['title'], $url) . $project;?>
 	</h3>
 
 	<span class="description">

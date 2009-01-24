@@ -35,6 +35,12 @@ $javascript->codeBlock($script, array('inline' => false));
 
 $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
+<?php
+	if ($session->check('Ticket.back')) {
+		echo $html->tag('div', $html->link('back', $session->read('Ticket.back')), array('class' => 'page-navigation'));
+	}
+
+?>
 <h2>
 	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> <?php __('Ticket') ?>
 	(<em><?php echo $ticket['Ticket']['status'];?></em>)
@@ -111,6 +117,13 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 					<span class="user">
 						by <?php echo $comment['User']['username'];?>
 					</span>
+
+				<?php if(!empty($this->params['isAdmin'])):?>
+					<span class="admin">
+						<?php echo $chaw->admin('delete', array('controller' => 'comments', 'action' => 'delete', $comment['id']))?>
+					</span>
+				<?php endif; ?>
+
 					<div class="body">
 						<?php echo $html->clean($comment['body']);?>
 					</div>
@@ -150,6 +163,8 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 				<fieldset class="options">
 					<legend><?php __('Options') ?></legend>
 					<?php
+						echo $form->input('owner', array('empty' => true));
+
 						if (!empty($versions)) {
 							echo $form->input('version_id');
 						}

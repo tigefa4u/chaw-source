@@ -15,7 +15,9 @@ $javascript->codeBlock($script, array('inline' => false));
 <?php $i = 0;
 	foreach ((array)$commits as $commit):
 		$zebra = ($i++ % 2) == 0 ? 'zebra' : null;
-		echo $this->element('timeline/commit', array('data' => $commit, 'zebra' => $zebra));
+		if (!empty($commit['Commit']['revision'])) {
+			echo $this->element('timeline/commit', array('data' => $commit, 'zebra' => $zebra));
+		}
 	endforeach;
 ?>
 </div>

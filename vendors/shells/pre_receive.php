@@ -32,6 +32,7 @@ class PreReceiveShell extends Shell {
 
 		$this->args[] = 'pre-receive';
  		$this->log($this->args, LOG_INFO);
+		$this->log($_SERVER, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
@@ -40,17 +41,28 @@ class PreReceiveShell extends Shell {
 			return 1;
 		}
 
+		if (empty($_SERVER['PHP_CHAWUSER'])) {
+			$this->err('User could not be found');
+			return 1;
+		}
+
+		if ($_SERVER['PHP_CHAWUSER'] == 'chawbacca') {
+			return 0;
+		}
+
+		/*
 		$conditions = $this->Project->Repo->find(array('commit' => $newrev), array('email', 'author', 'hash'));
 		$this->log($conditions, LOG_INFO);
-		
+
 		$user = $this->Project->User->field('username', array('OR' => array(
 			'email' => $conditions['email'],
 			'username' => $conditions['author']
 		)));
-		
+		*/
+
 		$allowed = $this->Permission->check($refname, array(
-			'user' => $user,
-			//'group' => @$permissions['Permission']['group'],
+			'user' => $_SERVER['PHP_CHAWUSER'],
+			'group' => $this->Permission->group($this->Project->id, $_SERVER['PHP_CHAWUSER']),
 			'access' => 'w',
 			'default' => false
 		));
@@ -60,8 +72,8 @@ class PreReceiveShell extends Shell {
 		}
 
 		$master = $this->Permission->check('refs/heads/master', array(
-			'user' => $user,
-			//'group' => @$permissions['Permission']['group'],
+			'user' => $_SERVER['PHP_CHAWUSER'],
+			'group' => $this->Permission->group($this->Project->id, $_SERVER['PHP_CHAWUSER']),
 			'access' => 'w',
 			'default' => false
 		));

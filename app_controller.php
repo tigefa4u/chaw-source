@@ -16,7 +16,10 @@
  */
 class AppController extends Controller {
 
-	var $components = array('Access', 'Auth', 'RequestHandler');
+	var $components = array(
+		'Access', 'Auth', 'RequestHandler',
+		//'DebugKit.Toolbar'
+	);
 
 	var $helpers = array(
 		'Html', 'Form', 'Javascript', 'Chaw'
@@ -35,7 +38,7 @@ class AppController extends Controller {
 			'modify' => 'update',
 			'remove' => 'delete'
 		));
-		
+
 		if (!empty($this->params['admin'])) {
 			$this->Auth->authorize = 'controller';
 		}
@@ -52,7 +55,10 @@ class AppController extends Controller {
 				return true;
 			}
 			$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
-			$this->redirect(array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index'));
+			$this->redirect(array(
+				'admin' => false, 'project' => false, 'fork' => false,
+				'controller' => 'dashboard', 'action' => 'index'
+			));
 			return false;
 		}
 		return true;
@@ -65,7 +71,7 @@ class AppController extends Controller {
  **/
 	function beforeRender() {
 		if ($this->params['isAdmin'] !== true) {
-			//$this->params['admin'] = false;
+			$this->params['admin'] = false;
 		}
 		if (!empty($this->params['admin'])) {
 			$this->layout = 'admin';
@@ -104,6 +110,15 @@ class AppController extends Controller {
 			}
 		}
 		parent::redirect($url, $status, $exit);
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function referer($default = null, $local = true) {
+		return parent::referer($default, $local);
 	}
 }
 ?>

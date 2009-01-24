@@ -2,7 +2,7 @@
 $html->css('highlight/idea', null, null, false);
 $javascript->link('ghighlight.min', false);
 ?>
-<div class="browser view">
+<div class="source view">
 	<span class="history">
 		<?php echo $html->link(__('history',true), array('controller' => 'commits', 'action' => 'history', $path));?>
 	</span>

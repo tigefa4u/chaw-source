@@ -1,4 +1,4 @@
-<div class="browser index">
+<div class="source index">
 
 <h2>
 	<?php
@@ -13,7 +13,7 @@
 		$path = '/';
 		foreach ((array)$args as $part):
 			$path .= $part . '/';
-			echo '/' . $html->link(' ' . $part . ' ', array($path));
+			echo '/' . $html->link(' ' . $part . ' ', array('action' => 'index', $path));
 		endforeach;
 		echo '/ ' . $current;
 	?>
@@ -43,7 +43,7 @@
 			}
 	?>
 			<tr<?php echo $class?>>
-				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'folder'));?></td>
+				<td><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'folder'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td class="date"><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
@@ -61,7 +61,7 @@
 			}
 	?>
 			<tr<?php echo $class?>>
-				<td><?php echo $html->link($item['name'], array($item['path']), array('class' => 'file'));?></td>
+				<td><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'file'));?></td>
 				<td><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td class="date"><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>

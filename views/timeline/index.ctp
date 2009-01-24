@@ -12,30 +12,49 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php __('Timeline') ?>
 </h2>
 <div class="page-navigation">
-	<?php echo $html->link(__('All',true), array('controller' => 'timeline', 'action' => 'index'));?>
-	|
-	<?php echo $html->link(__('Forks',true), array('controller' => 'timeline', 'action' => 'forks'));?>
-	|
-	<?php echo $html->link(__('Commits',true), array('controller' => 'timeline', 'type' => 'commits'));?>
-	|
-	<?php echo $html->link(__('Tickets',true), array('controller' => 'timeline', 'type' => 'tickets'));?>
-	|
-	<?php echo $html->link(__('Comments',true), array('controller' => 'timeline', 'type' => 'comments'));?>
-	|
-	<?php echo $html->link(__('Wiki',true), array('controller' => 'timeline', 'action' => 'index', 'type' => 'wiki'));?>
-	|
-	<?php echo $chaw->rss(__('Timeline Feed',true), $rssFeed);?>
+	<?php
+		$active = ($this->action == 'index') ? array('class' => 'active') : null;
+		echo $html->link('Project', array(
+			'controller' => 'timeline', 'action' => 'index',
+		), $active) . ' | ';
+
+		if (empty($CurrentProject->fork)) {
+			$active = ($this->action == 'forks') ? array('class' => 'active') : null;
+			echo $html->link('Forks', array('controller' => 'timeline', 'action' => 'forks'), $active) .' | ';
+		} else {
+			$active = ($this->action == 'parent') ? array('class' => 'active') : null;
+			echo $html->link('Parent', array('controller' => 'timeline', 'action' => 'parent'), $active) .' | ';
+		}
+
+		echo $chaw->type('commits', array(
+			'controller' => 'timeline',
+		)) . ' | ';
+
+		echo $chaw->type('tickets', array(
+			'controller' => 'timeline',
+		)) . ' | ';
+
+		echo $chaw->type('comments', array(
+			'controller' => 'timeline',
+		)) . ' | ';
+
+		echo $chaw->type('wiki', array(
+			'controller' => 'timeline',
+		)) . ' | ';
+
+		echo $chaw->rss('Timeline Feed', $rssFeed);
+	?>
 </div>
 <div class="timeline index">
-	<table class="smooth">
 	<?php $i = 0;
 		foreach ((array)$timeline as $event):
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
-			echo $this->element('timeline/' . strtolower($type), array('label' => ucwords($type), 'data' => $event, 'zebra' => $zebra));
+			if (!empty($event[$type])) {
+				echo $this->element('timeline/' . strtolower($type), array('label' => ucwords($type), 'data' => $event, 'zebra' => $zebra));
+			}
 		endforeach;
 	?>
-	</table>
 </div>
 <div class="paging">
 	<?php

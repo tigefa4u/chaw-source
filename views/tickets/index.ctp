@@ -4,6 +4,10 @@
 </h2>
 <?php
 	$links = array();
+	if (!empty($CurrentUser->username)) {
+		$links[] = $html->link('mine', array('user' => $CurrentUser->username));
+	}
+
 	foreach ($statuses as $status) {
 		$links[] = $html->link(__($status,true), array('status' => $status));
 	}
@@ -24,12 +28,13 @@ echo $paginator->counter(array(
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('#', 'number');?></th>
-	<th><?php echo $paginator->sort(__('Status',true),'status');?></th>
-	<th><?php echo $paginator->sort(__('Title',true),'title');?></th>
-	<th><?php echo $paginator->sort(__('Type',true),'type');?></th>
-	<th><?php echo $paginator->sort(__('Priority',true),'priority');?></th>
-	<th><?php echo $paginator->sort(__('Version',true),'version_id');?></th>
-	<th><?php echo $paginator->sort(__('Created',true),'created');?></th>
+	<th><?php echo $paginator->sort('version_id');?></th>
+	<th><?php echo $paginator->sort('type');?></th>
+	<th><?php echo $paginator->sort('priority');?></th>
+	<?php if(empty($this->passedArgs['status'])): ?>
+	<th><?php echo $paginator->sort('status');?></th>
+	<?php endif; ?>
+	<th class="left"><?php echo $paginator->sort('title');?></th>
 </tr>
 <?php
 $i = 0;
@@ -43,18 +48,7 @@ foreach ($tickets as $ticket):
 		<td>
 			<?php echo $ticket['Ticket']['number']; ?>
 		</td>
-		<td>
-			<?php echo $ticket['Ticket']['status']; ?>
-		</td>
-		<td>
-			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])); ?>
-		</td>
-		<td>
-			<?php echo $ticket['Ticket']['type']; ?>
-		</td>
-		<td>
-			<?php echo $ticket['Ticket']['priority']; ?>
-		</td>
+
 		<td>
 			<?php if (!empty($ticket['Version']['title'])):?>
 
@@ -62,8 +56,23 @@ foreach ($tickets as $ticket):
 
 			<?php endif;?>
 		</td>
+
 		<td>
-			<?php echo $ticket['Ticket']['created']; ?>
+			<?php echo $ticket['Ticket']['type']; ?>
+		</td>
+
+		<td>
+			<?php echo $ticket['Ticket']['priority']; ?>
+		</td>
+
+		<?php if(empty($this->passedArgs['status'])): ?>
+			<td>
+				<?php echo $ticket['Ticket']['status']; ?>
+			</td>
+		<?php endif; ?>
+
+		<td class="title left">
+			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

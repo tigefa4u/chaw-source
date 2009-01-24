@@ -24,6 +24,13 @@ class CommitsController extends AppController {
 
 	function index() {
 		$this->Commit->recursive = 0;
+		$this->Commit->bindModel(array('hasOne' => array(
+			'Timeline' => array(
+				'className' => 'Timeline',
+				'foreignKey' => 'foreign_key',
+				'conditions' => array('Timeline.model = \'Commit\''),
+		))), false);
+
 		$conditions = array('Commit.project_id' => $this->Project->id);
 		$this->set('commits', $this->paginate('Commit', $conditions));
 	}
@@ -48,7 +55,7 @@ class CommitsController extends AppController {
 		$this->set(compact('commits', 'args', 'current'));
 	}
 
-	function delete($id = null) {
+	function remove($id = null) {
 		if (!$id || empty($this->params['isAdmin'])) {
 			$this->redirect($this->referer());
 		}

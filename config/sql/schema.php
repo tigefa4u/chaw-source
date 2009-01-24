@@ -9,8 +9,18 @@ class ChawSchema extends CakeSchema {
 	}
 
 	function after($event = array()) {
+
 	}
 
+	var $branches = array(
+			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
+			'ref' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
+			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
+		);
 	var $comments = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'ticket_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
@@ -24,6 +34,7 @@ class ChawSchema extends CakeSchema {
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'branch_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'branch' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'revision' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
 			'author' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
@@ -50,7 +61,7 @@ class ChawSchema extends CakeSchema {
 			'fork' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'project_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
-			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
+			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),
@@ -114,7 +125,7 @@ class ChawSchema extends CakeSchema {
 		);
 	var $users = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'active' => array('type' => 'boolean', 'null' => true, 'default' => 1),
+			'active' => array('type' => 'boolean', 'null' => false, 'default' => 0),
 			'username' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
 			'password' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
 			'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),

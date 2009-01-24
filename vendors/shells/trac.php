@@ -57,7 +57,7 @@ class TracShell extends Shell {
 					$new = array();
 					foreach ($columns['Column'] as $column) {
 						if ($column['name'] == 'created' || $column['name'] == 'modified') {
-							$column['value'] = date('Y-m-d H:m:s', $column['value']);
+							$column['value'] = date('Y-m-d H:i:s', $column['value']);
 						}
 						$new[$column['name']] = $column['value'];
 					}

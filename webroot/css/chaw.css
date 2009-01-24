@@ -88,16 +88,6 @@ table th a {
 table tr, table td {
 	border: 0;
 }
-table th.left, table td.left {
-	clear: none;
-	float: none;
-	text-align: left;
-	margin: 0;
-	padding-left: 20px;
-}
-table th.left {
-	padding-left: 10px;
-}
 table.smooth {
 	clear: both;
 	float: none;
@@ -116,11 +106,24 @@ table.smooth td {
 	vertical-align: middle;
 	padding: 8px 4px;
 	border-bottom: 1px solid #ccc;
-
 }
 table.smooth tr.altrow td {
 	background-color: #fff;
 }
+table th.left, table td.left {
+	clear: none;
+	float: none;
+	text-align: left;
+	margin: 0;
+	padding-left: 16px;
+}
+table th.left {
+	padding-left: 10px;
+}
+table td.title {
+	width: 80%;
+}
+
 input[type=hidden] {
 	display: none;
 }
@@ -156,6 +159,7 @@ input[type=hidden] {
 }
 
 #page-content {
+	padding-top: 10px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -202,6 +206,8 @@ input[type=hidden] {
 }
 
 #current-user {
+	position: fixed;
+	right: 0;
 	clear: both;
 	float: right;
 	margin: 0px;
@@ -274,13 +280,16 @@ input[type=hidden] {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-.page-navigation span.active {
+span.active {
 	color: #363;
 }
-.page-navigation span.not-active {
+span.inactive {
 	color: #600;
 }
-
+a.active {
+	color: #69C;
+	font-weight: bold;
+}
 .left {
 	float:left;
 	margin-right: 20px;
@@ -320,6 +329,17 @@ div.help h4 {
 	font-size: 140%;
 	vertical-align: top;
 }
+.row h3.name em {
+	display: inline;
+	float: none;
+	clear: none;
+	margin: 0;
+	font-size: 70%;
+	font-style: normal;
+}
+.row h3.name em a {
+	color: #69C;
+}
 .row img {
 	display: block;
 	float: left;
@@ -327,20 +347,30 @@ div.help h4 {
 	padding: 0 10px 0 0;
 	background: #fff;
 }
-.row h3.subtitle {
-	margin: 0 10px 4px 0;
+.row span.subtitle {
+	float: right;
+	padding: 0;
+	margin: -20px 120px 4px 0;
+	color: #656565;
+}
+.row .description {
+	display: block;
+	float: left;
+	width: 70%;
+	line-height: 120%;
+}
+.row .footer {
+	margin-top: 4px;
+}
+.row .admin {
+	margin: -20px 10px 4px 0;
 	padding: 0;
 	float: right;
 	font-weight: bold;
 	font-size: 12px;
 	color: #656565;
 }
-.row .description {
-	display: block;
-	float: left;
-	width: 90%;
-}
-.row .admin, .row .nav {
+.row .nav {
 	float: right;
 	font-size: 100%;
 	padding-top: 2px;
@@ -352,6 +382,7 @@ div.help h4 {
 	font-size: 120%;
 	margin-top: -26px;
 }
+
 fieldset.options select {
 	width: 100%;
 }
@@ -455,6 +486,13 @@ fieldset.options textarea {
 .wiki-content .actions {
 	font-size: 100%;
 }
+.wiki-footer {
+	clear: both;
+}
+.wiki-footer .author, .wiki-footer .date {
+	font-size: 80%;
+	margin-top: 0px;
+}
 .wiki-navigation {
 	float: right;
 	padding-top: 20px;
@@ -517,14 +555,21 @@ fieldset.options textarea {
 	margin-right: 0%;
 	border-bottom: 1px solid #ccc;
 }
-
 .timeline .name {
 	width: 100%;
 }
+.timeline .description {
+	clear: both;
+}
+
 .timeline .message {
 	clear: both;
 	margin: 0;
 	width: 40%;
+}
+.timeline .author {
+	float: right;
+	font-weight: bold;
 }
 .timeline .author {
 	float: right;
@@ -547,7 +592,7 @@ fieldset.options textarea {
 	color: #990;
 }
 .timeline .wiki h3 {
-	color: #69C;
+	color: #996;
 }
 
 .tickets h3 em {
@@ -625,6 +670,10 @@ div.comments {
 	font-weight: bold;
 	color: #633;
 }
+.comments .comment .admin a {
+	font-size: 80%;
+	color: #ccc;
+}
 .comments .comment .body {
 	border: 1px solid #ccc;
 	padding: 4px 8px;
@@ -646,16 +695,20 @@ div.comments {
 	height: 200px;
 }
 
-.browser .forks {
+.source h2 {
+	margin-top: 50px;
+	margin-bottom: 4px;
+}
+.source .forks {
 	float: right;
 	margin-top: -20px;
 	margin-right: 4px;
 }
 
-.browser table th, .browser table td {
+.source table th, .source table td {
   padding: 5px 10px;
 }
-.browser table th {
+.source table th {
   color: #888;
   text-align: left;
   background: #CBCBCB;
@@ -667,7 +720,7 @@ div.comments {
   border-top: 1px solid #ccc;
 */
 }
-.browser table td {
+.source table td {
   text-align: left;
   background: #f7f7f7;
   padding: 5px 10px 5px 4px;
@@ -678,42 +731,42 @@ div.comments {
   border-left: 0px solid #ddd;
 */
 }
-.browser .message, .browser .date {
+.source .message, .source .date {
 	font-size: 80%;
 	padding-top: 6px;
 	vertical-align: middle;
 }
 
-.browser a.folder {
+.source a.folder {
 	background: url('images/folder.gif') no-repeat left;
 	color: #333;
 	text-decoration: none;
 	padding-left: 24px;
 }
-.browser a.folder:hover {
+.source a.folder:hover {
 	color: #000;
 	text-decoration: underline;
 }
-.browser a.file {
+.source a.file {
 	background: url('images/file.gif') no-repeat left;
 	color: #999;
 	text-decoration: none;
 	padding-left: 24px;
 }
-.browser a.file:hover {
+.source a.file:hover {
 	color: #bbb;
 	text-decoration: underline;
 }
 
-.browser span.history {
+.source span.history {
 	float: right;
 }
 
-.browser p.history a {
+.source p.history a {
 	font-size: 100%;
 	text-decoration: underline;
 }
-.browser p.history a:hover {
+.source p.history a:hover {
 	text-decoration: none;
 }
 
@@ -821,7 +874,7 @@ div.comments {
 	padding-left: 20px;
 }
 
-.browser .project-details {
+.source .project-details {
 	margin-right: 0;
 }
 
@@ -854,9 +907,17 @@ div.comments {
 	padding: 8px 0;
 	list-style-type: none;
 }
+.project .description {
+	clear: none;
+	line-height: 120%;
+}
+
 .projects {
 	border-bottom: 1px #ccc solid;
 	margin-right: 0%;
+}
+.form {
+	border-bottom: 0px;
 }
 .projects td.actions a {
 	font-weight: normal;

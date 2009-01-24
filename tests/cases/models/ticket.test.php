@@ -110,5 +110,25 @@ class TicketTest extends CakeTestCase {
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
 	}
+
+	function testOwner() {
+		$this->Ticket->Owner->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->Ticket->Owner->save();
+
+		$data = array('Ticket' => array(
+			'id' => 3,
+			'project_id'  => 1,
+			'owner'  => 'gwoo',
+			'previous' => '',
+			'status'  => 'fixed',
+			'created'  => '2008-09-23 07:54:29',
+			'modified'  => '2008-09-23 07:54:29',
+		));
+		$results = $this->Ticket->save($data);
+		$this->assertEqual($results, true);
+
+		$results = $this->Ticket->find('first');
+		$this->assertEqual($results['Ticket']['owner'], 1);
+	}
 }
 ?>

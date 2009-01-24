@@ -35,43 +35,117 @@ class UserTestCase extends CakeTestCase {
 	function testUserInstance() {
 		$this->assertTrue(is_a($this->User, 'User'));
 	}
-	
-	function testUserSave() {
-		/*
-		$result = $this->User->saveKey('gwoo', 'ssh-dss something something else');
-		$this->assertTrue($result);
 
-		$result = trim($this->AuthorizedKeys->read());
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$this->assertEqual($result, $expected);
+	function testUserGroups() {
+		$this->__addProject();
 
-		$result = $this->User->saveKey('gwoo', 'ssh-dss something something else');
-		$this->assertTrue($result);
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
 
-		$result = trim($this->AuthorizedKeys->read());
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$this->assertEqual($result, $expected);
+		$this->User->set(array('project_id' => 1, 'group' => 'developer'));
+		$this->User->permit();
 
-		$result = $this->User->saveKey('nate', 'ssh-dss something else');
-		$this->assertTrue($result);
+		$results = $this->User->groups(1);
+		$this->assertEqual($results, array(1 => 'developer'));
+	}
 
-		$result = trim($this->AuthorizedKeys->read());
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$expected .= "\n";
-		$expected .= 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user nate",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something else';
-		$this->assertEqual($result, $expected);
+	function testUseProjects() {
+		$this->__addProject();
 
-		$result = $this->User->saveKey('nate', 'ssh-dss something else');
-		$this->assertTrue($result);
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
 
-		$result = trim($this->AuthorizedKeys->read());
+		$this->User->set(array('project_id' => 1, 'group' => 'developer'));
+		$this->User->permit();
 
-		$expected = 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user gwoo",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something something else';
-		$expected .= "\n";
-		$expected .= 'command="../../chaw git_shell $SSH_ORIGINAL_COMMAND -user nate",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-dss something else';
-		$this->assertEqual($result, $expected);
-		*/
+		$results = $this->User->projects(1);
+		$this->assertEqual($results['ids'], array(1));
+	}
+
+	function testUserValidation() {
+		$this->User->create(array('username' => 'gwoo'));
+		$this->assertFalse($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array('email' => 'Required: Email must be unique'));
+
+		$this->User->create(array('email' => 'gwoo@test.com'));
+		$this->assertFalse($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array('username' => 'Required: Username must be unique'));
+	}
+
+	function testActivate() {
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$results = $this->User->setToken(array('id' => 1));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$results = $this->User->activate($results['User']['token']);
+		$this->assertEqual($results['User']['active'], 1);
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
 
 	}
+
+	function testSetToken() {
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$this->User->id = null;
+		$this->User->data = array();
+		$results = $this->User->setToken(array('username' => 'gwoo'));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$this->User->id = null;
+		$this->User->data = array();
+		$results = $this->User->setToken(array('email' => 'gwoo@test.com'));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+	}
+
+	function testSetTempPassword() {
+		$this->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->assertTrue($this->User->save());
+		$this->assertEqual($this->User->validationErrors, array());
+
+		$results = $this->User->setToken(array('email' => 'gwoo@test.com'));
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+
+
+		$results = $this->User->setTempPassword(array('token' => $results['User']['token']));
+		$this->assertEqual(strlen($results['User']['tmp_pass']), 10);
+		$this->assertEqual($results['User']['username'], 'gwoo');
+		$this->assertEqual($results['User']['email'], 'gwoo@test.com');
+		$this->assertEqual($this->User->validationErrors, array());
+	}
+
+	function __addProject() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->User->Permission->Project->save($data));
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($path . 'permissions.ini'));
+		$this->assertFalse(file_exists($this->User->Permission->Project->Repo->path . DS . 'permissions.ini'));
+	}
+
 }
 ?>

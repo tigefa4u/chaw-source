@@ -22,16 +22,17 @@ class DashboardController extends AppController {
 
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Access->allow('index');
+		$this->Access->allow('index', 'feed');
 	}
 
 	function index() {
-		if (!$this->Auth->user()) {
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));
-		}
+		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 
 		extract($this->Project->User->projects($this->Auth->user('id')));
 
+		if (empty($ids)) {
+			return;
+		}
 		$wiki = $this->Timeline->Wiki->find('all', array(
 			'conditions' => array('Wiki.project_id' => $ids, 'Wiki.active' => 1),
 			'limit' => 10, 'order' => 'Wiki.created DESC',
@@ -64,6 +65,36 @@ class DashboardController extends AppController {
 
 	}
 
+	function feed() {
+		$this->helpers[] = 'Text';
+		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
+
+		extract($this->Project->User->projects($this->Auth->user('id')));
+
+		if (empty($ids)) {
+			return;
+		}
+
+		$this->paginate['order'] = 'Timeline.created DESC';
+
+		if (empty($this->paginate['conditions'])) {
+			$this->paginate['conditions'] = array(
+				'Timeline.project_id' => $ids
+			);
+		}
+
+		if (!empty($this->passedArgs['type'])) {
+			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
+		} else if ($this->action !== 'forks'){
+			$this->passedArgs['type'] = null;
+		}
+
+		$this->Timeline->recursive = -1;
+		$data = $this->paginate();
+
+		$this->set('feed', $this->Timeline->related($data));
+	}
+
 	function admin_index() {
 		$this->Project->bindModel(array('hasMany' => array(
 			'Wiki' => array('conditions' => array('Wiki.project_id' => $this->Project->id)),
@@ -94,7 +125,7 @@ class DashboardController extends AppController {
 			'limit' => 10, 'order' => 'Commit.created DESC',
 			'recursive' => 0
 		));
-		
+
 		$forkCommits = null;
 		if (empty($this->Project->config['fork'])) {
 			$forks = $this->Project->forks();
@@ -104,7 +135,7 @@ class DashboardController extends AppController {
 				'recursive' => 0
 			));
 		}
-		
+
 		$this->set(compact('wiki', 'tickets', 'comments', 'commits', 'forkCommits'));
 	}
 

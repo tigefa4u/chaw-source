@@ -124,7 +124,7 @@
  * Session time out time (in seconds).
  * Actual value depends on 'Security.level' setting.
  */
-	Configure::write('Session.timeout', '320');
+	Configure::write('Session.timeout', '3200');
 /**
  * If set to false, sessions are not automatically started.
  */
@@ -226,4 +226,12 @@
  * 					);
  */
 	Cache::config('default', array('engine' => 'File'));
+
+	$duration = '+99 days';
+	if (Configure::read() > 1) {
+		$duration = '+15 seconds';
+	}
+
+	Cache::config('project', array('engine' => 'File', 'duration' => $duration, 'prefix' => 'project_', 'path' => CACHE . 'persistent'));
+
 ?>

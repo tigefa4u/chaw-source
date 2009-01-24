@@ -98,13 +98,6 @@ class Project extends AppModel {
 		$this->recursive = -1;
 		$this->config = Configure::read('Project');
 
-		$duration = '+99 days';
-		if (Configure::read() > 1) {
-			$duration = '+15 seconds';
-		}
-
-		Cache::set(array('prefix' => 'config_', 'duration' => $duration, 'path' => CACHE . 'persistent'));
-
 		if (!empty($this->data['Project']['url'])) {
 			$params['project'] = $this->data['Project']['url'];
 		}
@@ -118,22 +111,22 @@ class Project extends AppModel {
 			if (!empty($params['fork'])) {
 				$conditions['fork'] = $params['fork'];
 			}
-			$key = join('_', $conditions);
-			$project = Cache::read($key);
+			$key = join('_', array_filter(array_values($conditions)));
+			$project = Cache::read($key, 'project');
 			if (empty($project)) {
 				$project = $this->find($conditions);
 				if (!empty($project)) {
-					Cache::write($key, $project);
+					Cache::write($key, $project, 'project');
 				}
 			}
 		}
 		if (empty($project)) {
 			$key = Configure::read('App.dir');
-			$project = Cache::read($key);
+			$project = Cache::read($key, 'project');
 			if (empty($project)) {
 				$project = $this->find('first');
 				if (!empty($project)) {
-					Cache::write($key, $project);
+					Cache::write($key, $project, 'project');
 				}
 			}
 		}
@@ -211,6 +204,12 @@ class Project extends AppModel {
 			$this->data['Project']['fork'] = null;
 		}
 
+		if (empty($this->data['Project']['url'])) {
+			$this->invalidate('name', 'the project could not be created');
+			return false;
+		}
+
+
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
@@ -228,7 +227,7 @@ class Project extends AppModel {
 			}
 		}
 
-		if ($this->__created && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
+		if ($this->__created && !$this->id && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
 			$this->invalidate('user', 'Invalid user');
 			return false;
 		}
@@ -294,6 +293,14 @@ class Project extends AppModel {
 			));
 		}
 
+
+		if (!empty($this->config['url'])) {
+			$conditions = array($this->config['url']);
+			$conditions[] = (!empty($this->config['fork'])) ? $this->config['fork'] : false;
+			$key = join('_', array_filter($conditions));
+			Cache::delete($key, 'project');
+		}
+
 		$this->__created = false;
 		$this->createShell();
 	}
@@ -352,6 +359,14 @@ class Project extends AppModel {
 			return false;
 		}
 
+		$hasFork = $this->find(array(
+			'fork' => $this->data['Project']['fork'],
+			'url' => $this->config['url']
+		));
+		if (!empty($hasFork)) {
+			return false;
+		}
+
 		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['repo']['remote']))) {
 			$this->__created = true;
 			$this->data['Project']['project_id'] = $this->id;
@@ -374,6 +389,23 @@ class Project extends AppModel {
 			return $data;
 		}
 		return false;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function branches($id = null) {
+		if (!$id) {
+			$id = $this->id;
+		}
+
+		$Branch = ClassRegistry::init('Branch');
+		$Branch->recursive = -1;
+		return $Branch->find('all', array('conditions' =>
+			array('project_id' => $this->id)
+		));
 	}
 /**
  * undocumented function
@@ -421,19 +453,13 @@ class Project extends AppModel {
  * @return void
  *
  **/
-	function group($user) {
-		$id = $this->id;
-		if (is_array($user)) {
-			extract($user);
-		}
+	function users($type = 'list') {
 
-		$user = $this->Permission->user($user);
-
-		if (!$user || !$id) {
-			return false;
-		}
-
-		return $this->Permission->field('group', array('project_id' => $id, 'user_id' => $user));
+		$users = $this->Permission->find('all', array(
+			'fields' => array('User.id', 'User.username'),
+			'conditions' => array('Permission.project_id' => $this->id, 'User.username !=' => null)
+		));
+		return array_filter(Set::combine($users, '/User/id', '/User/username'));
 	}
 /**
  * undocumented function
@@ -484,10 +510,15 @@ class Project extends AppModel {
 			}
 			return true;
 		}
+
 		if (!empty($data['url'])) {
 			$reserved = array('forks');
+			if (in_array($data['url'], $reserved)) {
+				$this->invalidate('name');
+				return false;
+			}
 			$test = $this->findByUrl($data['url']);
-			if (in_array($test['url'], $reserved) || !empty($test) && $test['Project']['id'] != $this->id) {
+			if (in_array($data['url'], $reserved) || !empty($test) && $test['Project']['id'] != $this->id) {
 				$this->invalidate('name');
 				return false;
 			}

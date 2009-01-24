@@ -1,5 +1,25 @@
 <div class="projects index">
 <h2><?php __('Projects');?></h2>
+<div class="page-navigation">
+	<?php
+		echo $chaw->type('pending', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+		
+		echo $chaw->type('all', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+
+		echo $chaw->type('public', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+
+		echo $chaw->type('forks', array(
+			'controller' => 'projects', 'action' => 'index',
+		)) . ' | ';
+	
+	?>
+</div>
 <p>
 <?php
 $paginator->options(array('url'=> $this->passedArgs));
@@ -41,7 +61,7 @@ foreach ($projects as $project):
 			<?php
 				echo $html->link($project['Project']['name'], array(
 					'admin' => false, 'project' => $url, 'fork'=> $fork,
-					'controller' => 'browser', 'action' => 'index',
+					'controller' => 'source', 'action' => 'index',
 				));?>
 		</td>
 		<td>
@@ -56,7 +76,7 @@ foreach ($projects as $project):
 					'approve', 'reject',
 					'url' => array(
 						'admin' => true, 'project' => false, 'fork' => false,
-						'controller' => 'projects',	$project['Project']['id']
+						'controller' => 'projects',	$project['Project']['url']
 					)
 				)); ?>
 		</td>
@@ -66,7 +86,7 @@ foreach ($projects as $project):
 					'activate', 'deactivate',
 					'url' => array(
 						'admin' => true, 'project' => false, 'fork' => false,
-						'controller' => 'projects',	$project['Project']['id']
+						'controller' => 'projects',	$project['Project']['url']
 					)
 				)); ?>
 		</td>

@@ -6,7 +6,7 @@ class CommitTestCase extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit',
+		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
 	);
 
 	function startTest() {
@@ -27,11 +27,14 @@ class CommitTestCase extends CakeTestCase {
 			'created'  => '2008-10-13 09:26:08',
 			'modified'  => '2008-10-13 09:26:08',
 			'project_id'  => 1,
-			'user_id' => ''
+			'user_id' => '',
+			'branch' => 'refs/heads/master'
 			));
 
 		$results = $this->Commit->save($data);
-		$this->assertEqual($results, $data);
+		$this->assertEqual($results['Commit']['revision'], $data['Commit']['revision']);
+		$this->assertEqual($results['Commit']['branch_id'], 1);
+
 
 		$Timeline = ClassRegistry::init('Timeline');
 		$Timeline->recursive = -1;
