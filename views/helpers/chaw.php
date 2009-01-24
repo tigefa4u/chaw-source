@@ -177,12 +177,16 @@ class ChawHelper extends AppHelper {
 			$rss = ' . ' . $this->rss('home', array('controller' => 'wiki', 'action' => 'index', '/', $path, 'ext' => 'rss'));
 		}
 
-		if ($slug) {
-
+		if ($path != '/home') {
 			foreach ($parts as $key => $part) {
 				$parts['action'] = 'index';
-				$out[] = $this->Html->link($part, $parts);
+				$url[] = $part;
+				$out[] = $this->Html->link($part, $url);
 			}
+		}
+
+		if ($slug) {
+
 
 			$out[] = $slug;
 			$parts[] = $slug;
