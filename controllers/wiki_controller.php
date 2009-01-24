@@ -58,15 +58,6 @@ class WikiController extends AppController {
 			}
 		}
 
-		$wiki = $this->Wiki->find('all', array(
-			'conditions' => array(
-				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
-				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
-			),
-			'order' => 'Wiki.created DESC'
-		));
-
 		if (empty($page)) {
 			$page = $this->Wiki->find(array(
 				'Wiki.slug' => $slug,
@@ -76,13 +67,39 @@ class WikiController extends AppController {
 			));
 		}
 
+		$subpath = str_replace('//', '/', $path . '/' . $slug);
+
+		if (empty($page) || $this->RequestHandler->isRss() == true) {
+			$wiki = $this->Wiki->find('all', array(
+				'conditions' => array(
+					'Wiki.path' => $subpath,
+					'Wiki.project_id' => $this->Project->id,
+					'Wiki.active' => 1
+				),
+				'order' => 'Wiki.created DESC'
+			));
+		}
+
 		if (empty($wiki) && empty($page)) {
 			$this->passedArgs[] = $slug;
-			$this->redirect(array_merge(array('action' => 'add'), $this->passedArgs));
+			$this->redirect(array('action' => 'add', $path));
 		}
 
 		if ($this->RequestHandler->isRss() !== true) {
-			$paths = array_flip($this->Wiki->find('list', array(
+
+			if (!empty($page)) {
+				$subNav = $this->Wiki->find('all', array(
+					'fields' => array('Wiki.path', 'Wiki.slug'),
+					'conditions' => array(
+						'Wiki.path' => $subpath,
+						'Wiki.project_id' => $this->Project->id,
+						'Wiki.active' => 1
+					),
+					'order' => 'Wiki.created DESC'
+				));
+			}
+
+			$wikiNav = array_flip($this->Wiki->find('list', array(
 				'fields' => array('Wiki.path', 'Wiki.id'),
 				'conditions' => array(
 					'Wiki.path !=' => '/',
@@ -90,9 +107,9 @@ class WikiController extends AppController {
 					'Wiki.active' => 1
 				)
 			)));
-			sort($paths);
+			sort($wikiNav);
 
-			$recents = $this->Wiki->find('all', array(
+			$recentEntries = $this->Wiki->find('all', array(
 				'fields' => array('Wiki.path', 'Wiki.slug'),
 				'conditions' => array(
 					'Wiki.project_id' => $this->Project->id,
@@ -118,7 +135,11 @@ class WikiController extends AppController {
 			));
 		}
 
-		$this->set(compact('canWrite', 'canDelete', 'path', 'slug', 'wiki', 'page', 'paths', 'recents', 'revisions'));
+		$this->set(compact(
+			'canWrite', 'canDelete', 'path', 'slug',
+			'wiki', 'page', 'revisions',
+			'subNav', 'wikiNav', 'recentEntries'
+		));
 		$this->render('index');
 	}
 
