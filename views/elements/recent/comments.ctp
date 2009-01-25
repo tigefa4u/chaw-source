@@ -17,8 +17,10 @@ if (!empty($comments)):
 			)), array('class' => 'project'));
 		}
 
+
 		$li .= $html->tag('li', "on "
-			. $html->link($comment['Ticket']['title'], $url) . " by {$comment['User']['username']}" . $project
+			. $html->link($comment['Ticket']['title'], $url) . " <small>({$comment['Ticket']['status']})</small> "
+			. "by {$comment['User']['username']}" . $project
 		);
 
 	endforeach;

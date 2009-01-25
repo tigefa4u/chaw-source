@@ -351,14 +351,25 @@ div.help h4 {
 .row span.subtitle {
 	float: right;
 	padding: 0;
-	margin: -20px 120px 4px 0;
+	margin: -24px 10px 4px 0;
 	color: #656565;
+	width: 160px;
+	font-size: 120%;
 }
 .row .description {
+	clear: both;
 	display: block;
 	float: left;
-	width: 70%;
+	width: 50%;
 	line-height: 120%;
+}
+.row .author {
+	width: 20%;
+	text-align: right;
+}
+.row .date {
+	width: 160px;
+	text-align: left;
 }
 .row .footer {
 	margin-top: 4px;
@@ -608,6 +619,16 @@ div.wiki-text code {
 .timeline .ticket h3 {
 	color: #990;
 }
+.timeline .commit .subtitle a {
+	font-weight: normal;
+}
+.timeline .comment .subtitle, .timeline .ticket .subtitle {
+	font-weight: normal;
+	color: #990;
+}
+.timeline .ticket .message {
+	font-size: 60%;
+}
 .timeline .wiki h3 {
 	color: #996;
 }
@@ -760,6 +781,7 @@ div.comments {
 	color: #333;
 	text-decoration: none;
 	padding-left: 24px;
+	margin-left: 0px;
 }
 .source a.folder:hover {
 	color: #000;
@@ -770,6 +792,7 @@ div.comments {
 	color: #999;
 	text-decoration: none;
 	padding-left: 24px;
+	margin-left: 0px;
 }
 .source a.file:hover {
 	color: #bbb;
