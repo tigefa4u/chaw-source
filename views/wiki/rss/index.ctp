@@ -18,10 +18,7 @@ $this->set('channel', array(
 if(!empty($wiki)):
 
 	foreach($wiki as $page):
-		if ($title = str_replace($this->pageTitle, '', Inflector::humanize(Inflector::slug($page['Wiki']['path'])))) {
-			$title .= '/';
-		}
-		$title .= Inflector::humanize($page['Wiki']['slug']);
+		$title = ltrim($page['Wiki']['path'] . '/' . $page['Wiki']['slug'], '/');
 		$link = array('controller' => 'wiki', 'action' => 'index', $page['Wiki']['path'], $page['Wiki']['slug']);
 		$pubDate = $rss->time($page['Wiki']['modified']);
 		$author = $page['User']['username'];
