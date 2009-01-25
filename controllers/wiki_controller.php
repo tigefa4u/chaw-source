@@ -160,10 +160,10 @@ class WikiController extends AppController {
 				'last_changed_by' => $this->Auth->user('id'),
 			));
 			if ($data = $this->Wiki->save($this->data)) {
-				$this->Session->setFlash($data['Wiki']['slug'] . ' saved');
+				$this->Session->setFlash(sprintf(__('%s saved',true),$data['Wiki']['slug']));
 				$this->redirect(array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']));
 			} else {
-				$this->Session->setFlash($data['Wiki']['slug'] . ' NOT saved');
+				$this->Session->setFlash(sprintf(__('%s NOT saved',true),$data['Wiki']['slug']));
 			}
 		}
 

@@ -19,7 +19,7 @@
 		<div class="links">
 			<?php if (empty($CurrentUser->active)): ?>
 				<span class="activate link">
-					<?php echo $html->link('activate', array(
+					<?php echo $html->link(__('activate',true), array(
 						'admin' => false, 'project' => false, 'fork' => false,
 						'controller' => 'users', 'action' => 'activate'
 						), array('title' => 'activate your account')); ?>
@@ -27,7 +27,7 @@
 			<?php endif?>
 
 			<span class="account link">
-				<?php echo $html->link('account', array(
+				<?php echo $html->link(__('account',true), array(
 					'admin' => false, 'project' => false, 'fork' => false,
 					'controller' => 'users', 'action' => 'account'
 					), array('title' => 'edit your account')); ?>

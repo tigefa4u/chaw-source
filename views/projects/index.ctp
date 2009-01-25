@@ -11,24 +11,24 @@
 <?php if ($this->action != 'forks'):?>
 
 	<h2>
-		Projects
+		<?php __('Projects') ?>
 	</h2>
 
 	<div class="page-navigation">
 		<?php
 			if (!empty($CurrentUser->Permission)) {
-				echo $chaw->type(array('title' => 'Mine', 'type' => null)) . ' | ';
+				echo $chaw->type(array('title' => __('Mine',true), 'type' => null)) . ' | ';
 			}
 
-			echo $chaw->type('all', array(
+			echo $chaw->type(array('title' => __('All',true),'type' =>'all'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
-			echo $chaw->type('public', array(
+			echo $chaw->type(array('title' => __('Public',true),'type' =>'public'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
-			echo $chaw->type('forks', array(
+			echo $chaw->type(array('title' => __('Fork',true),'type' =>'fork'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
@@ -37,7 +37,7 @@
 					'width' => 14, 'height' => 14
 				)),
 				$rssFeed, array(
-				'title' => 'Projects Feed', 'class' => 'rss', 'escape'=> false
+				'title' => __('Projects Feed',true), 'class' => 'rss', 'escape'=> false
 			));?>
 	</div>
 <?php endif;?>

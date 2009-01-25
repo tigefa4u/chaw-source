@@ -76,7 +76,7 @@
 				<ul>
 					<li><?php
 						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
-						echo $html->link('Source', array(
+						echo $html->link(__('Source',true), array(
 							'admin' => false,
 							'controller' => 'source', 'action' => 'index'), $options);
 					?></li>

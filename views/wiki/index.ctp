@@ -153,10 +153,10 @@ $javascript->link('ghighlight.min', false);
 		echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
 		echo $form->input('revision', array('value' => $page['Wiki']['id']));
 		$buttons =
-			$form->submit('view', array('div' => false, 'name' => 'view'))
-			. $form->submit('activate', array('div' => false, 'name' => 'activate'));
+			$form->submit(__('view',true), array('div' => false, 'name' => 'view'))
+			. $form->submit(__('activate',true), array('div' => false, 'name' => 'activate'));
 		if (!empty($canDelete)) {
-			$buttons .= $form->submit('delete', array('div' => false, 'name' => 'delete'));
+			$buttons .= $form->submit(__('delete',true), array('div' => false, 'name' => 'delete'));
 		}
 		echo $html->tag('div', $buttons, array('class' => 'submit'));
 		echo $form->end();

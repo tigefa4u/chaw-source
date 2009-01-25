@@ -5,7 +5,7 @@
 <?php
 	$links = array();
 	if (!empty($CurrentUser->username)) {
-		$links[] = $html->link('mine', array('user' => $CurrentUser->username));
+		$links[] = $html->link(__('Mine',true), array('user' => $CurrentUser->username));
 	}
 
 	foreach ($statuses as $status) {
@@ -28,13 +28,13 @@ echo $paginator->counter(array(
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('#', 'number');?></th>
-	<th><?php echo $paginator->sort('version_id');?></th>
-	<th><?php echo $paginator->sort('type');?></th>
-	<th><?php echo $paginator->sort('priority');?></th>
+	<th><?php echo $paginator->sort(__('Version',true),'version_id');?></th>
+	<th><?php echo $paginator->sort(__('Type',true),'type');?></th>
+	<th><?php echo $paginator->sort(__('Priority',true),'priority');?></th>
 	<?php if(empty($this->passedArgs['status'])): ?>
-	<th><?php echo $paginator->sort('status');?></th>
+	<th><?php echo $paginator->sort(__('Status',true),'status');?></th>
 	<?php endif; ?>
-	<th class="left"><?php echo $paginator->sort('title');?></th>
+	<th class="left"><?php echo $paginator->sort(__('Title',true),'title');?></th>
 </tr>
 <?php
 $i = 0;

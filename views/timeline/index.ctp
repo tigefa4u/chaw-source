@@ -14,31 +14,31 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="page-navigation">
 	<?php
 		$active = ($this->action == 'index') ? array('class' => 'active') : null;
-		echo $html->link('Project', array(
+		echo $html->link(__('Project',true), array(
 			'controller' => 'timeline', 'action' => 'index',
 		), $active) . ' | ';
 
 		if (empty($CurrentProject->fork)) {
 			$active = ($this->action == 'forks') ? array('class' => 'active') : null;
-			echo $html->link('Forks', array('controller' => 'timeline', 'action' => 'forks'), $active) .' | ';
+			echo $html->link(__('Forks',true), array('controller' => 'timeline', 'action' => 'forks'), $active) .' | ';
 		} else {
 			$active = ($this->action == 'parent') ? array('class' => 'active') : null;
-			echo $html->link('Parent', array('controller' => 'timeline', 'action' => 'parent'), $active) .' | ';
+			echo $html->link(__('Parent',true), array('controller' => 'timeline', 'action' => 'parent'), $active) .' | ';
 		}
 
-		echo $chaw->type('commits', array(
+		echo $chaw->type(array('title' => __('Commits',true),'type' =>'commits'), array(
 			'controller' => 'timeline',
 		)) . ' | ';
 
-		echo $chaw->type('tickets', array(
+		echo $chaw->type(array('title' => __('Tickets',true),'type' =>'tickets'), array(
 			'controller' => 'timeline',
 		)) . ' | ';
 
-		echo $chaw->type('comments', array(
+		echo $chaw->type(array('title' => __('Comments',true),'type' =>'comments'), array(
 			'controller' => 'timeline',
 		)) . ' | ';
 
-		echo $chaw->type('wiki', array(
+		echo $chaw->type(array('title' => __('Wiki',true),'type' =>'wiki'), array(
 			'controller' => 'timeline',
 		)) . ' | ';
 

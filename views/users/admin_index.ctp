@@ -20,13 +20,13 @@ echo $paginator->counter(array(
 	<tr>
 		<?php if (!empty($groups)):?>
 			<th class="left">
-				<?php echo $paginator->sort('Group', 'Permission.group');?>
+				<?php echo $paginator->sort(__('Group',true), 'Permission.group');?>
 			</th>
 		<?php endif; ?>
 
-		<th><?php echo $paginator->sort('username');?></th>
-		<th><?php echo $paginator->sort('email');?></th>
-		<th><?php echo $paginator->sort('last_login');?></th>
+		<th><?php echo $paginator->sort(__('Username',true),'username');?></th>
+		<th><?php echo $paginator->sort(__('Email',true),'email');?></th>
+		<th><?php echo $paginator->sort(__('Last Login',true),'last_login');?></th>
 		<th>&nbsp;</th>
 	</tr>
 	<?php
@@ -59,10 +59,10 @@ echo $paginator->counter(array(
 			<td class="actions">
 				<?php
 					if (!empty($this->passedArgs['all']) && !empty($this->params['isAdmin'])) {
-						echo $chaw->admin('edit', array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
-						echo $chaw->admin('remove', array('controller' => 'users', 'action' => 'remove', $user['User']['id']));
+						echo $chaw->admin(__('edit',true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
+						echo $chaw->admin(__('remove',true), array('controller' => 'users', 'action' => 'remove', $user['User']['id']));
 					} else {
-						echo $chaw->admin('remove', array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id']));
+						echo $chaw->admin(__('remove',true), array('controller' => 'permissions', 'action' => 'remove', $user['Permission']['id']));
 					}
 				?>
 			</td>

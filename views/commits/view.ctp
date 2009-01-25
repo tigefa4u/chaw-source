@@ -3,7 +3,7 @@ $html->css('highlight/idea', null, null, false);
 $javascript->link('ghighlight.min', false);
 ?>
 <div class="page-navigation">
-	<?php echo $html->link('All Commits', array('controller' => 'commits', 'action' => 'index'));?>
+	<?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?>
 </div>
 
 <h2>

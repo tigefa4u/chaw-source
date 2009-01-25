@@ -76,7 +76,7 @@
 				<ul>
 					<li><?php
 						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
-						echo $html->link('Source', array(
+						echo $html->link(__('Source',true), array(
 							'admin' => false,
 							'controller' => 'source', 'action' => 'index'), $options);
 					?></li>
@@ -173,7 +173,7 @@
 				<p style="margin-top: 3em; margin-left: 10px;">
 					<?php
 						if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
-							echo $html->link('New Project', array(
+							echo $html->link(__('New Project',true), array(
 								'admin' => true, 'project' => false, 'fork' => false,
 								'controller' => 'projects', 'action' => 'add'
 							));

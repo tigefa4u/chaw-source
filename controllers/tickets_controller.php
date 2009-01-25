@@ -60,7 +60,7 @@ class TicketsController extends AppController {
 
 	function view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash('Invalid ticket');
+			$this->Session->setFlash(__('Invalid ticket',true));
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
 
@@ -71,7 +71,7 @@ class TicketsController extends AppController {
 		));
 
 		if (empty($ticket)) {
-			$this->Session->setFlash('Invalid ticket');
+			$this->Session->setFlash(__('Invalid ticket',true));
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
 
@@ -99,7 +99,7 @@ class TicketsController extends AppController {
 			));
 
 			if ($this->Ticket->save($this->data)) {
-				$this->Session->setFlash('Ticket saved');
+				$this->Session->setFlash(__('Ticket saved',true));
 				$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 			}
 		}
@@ -125,16 +125,16 @@ class TicketsController extends AppController {
 
 			if ($data = $this->Ticket->save($this->data)) {
 				if (!empty($data['Ticket']['comment'])) {
-					$this->Session->setFlash('Comment saved');
+					$this->Session->setFlash(__('Comment saved',true));
 				} else {
-					$this->Session->setFlash('Ticket updated');
+					$this->Session->setFlash(__('Ticket updated',true));
 				}
 				$this->Session->del('Ticket.previous');
 			} else {
 				if (!empty($data['Ticket']['comment'])) {
-					$this->Session->setFlash('Comment was NOT saved');
+					$this->Session->setFlash(__('Comment was NOT saved',true));
 				} else {
-					$this->Session->setFlash('Ticket was NOT updated');
+					$this->Session->setFlash(__('Ticket was NOT updated',true));
 				}
 			}
 		}

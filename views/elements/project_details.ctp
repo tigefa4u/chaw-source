@@ -2,7 +2,7 @@
 <div class="project-details">
 	<?php
 		if (empty($CurrentProject->approved)) {
-			echo $html->tag('span', 'Awaiting Approval', array('class' => 'inactive'));
+			echo $html->tag('span', __('Awaiting Approval',true), array('class' => 'inactive'));
 		}
 	?>
 	<p class="description">
@@ -27,7 +27,7 @@
 				endif;
 
 				if (!empty($CurrentProject->fork) && !empty($this->params['isAdmin'])):
-					echo $html->tag('span', $html->link('fast forward', array(
+					echo $html->tag('span', $html->link(__('fast forward',true), array(
 						'admin' => false,
 						'controller' => 'repo', 'action' => 'fast_forward'
 					), array('class' => 'detail')));
@@ -40,7 +40,7 @@
 							'controller' => 'projects', 'action' => 'forks'
 						), array('class' => 'detail'));
 					else:
-						$link = $html->link('view parent', array(
+						$link = $html->link(__('view parent',true), array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'source', 'action' => 'index'
 						), array('class' => 'detail'));
@@ -48,7 +48,7 @@
 					echo $html->tag('span', $link);
 				endif;
 				if (!empty($this->params['isAdmin']) && !empty($branch)):
-					echo $html->tag('span', $html->link('remove branch', array(
+					echo $html->tag('span', $html->link(__('remove branch',true), array(
 						'admin' => false,
 						'controller' => 'source', 'action' => 'delete', $branch
 					), array('class' => 'detail')));
