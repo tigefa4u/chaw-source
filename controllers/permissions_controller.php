@@ -26,9 +26,9 @@ class PermissionsController extends AppController {
 		if (!empty($this->data)) {
 			$this->data['Permission']['username'] = $this->Auth->user('username');
 			if ($this->Permission->saveFile($this->data)) {
-				$this->Session->setFlash('Permissions updated');
+				$this->Session->setFlash(__('Permissions updated',true));
 			} else {
-				$this->Session->setFlash('Permissions NOT updated');
+				$this->Session->setFlash(__('Permissions NOT updated',true));
 			}
 		}
 		$this->data['Permission']['fine_grained'] = $this->Permission->file();
@@ -41,12 +41,12 @@ class PermissionsController extends AppController {
 
 	function admin_remove($id = null) {
 		if (!$id || empty($this->params['isAdmin'])) {
-			$this->Session->setFlash('Invalid request');
+			$this->Session->setFlash(__('Invalid request',true));
 			$this->redirect(array('controller' => 'users', 'action' => 'index'));
 		}
 
 		if ($this->Permission->del($id)) {
-			$this->Session->setFlash('User removed');
+			$this->Session->setFlash(__('User removed',true));
 			$this->redirect(array('controller' => 'users', 'action' => 'index'));
 		}
 	}

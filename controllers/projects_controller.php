@@ -106,13 +106,13 @@ class ProjectsController extends AppController {
 			));
 			if ($data = $this->Project->save($this->data)) {
 				if (empty($data['Project']['approved'])) {
-					$this->Session->setFlash('Project is awaiting approval');
+					$this->Session->setFlash(__('Project is awaiting approval',true));
 					$this->redirect(array(
 						'project' => $data['Project']['url'],
 						'controller' => 'projects', 'action' => 'view'
 					));
 				} else {
-					$this->Session->setFlash('Project was created');
+					$this->Session->setFlash(__('Project was created',true));
 					$this->redirect(array(
 						'project' => $data['Project']['url'],
 						'controller' => 'timeline', 'action' => 'index'
@@ -152,9 +152,9 @@ class ProjectsController extends AppController {
 		if (!empty($this->data)) {
 			$this->data['Project']['id'] = $this->Project->id;
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was updated');
+				$this->Session->setFlash(__('Project was updated',true));
 			} else {
-				$this->Session->setFlash('Project was NOT updated');
+				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
 		}
 
@@ -210,13 +210,13 @@ class ProjectsController extends AppController {
 				'approved' => 1
 			));
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was created');
+				$this->Session->setFlash(__('Project was created',true));
 				$this->redirect(array(
 					'admin' => false, 'project' => $data['Project']['url'],
 					'controller' => 'timeline', 'action' => 'index'
 				));
 			} else {
-				$this->Session->setFlash('Project was NOT created');
+				$this->Session->setFlash(__('Project was NOT created',true));
 			}
 		}
 
@@ -234,7 +234,7 @@ class ProjectsController extends AppController {
 
 	function admin_edit($id = null) {
 		if (!$id) {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -297,12 +297,12 @@ class ProjectsController extends AppController {
 			if ($this->Project->initialize(compact('project'))) {
 				$this->Project->set($this->Project->config);
 				if ($this->Project->save(array($options['field'] => $options['value']))) {
-					$this->Session->setFlash('The project was ' . $options['action']);
+					$this->Session->setFlash(sprintf(__('The project was %s',true),$options['action']));
 				} else {
-					$this->Session->setFlash('The project was NOT ' . $options['action']);
+					$this->Session->setFlash(sprintf(__('The project was NOT %s',true),$options['action']));
 				}
 			} else {
-				$this->Session->setFlash('The project was invalid');
+				$this->Session->setFlash(__('The project was invalid',true));
 			}
 		} else {
 			$this->Session->setFlash(__('The project was invalid',true));

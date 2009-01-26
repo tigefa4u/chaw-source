@@ -1,9 +1,7 @@
 <div class="ticket row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> <?php __('Ticket')?>:
-		<?php echo $html->link($data['Ticket']['title'], array('controller' => 'tickets', 'action' => 'view', $data['Ticket']['number']));?>
-		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:
+		<?php __('New Ticket') ?>:
 		<?php
 			$url = array('admin' => false,
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number']
@@ -30,6 +28,10 @@
 		<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
+
+	<span class="subtitle">
+		<?php echo $data['Ticket']['type'];?>
+	</span>
 
 	<span class="date">
 		<?php echo $time->nice($data['Ticket']['created']);?>

@@ -23,7 +23,7 @@ if (!empty($tickets)):
 	endforeach;
 
 	echo $html->tag('div',
-		$html->tag('h4', __('Recent Tickets',true)) .$html->tag('ul', $li),
+		$html->tag('h4', __('New Tickets',true)) .$html->tag('ul', $li),
 		array('class' => 'panel', 'escape' => false)
 	);
 

@@ -1,8 +1,9 @@
-<div class="data row <?php echo $zebra;?>">
+<div class="comment row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		<?php echo strtoupper(Inflector::humanize($data['Ticket']['type']));?> Ticket:
 		<?php
+			__('Change to:');
+						
 			$url = array('admin' => false,
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
 				'#' => 'c' . $data['Comment']['id']
@@ -16,7 +17,7 @@
 				)), array('class' => 'project'));
 			}
 
-			echo $html->link($data['Ticket']['title'], $url) . $project;?>
+			echo ' ' . $html->link($data['Ticket']['title'], $url) . " <small>({$data['Ticket']['status']})</small>" . $project;?>
 	</h3>
 
 	<span class="description">
@@ -28,7 +29,11 @@
 		<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
-
+	
+	<span class="subtitle">
+		<?php echo $data['Ticket']['type'];?>
+	</span>
+	
 	<span class="date">
 		<?php echo $time->nice($data['Comment']['created']);?>
 	</span>
