@@ -3,8 +3,8 @@
 	<fieldset>
  		<legend><?php __('Change Password');?></legend>
 	<?php
-		echo $form->input('password');
+		echo $form->input('password',array('label'=>array('labeltext'=>__('Passwoord',true))));
 	?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $form->end(__('Submit',true));?>
 </div>

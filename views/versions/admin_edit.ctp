@@ -17,13 +17,13 @@ $javascript->codeBlock($script, array('inline' => false));
 		echo $form->input('id');
 
 		if (!empty($this->params['isAdmin'])) :
-			echo $form->input('project_id');
+			echo $form->input('project_id',array('label'=>array('labeltext' => __('Project',true))));
 		endif;
 
-		echo $form->input('title');
-		echo $form->input('description');
-		echo $form->input('due_date');
-		echo $form->input('completed');
+		echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
+		echo $form->input('description',array('label'=>array('labeltext' => __('Description',true))));
+		echo $form->input('due_date',array('label'=>array('labeltext' => __('Due Date',true))));
+		echo $form->input('completed',array('label'=>array('labeltext' => __('Completed',true))));
 	?>
 
 	<div id="Preview"></div>
@@ -34,5 +34,5 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
 
-<?php echo $form->end('Submit');?>
+<?php echo $form->end(__('Submit',true));?>
 </div>

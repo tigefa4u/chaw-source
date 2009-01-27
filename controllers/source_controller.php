@@ -95,9 +95,9 @@ class SourceController extends AppController {
 	function rebase() {
 		if (!empty($this->params['isAdmin'])) {
 			if ($this->Source->rebase()) {
-				$this->Session->setFlash('You should have a nice clean working copy');
+				$this->Session->setFlash(__('You should have a nice clean working copy',true));
 			} else {
-				$this->Session->setFlash('Oops, rebuild failed try again');
+				$this->Session->setFlash(__('Oops, rebuild failed try again',true));
 			}
 		}
 		$this->redirect($this->referer());
@@ -114,9 +114,9 @@ class SourceController extends AppController {
 		if (!empty($branch) && !empty($this->params['isAdmin'])) {
 			$this->Source->initialize($this->Project->Repo, array($branch));
 			if ($this->Project->Repo->delete()) {
-				$this->Session->setFlash($branch .' was deleted');
+				$this->Session->setFlash(sprintf(__('%s was deleted',true),$branch));
 			} else {
-				$this->Session->setFlash('Oops, delete failed try again');
+				$this->Session->setFlash(__('Oops, delete failed try again',true));
 			}
 		}
 		$this->redirect(array('action' => 'branches'));

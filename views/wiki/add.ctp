@@ -31,7 +31,7 @@ $javascript->codeBlock($script, array('inline' => false));
 			echo $html->tag('div',$form->input('active') . $form->input('read_only'), array('class' => 'single'));
 
 			echo $form->input('path', array('div' => 'input text path',
-				'label' => "use a path to group pages into categories and subcategories. example: /logs/by/{$CurrentUser->username}/",
+				'label' => sprintf(__("use a path to group pages into categories and subcategories. example: /logs/by/%s/"),$CurrentUser->username),
 			));
 
 			if ($form->value('slug')) {
@@ -52,6 +52,6 @@ $javascript->codeBlock($script, array('inline' => false));
 			?>
 		</fieldset>
 
-	<?php echo $form->end('Submit');?>
+	<?php echo $form->end(__('Submit',true));?>
 
 </div>

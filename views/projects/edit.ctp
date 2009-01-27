@@ -9,7 +9,7 @@
  		<legend><?php echo $this->pageTitle; ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('repo_type', array('disabled' => true));
+		echo $form->input('repo_type', array('disabled' => true,'label' => array('labeltext' => __('Repo Type',true))));
 		echo $form->input('name', array('disabled' => true));
 		echo $form->hidden('url');
 		echo $form->hidden('fork');
@@ -24,7 +24,7 @@
 		echo $form->input('ticket_priorities', array('type' => 'textarea'));
 		echo $form->input('ticket_statuses', array('type' => 'textarea'));
 	?>
-	<p>Comma seperated</p>
+	<p><?php __('Comma seperated') ?></p>
 
 	</fieldset>
 <?php echo $form->end('Submit');?>

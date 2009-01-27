@@ -3,7 +3,7 @@ $html->css('highlight/idea', null, null, false);
 $javascript->link('ghighlight.min', false);
 ?>
 <div class="page-navigation">
-	<?php echo $html->link('All Commits', array('controller' => 'commits', 'action' => 'index'));?>
+	<?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?>
 </div>
 
 <h2>
@@ -13,11 +13,11 @@ $javascript->link('ghighlight.min', false);
 
 <div class="commit view">
 	<p>
-		<strong>Author:</strong> <?php echo $commit['Commit']['author'];?>
+		<strong><?php  __('Author') ?>:</strong> <?php echo $commit['Commit']['author'];?>
 	</p>
 
 	<p>
-		<strong>Date:</strong> <?php echo $commit['Commit']['commit_date'];?>
+		<strong><?php __('Date') ?>:</strong> <?php echo $commit['Commit']['commit_date'];?>
 	</p>
 
 	<p class="message wiki-text">
@@ -26,7 +26,7 @@ $javascript->link('ghighlight.min', false);
 
 	<?php if(!empty($commit['Commit']['changes'])):?>
 	<p>
-		<strong>Changes:</strong>
+		<strong><?php __('Changes') ?>:</strong>
 		<ul>
 		<?php
 			foreach ($commit['Commit']['changes'] as $changed) :

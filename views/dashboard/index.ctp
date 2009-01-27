@@ -2,7 +2,7 @@
 
 <div class="page-navigation">
 	<?php
-		echo $html->link('View Account', array('controller' => 'users', 'action' => 'account')) .' | ';
+		echo $html->link(__('View Account',true), array('controller' => 'users', 'action' => 'account')) .' | ';
 
 		echo $html->link(
 			$html->image('feed-icon.png', array(

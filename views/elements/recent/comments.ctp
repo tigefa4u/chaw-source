@@ -26,7 +26,7 @@ if (!empty($comments)):
 	endforeach;
 
 	echo $html->tag('div',
-		$html->tag('h4', 'Recent Comments') .$html->tag('ul', $li),
+		$html->tag('h4', __('Recent Comments',true)) .$html->tag('ul', $li),
 		array('class' => 'panel', 'escape' => false)
 	);
 

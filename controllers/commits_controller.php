@@ -69,12 +69,12 @@ class CommitsController extends AppController {
 		))), false);
 
 		if ($this->Commit->del($id)) {
-			$this->Session->setFlash('The commit was deleted');
+			$this->Session->setFlash(__('The commit was deleted',true));
 		} else {
-			$this->Session->setFlash('The commit was NOT deleted');
+			$this->Session->setFlash(__('The commit was NOT deleted',true));
 			if ($timeline = $this->Commit->Timeline->find('id', array('Timeline.foreign_key' => $id, 'Timeline.model = \'Commit\''))) {
 				if ($this->Commit->Timeline->del($timeline)) {
-					$this->Session->setFlash('The commit was removed from timeline');
+					$this->Session->setFlash(__('The commit was removed from timeline',true));
 				}
 			}
 		}
