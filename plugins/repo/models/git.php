@@ -368,9 +368,9 @@ class Git extends Repo {
  **/
 	function read($newrev = null, $diff = false) {
 		if ($diff) {
-			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
+			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s", "-1"), 'capture');
 		} else {
-			$info = $this->run('log', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
+			$info = $this->run('log', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s", "-1"), 'capture');
 		}
 		if (empty($info)) {
 			return null;
