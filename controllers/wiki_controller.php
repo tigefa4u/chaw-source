@@ -122,7 +122,7 @@ class WikiController extends AppController {
 		if(!empty($page) && $canWrite) {
 			$this->Wiki->recursive = 0;
 			$revisions = $this->Wiki->find('superList', array(
-				'fields' => array('id', 'User.username', 'created'),
+				'fields' => array('Wiki.id', 'User.username', 'Wiki.created'),
 				'separator' => ' - ',
 				'conditions' => array(
 					'Wiki.slug' => $slug,

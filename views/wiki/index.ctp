@@ -142,7 +142,7 @@ $javascript->link('ghighlight.min', false);
 	<p class="author">
 		last revision by
 		<strong><?php echo $page['User']['username']?></strong>
-		on <?php echo date('Y-m-d', strtotime($page['User']['created']));?>
+		on <?php echo date('Y-m-d', strtotime($page['Wiki']['created']));?>
 	</p>
 </div>
 <?php endif;?>
