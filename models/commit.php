@@ -20,7 +20,7 @@ class Commit extends AppModel {
 
 	var $validate = array(
 		'project_id' => array('notEmpty'),
-		'revision' => array('notEmpty'),
+		'revision' => array('isUnique'),
 		'author' => array('notEmpty'),
 		'commit_date' => array('notEmpty'),
 		'message' =>array('notEmpty'),
@@ -84,7 +84,8 @@ class Commit extends AppModel {
 
 	function isUnique($data, $options = array()) {
 		if (!empty($data['revision'])) {
-			if ($this->find('count', array('conditons' => array('revision' => $data['revision'])))) {
+			$this->recursive = -1;
+			if ($this->find('count', array('conditions' => array('revision' => $data['revision'])))) {
 				return false;
 			}
 			return true;
