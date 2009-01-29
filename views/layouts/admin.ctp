@@ -39,7 +39,7 @@
 		echo $html->css(array('generic', 'chaw', 'chaw.admin'));
 
 		if (!empty($javascript)) {
-			echo $javascript->link('jquery-1.2.6.min');
+			echo $javascript->link('jquery-1.3.1.min');
 			echo $javascript->link('gshowdown.min');
 
 			$base = $this->webroot;

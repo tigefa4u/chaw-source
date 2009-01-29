@@ -80,6 +80,10 @@ span.highlight {
 span.numbers {
 	padding: 0 4px;
 }
+
+span.plain a, span.highlight a, span.numbers a {
+	font-size: 80%;
+}
 .coderow, .alternaterow {
 	clear: both;
 	line-height: 17px;

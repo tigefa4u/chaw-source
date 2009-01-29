@@ -1,6 +1,8 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link('ghighlight.min', false);
+$javascript->link('highlight.pack', false);
+$script = 'hljs.initHighlightingOnLoad();';
+$javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="page-navigation">
 
