@@ -32,7 +32,6 @@ class PreReceiveShell extends Shell {
 
 		$this->args[] = 'pre-receive';
  		$this->log($this->args, LOG_INFO);
-		$this->log($_SERVER, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
@@ -45,6 +44,8 @@ class PreReceiveShell extends Shell {
 			$this->err('User could not be found');
 			return 1;
 		}
+
+		$this->log($_SERVER['PHP_CHAWUSER'], LOG_INFO);
 
 		if ($_SERVER['PHP_CHAWUSER'] == 'chawbacca') {
 			return 0;

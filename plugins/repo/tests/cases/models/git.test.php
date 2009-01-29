@@ -40,11 +40,34 @@ class GitTest extends CakeTestCase {
 		unlink(TMP . 'tests/git/repo/test.git/hooks/post-receive');
 	}
 
+	function igetTests() {
+		return array('start', 'startTest', 'testRead', 'end');
+	}
+
 	function testRead() {
 		$Git = ClassRegistry::init($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$result = $Git->read();
 		$this->assertEqual($result['message'], 'Initial Project Commit');
+
+		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
+		$this->assertTrue($File->write('this is something new'));
+
+		$Git->commit('Updating git ignore');
+
+		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
+		$this->assertTrue($File->write('this is something new again'));
+
+		$Git->commit('Updating git ignore again');
+		$Git->push();
+
+		$data = $Git->read();
+		$result = $Git->find('all', array('conditions' => array($result['revision'] . '..' . $data['revision'])));
+
+		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
+		$this->assertEqual($result[1]['Repo']['message'], 'Updating git ignore');
+
+		$this->end();
 	}
 
 	function testBranch() {

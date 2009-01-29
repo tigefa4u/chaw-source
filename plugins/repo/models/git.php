@@ -344,20 +344,20 @@ class Git extends Repo {
 			unset($options['conditions']['path']);
 		}
 
-		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
+		extract(array_merge(array('conditions' => array(), 'path' => '.', 'order' => 'desc', 'limit' => 100, 'page' => 1), $options));
 
 		if (empty($path)) {
 			return false;
 		}
 
-		$data = explode("\n", $this->run('log', array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path))));
+		$data = explode("\n", $this->run('log', array_merge($conditions, array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path)))));
 
 		if ($type == 'count') {
 			return count($data);
 		}
 
 		if ($type == 'all') {
-			return parent::_findAll($data, compact('limit', 'page'));
+			return parent::_findAll($data, compact('limit', 'page', 'order'));
 		}
 	}
 /**

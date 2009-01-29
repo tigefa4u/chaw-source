@@ -45,18 +45,20 @@ class PostReceiveShell extends Shell {
 			$refname = 'refs/heads/master';
 		}
 
-		$data = $this->Project->Repo->read($newrev, false);
+		$commits = $this->Project->Repo->find('all', array(
+			'conditions' => array($oldrev . '..' . $newrev),
+			'order' => 'asc'
+		));
 
-		if (!empty($data)) {
+		if (!empty($commits)) {
 
-			$this->Commit->create(array(
-				'project_id' =>  $this->Project->id,
-				'branch' => $refname
-			));
+			foreach ($commits as $data) {
+				$this->Commit->create(array(
+					'project_id' =>  $this->Project->id,
+					'branch' => $refname
+				));
 
-			if (!$this->Commit->save($data)) {
-				$this->out($this->Commit->validationErrors, false);
-				return false;
+				$this->Commit->save($data['Repo']);
 			}
 		}
 
