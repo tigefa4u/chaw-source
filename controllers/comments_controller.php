@@ -20,14 +20,14 @@ class CommentsController extends AppController {
 
 	function delete($id = null) {
 		if (empty($this->params['isAdmin'])) {
-			$this->Session->setFlash('Authorization Failed');
+			$this->Session->setFlash(__('Authorization Failed',true));
 			$this->redirect($this->referer());
 		}
 
 		$comment = $this->Comment->find(array('Comment.id' => $id, 'Ticket.project_id' => $this->Project->id));
 
 		if (empty($comment)) {
-			$this->Session->setFlash('Invalid Comment');
+			$this->Session->setFlash(__('Invalid Comment',true));
 			$this->redirect($this->referer());
 		}
 
@@ -40,12 +40,12 @@ class CommentsController extends AppController {
 		))), false);
 
 		if ($this->Comment->del($id)) {
-			$this->Session->setFlash('The comment was deleted');
+			$this->Session->setFlash(__('The comment was deleted',true));
 		} else {
-			$this->Session->setFlash('The comment was NOT deleted');
+			$this->Session->setFlash(__('The comment was NOT deleted',true));
 			if ($timeline = $this->Comment->Timeline->find('id', array('Timeline.foreign_key' => $id, 'Timeline.model' => 'Comment'))) {
 				if ($this->Comment->Timeline->del($timeline)) {
-					$this->Session->setFlash('The comment was removed from timeline');
+					$this->Session->setFlash(__('The comment was removed from timeline',true));
 				}
 			}
 		}

@@ -25,9 +25,9 @@
 				: null;
 
 				if ($this->name == 'Timeline') {
-					echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));
+					echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));
 				} else if ($this->name == 'Commits') {
-					echo $chaw->admin('remove', array('controller' => 'commits', 'action' => 'remove', $data['Commit']['id']));
+					echo $chaw->admin(__('remove',true), array('controller' => 'commits', 'action' => 'remove', $data['Commit']['id']));
 				}
 			?>
 		</span>

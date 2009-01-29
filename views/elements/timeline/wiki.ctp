@@ -23,16 +23,16 @@
 	<span class="description">
 		<?php
 			if ($data['Wiki']['created'] != $data['Wiki']['modified']):
-				echo 'current revision modified';
+				__('current revision modified');
 			else :
-				echo 'new revision created';
+				__('new revision created');
 			endif;
 		?>
 	</span>
 
 <?php if (!empty($this->params['isAdmin'])):?>
 	<span class="admin">
-		<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
+		<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
 

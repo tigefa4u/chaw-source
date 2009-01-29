@@ -89,7 +89,7 @@ class Git extends Repo {
 			return true;
 		}
 
-		return false;
+		return true;
 	}
 /**
  * undocumented function

@@ -5,9 +5,9 @@
 	<?php
 		echo $form->input('id');
 		echo $form->hidden('username');
-		echo $form->input('username', array('disabled' => true));
-		echo $form->input('email');
-		echo $html->tag('div', $html->link('Change Password', array(
+		echo $form->input('username', array('disabled' => true,'label'=>array('labeltext'=>__('Username',true))));
+		echo $form->input('email',array('label'=>array('labeltext'=>__('Email',true))));
+		echo $html->tag('div', $html->link(__('Change Password',true), array(
 			'admin' => false, 'action' => 'change'
 		)));
 	?>
@@ -39,7 +39,7 @@
 					echo $html->tag('fieldset',
 						$legend .
 						$html->tag('div', $spans, array('class' => 'checkbox')) .
-						$form->submit('delete')
+						$form->submit(__('delete',true))
 					);
 				}
 			}
@@ -56,5 +56,5 @@
 		</fieldset>
 
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $form->end(__('Submit',true));?>
 </div>

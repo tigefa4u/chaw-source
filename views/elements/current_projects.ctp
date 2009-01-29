@@ -27,7 +27,7 @@
 		endforeach;
 
 		echo $html->tag('div',
-			$html->tag('h4', 'Projects') .$html->tag('ul', $li),
+			$html->tag('h4', __('Projects',true)) .$html->tag('ul', $li),
 			array('class' => 'panel', 'escape' => false)
 		);
 

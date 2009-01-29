@@ -21,14 +21,14 @@ class RepoController extends AppController {
 
 	function fast_forward() {
 		if ($this->Project->Repo->type != 'git') {
-			$this->Session->setFlash('You cannot fork an svn project yet');
+			$this->Session->setFlash(__('You cannot fork an svn project yet',true));
 			$this->redirect($this->referer());
 		}
 		$this->Project->Repo->logResponse = true;
 		if ($this->Project->Repo->merge($this->Project->config['url'])) {
-			$this->Session->setFlash('Fast Forward successfull!');
+			$this->Session->setFlash(__('Fast Forward successfull!',true));
 		} else {
-			$this->Session->setFlash('Fast Forward failed. Time to merge manually?');
+			$this->Session->setFlash(__('Fast Forward failed. Time to merge manually?',true));
 		}
 		$this->log($this->Project->Repo->debug, LOG_DEBUG);
 		$this->log($this->Project->Repo->response, LOG_DEBUG);
@@ -37,11 +37,11 @@ class RepoController extends AppController {
 
 	function merge($fork = null) {
 		if ($this->Project->Repo->type != 'git') {
-			$this->Session->setFlash('You cannot fork an svn project yet');
+			$this->Session->setFlash(__('You cannot fork an svn project yet',true));
 			$this->redirect($this->referer());
 		}
 		if (!$fork) {
-			$this->Session->setFlash('Invalid Fork');
+			$this->Session->setFlash(__('Invalid Fork',true));
 			$this->redirect($this->referer());
 		}
 		$this->Project->Repo->logResponse = true;
@@ -52,9 +52,9 @@ class RepoController extends AppController {
 				'branch' => 'refs/heads/master'
 			));
 			$this->Commit->save($data);
-			$this->Session->setFlash('Merge successfull!');
+			$this->Session->setFlash(__('Merge successfull!',true));
 		} else {
-			$this->Session->setFlash('Merge failed. Time to merge manually?');
+			$this->Session->setFlash(__('Merge failed. Time to merge manually?',true));
 		}
 		$this->log($this->Project->Repo->debug, LOG_DEBUG);
 		$this->log($this->Project->Repo->response, LOG_DEBUG);
@@ -63,7 +63,7 @@ class RepoController extends AppController {
 
 	function fork_it() {
 		if ($this->Project->Repo->type != 'git') {
-			$this->Session->setFlash('You cannot fork an svn project');
+			$this->Session->setFlash(__('You cannot fork an svn project',true));
 			$this->redirect($this->referer());
 		}
 
@@ -82,9 +82,9 @@ class RepoController extends AppController {
 			));
 			if ($data = $this->Project->fork()) {
 				if (empty($data['Project']['approved'])) {
-					$this->Session->setFlash('Project is awaiting approval');
+					$this->Session->setFlash(__('Project is awaiting approval',true));
 				} else {
-					$this->Session->setFlash('Project was created');
+					$this->Session->setFlash(__('Project was created',true));
 				}
 				$this->redirect(array(
 					'fork' => $data['Project']['fork'],
@@ -92,14 +92,14 @@ class RepoController extends AppController {
 				));
 			} else {
 				if (!empty($this->Project->data)) {
-					$this->Session->setFlash('You already have a fork');
+					$this->Session->setFlash(__('You already have a fork',true));
 					$this->redirect(array(
 						'fork' => $this->Project->data['Project']['fork'],
 						'controller' => 'source', 'action' => 'index',
 					));
 
 				}
-				$this->Session->setFlash('Project was NOT created');
+				$this->Session->setFlash(__('Project was NOT created',true));
 			}
 		}
 
@@ -109,7 +109,7 @@ class RepoController extends AppController {
 				'url' => $this->Project->config['url']
 			));
 			if ($hasFork) {
-				$this->Session->setFlash('You already have a fork');
+				$this->Session->setFlash(__('You already have a fork',true));
 				$this->redirect(array(
 					'fork' => $this->Auth->user('username'),
 					'controller' => 'source', 'action' => 'index',

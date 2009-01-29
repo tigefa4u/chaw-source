@@ -12,10 +12,10 @@
 	</p>
 
 	<p class="created">
-		<strong>Created:</strong> <?php echo date('Y-m-d', strtotime($version['Version']['created']));?>
+		<strong><?php __('Created') ?>:</strong> <?php echo date('Y-m-d', strtotime($version['Version']['created']));?>
 	</p>
 
 	<p class="created">
-		<strong>Due by:</strong> <?php echo $version['Version']['due_date'];?>
+		<strong><?php __('Due by') ?>:</strong> <?php echo $version['Version']['due_date'];?>
 	</p>
 </div>

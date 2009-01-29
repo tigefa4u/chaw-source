@@ -1,7 +1,7 @@
 <div class="ticket row <?php echo $zebra;?>">
 
 	<h3 class="name">
-		New Ticket:
+		<?php __('New Ticket') ?>:
 		<?php
 			$url = array('admin' => false,
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number']
@@ -25,7 +25,7 @@
 
 <?php if (!empty($this->params['isAdmin'])):?>
 	<span class="admin">
-		<?php echo $chaw->admin('remove', array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
+		<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
 	</span>
 <?php endif;?>
 

@@ -11,7 +11,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <div class="commits history">
 	<h2>
-		History /
+		<?php __('History') ?> /
 		<?php
 			$title = null;
 			if (!empty($CurrentProject->fork)) {
@@ -38,11 +38,11 @@ $javascript->codeBlock($script, array('inline' => false));
 			</h4>
 
 			<p>
-				<strong>Author:</strong> <?php echo $commit['Repo']['author'];?>
+				<strong><?php __('Author') ?>:</strong> <?php echo $commit['Repo']['author'];?>
 			</p>
 
 			<p>
-				<strong>Date:</strong> <?php echo $commit['Repo']['commit_date'];?>
+				<strong><?php __('Date') ?>:</strong> <?php echo $commit['Repo']['commit_date'];?>
 			</p>
 
 			<p class="message">
@@ -53,7 +53,7 @@ $javascript->codeBlock($script, array('inline' => false));
 				if(!empty($commit['Repo']['changes'])):
 			?>
 				<div class="changes">
-					<strong>Changes:</strong>
+					<strong><?php __('Changes') ?>:</strong>
 					<ul>
 					<?php
 						foreach ($commit['Repo']['changes'] as $changed) :

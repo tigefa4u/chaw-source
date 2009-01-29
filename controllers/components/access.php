@@ -88,7 +88,7 @@ class AccessComponent extends Object {
 
 		if ($C->Project->initialize($C->params) === false) {
 			if ($C->Session->read('Install') !== true) {
-				$C->Session->setFlash('Chaw needs to be installed');
+				$C->Session->setFlash(__('Chaw needs to be installed',true));
 				$C->redirect(array(
 					'admin' => false, 'project' => null,
 					'controller' => 'pages', 'action'=> 'start'
@@ -98,7 +98,7 @@ class AccessComponent extends Object {
 
 			if ($this->user()) {
 				if (!in_array($this->url, array('projects/add'))) {
-					$C->Session->setFlash('Chaw needs to be installed');
+					$C->Session->setFlash(__('Chaw needs to be installed',true));
 					$C->redirect(array(
 						'admin' => false, 'project' => false,
 						'controller' => 'pages', 'action'=> 'start'
@@ -113,7 +113,7 @@ class AccessComponent extends Object {
 				$login =  Router::url(array(
 					'admin' => false, 'project' => null, 'controller' => 'users', 'action'=> 'login'
 				));
-				$C->Session->setFlash("Chaw needs to be installed. Please <a href='{$login}'>Login</a> or Register");
+				$C->Session->setFlash(sprintf(__("Chaw needs to be installed. Please <a href='%s'>Login</a> or Register",true),$login));
 				$C->redirect(array(
 					'admin' => false, 'project' => null,
 					'controller' => 'users', 'action'=> 'add'
@@ -174,7 +174,7 @@ class AccessComponent extends Object {
 		if ($this->isPublic === false) {
 			$C->Auth->deny($C->action);
 			if (!$this->user()) {
-				$C->Session->setFlash('Select a Project');
+				$C->Session->setFlash(__('Select a Project',true));
 				$C->redirect(array(
 					'admin' => false, 'project' => false, 'fork' => false,
 					'controller' => 'projects', 'action' => 'index'

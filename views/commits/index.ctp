@@ -9,7 +9,7 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 ?>
 
-<h2>Commits</h2>
+<h2><?php  __('Commits') ?></h2>
 
 <div class="commits timeline index">
 <?php $i = 0;
