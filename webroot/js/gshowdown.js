@@ -911,6 +911,28 @@ var _DoCodeBlocks = function(text) {
 	*/
 
 	// attacklab: sentinel workarounds for lack of \A and \Z, safari\khtml bug
+	//text += "~0";
+
+	text = text.replace(/(\{{3,}([\s\S]*?)\}{3,})/g,
+		function(wholeMatch,m1,m2,m3) {
+			var codeblock = m2;
+
+			codeblock = _EncodeCode( _Outdent(codeblock));
+			codeblock = _Detab(codeblock);
+			codeblock = codeblock.replace(/^\n+/g,""); // trim leading newlines
+			codeblock = codeblock.replace(/\n+$/g,""); // trim trailing whitespace
+
+			codeblock = "<pre><code class='php'>" + codeblock + "\n</code></pre>";
+
+			return hashBlock(codeblock);
+		}
+	);
+
+	// attacklab: strip sentinel
+	//text = text.replace(/~0/,"");
+
+
+	// attacklab: sentinel workarounds for lack of \A and \Z, safari\khtml bug
 	text += "~0";
 
 	text = text.replace(/(?:\n\n|^)((?:(?:[ ]{4}|\t).*\n+)+)(\n*[ ]{0,3}[^ \t\n]|(?=~0))/g,
@@ -931,21 +953,6 @@ var _DoCodeBlocks = function(text) {
 
 	// attacklab: strip sentinel
 	text = text.replace(/~0/,"");
-
-	text = text.replace(/(\{{3,}([\s\S]*?)\}{3,})/g,
-		function(wholeMatch,m1,m2,m3) {
-			var codeblock = m2;
-
-			codeblock = _EncodeCode( _Outdent(codeblock));
-			codeblock = _Detab(codeblock);
-			codeblock = codeblock.replace(/^\n+/g,""); // trim leading newlines
-			codeblock = codeblock.replace(/\n+$/g,""); // trim trailing whitespace
-
-			codeblock = "<pre><code class='php'>" + codeblock + "\n</code></pre>";
-
-			return hashBlock(codeblock);
-		}
-	);
 
 	return text;
 }
