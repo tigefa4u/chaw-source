@@ -432,6 +432,9 @@ fieldset.options textarea {
 div.wiki-text pre {
 	white-space: normal;
 }
+div.wiki-text pre code {
+	white-space: pre;
+}
 div.wiki-text code {
 	white-space: normal;
 }
