@@ -67,6 +67,14 @@ class GitTest extends CakeTestCase {
 		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
 		$this->assertEqual($result[1]['Repo']['message'], 'Updating git ignore');
 
+
+		$commits = $Git->find('all', array(
+			'conditions' => array($data['revision']),
+			'limit' => 1
+		));
+
+		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
+
 		$this->end();
 	}
 

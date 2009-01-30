@@ -68,9 +68,10 @@ class Source extends Object {
  *
  **/
 	function branches() {
-		$this->Repo->logResponse = true;
 		$config = $this->Repo->config;
 		$this->Repo->branch('master', true);
+		$this->Repo->cd();
+		$this->Repo->run('pull', null);
 		$branches = $this->Repo->find('branches');
 		foreach ($branches as $branch) {
 			if ($branch == 'master') {
