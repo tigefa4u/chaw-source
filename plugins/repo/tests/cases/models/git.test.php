@@ -94,10 +94,19 @@ class GitTest extends CakeTestCase {
 	function testFork() {
 		$Git = ClassRegistry::init($this->__repos[1]);
 		$this->assertTrue($Git->create());
+
+		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
+		$this->assertTrue($File->write('this is something new'));
+		$Git->commit('Updating git ignore');
+		$Git->push();
+
 		$Git->logResponse = true;
 		$result = $Git->fork("gwoo");
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/gwoo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test/master/'));
+
+		$result = $Git->find('count', array('path' => TMP . 'tests/git/working/forks/gwoo/test/master/.gitignore'));
+		$this->assertEqual($result, 2);
 
 		//pr($Git->debug);
 		//pr($Git->response);

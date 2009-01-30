@@ -140,6 +140,7 @@ class Git extends Repo {
 			));
 			//$this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
 			$this->pull();
+			$this->merge($project);
 		}
 
 		if (is_dir($this->path) && is_dir($this->working)) {
@@ -269,7 +270,7 @@ class Git extends Repo {
  **/
 	function merge($project, $fork = false) {
 		$this->branch('master', true);
-		//$this->update('origin', 'master');
+		$this->update('origin', 'master');
 
 		$remote = 'parent';
 		if (strpos($project, '.git') === false) {
