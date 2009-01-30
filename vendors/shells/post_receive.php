@@ -44,11 +44,18 @@ class PostReceiveShell extends Shell {
 		if (!isset($refname)) {
 			$refname = 'refs/heads/master';
 		}
-
-		$commits = $this->Project->Repo->find('all', array(
-			'conditions' => array($oldrev . '..' . $newrev),
-			'order' => 'asc'
-		));
+		
+		if ($oldrev == str_pad("0", 40, "0")) {
+			$commits = $Git->find('all', array(
+				'conditions' => array($data['revision']),
+				'limit' => 1
+			));
+		} else {
+			$commits = $this->Project->Repo->find('all', array(
+				'conditions' => array($oldrev . '..' . $newrev),
+				'order' => 'asc'
+			));
+		}
 
 		if (!empty($commits)) {
 
