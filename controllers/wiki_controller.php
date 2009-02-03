@@ -34,7 +34,9 @@ class WikiController extends AppController {
 			$slug = 'home';
 		}
 
-		$this->pageTitle = 'Wiki/' . ltrim($path . '/' . $slug, '/');
+		$fullpath = str_replace('//', '/', $path . '/' . $slug);
+
+		$this->pageTitle = 'Wiki' . $fullpath;
 
 		if (!empty($this->data)) {
 
@@ -58,15 +60,6 @@ class WikiController extends AppController {
 			}
 		}
 
-		$wiki = $this->Wiki->find('all', array(
-			'conditions' => array(
-				'Wiki.path' => str_replace('//', '/', $path . '/' . $slug),
-				'Wiki.project_id' => $this->Project->id,
-				'Wiki.active' => 1
-			),
-			'order' => 'Wiki.created DESC'
-		));
-
 		if (empty($page)) {
 			$page = $this->Wiki->find(array(
 				'Wiki.slug' => $slug,
@@ -75,14 +68,37 @@ class WikiController extends AppController {
 				'Wiki.active' => 1
 			));
 		}
+		if (empty($page) || $this->RequestHandler->isRss() == true) {
+			$wiki = $this->Wiki->find('all', array(
+				'conditions' => array(
+					'Wiki.path' => $fullpath,
+					'Wiki.project_id' => $this->Project->id,
+					'Wiki.active' => 1
+				),
+				'order' => 'Wiki.created DESC'
+			));
+		}
 
 		if (empty($wiki) && empty($page)) {
 			$this->passedArgs[] = $slug;
-			$this->redirect(array_merge(array('action' => 'add'), $this->passedArgs));
+			$this->redirect(array('action' => 'add', $fullpath));
 		}
 
 		if ($this->RequestHandler->isRss() !== true) {
-			$paths = array_flip($this->Wiki->find('list', array(
+
+			if (!empty($page)) {
+				$subNav = $this->Wiki->find('all', array(
+					'fields' => array('Wiki.path', 'Wiki.slug'),
+					'conditions' => array(
+						'Wiki.path' => $fullpath,
+						'Wiki.project_id' => $this->Project->id,
+						'Wiki.active' => 1
+					),
+					'order' => 'Wiki.created DESC'
+				));
+			}
+
+			$wikiNav = array_flip($this->Wiki->find('list', array(
 				'fields' => array('Wiki.path', 'Wiki.id'),
 				'conditions' => array(
 					'Wiki.path !=' => '/',
@@ -90,9 +106,9 @@ class WikiController extends AppController {
 					'Wiki.active' => 1
 				)
 			)));
-			sort($paths);
+			sort($wikiNav);
 
-			$recents = $this->Wiki->find('all', array(
+			$recentEntries = $this->Wiki->find('all', array(
 				'fields' => array('Wiki.path', 'Wiki.slug'),
 				'conditions' => array(
 					'Wiki.project_id' => $this->Project->id,
@@ -106,7 +122,7 @@ class WikiController extends AppController {
 		if(!empty($page) && $canWrite) {
 			$this->Wiki->recursive = 0;
 			$revisions = $this->Wiki->find('superList', array(
-				'fields' => array('id', 'User.username', 'created'),
+				'fields' => array('Wiki.id', 'User.username', 'Wiki.created'),
 				'separator' => ' - ',
 				'conditions' => array(
 					'Wiki.slug' => $slug,
@@ -118,7 +134,11 @@ class WikiController extends AppController {
 			));
 		}
 
-		$this->set(compact('canWrite', 'canDelete', 'path', 'slug', 'wiki', 'page', 'paths', 'recents', 'revisions'));
+		$this->set(compact(
+			'canWrite', 'canDelete', 'path', 'slug',
+			'wiki', 'page', 'revisions',
+			'subNav', 'wikiNav', 'recentEntries'
+		));
 		$this->render('index');
 	}
 
@@ -126,12 +146,13 @@ class WikiController extends AppController {
 
 		extract($this->__params());
 
-		if ($slug == '1') {
-			$slug = null;
-			$this->pageTitle = 'Wiki/add/';
-		}
+		$fullpath = str_replace('//', '/', $path . '/' . $slug);
 
-		$this->pageTitle .= ltrim($path . '/' . $slug, '/');
+		$this->pageTitle = 'Wiki/add' . $fullpath;
+
+		if ($slug === 'new-page') {
+			$slug = null;
+		}
 
 		if (!empty($this->data)) {
 			$this->Wiki->create(array(
@@ -139,10 +160,10 @@ class WikiController extends AppController {
 				'last_changed_by' => $this->Auth->user('id'),
 			));
 			if ($data = $this->Wiki->save($this->data)) {
-				$this->Session->setFlash($data['Wiki']['slug'] . ' saved');
+				$this->Session->setFlash(sprintf(__('%s saved',true),$data['Wiki']['slug']));
 				$this->redirect(array('controller' => 'wiki', 'action' => 'index', $data['Wiki']['path'], $data['Wiki']['slug']));
 			} else {
-				$this->Session->setFlash($data['Wiki']['slug'] . ' NOT saved');
+				$this->Session->setFlash(sprintf(__('%s NOT saved',true),$data['Wiki']['slug']));
 			}
 		}
 
@@ -158,7 +179,7 @@ class WikiController extends AppController {
 			if (empty($this->data['Wiki']['active'])) {
 				$this->data['Wiki']['active'] = 1;
 			}
-			$canEdit = !empty($this->params['isAdmin']) || $this->Auth->user('id') === $this->data['Wiki']['last_changed_by'];
+			$canEdit = !empty($this->params['isAdmin']) || !empty($this->data['Wiki']['last_changed_by']) && $this->Auth->user('id') === $this->data['Wiki']['last_changed_by'];
 			if (!empty($this->data['Wiki']['read_only']) && !$canEdit) {
 				$this->redirect(array('controller' => 'wiki', 'action' => 'index', $path, $slug));
 			}

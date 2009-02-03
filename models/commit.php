@@ -84,7 +84,8 @@ class Commit extends AppModel {
 
 	function isUnique($data, $options = array()) {
 		if (!empty($data['revision'])) {
-			if ($this->find('count', array('conditons' => array('revision' => $data['revision'])))) {
+			$this->recursive = -1;
+			if ($this->find('count', array('conditions' => array('revision' => $data['revision'])))) {
 				return false;
 			}
 			return true;

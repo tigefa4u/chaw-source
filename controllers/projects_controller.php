@@ -106,20 +106,20 @@ class ProjectsController extends AppController {
 			));
 			if ($data = $this->Project->save($this->data)) {
 				if (empty($data['Project']['approved'])) {
-					$this->Session->setFlash('Project is awaiting approval');
+					$this->Session->setFlash(__('Project is awaiting approval',true));
 					$this->redirect(array(
 						'project' => $data['Project']['url'],
 						'controller' => 'projects', 'action' => 'view'
 					));
 				} else {
-					$this->Session->setFlash('Project was created');
+					$this->Session->setFlash(__('Project was created',true));
 					$this->redirect(array(
 						'project' => $data['Project']['url'],
 						'controller' => 'timeline', 'action' => 'index'
 					));
 				}
 			} else {
-				$this->Session->setFlash('Project was NOT created');
+				$this->Session->setFlash(__('Project was NOT created',true));
 			}
 		}
 
@@ -152,9 +152,9 @@ class ProjectsController extends AppController {
 		if (!empty($this->data)) {
 			$this->data['Project']['id'] = $this->Project->id;
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was updated');
+				$this->Session->setFlash(__('Project was updated',true));
 			} else {
-				$this->Session->setFlash('Project was NOT updated');
+				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
 		}
 
@@ -210,13 +210,13 @@ class ProjectsController extends AppController {
 				'approved' => 1
 			));
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was created');
+				$this->Session->setFlash(__('Project was created',true));
 				$this->redirect(array(
 					'admin' => false, 'project' => $data['Project']['url'],
 					'controller' => 'timeline', 'action' => 'index'
 				));
 			} else {
-				$this->Session->setFlash('Project was NOT created');
+				$this->Session->setFlash(__('Project was NOT created',true));
 			}
 		}
 
@@ -234,11 +234,11 @@ class ProjectsController extends AppController {
 
 	function admin_edit($id = null) {
 		if (!$id) {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->pageTitle = 'Project Admin';
+		$this->pageTitle = __('Project Admin',true);
 
 		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
@@ -248,10 +248,10 @@ class ProjectsController extends AppController {
 
 		if (!empty($this->data)) {
 			if ($data = $this->Project->save($this->data)) {
-				$this->Session->setFlash('Project was updated');
+				$this->Session->setFlash(__('Project was updated',true));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('Project was NOT updated');
+				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
 		}
 
@@ -262,60 +262,52 @@ class ProjectsController extends AppController {
 		$this->set('messages', $this->Project->messages);
 	}
 
-	function admin_approve($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('approved' => 1))) {
-				$this->Session->setFlash('The project was approved');
-			} else {
-				$this->Session->setFlash('The project was NOT approved');
-			}
-		} else {
-			$this->Session->setFlash('The project was invalid');
-		}
-		$this->redirect(array('action' => 'index'));
+	function admin_approve($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'approved', 'value' => 1, 'action' => 'approved'
+		));
 	}
 
-	function admin_reject($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('approved' => 0))) {
-				$this->Session->setFlash('The project was rejected');
-			} else {
-				$this->Session->setFlash('The project was NOT rejected');
-			}
-		} else {
-			$this->Session->setFlash('The project was invalid');
-		}
-		$this->redirect(array('action' => 'index'));
+	function admin_reject($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'approved', 'value' => 0, 'action' => 'rejected'
+		));
+
 	}
 
-	function admin_activate($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('active' => 1))) {
-				$this->Session->setFlash('The project was activated');
-			} else {
-				$this->Session->setFlash('The project was NOT activated');
-			}
-		} else {
-			$this->Session->setFlash('The project was invalid');
-		}
-		$this->redirect(array('action' => 'index'));
+	function admin_activate($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'active', 'value' => 1, 'action' => 'activated'
+		));
 	}
 
-	function admin_deactivate($id = null) {
-		if ($id) {
-			$this->Project->id = $id;
-			if ($this->Project->save(array('active' => 0))) {
-				$this->Session->setFlash('The project was deactivated');
+	function admin_deactivate($project = null) {
+		$this->_toggle($project, array(
+			'field' => 'active', 'value' => 0, 'action' => 'deactivated'
+		));
+	}
+
+	function _toggle($project, $options = array()) {
+		$options = array_merge(array('field' => null, 'value' => null, 'action' => null), $options);
+
+		$isValid = $project && !empty($options['field']) && !empty($options['action']) &&
+			$this->Project->id == 1 && !empty($this->params['isAdmin']);
+
+		if ($isValid) {
+			if ($this->Project->initialize(compact('project'))) {
+				$this->Project->set($this->Project->config);
+				if ($this->Project->save(array($options['field'] => $options['value']))) {
+					$this->Session->setFlash(sprintf(__('The project was %s',true),$options['action']));
+				} else {
+					$this->Session->setFlash(sprintf(__('The project was NOT %s',true),$options['action']));
+				}
 			} else {
-				$this->Session->setFlash('The project was NOT deactivated');
+				$this->Session->setFlash(__('The project was invalid',true));
 			}
 		} else {
-			$this->Session->setFlash('The project was invalid');
+			$this->Session->setFlash(__('The project was invalid',true));
 		}
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('project' => false, 'fork' => false, 'action' => 'index'));
 	}
 }
 ?>

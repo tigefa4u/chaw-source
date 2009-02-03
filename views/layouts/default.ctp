@@ -39,7 +39,7 @@
 		echo $html->css(array('generic', 'chaw'));
 
 		if (!empty($javascript)) {
-			echo $javascript->link('jquery-1.2.6.min');
+			echo $javascript->link('jquery-1.3.1.min');
 			echo $javascript->link('gshowdown.min');
 
 			$base = $this->webroot;
@@ -76,42 +76,42 @@
 				<ul>
 					<li><?php
 						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
-						echo $html->link('Source', array(
+						echo $html->link(__('Source',true), array(
 							'admin' => false,
 							'controller' => 'source', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
-						echo $html->link('Timeline', array(
+						echo $html->link(__('Timeline',true), array(
 							'admin' => false,
 							'controller' => 'timeline', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
-						echo $html->link('Wiki', array(
+						echo $html->link(__('Wiki',true), array(
 							'admin' => false,
 							'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
-						echo $html->link('Tickets', array(
+						echo $html->link(__('Tickets',true), array(
 							'admin' => false,
 							'controller' => 'tickets', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
-						echo $html->link('Versions', array(
+						echo $html->link(__('Versions',true), array(
 							'admin' => false,
 							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
-						echo $html->link('Projects', array(
+						echo $html->link(__('Projects',true), array(
 							'admin' => false, 'project'=> false, 'fork' => false,
 							'controller' => 'projects', 'action' => 'index'), $options);
 					?></li>
@@ -120,7 +120,7 @@
 
 						<li><?php
 							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
-							echo $html->link('Admin', array(
+							echo $html->link(__('Admin',true), array(
 								'admin' => true,
 								'controller' => 'dashboard', 'action' => 'index'), $options);
 						?></li>
@@ -150,7 +150,7 @@
 		<div id="footer">
 			<p>
 				<span>
-					<?php echo $html->link('About', '/pages/about');?>
+					<?php echo $html->link(__('About',true), '/pages/about');?>
 				</span>
 				<?php echo $html->link(
 						$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
@@ -161,6 +161,14 @@
 			</p>
 		</div>
 	</div>
-
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+	try {
+		var pageTracker = _gat._getTracker("UA-743287-5");
+		pageTracker._trackPageview();	} catch(err) {}
+</script>
 </body>
 </html>

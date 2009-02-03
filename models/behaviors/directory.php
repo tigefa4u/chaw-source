@@ -30,12 +30,15 @@ class DirectoryBehavior extends ModelBehavior {
 		if (!empty($query['conditions'][$field])) {
 			$path = $query['conditions'][$field];
 			$query['conditions']["{$field} LIKE"] = "{$path}%";
-			if ($path == '/') {
-				$path = '/%';
+			/*
+			if (array_key_exists('not', $query) && $query['not'] == false) {
+				if ($path == '/') {
+					$path = '/%';
+				}
+				$not = str_replace('//', '/', $path .'/');
+				$query['conditions']["{$field} NOT LIKE"] = "{$not}%";
 			}
-			$not = str_replace('//', '/', $path .'/');
-			$query['conditions']["{$field} NOT LIKE"] = "{$not}%";
-
+			*/
 		}
 
 		if (!empty($query['conditions']) && array_key_exists($field, $query['conditions'])) {
@@ -46,10 +49,9 @@ class DirectoryBehavior extends ModelBehavior {
 	}
 
 	function beforeSave(&$Model) {
+
 		if (!empty($Model->data[$Model->alias]['path'])) {
-			if ($Model->data[$Model->alias]['path'][0] !== '/') {
-				$Model->data[$Model->alias]['path'] = '/' . $Model->data[$Model->alias]['path'];
-			}
+			$Model->data[$Model->alias]['path'] = str_replace('//', '/', '/' . $Model->data[$Model->alias]['path']);
 		} else {
 			$Model->data[$Model->alias]['path'] = '/';
 		}

@@ -1,21 +1,24 @@
 <?php
 $html->css('highlight/idea', null, null, false);
-$javascript->link('ghighlight.min', false);
+$javascript->link('highlight.pack', false);
+$script = 'hljs.initHighlightingOnLoad();';
+$javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="page-navigation">
 
 	<?php if (!empty($canWrite)):?>
+
 		<?php if (!empty($page['Wiki']['active'])):?>
-			<span class="active">Active</span>
+			<span class="active"><?php __('Active') ?></span>
 		<?php else: ?>
-			<span class="inactive">Not Active</span>
+			<span class="inactive"><?php __('Not Active') ?></span>
 		<?php endif;?>
 
 		<?php if ((empty($content['Wiki']['read_only']) || $CurrentUser->id == $page['Wiki']['last_changed_by'])):?>
 			|
-			<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
+			<?php echo $html->link(__('Edit',true), array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
 			|
-			<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $path, $slug, 1));?>
+			<?php echo $html->link(__('New',true), array('controller' => 'wiki', 'action' => 'add', $path, $slug, 'new-page'));?>
 		<?php endif;?>
 
 	<?php endif;?>
@@ -27,43 +30,47 @@ $javascript->link('ghighlight.min', false);
 
 <div class="clear"><!----></div>
 
-<?php if (!empty($page) || !empty($paths)):?>
 <div class="wiki-navigation">
-	<?php if(!empty($wiki) && !empty($page)):
-		$data = h($page['Wiki']['content']);
-	?>
-		<div class="description">
-			<?php if (strpos($data, '##') === false):?>
-				<h2><?php echo Inflector::humanize($slug);?></h2>
-			<?php endif;?>
 
-			<div class="wiki-text">
-				<?php echo $data;?>
-			</div>
-		</div>
-	<?php endif;?>
-
-	<?php if (!empty($paths)):?>
+	<?php if (!empty($subNav)):?>
 		<?php
 			$nav = null;
-			foreach ($paths as $category):
-				$nav .= $html->tag('li',
-					$html->link(ltrim($category, '/'), array($category))
-				);
+			foreach ($subNav as $subpage):
+					$title = ltrim($subpage['Wiki']['path'] . '/' . $subpage['Wiki']['slug'], '/');
+					$nav .= $html->tag('li',
+						$html->link($title, array($subpage['Wiki']['path'], $subpage['Wiki']['slug']))
+					);
 			endforeach;
 			if (!empty($nav)) {
 				echo $html->tag('div',
-					'<h3>Wiki Nav</h3>' .
+					'<h3>Sub Nav</h3>' .
 					$html->tag('ul', $nav), array('class' => 'paths')
 				);
 			}
 		?>
 	<?php endif;?>
 
-	<?php if (!empty($recents)):?>
+	<?php if (!empty($wikiNav)):?>
 		<?php
 			$nav = null;
-			foreach ($recents as $recent):
+			foreach ($wikiNav as $category):
+				$nav .= $html->tag('li',
+					$html->link(ltrim($category, '/'), array($category))
+				);
+			endforeach;
+			if (!empty($nav)) {
+				echo $html->tag('div',
+					'<h3>'.__('Wiki Nav',true).'</h3>' .
+					$html->tag('ul', $nav), array('class' => 'paths')
+				);
+			}
+		?>
+	<?php endif;?>
+
+	<?php if (!empty($recentEntries)):?>
+		<?php
+			$nav = null;
+			foreach ($recentEntries as $recent):
 					$title = ltrim($recent['Wiki']['path'] . '/' . $recent['Wiki']['slug'], '/');
 					$nav .= $html->tag('li',
 						$html->link($title, array($recent['Wiki']['path'], $recent['Wiki']['slug']))
@@ -71,41 +78,37 @@ $javascript->link('ghighlight.min', false);
 			endforeach;
 			if (!empty($nav)) {
 				echo $html->tag('div',
-					'<h3>Recent Entries</h3>' .
+					'<h3>'.__('Recent Entries',true).'</h3>' .
 					$html->tag('ul', $nav), array('class' => 'paths')
 				);
 			}
 		?>
 	<?php endif;?>
 
-		<div class="revisions">
-
-		<?php
-		if (!empty($revisions)):
-			echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
-			echo $form->input('revision', array('value' => $page['Wiki']['id']));
-
-			$buttons = $form->submit('view', array('div' => false, 'name' => 'view'))
-				. $form->submit('activate', array('div' => false, 'name' => 'activate'));
-			$buttons .= (!empty($canDelete)) ? $form->submit('delete', array('div' => false, 'name' => 'delete')) : null;
-			echo $html->tag('div', $buttons, array('class' => 'submit'));
-
-			echo $form->end();
-		endif;
-		?>
-		</div>
-
 </div>
+
+<?php if (!empty($page)): ?>
+	<div class="wiki-content">
+		<div class="wiki-text">
+			<?php echo h($page['Wiki']['content']);?>
+		</div>
+	</div>
+
 <?php endif; ?>
 
-<div class="wiki-content">
-	<?php if(!empty($wiki)):?>
+<?php if (empty($page) && !empty($wiki)): ?>
+	<div class="wiki-content">
 
 		<?php foreach($wiki as $content):
 			$data = h($text->truncate($content['Wiki']['content'], 420, '...', false, true));
 		?>
 			<?php if (strpos($data, '##') === false):?>
-				<h3><?php echo $html->link(Inflector::humanize($content['Wiki']['slug']), array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?></h3>
+				<h3><?php
+					echo $html->link(Inflector::humanize($content['Wiki']['slug']), array(
+						'controller' => 'wiki', 'action' => 'index',
+						$content['Wiki']['path'], $content['Wiki']['slug']
+					));?>
+				</h3>
 			<?php endif; ?>
 
 			<div class="wiki-text">
@@ -113,37 +116,52 @@ $javascript->link('ghighlight.min', false);
 			</div>
 
 			<div class="actions">
-				<?php echo $html->link('View', array('controller' => 'wiki', 'action' => 'index', $content['Wiki']['path'], $content['Wiki']['slug']));?>
+				<?php echo $html->link(__('View',true), array(
+						'controller' => 'wiki', 'action' => 'index',
+						$content['Wiki']['path'], $content['Wiki']['slug']));
+				?>
 				<?php if (!empty($canWrite) && (empty($content['Wiki']['read_only']) || $CurrentUser->id == $content['Wiki']['last_changed_by'])):?>
 					|
-					<?php echo $html->link('Edit', array('controller' => 'wiki', 'action' => 'edit', $content['Wiki']['path'], $content['Wiki']['slug']));?>
+					<?php echo $html->link(__('Edit',true), array(
+							'controller' => 'wiki', 'action' => 'edit',
+							$content['Wiki']['path'], $content['Wiki']['slug']));
+					?>
 					|
-					<?php echo $html->link('New', array('controller' => 'wiki', 'action' => 'add', $content['Wiki']['path'], $content['Wiki']['slug'], 1));?>
+					<?php echo $html->link(__('New',true), array(
+							'controller' => 'wiki', 'action' => 'add',
+							$content['Wiki']['path'], $content['Wiki']['slug'], 'new-page'));
+					?>
 				<?php endif; ?>
 			</div>
 
 		<?php endforeach; ?>
 
-	<?php elseif(!empty($page)):
-		$data = h($page['Wiki']['content']);
-	?>
-		<?php if (strpos($data, '##') === false):?>
-			<h2><?php echo Inflector::humanize($slug);?></h2>
-		<?php endif;?>
-
-		<div class="wiki-text">
-			<?php echo $data;?>
-		</div>
-
-	<?php endif; ?>
-</div>
+	</div>
+<?php endif; ?>
 
 <?php if (empty($revisions) && !empty($page)):?>
 <div class="wiki-footer">
 	<p class="author">
 		last revision by
 		<strong><?php echo $page['User']['username']?></strong>
-		on <?php echo date('Y-m-d', strtotime($page['User']['created']));?>
+		on <?php echo date('Y-m-d', strtotime($page['Wiki']['created']));?>
 	</p>
+</div>
+<?php endif;?>
+
+<?php if (!empty($revisions) && !empty($page)):?>
+<div class="wiki-footer revisions">
+	<?php
+		echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
+		echo $form->input('revision', array('value' => $page['Wiki']['id']));
+		$buttons =
+			$form->submit(__('view',true), array('div' => false, 'name' => 'view'))
+			. $form->submit(__('activate',true), array('div' => false, 'name' => 'activate'));
+		if (!empty($canDelete)) {
+			$buttons .= $form->submit(__('delete',true), array('div' => false, 'name' => 'delete'));
+		}
+		echo $html->tag('div', $buttons, array('class' => 'submit'));
+		echo $form->end();
+	?>
 </div>
 <?php endif;?>

@@ -76,7 +76,7 @@ class GitShellShell extends Shell {
 
 			$this->Project->permit($this->params['user']);
 		}
-
+		$this->Project->Repo->chawuser = $this->params['user'];
 		$result = $this->Project->Repo->execute($command, array($this->Project->Repo->path), 'pass');
 		return $result;
 

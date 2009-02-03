@@ -7,7 +7,7 @@ class SourceTestCase extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit',
+		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch',
 		'app.comment'
 	);
 
@@ -57,6 +57,9 @@ class SourceTestCase extends CakeTestCase {
 			'working' => TMP . 'tests/svn/working/test',
 			'chmod' => 0777
 		));
+
+
+		//die();
 	}
 
 	function end() {
@@ -96,6 +99,32 @@ class SourceTestCase extends CakeTestCase {
 	}
 	function testRebuild() {
 
+	}
+
+	function testBranches() {		
+		$this->Git->branch('master', true);
+		$this->Git->cd();
+		$this->Git->run('checkout', array('-b', 'newbranch'));
+		$this->Git->push('origin', 'newbranch');
+		
+		$this->Git->branch = null;
+		$result = $this->Source->initialize($this->Git, array('newbranch'));
+		$this->assertEqual($result, array(
+			array('branches'),
+			'',
+			'newbranch'
+		));
+		
+		$Delete = new Folder($this->Git->working);
+		$Delete->delete();
+		$this->assertFalse(file_exists($this->Git->working));
+		
+		$this->Source->branches();
+		$this->assertTrue(file_exists($this->Git->working));
+		
+		pr($this->Source->Repo->debug);
+		pr($this->Source->Repo->response);
+		
 	}
 
 	function testRead() {

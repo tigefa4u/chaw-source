@@ -17,14 +17,16 @@ if (!empty($comments)):
 			)), array('class' => 'project'));
 		}
 
+
 		$li .= $html->tag('li', "on "
-			. $html->link($comment['Ticket']['title'], $url) . " by {$comment['User']['username']}" . $project
+			. $html->link($comment['Ticket']['title'], $url) . " <small>({$comment['Ticket']['status']})</small> "
+			. "by {$comment['User']['username']}" . $project
 		);
 
 	endforeach;
 
 	echo $html->tag('div',
-		$html->tag('h4', 'Recent Comments') .$html->tag('ul', $li),
+		$html->tag('h4', __('Recent Comments',true)) .$html->tag('ul', $li),
 		array('class' => 'panel', 'escape' => false)
 	);
 

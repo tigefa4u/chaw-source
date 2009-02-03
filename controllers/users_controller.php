@@ -92,14 +92,14 @@ class UsersController extends AppController {
 					'last_login' => date('Y-m-d H:i:s'),
 					'tmp_pass' => null,
 				));
-				$this->Session->setFlash('You may now change your password');
+				$this->Session->setFlash(__('You may now change your password',true));
 				$this->redirect(array('action' => 'change'));
 			}
 		}
 
 		if (!empty($this->data['User']['username'])) {
 			$this->Session->del('Message.auth');
-			$this->Session->setFlash('Did you forget your password?');
+			$this->Session->setFlash(__('Did you forget your password?',true));
 			$this->redirect(array('action' => 'forgotten'), 401);
 		}
 	}
@@ -116,10 +116,10 @@ class UsersController extends AppController {
 		if (!empty($this->data)) {
 			$this->User->create();
 			if ($data = $this->User->save($this->data)) {
-				$this->Session->setFlash(sprintf('%1$s is now registered', $data['User']['username']));
+				$this->Session->setFlash(sprintf(__('%1$s is now registered',true), $data['User']['username']));
 				$this->redirect(array('action' => 'login'));
 			} else {
-				$this->Session->setFlash('User NOT added');
+				$this->Session->setFlash(__('User NOT added',true));
 			}
 
 			$this->data['User']['password'] = $this->data['User']['confirm_password'];
@@ -158,9 +158,9 @@ class UsersController extends AppController {
 
 		if ($isGet === false) {
 			if ($data = $this->User->save($this->data)) {
-				$this->Session->setFlash('User updated');
+				$this->Session->setFlash(__('User updated',true));
 			} else {
-				$this->Session->setFlash('User NOT updated');
+				$this->Session->setFlash(__('User NOT updated',true));
 			}
 			unset($this->data['SshKey']);
 		}
@@ -190,10 +190,10 @@ class UsersController extends AppController {
 		if (!empty($this->data['User']['username'])) {
 			if ($id = $this->User->field('id', array('username' => $this->data['User']['username']))) {
 				if ($this->Project->permit($id, $this->data['User']['group'])) {
-					$this->Session->setFlash($this->data['User']['username'] . ' added');
+					$this->Session->setFlash(sprintf(__('%s added',true)),$this->data['User']['username']);
 				}
 			} else {
-				$this->Session->setFlash($this->data['User']['username'] .' was not found');
+				$this->Session->setFlash(sprintf(__('%s was not found',true),$this->data['User']['username']));
 			}
 		}
 
@@ -240,20 +240,20 @@ class UsersController extends AppController {
 
 				$this->Email->lineLength = 120;
 				if ($this->Email->send($content)) {
-					$this->Session->setFlash('Check your email.');
+					$this->Session->setFlash(__('Check your email.',true));
 				} else {
-					$this->Session->setFlash('Email was not sent');
+					$this->Session->setFlash(__('Email was not sent',true));
 				}
 			} else {
-				$this->Session->setFlash('User could not be found');
+				$this->Session->setFlash(__('User could not be found',true));
 			}
 			$this->redirect($this->referer());
 		} else {
 			if ($data = $this->User->activate($token)) {
 				$this->Session->write('Auth.User.active', $data['User']['active']);
-				$this->Session->setFlash('Your Account was activated');
+				$this->Session->setFlash(__('Your Account was activated',true));
 			} else {
-				$this->Session->setFlash('Your Account could not be activated');
+				$this->Session->setFlash(__('Your Account could not be activated',true));
 			}
 		}
 
@@ -280,7 +280,7 @@ class UsersController extends AppController {
 
 				$this->Email->lineLength = 120;
 				if ($this->Email->send($content)) {
-					$this->Session->setFlash('Check your email to verify your request');
+					$this->Session->setFlash(__('Check your email to verify your request',true));
 				}
 			}
 		}
@@ -304,7 +304,7 @@ class UsersController extends AppController {
 
 				$this->Email->lineLength = 120;
 				if ($this->Email->send($content)) {
-					$this->Session->setFlash('Check your email for your new password.');
+					$this->Session->setFlash(__('Check your email for your new password.',true));
 				}
 			}
 		}
@@ -316,10 +316,10 @@ class UsersController extends AppController {
 			$this->User->id = $this->Auth->user('id');
 			$this->data['User']['password'] = $this->Auth->password($this->data['User']['password']);
 			if ($this->User->save($this->data, false, array('password'))) {
-				$this->Session->setFlash('Your password was changed');
+				$this->Session->setFlash(__('Your password was changed',true));
 				$this->redirect(array('action' => 'account'));
 			} else {
-				$this->Session->setFlash('Your password was NOT changed');
+				$this->Session->setFlash(__('Your password was NOT changed',true));
 			}
 		}
 	}
@@ -329,9 +329,9 @@ class UsersController extends AppController {
 			$this->User->id = $id;
 			if ($this->User->save(array('active' => 0), false, array('active'))) {
 				$this->User->Permission->deleteAll(array('Permission.user_id' => $id));
-				$this->Session->setFlash('User was removed');
+				$this->Session->setFlash(__('User was removed',true));
 			} else {
-				$this->Session->setFlash('User was NOT changed');
+				$this->Session->setFlash(__('User was NOT changed',true));
 			}
 		}
 		$this->redirect($this->referer());

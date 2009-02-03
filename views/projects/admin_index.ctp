@@ -76,7 +76,7 @@ foreach ($projects as $project):
 					'approve', 'reject',
 					'url' => array(
 						'admin' => true, 'project' => false, 'fork' => false,
-						'controller' => 'projects',	$project['Project']['id']
+						'controller' => 'projects',	$project['Project']['url']
 					)
 				)); ?>
 		</td>
@@ -86,7 +86,7 @@ foreach ($projects as $project):
 					'activate', 'deactivate',
 					'url' => array(
 						'admin' => true, 'project' => false, 'fork' => false,
-						'controller' => 'projects',	$project['Project']['id']
+						'controller' => 'projects',	$project['Project']['url']
 					)
 				)); ?>
 		</td>

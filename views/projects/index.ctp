@@ -1,9 +1,9 @@
 <?php
 	if (empty($projects)) {
 		if ($this->action == 'forks') {
-			echo $html->tag('h2', 'There are no forks');
+			echo $html->tag('h2', __('There are no forks',true));
 		} else {
-			echo $html->tag('h2', 'Sorry, no projects are available');
+			echo $html->tag('h2', __('Sorry, no projects are available',true));
 		}
 		return;
 	}
@@ -11,24 +11,24 @@
 <?php if ($this->action != 'forks'):?>
 
 	<h2>
-		Projects
+		<?php __('Projects') ?>
 	</h2>
 
 	<div class="page-navigation">
 		<?php
 			if (!empty($CurrentUser->Permission)) {
-				echo $chaw->type(array('title' => 'Mine', 'type' => null)) . ' | ';
+				echo $chaw->type(array('title' => __('Mine',true), 'type' => null)) . ' | ';
 			}
 
-			echo $chaw->type('all', array(
+			echo $chaw->type(array('title' => __('All',true),'type' =>'all'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
-			echo $chaw->type('public', array(
+			echo $chaw->type(array('title' => __('Public',true),'type' =>'public'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
-			echo $chaw->type('forks', array(
+			echo $chaw->type(array('title' => __('Fork',true),'type' =>'fork'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
@@ -37,7 +37,7 @@
 					'width' => 14, 'height' => 14
 				)),
 				$rssFeed, array(
-				'title' => 'Projects Feed', 'class' => 'rss', 'escape'=> false
+				'title' => __('Projects Feed',true), 'class' => 'rss', 'escape'=> false
 			));?>
 	</div>
 <?php endif;?>
@@ -46,7 +46,7 @@
 
 	<?php if ($this->action == 'forks'):?>
 		<h2>
-			Forks
+			<?php __('Forks') ?>
 		</h2>
 		<?php echo $this->element('project_details'); ?>
 	<?php endif;?>
@@ -90,34 +90,34 @@
 					));
 					echo ' | ';
 					*/
-					echo $html->link('timeline', array(
+					echo $html->link(__('timeline',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'timeline', 'action' => 'index'
 					));
 					echo ' | ';
-					echo $html->link('wiki', array(
+					echo $html->link(__('wiki',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'wiki', 'action' => 'index'
 					));
 					echo ' | ';
-					echo $html->link('tickets', array(
+					echo $html->link(__('tickets',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
 					));
 
 					if (!empty($this->params['isAdmin'])):
 						echo ' | ';
-						echo $html->link('view', array(
+						echo $html->link(__('view',true), array(
 							'admin' => false, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'projects', 'action' => 'view',
 						));
 						echo ' | ';
-						echo $html->link('edit', array(
+						echo $html->link(__('edit',true), array(
 							'admin' => true, 'project' => false, 'fork'=> $fork,
 							'controller' => 'projects', 'action' => 'edit', $project['Project']['id']
 						));
 						echo ' | ';
-						echo $html->link('admin', array(
+						echo $html->link(__('admin',true), array(
 							'admin' => true, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'dashboard'
 						));

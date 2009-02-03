@@ -89,7 +89,7 @@ class Git extends Repo {
 			return true;
 		}
 
-		return false;
+		return true;
 	}
 /**
  * undocumented function
@@ -140,6 +140,7 @@ class Git extends Repo {
 			));
 			//$this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
 			$this->pull();
+			$this->merge($project);
 		}
 
 		if (is_dir($this->path) && is_dir($this->working)) {
@@ -218,9 +219,8 @@ class Git extends Repo {
 		}
 
 		$this->cd();
-		$this->before(array(
-			$this->run('add', array($path), true)
-		));
+		$this->run('add', array($path));
+		$this->cd();
 		return $this->run('commit', $options);
 	}
 /**
@@ -270,7 +270,7 @@ class Git extends Repo {
  **/
 	function merge($project, $fork = false) {
 		$this->branch('master', true);
-		//$this->update('origin', 'master');
+		$this->update('origin', 'master');
 
 		$remote = 'parent';
 		if (strpos($project, '.git') === false) {
@@ -294,7 +294,6 @@ class Git extends Repo {
 
 		$this->commit("Merge from {$project}");
 		$this->push('origin', 'master');
-		$this->execute("env - {$this->path}/hooks/post-receive refs/heads/master");
 		return true;
 	}
 /**
@@ -346,20 +345,20 @@ class Git extends Repo {
 			unset($options['conditions']['path']);
 		}
 
-		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
+		extract(array_merge(array('conditions' => array(), 'path' => '.', 'order' => 'desc', 'limit' => 100, 'page' => 1), $options));
 
 		if (empty($path)) {
 			return false;
 		}
 
-		$data = explode("\n", $this->run('log', array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path))));
+		$data = explode("\n", $this->run('log', array_merge($conditions, array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path)))));
 
 		if ($type == 'count') {
 			return count($data);
 		}
 
 		if ($type == 'all') {
-			return parent::_findAll($data, compact('limit', 'page'));
+			return parent::_findAll($data, compact('limit', 'page', 'order'));
 		}
 	}
 /**
@@ -370,9 +369,9 @@ class Git extends Repo {
  **/
 	function read($newrev = null, $diff = false) {
 		if ($diff) {
-			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
+			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s", "-1"), 'capture');
 		} else {
-			$info = $this->run('log', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s"), 'capture');
+			$info = $this->run('log', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s", "-1"), 'capture');
 		}
 		if (empty($info)) {
 			return null;

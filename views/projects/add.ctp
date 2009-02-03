@@ -7,9 +7,9 @@
  		<legend><?php __('Project Setup') ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('repo_type');
+		echo $form->input('repo_type',array('label' => array('labeltext' => __('Repo Type',true))));
 		echo $form->input('name', array(
-			'error' => array('unique' => 'The project name must be unique.')
+			'error' => array('unique' => __('The project name must be unique.',true))
 		));
 		echo $form->input('description');
 
@@ -23,14 +23,14 @@
 	?>
 	</fieldset>
 	<fieldset class="options">
- 		<legend>Options</legend>
+ 		<legend><?php  __('Options') ?></legend>
 	<?php
-		echo $form->input('groups', array('type' => 'textarea'));
-		echo $form->input('ticket_types', array('type' => 'textarea'));
-		echo $form->input('ticket_priorities', array('type' => 'textarea'));
-		echo $form->input('ticket_statuses', array('type' => 'textarea'));
+		echo $form->input('groups', array('type' => 'textarea','label' => array('labeltext' => __('Groups',true))));
+		echo $form->input('ticket_types', array('type' => 'textarea','label' => array('labeltext' => __('Ticket Types',true))));
+		echo $form->input('ticket_priorities', array('type' => 'textarea','label' => array('labeltext' => __('Ticket Priorities',true))));
+		echo $form->input('ticket_statuses', array('type' => 'textarea','label' => array('labeltext' => __('Ticket Statuses',true))));
 	?>
-	<p>Comma seperated</p>
+	<p><?php echo __('Comma seperated') ?></p>
 
 	</fieldset>
 <?php echo $form->end('Submit');?>

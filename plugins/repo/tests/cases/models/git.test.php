@@ -40,11 +40,42 @@ class GitTest extends CakeTestCase {
 		unlink(TMP . 'tests/git/repo/test.git/hooks/post-receive');
 	}
 
+	function igetTests() {
+		return array('start', 'startTest', 'testRead', 'end');
+	}
+
 	function testRead() {
 		$Git = ClassRegistry::init($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$result = $Git->read();
 		$this->assertEqual($result['message'], 'Initial Project Commit');
+
+		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
+		$this->assertTrue($File->write('this is something new'));
+
+		$Git->commit('Updating git ignore');
+
+		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
+		$this->assertTrue($File->write('this is something new again'));
+
+		$Git->commit('Updating git ignore again');
+		$Git->push();
+
+		$data = $Git->read();
+		$result = $Git->find('all', array('conditions' => array($result['revision'] . '..' . $data['revision'])));
+
+		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
+		$this->assertEqual($result[1]['Repo']['message'], 'Updating git ignore');
+
+
+		$commits = $Git->find('all', array(
+			'conditions' => array($data['revision']),
+			'limit' => 1
+		));
+
+		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
+
+		$this->end();
 	}
 
 	function testBranch() {
@@ -63,10 +94,19 @@ class GitTest extends CakeTestCase {
 	function testFork() {
 		$Git = ClassRegistry::init($this->__repos[1]);
 		$this->assertTrue($Git->create());
+
+		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
+		$this->assertTrue($File->write('this is something new'));
+		$Git->commit('Updating git ignore');
+		$Git->push();
+
 		$Git->logResponse = true;
 		$result = $Git->fork("gwoo");
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/gwoo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test/master/'));
+
+		$result = $Git->find('count', array('path' => TMP . 'tests/git/working/forks/gwoo/test/master/.gitignore'));
+		$this->assertEqual($result, 2);
 
 		//pr($Git->debug);
 		//pr($Git->response);

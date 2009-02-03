@@ -178,6 +178,7 @@ input[type=hidden] {
 	color: #222;
 }
 #authMessage {
+	margin-top: -10px;
 	margin-left: -20px;
 }
 
@@ -350,14 +351,25 @@ div.help h4 {
 .row span.subtitle {
 	float: right;
 	padding: 0;
-	margin: -20px 120px 4px 0;
+	margin: -24px 60px 4px 0;
 	color: #656565;
+	width: 110px;
+	font-size: 120%;
 }
 .row .description {
+	clear: both;
 	display: block;
 	float: left;
-	width: 70%;
+	width: 50%;
 	line-height: 120%;
+}
+.row .author {
+	width: 20%;
+	text-align: right;
+}
+.row .date {
+	width: 160px;
+	text-align: left;
 }
 .row .footer {
 	margin-top: 4px;
@@ -416,6 +428,15 @@ fieldset.options textarea {
 	padding: 4px;
 	color: #300;
 	font-weight: normal;
+}
+div.wiki-text pre {
+	white-space: normal;
+}
+div.wiki-text pre code {
+	white-space: pre;
+}
+div.wiki-text code {
+	white-space: normal;
 }
 .wiki form div.wiki-text {
 	padding: 0 0.5em;
@@ -482,16 +503,10 @@ fieldset.options textarea {
 .wiki-content {
 	margin-right: 4%;
 	width: 56%;
+	margin-bottom: 40px;
 }
 .wiki-content .actions {
 	font-size: 100%;
-}
-.wiki-footer {
-	clear: both;
-}
-.wiki-footer .author, .wiki-footer .date {
-	font-size: 80%;
-	margin-top: 0px;
 }
 .wiki-navigation {
 	float: right;
@@ -529,26 +544,42 @@ fieldset.options textarea {
 .wiki-navigation .paths li a {
 	color: #656565;
 }
-.wiki-navigation .revisions {
-	margin-top: 30px;
+.wiki-footer {
+	clear: both;
+	width: 56%;
+	border-top: 0px solid #ccc;
 }
-.wiki-navigation .revisions form {
-	float: left;
-}
-.wiki-navigation .revisions form div label {
-	font-weight: normal;
-	font-size: 120%;
-	color: #333;
-}
-.wiki-navigation .revisions form div input,
-.wiki-navigation .revisions form div select {
+.wiki-footer .author, .wiki-footer .date {
 	font-size: 80%;
+	margin-top: 0px;
 }
-.wiki-navigation .revisions form div {
+.revisions form {
+	clear: both;
+}
+.revisions form div {
+	clear: none;
+	float: left;
 	padding: 0;
 	margin: 6px 0;
 }
-.wiki-navigation .revisions form div.submit input {
+.revisions form div label {
+	font-weight: normal;
+	font-size: 100%;
+	color: #333;
+	line-height: 120%;
+	height: 120%;
+}
+.revisions form div input,
+.revisions form div select {
+	font-size: 80%;
+}
+
+.revisions form div.submit {
+	padding: 2px;
+	margin-top: 1.5em;
+	margin-left: 6px;
+}
+.revisions form div.submit input {
 	margin-right: 6px;
 }
 .timeline {
@@ -590,6 +621,16 @@ fieldset.options textarea {
 }
 .timeline .ticket h3 {
 	color: #990;
+}
+.timeline .commit .subtitle a {
+	font-weight: normal;
+}
+.timeline .comment .subtitle, .timeline .ticket .subtitle {
+	font-weight: normal;
+	color: #990;
+}
+.timeline .ticket .message {
+	font-size: 60%;
 }
 .timeline .wiki h3 {
 	color: #996;
@@ -734,6 +775,7 @@ div.comments {
 .source .message, .source .date {
 	font-size: 80%;
 	padding-top: 6px;
+	margin: 0.5em 0;
 	vertical-align: middle;
 }
 
@@ -742,6 +784,7 @@ div.comments {
 	color: #333;
 	text-decoration: none;
 	padding-left: 24px;
+	margin-left: 0px;
 }
 .source a.folder:hover {
 	color: #000;
@@ -752,6 +795,7 @@ div.comments {
 	color: #999;
 	text-decoration: none;
 	padding-left: 24px;
+	margin-left: 0px;
 }
 .source a.file:hover {
 	color: #bbb;
