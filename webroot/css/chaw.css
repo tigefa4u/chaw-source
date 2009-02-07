@@ -104,7 +104,7 @@ table.smooth th a {
 table.smooth td {
 	border: 0;
 	vertical-align: middle;
-	padding: 8px 4px;
+	padding: 8px 10px;
 	border-bottom: 1px solid #ccc;
 }
 table.smooth tr.altrow td {

@@ -1,15 +1,19 @@
 <h2>
-	<?php __(Inflector::humanize($current)) ?>
+	<?php __(
+		Inflector::humanize($current) .
+		(!empty($this->params['named']['user']) ? "'s" : '')
+	) ?>
 	<?php __('Tickets') ?>
 </h2>
 <?php
 	$links = array();
+
 	if (!empty($CurrentUser->username)) {
-		$links[] = $html->link(__('Mine',true), array('user' => $CurrentUser->username));
+		$links[] = $html->link(__('mine', true), array('user' => $CurrentUser->username));
 	}
 
 	foreach ($statuses as $status) {
-		$links[] = $html->link(__($status,true), array('status' => $status));
+		$links[] = $html->link(__($status, true), array('status' => $status));
 	}
 	echo join(' | ', $links);
 ?>
@@ -28,11 +32,13 @@ echo $paginator->counter(array(
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('#', 'number');?></th>
-	<th><?php echo $paginator->sort(__('Version',true),'version_id');?></th>
-	<th><?php echo $paginator->sort(__('Type',true),'type');?></th>
-	<th><?php echo $paginator->sort(__('Priority',true),'priority');?></th>
+	<th><?php echo $paginator->sort(__('Version',true), 'version_id');?></th>
+	<th><?php echo $paginator->sort(__('Type',true), 'type');?></th>
+	<th><?php echo $paginator->sort(__('Priority',true), 'priority');?></th>
+	<th><?php echo $paginator->sort(__('Reporter',true), 'reporter');?></th>
+	<th><?php echo $paginator->sort(__('Owner',true), 'owner');?></th>
 	<?php if(empty($this->passedArgs['status'])): ?>
-	<th><?php echo $paginator->sort(__('Status',true),'status');?></th>
+		<th><?php echo $paginator->sort(__('Status',true),'status');?></th>
 	<?php endif; ?>
 	<th class="left"><?php echo $paginator->sort(__('Title',true),'title');?></th>
 </tr>
@@ -45,25 +51,24 @@ foreach ($tickets as $ticket):
 	}
 ?>
 	<tr<?php echo $class;?>>
-		<td>
-			<?php echo $ticket['Ticket']['number']; ?>
+		<td><?php echo $ticket['Ticket']['number']; ?></td>
+
+		<td><?php
+			if (!empty($ticket['Version']['title'])):
+				echo $html->link(
+					$ticket['Version']['title'],
+					array('controller' => 'versions', 'action' => 'view', $ticket['Version']['id'])
+				);
+			endif; ?>
 		</td>
 
-		<td>
-			<?php if (!empty($ticket['Version']['title'])):?>
+		<td><?php echo $ticket['Ticket']['type']; ?></td>
 
-				<?php echo $html->link($ticket['Version']['title'], array('controller'=> 'versions', 'action'=>'view', $ticket['Version']['id'])); ?>
+		<td><?php echo $ticket['Ticket']['priority']; ?></td>
 
-			<?php endif;?>
-		</td>
+		<td><?php echo $ticket['Reporter']['username']; ?></td>
 
-		<td>
-			<?php echo $ticket['Ticket']['type']; ?>
-		</td>
-
-		<td>
-			<?php echo $ticket['Ticket']['priority']; ?>
-		</td>
+		<td><?php echo $ticket['Owner']['username']; ?></td>
 
 		<?php if(empty($this->passedArgs['status'])): ?>
 			<td>
@@ -72,16 +77,20 @@ foreach ($tickets as $ticket):
 		<?php endif; ?>
 
 		<td class="title left">
-			<?php echo $html->link($ticket['Ticket']['title'], array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])); ?>
+			<?php echo $html->link(
+				$ticket['Ticket']['title'],
+				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
+			); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 </table>
 </div>
+
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php echo $paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled'));?>
+	| <?php echo $paginator->numbers();?>
+	<?php echo $paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 
-<?php echo $html->link(__('New Ticket',true), array('controller' => 'tickets', 'action'=>'add')); ?>
+<?php echo $html->link(__('New Ticket', true), array('controller' => 'tickets', 'action' => 'add')); ?>
