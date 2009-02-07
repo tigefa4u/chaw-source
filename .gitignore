@@ -1,2 +1,7 @@
 content/*
 tmp/*
+config/core.php
+config/database.php
+webroot/index.php
+webroot/test.php
+
