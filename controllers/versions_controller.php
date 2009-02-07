@@ -65,7 +65,6 @@ class VersionsController extends AppController {
 	}
 
 	function admin_edit($id = null) {
-		$canWrite = $this->Access->check($this, array('access' => 'w', 'default' => false));
 		if (empty($this->params['isAdmin'])) {
 			$this->Session->setFlash(__('Invalid Action.', true));
 			$this->redirect(array('admin' => false, 'action'=>'index'));
