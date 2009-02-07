@@ -80,7 +80,7 @@ class VersionsController extends AppController {
 		if (!empty($this->data)) {
 			if ($this->Version->save($this->data)) {
 				$this->Session->setFlash(__('The Version has been saved', true));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('admin' => false, 'action'=>'index'));
 			} else {
 				$this->Session->setFlash(__('The Version could not be saved. Please, try again.', true));
 			}
