@@ -5,40 +5,46 @@
 	) ?>
 	<?php __('Tickets') ?>
 </h2>
-<?php
-	$links = array();
 
-	if (!empty($CurrentUser->username)) {
-		$links[] = $html->link(__('mine', true), array('user' => $CurrentUser->username));
-	}
-
-	foreach ($statuses as $status) {
-		$links[] = $html->link(__($status, true), array('status' => $status));
-	}
-	echo join(' | ', $links);
-?>
-<div class="tickets index">
-<p>
+<div class="queues">
 <?php
 
+$links = array();
 $paginator->options(array('url' => $this->passedArgs));
 
-if ($this->params['paging']['Ticket']['page'] > 0) {
-echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-));
+if (!empty($CurrentUser->username)) {
+	$links[] = $html->link(__('mine', true), array('user' => $CurrentUser->username));
 }
-?></p>
+
+foreach ($statuses as $status) {
+	$links[] = $html->link(__($status, true), array('status' => $status));
+}
+echo join(' | ', $links);
+
+?>
+</div>
+<?php
+
+if ($this->params['paging']['Ticket']['page'] > 0) {
+	echo '<div class="paging">';
+	echo $paginator->counter(array(
+		'format' => __('(page {:page} of {:pages}, showing {:current} of {:count} tickets)', true)
+	));
+	echo '</div>';
+}
+
+?>
+<div class="tickets index">
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
-	<th><?php echo $paginator->sort('#', 'number');?></th>
-	<th><?php echo $paginator->sort(__('Version',true), 'version_id');?></th>
-	<th><?php echo $paginator->sort(__('Type',true), 'type');?></th>
-	<th><?php echo $paginator->sort(__('Priority',true), 'priority');?></th>
-	<th><?php echo $paginator->sort(__('Reporter',true), 'reporter');?></th>
-	<th><?php echo $paginator->sort(__('Owner',true), 'owner');?></th>
+	<th><?php echo $paginator->sort('#', 'number'); ?></th>
+	<th><?php echo $paginator->sort(__('Version', true), 'version_id'); ?></th>
+	<th><?php echo $paginator->sort(__('Type', true), 'type'); ?></th>
+	<th><?php echo $paginator->sort(__('Priority', true), 'priority'); ?></th>
+	<th><?php echo $paginator->sort(__('Reporter', true), 'reporter'); ?></th>
+	<th><?php echo $paginator->sort(__('Owner', true), 'owner'); ?></th>
 	<?php if(empty($this->passedArgs['status'])): ?>
-		<th><?php echo $paginator->sort(__('Status',true),'status');?></th>
+		<th><?php echo $paginator->sort(__('Status', true),'status');?></th>
 	<?php endif; ?>
 	<th class="left"><?php echo $paginator->sort(__('Title',true),'title');?></th>
 </tr>

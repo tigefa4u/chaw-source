@@ -26,14 +26,13 @@ class TicketsController extends AppController {
 		Router::connectNamed(array('status', 'page', 'user'));
 
 		$statuses = array_values($this->Project->ticket('statuses'));
-
 		$current = $statuses[0];
+
 		if (!empty($this->passedArgs['status'])) {
 			$current = $this->passedArgs['status'];
 		}
-				
+
 		$conditions = array('Ticket.project_id' => $this->Project->id);
-		
 		$conditions['Ticket.status'] = $current;
 
 		if (!empty($this->passedArgs['user'])) {
@@ -90,16 +89,23 @@ class TicketsController extends AppController {
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
 	}
 
+	/**
+	 * Creates a new ticket
+	 *
+	 * @todo Automatically move the ticket status to 'approved' if the user has ticket
+	 *       permissions on the project.  This should probably be implemented in the Ticket model.
+	 * @return void
+	 */
 	function add() {
 		if (!empty($this->data)) {
-			$this->Ticket->create(array(
+			$init = array(
 				'reporter' => $this->Auth->user('id'),
-				'project_id' => $this->Project->id,
-				'status' => 'open'
-			));
+				'project_id' => $this->Project->id
+			);
+			$this->Ticket->create($this->data);
 
-			if ($this->Ticket->save($this->data)) {
-				$this->Session->setFlash(__('Ticket saved',true));
+			if ($this->Ticket->save($init)) {
+				$this->Session->setFlash(__('Ticket saved', true));
 				$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 			}
 		}
@@ -107,6 +113,7 @@ class TicketsController extends AppController {
 		$versions = $this->Ticket->Version->find('list', array(
 			'conditions' => array('Version.project_id' => $this->Project->id
 		)));
+
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
 		$owners = $this->Project->users();

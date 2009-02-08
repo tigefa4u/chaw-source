@@ -22,9 +22,22 @@ class Ticket extends AppModel {
 		'Containable',
 		'List' => array('position_column' => 'number', 'scope' => 'project_id'),
 		'StateMachine' => array(
-			'state' => 'status', 'default' => 'pending',
-			'states' => array('pending', 'open', 'on hold', 'closed'),
-			'events' => array('open', 'close', 'promote', 'demote')
+			'field' => 'status',
+			'default' => 'pending',
+			'states' => array('pending', 'approved', 'in progress', 'on hold', 'closed'),
+			'auto' => 'after',
+			'transitions' => array(
+				'approve' => array('pending' => 'approved'),
+				'accept' => array('pending' => 'in progress', 'approved' => 'in progress'),
+				'hold' => array(
+					'pending' => 'on hold', 'approved' => 'on hold', 'in progress' => 'on hold'
+				),
+				'close' => array(
+					'pending' => 'closed', 'approved' => 'closed', 'in progress' => 'closed',
+					'on hold' => 'closed'
+				),
+				'reopen' => array('closed' => 'pending', 'on hold' => 'pending')
+			)
 		)
 	);
 
@@ -34,14 +47,14 @@ class Ticket extends AppModel {
 		'Owner' => array('className' => 'User', 'foreignKey' => 'Owner'),
 		'Reporter' => array('className' => 'User', 'foreignKey' => 'reporter'),
 	);
-/*
-	var $hasOne = array(
-		'Timeline' => array(
-			'foreignKey' => 'foreign_key',
-			'conditions' => array('Timeline.model = \'Ticket\'')
-		)
-	);
-*/
+
+	// var $hasOne = array(
+	// 	'Timeline' => array(
+	// 		'foreignKey' => 'foreign_key',
+	// 		'conditions' => array('Timeline.model = \'Ticket\'')
+	// 	)
+	// );
+
 	var $hasMany = array('Comment' => array(
 		'foreignKey' => 'foreign_key', 'conditions' => array('Comment.model = "Ticket"')
 	));
@@ -55,9 +68,7 @@ class Ticket extends AppModel {
 	);
 
 	function transitions($event) {
-		switch ($event) {
-			
-		}
+		return true;
 	}
 
 	function beforeValidate() {
