@@ -42,6 +42,10 @@ h3 {
 	font-weight: normal;
 	font-size: 160%;
 }
+h3 em {
+	font-size: 70%;
+	font-style: normal;
+}
 
 h4 {
 	color: #3b3b3b;
@@ -824,6 +828,16 @@ div.comments {
 .history .changes li {
 	font-size: 80%;
 }
+.version {
+	width: 56%;
+	padding-bottom: 1em;
+	margin-bottom: 3em;
+}
+.versions .version h3 {
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid #ccc;
+}
+
 .versions div.help {
 	float: left;
 	clear: none;
@@ -1009,3 +1023,23 @@ a.project {
   font-size: 300%;
   color: #fff;
 }
+
+.newrow {
+
+}
+
+.newrow .badge {
+	background:#241;
+	color:#fff;
+	font-size:0.655em;
+	line-height:2em;
+	margin-right:0.5em;
+	padding:0.4em;
+	text-transform:uppercase;
+	white-space:nowrap
+}
+
+.newrow .date {
+	float: none;
+}
+

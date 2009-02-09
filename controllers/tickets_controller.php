@@ -31,16 +31,20 @@ class TicketsController extends AppController {
 		if (!empty($this->passedArgs['status'])) {
 			$current = $this->passedArgs['status'];
 		}
-				
-		$conditions = array('Ticket.project_id' => $this->Project->id);
-		
-		$conditions['Ticket.status'] = $current;
+
+		$conditions = array(
+			'Ticket.project_id' => $this->Project->id,
+			'Ticket.status' => $current
+		);
+
+		$this->pageTitle = 'Tickets/Status/';
 
 		if (!empty($this->passedArgs['user'])) {
 			$current = $this->passedArgs['user'];
 			$conditions['Owner.username'] = $this->passedArgs['user'];
+			$this->pageTitle = 'Tickets/User/';
 		}
-		
+
 		/*
 		if (!empty($this->Project->config['fork'])) {
 			$conditions = array('OR' => array(
@@ -49,9 +53,10 @@ class TicketsController extends AppController {
 			));
 		}
 		*/
-		
-		$this->pageTitle = 'Tickets/Status/' . Inflector::humanize($current);
-		
+
+		$this->pageTitle .= Inflector::humanize($current);
+
+
 		$tickets = $this->paginate('Ticket', $conditions);
 		$this->set(compact('current', 'statuses', 'tickets'));
 
