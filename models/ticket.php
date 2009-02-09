@@ -18,15 +18,7 @@ class Ticket extends AppModel {
 
 	var $name = 'Ticket';
 
-	var $actsAs = array(
-		'Containable',
-		'List' => array('position_column' => 'number', 'scope' => 'project_id'),
-		'StateMachine' => array(
-			'state' => 'status', 'default' => 'pending',
-			'states' => array('pending', 'open', 'on hold', 'closed'),
-			'events' => array('open', 'close', 'promote', 'demote')
-		)
-	);
+	var $actsAs = array('Containable', 'List' => array('position_column' => 'number', 'scope' => 'project_id'));
 
 	var $belongsTo = array(
 		'Project',
@@ -42,9 +34,7 @@ class Ticket extends AppModel {
 		)
 	);
 */
-	var $hasMany = array('Comment' => array(
-		'foreignKey' => 'foreign_key', 'conditions' => array('Comment.model = "Ticket"')
-	));
+	var $hasMany = array('Comment');
 
 	var $hasAndBelongsToMany = array('Tag');
 
@@ -54,17 +44,9 @@ class Ticket extends AppModel {
 		'project_id' => 'numeric'
 	);
 
-	function transitions($event) {
-		switch ($event) {
-			
-		}
-	}
-
 	function beforeValidate() {
 		if (!empty($this->data['Ticket']['project'])) {
-			$this->data['Ticket']['project_id'] = $this->Project->field('id', array(
-				'url' => $this->data['Ticket']['project']
-			));
+			$this->data['Ticket']['project_id'] = $this->Project->field('id', array('url' => $this->data['Ticket']['project']));
 		}
 		return true;
 	}
@@ -136,6 +118,7 @@ class Ticket extends AppModel {
 				return $this->Comment->save();
 			}
 		}
+
 		return true;
 	}
 

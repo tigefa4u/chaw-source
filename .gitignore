@@ -1,2 +1,6 @@
+config/*
 content/*
 tmp/*
+webroot/js/*
+plugins/diff
+webroot/css/images
