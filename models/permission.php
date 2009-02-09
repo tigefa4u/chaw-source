@@ -184,7 +184,7 @@ class Permission extends AppModel {
 						if (strpos($check, $perm) !== false) {
 							return true;//return compact('check', 'perm', 'user', 'group');
 						}
-						if ($perm == 'c' || $perm == 'd') {
+						if ($perm == 'c' || $perm == 'u' || $perm == 'd') {
 							if (strpos($check, 'w') !== false) {
 								return true;
 							}

@@ -253,6 +253,7 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
 		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'c'))));
+		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('u'))));
 		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
 		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'))));
