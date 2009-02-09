@@ -307,7 +307,8 @@ class Git extends Repo {
 		if ($type == 'branches') {
 			$this->cd();
 			$result = $this->run('remote show origin', null, 'capture');
-			return str_replace("/", ":", array_values(array_filter(explode(" ", array_pop($result)))));
+			$Inflector = Inflector::getInstance();
+			return array_map(array($Inflector, 'slug'), array_values(array_filter(explode(" ", array_pop($result)))));
 		}
 
 		if (is_array($type)) {

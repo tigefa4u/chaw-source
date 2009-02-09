@@ -123,7 +123,7 @@ class SourceTestCase extends CakeTestCase {
 		$this->assertFalse(file_exists($this->Git->working));
 
 		$result = $this->Source->branches();
-		$this->assertEqual($result, array('master', 'newbranch', 'with:slashes'));
+		$this->assertEqual($result, array('master', 'newbranch', 'with_slashes'));
 		$this->assertTrue(file_exists($this->Git->working));
 
 
