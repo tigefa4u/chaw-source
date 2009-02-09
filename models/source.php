@@ -39,10 +39,13 @@ class Source extends Object {
 		$path = join(DS, $args);
 
 		if ($this->Repo->type == 'git') {
-			if (!empty($args) && !$this->Repo->branch) {
-				$branch = array_shift($args);
-				$path = join(DS, $args);
-				$this->Repo->branch($branch, true);
+			if (!empty($args)) {
+				$branch = $args[0];
+				if (!$this->Repo->branch || $this->Repo->branch !== $branch)  {
+					$branch = array_shift($args);
+					$path = join(DS, $args);
+					$this->Repo->branch($branch, true);
+				}
 			}
 
 			if ($this->Repo->branch) {
@@ -81,7 +84,7 @@ class Source extends Object {
 			$this->Repo->update('origin', $branch);
 		}
 		$this->Repo->config($config);
-		return true;
+		return $branches;
 	}
 /**
  * undocumented function

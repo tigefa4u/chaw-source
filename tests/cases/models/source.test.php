@@ -101,30 +101,35 @@ class SourceTestCase extends CakeTestCase {
 
 	}
 
-	function testBranches() {		
+	function testBranches() {
 		$this->Git->branch('master', true);
 		$this->Git->cd();
 		$this->Git->run('checkout', array('-b', 'newbranch'));
 		$this->Git->push('origin', 'newbranch');
-		
-		$this->Git->branch = null;
+
+		$this->Git->cd();
+		$this->Git->run('checkout', array('-b', 'with/slashes'));
+		$this->Git->push('origin', 'with/slashes');
+
 		$result = $this->Source->initialize($this->Git, array('newbranch'));
 		$this->assertEqual($result, array(
 			array('branches'),
 			'',
 			'newbranch'
 		));
-		
+
 		$Delete = new Folder($this->Git->working);
 		$Delete->delete();
 		$this->assertFalse(file_exists($this->Git->working));
-		
-		$this->Source->branches();
+
+		$result = $this->Source->branches();
+		$this->assertEqual($result, array('master', 'newbranch', 'with:slashes'));
 		$this->assertTrue(file_exists($this->Git->working));
-		
-		pr($this->Source->Repo->debug);
-		pr($this->Source->Repo->response);
-		
+
+
+		//pr($this->Source->Repo->debug);
+		//pr($this->Source->Repo->response);
+
 	}
 
 	function testRead() {
