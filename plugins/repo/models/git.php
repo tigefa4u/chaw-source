@@ -172,7 +172,7 @@ class Git extends Repo {
 			$path = dirname($this->working);
 		}
 
-		$path = $path . DS . $name;
+		$path = $path . DS . str_replace("/", "_", $name);
 		if (!is_dir($path)) {
 			$base = dirname($path);
 			if (!is_dir($base)) {
@@ -307,7 +307,7 @@ class Git extends Repo {
 		if ($type == 'branches') {
 			$this->cd();
 			$result = $this->run('remote show origin', null, 'capture');
-			return str_replace("/", "_", array_values(array_filter(explode(" ", array_pop($result)))));
+			return array_values(array_filter(explode(" ", array_pop($result))));
 		}
 
 		if (is_array($type)) {
