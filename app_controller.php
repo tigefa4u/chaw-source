@@ -16,22 +16,17 @@
  */
 class AppController extends Controller {
 
-	var $components = array(
-		'Access', 'Auth', 'RequestHandler',
-		//'DebugKit.Toolbar'
-	);
+	var $components = array('Access', 'Auth', 'RequestHandler', /*'DebugKit.Toolbar'*/);
 
-	var $helpers = array(
-		'Html', 'Form', 'Javascript', 'Chaw'
-	);
+	var $helpers = array('Html', 'Form', 'Javascript', 'Chaw');
 
 	var $uses = array('Project');
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeFilter() {
 		$this->Auth->loginAction = '/users/login';
 		$this->Auth->mapActions(array(
@@ -43,12 +38,12 @@ class AppController extends Controller {
 			$this->Auth->authorize = 'controller';
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function isAuthorized() {
 		if (!empty($this->params['admin']) && empty($this->params['isAdmin'])) {
 			if ($this->Access->check($this, array('access' => 'w', 'default' => false)) === true) {
@@ -63,12 +58,12 @@ class AppController extends Controller {
 		}
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeRender() {
 		if ($this->params['isAdmin'] !== true) {
 			$this->params['admin'] = false;
@@ -94,12 +89,12 @@ class AppController extends Controller {
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
 		$this->set('CurrentProject', Set::map(Configure::read('Project'), true));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function redirect($url = array(), $status = null, $exit = true) {
 		if (is_array($url)) {
 			if (!empty($this->params['project'])) {
@@ -111,14 +106,37 @@ class AppController extends Controller {
 		}
 		parent::redirect($url, $status, $exit);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function referer($default = null, $local = true) {
 		return parent::referer($default, $local);
 	}
+
+	/**
+	 * Converts the $_GET parameters specified in $params to an array suitable for use in named
+	 * parameters.  If a key is an array of values, those values will be compacted into a comma-
+	 * separated string.
+	 *
+	 * @param array $params The keys of GET parameters (from $this->params['url']) to convert.
+	 * @param array $get Optional.  If specified, replaces $this->params['url'] as the source for
+	 *              GET data.
+	 * @return array A 1-depth of all the keys in $params which are present in $this->params['url'].
+	 */
+	function _toNamedParams($params, $get = null) {
+		$named = array();
+		$get = is_null($get) ? $this->params['url'] : $get;
+
+		foreach ($params as $key) {
+			if (isset($get[$key])) {
+				$named[$key] = join(',', (array)$get[$key]);
+			}
+		}
+		return $named;
+	}
 }
+
 ?>

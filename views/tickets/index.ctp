@@ -1,3 +1,25 @@
+<?php echo $form->create(array('type' => 'get', 'action' => 'index')); ?>
+<fieldset class="mini-form">
+	<legend><?php echo __('Search'); ?></legend>
+
+	<div class="input-row">
+	<?php
+		echo $form->label('Ticket.type.rfc', __('type', true), 'title');
+		echo $form->select('Ticket.type', $types, null, array('multiple' => 'checkbox'));
+	?>
+	</div>
+
+	<div class="input-row">
+	<?php
+		echo $form->label('Ticket.priority.low', __('priority', true), 'title');
+		echo $form->select('Ticket.priority', $priorities, null, array('multiple' => 'checkbox'));
+	?>
+	</div>
+
+	<?php echo $form->submit('Update (doesn\'t work yet)'); ?>
+</fieldset>
+<?php echo $form->end(); ?>
+
 <h2>
 	<?php __(
 		Inflector::humanize($current) .
@@ -10,7 +32,8 @@
 <?php
 
 $links = array();
-$paginator->options(array('url' => $this->passedArgs));
+// $paginator->options(array('url' => $this->passedArgs));
+pr($this->passedArgs);
 
 if (!empty($CurrentUser->username)) {
 	$links[] = $html->link(__('mine', true), array('user' => $CurrentUser->username));
@@ -76,10 +99,8 @@ foreach ($tickets as $ticket):
 
 		<td><?php echo $ticket['Owner']['username']; ?></td>
 
-		<?php if(empty($this->passedArgs['status'])): ?>
-			<td>
-				<?php echo $ticket['Ticket']['status']; ?>
-			</td>
+		<?php if (empty($this->passedArgs['status'])): ?>
+			<td><?php echo $ticket['Ticket']['status']; ?></td>
 		<?php endif; ?>
 
 		<td class="title left">

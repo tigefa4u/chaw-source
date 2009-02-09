@@ -76,6 +76,61 @@ fieldset.options {
 	margin-top: 30px;
 }
 
+fieldset.mini-form {
+	padding: 10px 10px 0px 20px;
+}
+
+fieldset.mini-form legend {
+	font-size: 1em;
+	color: #806060;
+	font-weight: bold;
+	padding: 0 10px;
+}
+
+fieldset.mini-form div.input-row {
+	float: left;
+	clear: left;
+	margin: 0px;
+	padding: 0 0 8px 0;
+}
+
+fieldset.mini-form div.submit {
+	display: inline;
+	float: right;
+	clear: none;
+	margin: 0 8px 0 0;
+	padding: 0px;
+}
+
+fieldset.mini-form div.checkbox input {
+	display: inline;
+	float: left;
+	clear: none;
+}
+
+fieldset.mini-form label {
+	float: left;
+	clear: none;
+	font-size: 0.9em;
+	width: 50px;
+}
+
+fieldset.mini-form div label.title {
+	font-weight: bold;
+}
+
+fieldset.mini-form div.checkbox {
+	display: inline;
+	clear: none;
+	border: 1px solid #000000;
+	margin: 0px;
+	padding: 4px 5px 3px 5px;
+}
+
+fieldset.mini-form div.checkbox label, fieldset.mini-form div.checkbox input {
+	display: inline;
+}
+
 table {
 	clear: none;
 	float: left;
