@@ -16,10 +16,13 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  *
  */
+
+$content = '/htdocs/chaw_';
+
 Configure::write('Content', array(
-	'base' => APP . 'content' . DS,
-	'git' => APP . 'content' . DS . 'git' . DS,
-	'svn' => APP . 'content' . DS . 'svn' . DS ,
+	'base' => $content . 'content' . DS,
+	'git' => $content . 'content' . DS . 'git' . DS,
+	'svn' => $content . 'content' . DS . 'svn' . DS ,
 ));
 
 Configure::write('Project', array(

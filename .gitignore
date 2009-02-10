@@ -3,4 +3,5 @@ content/*
 tmp/*
 webroot/js/*
 plugins/diff
+plugins/debug_kit
 webroot/css/images
