@@ -132,6 +132,11 @@ class AccessComponent extends Object {
  *
  **/
 	function startup(&$C) {
+		if (!empty($_COOKIE['Chaw']) && empty($this->user) && ($C->action !== 'login' || $C->action !== 'logout')) {
+			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
+			$C->redirect('/users/login');
+		}
+
 		$this->isAllowed = in_array($C->action, $this->allowedActions);
 
 		if (!empty($C->Project->config) && $this->user('id') == $C->Project->config['user_id']) {
@@ -144,11 +149,6 @@ class AccessComponent extends Object {
 
 		if ($this->isAllowed) {
 			return true;
-		}
-
-		if (!empty($_COOKIE['Chaw']['User']) && empty($this->user)) {
-			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
-			$C->redirect('/users/login');
 		}
 
 		$this->access = 'r';
