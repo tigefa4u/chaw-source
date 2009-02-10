@@ -8,7 +8,7 @@
 	<?php
 		echo $form->input('username',array('label' => __('Username',true)));
 		echo $form->input('password',array('label' => __('Password',true)));
-		echo $form->input(__('Remember Me', true), array(
+		echo $form->input('remember_me', array(
 			'type' => 'checkbox',
 			'checked' => true,
 			'label' => __('Remember me for 2 weeks', true)
