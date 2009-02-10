@@ -41,7 +41,11 @@ class Source extends Object {
 		if ($this->Repo->type == 'git') {
 			if (!empty($args)) {
 				$branch = $args[0];
-				if (!$this->Repo->branch || $this->Repo->branch !== $branch)  {
+				if($branch == 'branches' && $this->Project->Repo->type == 'git') {
+					$this->Source->branches();
+					$this->Project->Repo->branch = null;
+				}
+				if (!$this->Repo->branch)  {
 					$branch = array_shift($args);
 					$path = join(DS, $args);
 					$this->Repo->branch($branch, true);
