@@ -37,14 +37,14 @@ class Source extends Object {
 		$this->Repo =& $Repo;
 
 		$path = join(DS, $args);
-
 		if ($this->Repo->type == 'git') {
+			if(empty($args) && !$this->Repo->branch) {
+				$this->branches();
+				$this->Repo->branch = null;
+			}
+
 			if (!empty($args)) {
 				$branch = $args[0];
-				if($branch == 'branches' && $this->Project->Repo->type == 'git') {
-					$this->Source->branches();
-					$this->Project->Repo->branch = null;
-				}
 				if (!$this->Repo->branch)  {
 					$branch = array_shift($args);
 					$path = join(DS, $args);
@@ -75,6 +75,9 @@ class Source extends Object {
  *
  **/
 	function branches() {
+		if ($this->Repo->type != 'git') {
+			return array();
+		}
 		$config = $this->Repo->config;
 		$this->Repo->branch('master', true);
 		$this->Repo->cd();
@@ -145,7 +148,6 @@ class Source extends Object {
 				}
 			}
 		}
-
 
 		list($dirs, $files) = $Folder->read(true, array('.git', '.svn'));
 
