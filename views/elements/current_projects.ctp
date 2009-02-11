@@ -22,6 +22,13 @@
 					'admin' => false, 'project' => $url, 'fork'=> $fork,
 					'controller' => 'source', 'action' => 'index',
 				))
+				. $html->tag('span',
+					$html->link('remove', array(
+						'admin' => false,
+						'controller' => 'projects', 'action' => 'remove',
+						$project['Project']['id']
+					)),
+				array('class' => 'small right'))
 			);
 
 		endforeach;

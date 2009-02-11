@@ -22,6 +22,9 @@ a {
 	font-family: helvetica,arial,sans-serif;
 	font-weight: normal;
 }
+.small {
+	font-size: 70%;
+}
 h2 a {
 	color: #804000;
 	font-family: helvetica,arial,sans-serif;

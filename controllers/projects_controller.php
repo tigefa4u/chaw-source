@@ -167,6 +167,18 @@ class ProjectsController extends AppController {
 		$this->render('edit');
 	}
 
+	function remove($id) {
+		$project = $this->Project->findById($id);
+		if (empty($project)) {
+			$this->Session->setFlash(__("Invalid Project", true));
+		} else {
+			if ($this->Project->Permission->deleteAll(array('Permission.project_id' => $id, 'Permission.user_id' => $this->Auth->user('id')))) {
+				$this->Session->setFlash(sprintf(__("%s was removed ", true), $project['Project']['name']));
+			}
+		}
+		$this->redirect($this->referer());
+	}
+
 	function admin_index() {
 		if ($this->Project->id != 1 || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
