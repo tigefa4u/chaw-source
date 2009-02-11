@@ -458,6 +458,7 @@ class Git extends Repo {
 			return null;
 		}
 		list($revision, $author, $date, $message) = explode(chr(0), $info);
+		$message = str_replace(dirname($this->path), "", $message);
 		return compact('revision', 'author', 'date', 'message');
 	}
 /**
