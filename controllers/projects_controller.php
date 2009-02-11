@@ -175,6 +175,7 @@ class ProjectsController extends AppController {
 			if ($this->Project->Permission->deleteAll(array('Permission.project_id' => $id, 'Permission.user_id' => $this->Auth->user('id')))) {
 				$this->Session->setFlash(sprintf(__("%s was removed ", true), $project['Project']['name']));
 			}
+			$this->Session->write('Auth.User.Permission', $this->Project->User->groups($this->Auth->user('id')));
 		}
 		$this->redirect($this->referer());
 	}
