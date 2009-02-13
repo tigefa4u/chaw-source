@@ -453,12 +453,20 @@ class Project extends AppModel {
  * @return void
  *
  **/
-	function users($type = 'list') {
-
+	function users($conditions = array()) {
+		$scope = array('Permission.project_id' => $this->id, 'User.username !=' => null);
+		if (!empty($conditions)) {
+			$scope = array_merge($scope, (array)$conditions);
+		}
 		$users = $this->Permission->find('all', array(
 			'fields' => array('User.id', 'User.username'),
-			'conditions' => array('Permission.project_id' => $this->id, 'User.username !=' => null)
+			'conditions' => $scope
 		));
+
+		if (empty($users)) {
+			return array();
+		}
+
 		return array_filter(Set::combine($users, '/User/id', '/User/username'));
 	}
 /**

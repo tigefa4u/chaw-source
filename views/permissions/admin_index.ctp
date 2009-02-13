@@ -29,7 +29,7 @@
 		<p class="rule">
 			[wiki]<br/>
 			* = <?php echo $example; ?>
-		</pre>
+		</p>
 		<p>
 			<?php __('use groups from') ?> 
 			<?php echo $chaw->admin('settings', array(
@@ -43,16 +43,16 @@
 		<p class="rule">
 			[tickets]<br/>
 			@<?php echo $groups['user'];?> = <?php echo $example; ?>
-		</pre>
+		</p>
 		<p><?php __('create groups') ?></p>
 		<p class="rule">
 			[groups]<br/>
 			some-group-name = user1, user2
-		</pre>
+		</p>
 		<p>`some-group-name` can `<?php echo $example; ?>` tickets</p>
 		<p class="rule">
 			[tickets]<br/>
 			@some-group-name = <?php echo $example; ?>
-		</pre>
+		</p>
 	</div>
 </div>

@@ -400,17 +400,17 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertEqual($results, array('2', '3'));
 
 	}
-	
-	function NotGetTests() {
+
+	function getTests() {
 		return array('start', 'startTest', 'testProjectUsers', 'endTest', 'end');
 	}
-	
+
 	function testProjectUsers() {
 		$this->Project->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.org'));
 		$this->assertTrue($this->Project->User->save());
 		$this->Project->User->create(array('username' => 'bob', 'email' => 'bob@test.org'));
 		$this->assertTrue($this->Project->User->save(array('username' => 'bob', 'email' => 'bob@test.org')));
-		
+
 		$data = array('Project' =>array(
 			'id' => 1,
 			'name' => 'test project',
@@ -450,10 +450,15 @@ class ProjectTestCase extends CakeTestCase {
 			)
 		));
 		$this->assertTrue($this->Project->save());
-		
-		$results = $this->Project->users(1);
+
+		$results = $this->Project->users();
 		$this->assertEqual($results, array('1'=> 'gwoo', '2' => 'bob'));
-		
+
+		$results = $this->Project->users(array('Permission.group' => 'user'));
+		$this->assertEqual($results, array());
+
+		$results = $this->Project->users(array('Permission.group' => array('admin', 'developer')));
+		$this->assertEqual($results, array('1'=> 'gwoo', '2' => 'bob'));
 	}
 
 	function __cleanUp() {

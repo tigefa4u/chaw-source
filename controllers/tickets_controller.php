@@ -88,7 +88,7 @@ class TicketsController extends AppController {
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
-		$owners = $this->Project->users();
+		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
 
 		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities', 'owners'));
 
@@ -114,7 +114,7 @@ class TicketsController extends AppController {
 		)));
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
-		$owners = $this->Project->users();
+		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
 
 		$this->set(compact('versions', 'types', 'priorities', 'owners'));
 	}
