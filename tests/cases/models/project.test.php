@@ -16,7 +16,8 @@ class ProjectTestCase extends CakeTestCase {
 			'svn' => TMP . 'tests' . DS . 'svn' . DS ,
 		));
 		Configure::write('Project', array(
-			'id' => 0
+			'id' => 0,
+			'remote' => 'git@git.chaw'
 		));
 		$this->Project = ClassRegistry::init('Project');
 	}
@@ -157,8 +158,6 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 		$this->assertTrue(file_exists($this->Project->Repo->path));
-
-
 	}
 
 	function testProjectFork() {
@@ -189,7 +188,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'hooks' . DS . 'post-receive'));
 
 		$result = file_get_contents($path . 'permissions.ini');
-		$expected = "[admin]\ngwoo = crud\n\n[refs/heads/master]\ngwoo = rw";
+		$expected = "[admin]\n@admin = crud\n\n[refs/heads/master]\n@admin = rw";
 		$this->assertEqual($result, $expected);
 
 		$results = $this->Project->Permission->find('all', array('conditions' => array('Permission.project_id' => 1)));
@@ -261,6 +260,8 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue($this->Project->save($data));
 
 		$this->Project->id = 1;
+		$this->Project->initialize(array('project' => 'original_project'));
+		$this->Project->set($this->Project->config);
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
 
@@ -284,6 +285,8 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue($this->Project->save($data));
 
 		$this->Project->id = 2;
+		$this->Project->initialize(array('project' => 'another_project'));
+		$this->Project->set($this->Project->config);
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
 	}
@@ -401,10 +404,6 @@ class ProjectTestCase extends CakeTestCase {
 
 	}
 
-	function getTests() {
-		return array('start', 'startTest', 'testProjectUsers', 'endTest', 'end');
-	}
-
 	function testProjectUsers() {
 		$this->Project->User->create(array('username' => 'gwoo', 'email' => 'gwoo@test.org'));
 		$this->assertTrue($this->Project->User->save());
@@ -459,6 +458,39 @@ class ProjectTestCase extends CakeTestCase {
 
 		$results = $this->Project->users(array('Permission.group' => array('admin', 'developer')));
 		$this->assertEqual($results, array('1'=> 'gwoo', '2' => 'bob'));
+	}
+
+	function testApprovedProjectPermissionsCreate() {
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'groups' => 'user, docs team, developer, admin',
+			'ticket_types' => 'rfc, bug, enhancement',
+			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+			'ticket_priorities' => 'low, normal, high',
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 0,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+		$path = Configure::read('Content.base');
+		$this->assertFalse(file_exists($path . 'permissions.ini'));
+
+		$project = 'new_project';
+		$this->Project->initialize(compact('project'));
+		$this->assertTrue($this->Project->set($this->Project->config));
+		$this->assertTrue($this->Project->save(array('approved' => 1)));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+	}
+
+	function igetTests() {
+		return array('start', 'startTest', 'testApprovedProjectPermissionsCreate', 'endTest', 'end');
 	}
 
 	function __cleanUp() {
