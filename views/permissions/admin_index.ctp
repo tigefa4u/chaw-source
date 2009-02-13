@@ -7,14 +7,23 @@
 			echo $form->input('fine_grained', array('type' => 'textarea'));
 		?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+
+<?php
+	echo '<div class="submit">';
+	echo '<input type="submit" value="'.__('Submit',true).'">';
+	echo '<input type="submit" value="'.__('Reload Defaults',true).'" name="default">';
+	echo '</div>';
+
+echo $form->end();
+
+?>
 	<div class="help">
 		<h4><?php __('Guide'); ?></h4>
 		<p><?php __('access rights') ?></p>
 		<p class="rule">
 			r - <?php __('read') ?><br/>
 			w - <?php __('write (c, u, d)') ?><br/>
-			<?php  
+			<?php
 				$example = 'rw';
 				if($CurrentProject->repo->type != 'svn'): $example = 'cr';
 			?>
@@ -31,7 +40,7 @@
 			* = <?php echo $example; ?>
 		</p>
 		<p>
-			<?php __('use groups from') ?> 
+			<?php __('use groups from') ?>
 			<?php echo $chaw->admin('settings', array(
 				'admin' => false, 'controller' => 'projects', 'action' => 'edit'
 			))?>

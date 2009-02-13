@@ -25,6 +25,9 @@ class PermissionsController extends AppController {
 
 		if (!empty($this->data)) {
 			$this->data['Permission']['username'] = $this->Auth->user('username');
+			if (!empty($this->params['form']['default'])) {
+				$this->data = array('username' => '@admin');
+			}
 			if ($this->Permission->saveFile($this->data)) {
 				$this->Session->setFlash(__('Permissions updated',true));
 			} else {
