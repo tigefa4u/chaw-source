@@ -2,7 +2,6 @@
 
 	<p class="metadata">
 		<span class="type ticket">
-			<?php //echo (isset($label)) ? $label . ': ' : null;?>
 			<?php echo $data['Ticket']['type'];?>
 		</span>
 		<span class="date">

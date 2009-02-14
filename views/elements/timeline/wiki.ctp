@@ -1,9 +1,11 @@
 <li class="event <?php echo $zebra?>">
 
 	<p class="metadata">
-		<span class="type wiki">
-			<?php echo (isset($label)) ? $label . ': ' : null;?>
-		</span>
+		<?php
+			if (!empty($label)) {
+				echo "<span class=\"type wiki\">{$label}</span>";
+			}
+		?>
 		<span class="date">
 			<?php
 				echo date("H:i", strtotime($data['Wiki']['created']));
