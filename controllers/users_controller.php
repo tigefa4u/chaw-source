@@ -204,6 +204,7 @@ class UsersController extends AppController {
 
 		$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
 		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
+		$this->paginate['order'] = 'Permission.group DESC';
 
 		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
 			$this->paginate['conditions'] = array();

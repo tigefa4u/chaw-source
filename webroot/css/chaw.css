@@ -312,7 +312,6 @@ div.actions {
 div.help h4 {
 	font-size: 120%;
 }
-
 .index {
 	overflow: visible;
 }
@@ -938,6 +937,14 @@ div.comments {
 /* Users */
 .users form {
 	width: 60%;
+}
+.index form {
+	width: auto;
+}
+.index form .submit {
+	clear: none;
+	float: left;
+	margin-left: 12px;
 }
 .login form {
 	width: 420px;
