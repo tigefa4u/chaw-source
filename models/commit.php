@@ -64,7 +64,6 @@ class Commit extends AppModel {
 				'project_id' => $this->data['Commit']['project_id'],
 				'model' => 'Commit',
 				'foreign_key' => $this->id,
-				'created' => $this->data['Commit']['commit_date']
 			));
 
 			$Timeline->create($timeline);

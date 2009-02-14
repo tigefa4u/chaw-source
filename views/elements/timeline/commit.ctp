@@ -8,7 +8,7 @@
 		?>
 		<span class="date">
 			<?php
-				echo date("H:i", strtotime($data['Commit']['commit_date']));
+				echo date("H:i", strtotime($data['Commit']['created']));
 			?>
 		</span>
 	<p>
