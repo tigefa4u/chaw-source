@@ -644,7 +644,7 @@ div.wiki-text code {
 .timeline li.event {
 	clear: both;
 	margin: 4px 0;
-	overflow: auto;
+	overflow: hidden;
 }
 .timeline .event p.metadata {
 	float: left;
