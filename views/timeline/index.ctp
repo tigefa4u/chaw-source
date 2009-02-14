@@ -45,16 +45,29 @@ $javascript->codeBlock($script, array('inline' => false));
 		echo $chaw->rss('Timeline Feed', $rssFeed);
 	?>
 </div>
+
 <div class="timeline index">
-	<?php $i = 0;
+	<ul>
+	<?php $i = 0; $prevDate = null;
 		foreach ((array)$timeline as $event):
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
+
+			$currentDate = date('l F d', strtotime($event[$type]['created']));
+			if ($currentDate !== $prevDate)  {
+				if ($i > 1 ) {
+					echo "</ul></li>";
+				}
+				echo "<li><p class=\"the-date\">{$currentDate}</p>";
+				echo "<ul>";
+			}
 			if (!empty($event[$type])) {
 				echo $this->element('timeline/' . strtolower($type), array('label' => ucwords($type), 'data' => $event, 'zebra' => $zebra));
 			}
+			$prevDate = $currentDate;
 		endforeach;
 	?>
+	</ul>
 </div>
 <div class="paging">
 	<?php

@@ -1,45 +1,58 @@
-<div class="comment row <?php echo $zebra;?>">
+<li class="event <?php echo $zebra?>">
 
-	<h3 class="name">
-		<?php
-			__('Change to:');
-						
-			$url = array('admin' => false,
-				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
-				'#' => 'c' . $data['Comment']['id']
-			);
+	<p class="metadata">
+		<span class="type comment">
+			<?php echo $data['Ticket']['type'];?>
+		</span>
+		<span class="date">
+			<?php
+				echo date("H:i", strtotime($data['Comment']['created']));
+			?>
+		</span>
+	<p>
 
-			$project = null;
-			if (!empty($data['Ticket']['Project']) && $data['Ticket']['Project']['id'] !== $CurrentProject->id) {
-				$url = $chaw->url($data['Ticket']['Project'], $url);
-				$project = ' in '. $html->link($data['Ticket']['Project']['name'], $chaw->url($data['Ticket']['Project'], array(
-					'admin' => false, 'controller' => 'source'
-				)), array('class' => 'project'));
-			}
+	<div class="body">
+		<!--
+			<img width="16" height="16" src="http://www.gravatar.com/avatar.php?gravatar_id=5a973346f5546f3a840e1fcec0e9e4f1&size=16" alt="avatar"/>
+		-->
 
-			echo ' ' . $html->link($data['Ticket']['title'], $url) . " <small>({$data['Ticket']['status']})</small>" . $project;?>
-	</h3>
+		<p class="action">
+			<span class="username">
+				<?php echo $data['User']['username'];?>
+			</span>
+			<strong>
+				<?php
+					__('modified');
+				?>
+			</strong>
+			<?php
+				$url = array('admin' => false,
+					'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
+					'#' => 'c' . $data['Comment']['id']
+				);
 
-	<span class="description">
-		<?php echo $text->truncate($data['Comment']['body'], 80, '...', false, true); ?>
-	</span>
+				$project = null;
+				if (!empty($data['Ticket']['Project']) && $data['Ticket']['Project']['id'] !== $CurrentProject->id) {
+					$url = $chaw->url($data['Ticket']['Project'], $url);
+					$project = ' in '. $html->link($data['Ticket']['Project']['name'], $chaw->url($data['Ticket']['Project'], array(
+						'admin' => false, 'controller' => 'source'
+					)), array('class' => 'project'));
+				}
 
-<?php if (!empty($this->params['isAdmin'])):?>
-	<span class="admin">
-		<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
-	</span>
-<?php endif;?>
-	
-	<span class="subtitle">
-		<?php echo $data['Ticket']['type'];?>
-	</span>
-	
-	<span class="date">
-		<?php echo $time->nice($data['Comment']['created']);?>
-	</span>
+				echo ' ' . $html->link($data['Ticket']['title'], $url);
+				echo " ({$data['Ticket']['status']})" .  $project;
+			?>
+		</p>
 
-	<span class="author">
-		<?php echo $data['User']['username']; ?>
-	</span>
+		<p class="description">
+			<?php echo $text->truncate($data['Comment']['body'], 80, '...', false, true); ?>
+		</p>
+	</div>
 
-</div>
+	<?php if (!empty($this->params['isAdmin'])):?>
+		<span class="admin">
+			<?php echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));?>
+		</span>
+	<?php endif;?>
+
+</li>
