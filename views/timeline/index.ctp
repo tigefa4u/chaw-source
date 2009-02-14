@@ -52,21 +52,16 @@ $javascript->codeBlock($script, array('inline' => false));
 		foreach ((array)$timeline as $event):
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
-			$date = $event[$type]['created'];
-			/*
-			if ($type == 'Commit') {
-				$date = $event[$type]['commit_date'];
-			}
-			*/
-			$currentDate = date('l F d', strtotime($date));
-			if ($currentDate !== $prevDate)  {
-				if ($i > 1 ) {
-					echo "</ul></li>";
-				}
-				echo "<li><p class=\"the-date\">{$currentDate}</p>";
-				echo "<ul>";
-			}
 			if (!empty($event[$type])) {
+				$date = $event[$type]['created'];
+				$currentDate = date('l F d', strtotime($date));
+				if ($currentDate !== $prevDate)  {
+					if ($i > 1 ) {
+						echo "</ul></li>";
+					}
+					echo "<li><p class=\"the-date\">{$currentDate}</p>";
+					echo "<ul>";
+				}
 				echo $this->element('timeline/' . strtolower($type), array('label' => ucwords($type), 'data' => $event, 'zebra' => $zebra));
 			}
 			$prevDate = $currentDate;
