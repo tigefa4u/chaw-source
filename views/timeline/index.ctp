@@ -53,9 +53,11 @@ $javascript->codeBlock($script, array('inline' => false));
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
 			$date = $event[$type]['created'];
+			/*
 			if ($type == 'Commit') {
 				$date = $event[$type]['commit_date'];
 			}
+			*/
 			$currentDate = date('l F d', strtotime($date));
 			if ($currentDate !== $prevDate)  {
 				if ($i > 1 ) {
