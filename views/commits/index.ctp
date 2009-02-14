@@ -16,7 +16,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php $i = 0; $prevDate = null;
 			foreach ((array)$commits as $commit):
 				$zebra = ($i++ % 2) == 0 ? 'zebra' : null;
-				$currentDate = date('l F d', strtotime($commit['Commit']['created']));
+				$currentDate = date('l F d', strtotime($commit['Commit']['commit_date']));
 				if ($currentDate !== $prevDate)  {
 					if ($i > 1 ) {
 						echo "</ul></li>";
