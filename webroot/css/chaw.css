@@ -608,6 +608,9 @@ div.wiki-text code {
 	list-style-type: none;
 	margin: 0;
 }
+.timeline .zebra {
+	background-color: #F7F7F7;
+}
 .timeline li {
 	margin: 0;
 	margin-bottom: 30px;
@@ -643,7 +646,7 @@ div.wiki-text code {
 }
 .timeline li.event {
 	clear: both;
-	margin: 4px 0;
+	padding: 6px 6px 6px 0;
 	overflow: hidden;
 }
 .timeline .event p.metadata {
