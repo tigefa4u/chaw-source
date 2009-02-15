@@ -1,29 +1,72 @@
-<div class="commit row <?php echo $zebra;?>">
-	<h3 class="name">
-		<?php echo (isset($label)) ? $label . ': ' : null;?>
-		<?php
-			echo $chaw->commit($data['Commit']['revision'], $data['Project']);
+<li class="event <?php echo $zebra?>">
 
-			$project = null;
-			if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
-				$project = ' in '.
-					$html->link($data['Project']['name'], $chaw->url($data['Project'], array(
-						'admin' => false, 'controller' => 'source'
-					)), array('class' => 'project'));
+	<p class="metadata">
+		<?php
+			if (!empty($label)) {
+				echo "<span class=\"type commit\">{$label}</span>";
 			}
-			echo $project;
 		?>
-	</h3>
+		<span class="date">
+			<?php
+				echo date("H:i", strtotime($data['Commit']['created']));
+			?>
+		</span>
+	<p>
+
+	<div class="body">
+		<!--
+			<img width="16" height="16" src="http://www.gravatar.com/avatar.php?gravatar_id=5a973346f5546f3a840e1fcec0e9e4f1&size=16" alt="avatar"/>
+		-->
+
+		<p class="action">
+			<span class="username">
+				<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['Commit']['author'];?>
+			</span>
+			<strong>
+				<?php
+				if ($CurrentProject->repo->type == 'git'):
+				 	if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
+						__("merged");
+					} else {
+						__("pushed");
+					}
+				else :
+					__('committed');
+				endif;
+				?>
+			</strong>
+			<?php
+				echo $chaw->commit($data['Commit']['revision'], $data['Project']) . " to ";
+
+				if (!empty($data['Project']['fork'])) {
+					$project = "forks/{$data['Project']['fork']}/{$data['Project']['url']}/{$data['Branch']['name']}";
+					echo $html->link($project, $chaw->url($data['Project'], array(
+						'admin' => false, 'controller' => 'source','action' => 'branches',
+						$data['Branch']['name']
+					)), array('class' => 'project'));
+				} else {
+					echo $html->link($data['Branch']['name'], array(
+							'controller' => 'source', 'action' => 'branches',
+							$data['Branch']['name']
+					));
+				}
+
+				if (empty($CurrentProject->fork) && !empty($project)) {
+					'(' . $chaw->admin('merge', array(
+						'controller' => 'repo', 'action' => 'merge', $data['Project']['fork']
+					)) . ')';
+				}
+			?>
+		</p>
+
+		<p class="description">
+			<?php echo $text->truncate($data['Commit']['message'], 80, '...', false, true); ?>
+		</p>
+	</div>
 
 	<?php if (!empty($this->params['isAdmin'])):?>
 		<span class="admin">
 			<?php
-			 	echo (empty($CurrentProject->fork) && $project) ?
-					$chaw->admin('merge', array(
-						'controller' => 'repo', 'action' => 'merge', $data['Project']['fork']
-					)) . ' | '
-				: null;
-
 				if ($this->name == 'Timeline') {
 					echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));
 				} else if ($this->name == 'Commits') {
@@ -33,31 +76,4 @@
 		</span>
 	<?php endif;?>
 
-	<span class="subtitle">
-		<?php //echo $data['Commit']['branch'];?>
-	</span>
-
-	<span class="subtitle">
-		<?php echo $html->link($data['Branch']['name'], array(
-				'controller' => 'source', 'action' => 'branches',
-				$data['Branch']['name']
-			));?>
-	</span>
-
-	<span class="description footer">
-		<?php echo $text->truncate($data['Commit']['message'], 80, '...', false, true); ?>
-	</span>
-
-	<span class="date footer">
-		<?php echo $time->nice($data['Commit']['commit_date']);?>
-	</span>
-
-	<span class="author footer">
-		<?php echo (!empty($data['User']['username'])) ? $data['User']['username'] : $data['Commit']['author'];?>
-	</span>
-
-</div>
-<?php
-
-
-?>
+</li>

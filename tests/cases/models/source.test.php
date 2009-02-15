@@ -111,7 +111,10 @@ class SourceTestCase extends CakeTestCase {
 		$this->Git->run('checkout', array('-b', 'with/slashes'));
 		$this->Git->push('origin', 'with/slashes');
 
+		$this->Git->branch = null;
+
 		$result = $this->Source->initialize($this->Git, array('newbranch'));
+
 		$this->assertEqual($result, array(
 			array('branches'),
 			'',
@@ -129,7 +132,6 @@ class SourceTestCase extends CakeTestCase {
 
 		//pr($this->Source->Repo->debug);
 		//pr($this->Source->Repo->response);
-
 	}
 
 	function testRead() {

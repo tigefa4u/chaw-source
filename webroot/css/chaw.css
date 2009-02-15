@@ -22,6 +22,9 @@ a {
 	font-family: helvetica,arial,sans-serif;
 	font-weight: normal;
 }
+.small {
+	font-size: 70%;
+}
 h2 a {
 	color: #804000;
 	font-family: helvetica,arial,sans-serif;
@@ -80,6 +83,61 @@ fieldset.options {
 	margin-top: 30px;
 }
 
+fieldset.mini-form {
+	padding: 10px 10px 0px 20px;
+}
+
+fieldset.mini-form legend {
+	font-size: 1em;
+	color: #806060;
+	font-weight: bold;
+	padding: 0 10px;
+}
+
+fieldset.mini-form div.input-row {
+	float: left;
+	clear: left;
+	margin: 0px;
+	padding: 0 0 8px 0;
+}
+
+fieldset.mini-form div.submit {
+	display: inline;
+	float: right;
+	clear: none;
+	margin: 0 8px 0 0;
+	padding: 0px;
+}
+
+fieldset.mini-form div.checkbox input {
+	display: inline;
+	float: left;
+	clear: none;
+}
+
+fieldset.mini-form label {
+	float: left;
+	clear: none;
+	font-size: 0.9em;
+	width: 50px;
+}
+
+fieldset.mini-form div label.title {
+	font-weight: bold;
+}
+
+fieldset.mini-form div.checkbox {
+	display: inline;
+	clear: none;
+	border: 1px solid #000000;
+	margin: 0px;
+	padding: 4px 5px 3px 5px;
+}
+
+fieldset.mini-form div.checkbox label, fieldset.mini-form div.checkbox input {
+	display: inline;
+}
+
 table {
 	clear: none;
 	float: left;
@@ -108,7 +166,7 @@ table.smooth th a {
 table.smooth td {
 	border: 0;
 	vertical-align: middle;
-	padding: 8px 4px;
+	padding: 8px 10px;
 	border-bottom: 1px solid #ccc;
 }
 table.smooth tr.altrow td {
@@ -312,10 +370,17 @@ div.help h4 {
 .index {
 	overflow: visible;
 }
+.index form {
+	width: auto;
+}
+.index form .submit {
+	clear: none;
+	float: left;
+	margin-left: 12px;
+}
 .view .textarea textarea {
 	height: 200px;
 }
-
 .row {
 	clear: both;
 	padding: 12px 2px 6px 2px;
@@ -586,59 +651,100 @@ div.wiki-text code {
 .revisions form div.submit input {
 	margin-right: 6px;
 }
+
+/* Timeline */
+
 .timeline {
 	margin-right: 0%;
 	border-bottom: 1px solid #ccc;
 }
-.timeline .name {
-	width: 100%;
-}
-.timeline .description {
-	clear: both;
-}
-
-.timeline .message {
-	clear: both;
+.timeline ul {
+	list-style-type: none;
 	margin: 0;
-	width: 40%;
 }
-.timeline .author {
-	float: right;
+.timeline .zebra {
+	background-color: #F7F7F7;
+}
+.timeline li {
+	margin: 0;
+	margin-bottom: 30px;
+}
+.timeline ul li ul {
+	margin: 0;
+}
+.timeline ul li ul li {
+	margin: 0;
+}
+.timeline p.the-date {
+	clear: both;
+	font-size: 160%;
+	color: #656565;
+	padding: 2px 0px;
+	border-bottom: 1px solid #ccc;
+}
+.timeline span.comment {
+	background-color: #990;
+	color: #fff;
+}
+.timeline span.commit {
+	background-color: #963;
+	color: #fff;
+}
+.timeline span.ticket {
+	background-color: #990;
+	color: #fff;
+}
+.timeline span.wiki {
+	background-color: #996;
+	color: #fff;
+}
+.timeline li.event {
+	clear: both;
+	padding: 6px 6px 6px 0;
+	overflow: hidden;
+}
+.timeline .event p.metadata {
+	float: left;
+	width: 80px;
+	margin-right: 20px;
+	text-align: center;
+}
+.timeline .event span.type {
+	font-variant: small-caps;
+	text-transform: uppercase;
+	font-size: 11px;
+	padding: 2px;
+}
+.timeline .event span.date {
+	display: block;
+	font-size: 11px;
+	color: #333;
+}
+.timeline .event div.body {
+	float: left;
+}
+.timeline .event p.action {
+	padding: 0;
+	margin: 0;
+}
+.timeline .event span.username {
 	font-weight: bold;
+	color: #69C;
 }
-.timeline .author {
+.timeline .event p.description {
+	margin: 0;
+	margin-top: 1px;
+	font-family: "Andale Mono", monospace;
+	font-size: 90%;
+}
+.timeline .event span.admin {
 	float: right;
-	font-weight: bold;
+	font-size: 80%;
 }
-.timeline .date {
-	float: right;
+.timeline .event span.admin a {
+	color: #999;
 }
-
-.timeline .comment {
-	font-style: normal;
-}
-.timeline .comment h3 {
-	color: #633;
-}
-.timeline .commit h3 {
-	color: #963;
-}
-.timeline .ticket h3 {
-	color: #990;
-}
-.timeline .commit .subtitle a {
-	font-weight: normal;
-}
-.timeline .comment .subtitle, .timeline .ticket .subtitle {
-	font-weight: normal;
-	color: #990;
-}
-.timeline .ticket .message {
-	font-size: 60%;
-}
-.timeline .wiki h3 {
-	color: #996;
-}
+/* Tickets */
 
 .tickets h3 em {
 	font-size: 80%;
@@ -696,6 +802,9 @@ div.wiki-text code {
 .tickets textarea#TicketComment {
 	height: 130px;
 }
+
+/* Comments */
+
 div.comments {
 	clear: both;
 	padding: 0 4px;
@@ -739,6 +848,8 @@ div.comments {
 	font-size: 12px;
 	height: 200px;
 }
+
+/* Source */
 
 .source h2 {
 	margin-top: 50px;
@@ -818,6 +929,7 @@ div.comments {
 	text-decoration: none;
 }
 
+/* History */
 .history h3 {
 	color: #333;
 }
@@ -828,6 +940,8 @@ div.comments {
 .history .changes li {
 	font-size: 80%;
 }
+
+/* Version */
 .version {
 	width: 56%;
 	padding-bottom: 1em;
@@ -844,6 +958,9 @@ div.comments {
 	margin-top: 2em;
 	width: 20%;
 }
+
+/* Permissions */
+
 .permissions form {
 	float: left;
 	width: 66%;
@@ -872,6 +989,7 @@ div.comments {
 	height: 340px;
 }
 
+/* Users */
 .users form {
 	width: 60%;
 }
@@ -919,6 +1037,7 @@ div.comments {
 	font-size: 90%;
 }
 
+/* Projects */
 
 .project-details {
 	margin: 0;
@@ -1017,29 +1136,23 @@ a.project {
   top: 40%;
   width: 100%;
   padding: 40px 0;
-  background: rgb(0,0,0);
+  background: rgb(0, 0, 0);
   opacity: 0.8;
   text-align: center;
   font-size: 300%;
   color: #fff;
 }
 
-.newrow {
-
+div.paging {
+	float: right;
+	clear: none;
+	color: #909090;
+	font-size: 0.9em;
+	margin: 0 0 5px 0;
 }
 
-.newrow .badge {
-	background:#241;
-	color:#fff;
-	font-size:0.655em;
-	line-height:2em;
-	margin-right:0.5em;
-	padding:0.4em;
-	text-transform:uppercase;
-	white-space:nowrap
+div.queues {
+	float: left;
+	clear: none;
+	margin: 0 0 5px 0;
 }
-
-.newrow .date {
-	float: none;
-}
-

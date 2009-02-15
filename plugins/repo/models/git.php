@@ -125,7 +125,7 @@ class Git extends Repo {
 			$Fork = new Folder($userDir, true, $chmod);
 		}
 
-		$this->clone(array('--bare', $this->path, $this->working));
+		$this->clone(array('--mirror', $this->path, $this->working));
 
 		if (is_dir($this->working)) {
 			if (!empty($options['remote'])) {
@@ -140,7 +140,7 @@ class Git extends Repo {
 			));
 			//$this->remote(array('add', 'origin', "{$remote}:forks/{$user}/{$project}"));
 			$this->pull();
-			$this->merge($project);
+			//$this->merge($project);
 		}
 
 		if (is_dir($this->path) && is_dir($this->working)) {
@@ -458,6 +458,7 @@ class Git extends Repo {
 			return null;
 		}
 		list($revision, $author, $date, $message) = explode(chr(0), $info);
+		$message = str_replace(dirname($this->path), "", $message);
 		return compact('revision', 'author', 'date', 'message');
 	}
 /**

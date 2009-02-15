@@ -1,4 +1,4 @@
-<?php
+	<?php
 	if (empty($projects)) {
 		if ($this->action == 'forks') {
 			echo $html->tag('h2', __('There are no forks',true));
@@ -42,14 +42,14 @@
 	</div>
 <?php endif;?>
 
-<div class="projects index">
+<?php if ($this->action == 'forks'):?>
+	<h2>
+		<?php __('Forks') ?>
+	</h2>
+	<?php echo $this->element('project_details'); ?>
+<?php endif;?>
 
-	<?php if ($this->action == 'forks'):?>
-		<h2>
-			<?php __('Forks') ?>
-		</h2>
-		<?php echo $this->element('project_details'); ?>
-	<?php endif;?>
+<div class="projects index">
 
 	<?php $i = 0;
 		foreach ((array)$projects as $project):
@@ -121,7 +121,16 @@
 							'admin' => true, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'dashboard'
 						));
+
 					endif;
+					if (!empty($CurrentUser->Permission) && empty($this->passedArgs['type']) && $this->action !== 'forks') {
+						echo ' | ';
+						echo $html->link('remove', array(
+							'admin' => false,
+							'controller' => 'projects', 'action' => 'remove',
+							$project['Project']['id']
+						));
+					}
 
 				?>
 			</span>

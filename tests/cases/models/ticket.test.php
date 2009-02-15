@@ -7,7 +7,7 @@ class TicketTest extends CakeTestCase {
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
 		'app.tag', 'app.tags_tickets', 'app.commit',
-		'app.ticket'
+		'app.ticket', 'app.branch'
 	);
 
 	function startTest() {
@@ -81,7 +81,6 @@ class TicketTest extends CakeTestCase {
 		$this->Ticket->recursive = -1;
 		$results = $this->Ticket->find('count');
 		$this->assertEqual($results, 4);
-
 	}
 
 	function testModify() {
@@ -122,7 +121,7 @@ class TicketTest extends CakeTestCase {
 			'previous' => '',
 			'status'  => 'fixed',
 			'created'  => '2008-09-23 07:54:29',
-			'modified'  => '2008-09-23 07:54:29',
+			'modified'  => '2008-09-23 07:54:29'
 		));
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
@@ -130,5 +129,35 @@ class TicketTest extends CakeTestCase {
 		$results = $this->Ticket->find('first');
 		$this->assertEqual($results['Ticket']['owner'], 1);
 	}
+
+	function testInitialStatus() {
+		$this->Ticket->create();
+		$this->Ticket->Owner->save(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+
+		$results = $this->Ticket->save(array('project_id'  => 1, 'owner'  => 'gwoo'));
+		$this->assertEqual($results['Ticket']['status'], 'pending');
+	}
+
+	function testValidStateTransitions() {
+		$this->Ticket->create();
+		$this->Ticket->Owner->save(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+		$this->Ticket->save(array('project_id'  => 1, 'owner'  => 'gwoo'));
+
+		$result = $this->Ticket->read();
+		$this->assertEqual($result['Ticket']['status'], 'pending');
+
+		$result = $this->Ticket->events();
+		$expected = array('approve', 'accept', 'hold', 'close');
+		$this->assertEqual($result, $expected);
+
+		$this->assertFalse($this->Ticket->reopen());
+		$result = $this->Ticket->read();
+		$this->assertEqual($result['Ticket']['status'], 'pending');
+
+		$this->assertTrue($this->Ticket->approve());
+		$result = $this->Ticket->read();
+		$this->assertEqual($result['Ticket']['status'], 'approved');
+	}
 }
+
 ?>

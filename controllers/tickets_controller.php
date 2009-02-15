@@ -23,11 +23,23 @@ class TicketsController extends AppController {
 	var $paginate = array('order' => 'Ticket.number DESC');
 
 	function index() {
-		Router::connectNamed(array('status', 'page', 'user'));
+		Router::connectNamed(array('status', 'page', 'user', 'priority'));
+		$searchKeys = array('type', 'priority');
+
+		if (count($this->params['url']) > 2) {
+			die(Router::url($this->_toNamedParams($searchKeys) + $this->params['named']));
+			$this->redirect();
+		}
+
+		foreach ($searchKeys as $key) {
+			if (isset($this->params['named'][$key])) {
+				$this->data['Ticket'][$key] = explode(',', $this->params['named'][$key]);
+			}
+		}
 
 		$statuses = array_values($this->Project->ticket('statuses'));
-
 		$current = $statuses[0];
+
 		if (!empty($this->passedArgs['status'])) {
 			$current = $this->passedArgs['status'];
 		}
@@ -53,14 +65,13 @@ class TicketsController extends AppController {
 			));
 		}
 		*/
-
 		$this->pageTitle .= Inflector::humanize($current);
 
-
 		$tickets = $this->paginate('Ticket', $conditions);
-		$this->set(compact('current', 'statuses', 'tickets'));
 
 		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
+		$this->set(compact('current', 'tickets'));
+		$this->_ticketInfo();
 	}
 
 	function view($id = null) {
@@ -81,42 +92,33 @@ class TicketsController extends AppController {
 		}
 
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
-
-		$versions = $this->Ticket->Version->find('list', array(
-			'conditions' => array('Version.project_id' => $this->Project->id
-		)));
-		$types = $this->Project->ticket('types');
-		$statuses = $this->Project->ticket('statuses');
-		$priorities = $this->Project->ticket('priorities');
-		$owners = $this->Project->users();
-
-		$this->set(compact('ticket', 'versions', 'types', 'statuses', 'priorities', 'owners'));
-
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
+		$this->set(compact('ticket'));
+		$this->_ticketInfo();
 	}
 
+	/**
+	 * Creates a new ticket
+	 *
+	 * @todo Automatically move the ticket status to 'approved' if the user has ticket
+	 *       permissions on the project.  This should probably be implemented in the Ticket model.
+	 * @return void
+	 */
 	function add() {
 		if (!empty($this->data)) {
-			$this->Ticket->create(array(
+			$init = array(
 				'reporter' => $this->Auth->user('id'),
-				'project_id' => $this->Project->id,
-				'status' => 'open'
-			));
+				'project_id' => $this->Project->id
+			);
+			$this->Ticket->create($this->data);
 
-			if ($this->Ticket->save($this->data)) {
-				$this->Session->setFlash(__('Ticket saved',true));
+			if ($this->Ticket->save($init)) {
+				$this->Session->setFlash(__('Ticket saved', true));
 				$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 			}
 		}
 
-		$versions = $this->Ticket->Version->find('list', array(
-			'conditions' => array('Version.project_id' => $this->Project->id
-		)));
-		$types = $this->Project->ticket('types');
-		$priorities = $this->Project->ticket('priorities');
-		$owners = $this->Project->users();
-
-		$this->set(compact('versions', 'types', 'priorities', 'owners'));
+		$this->_ticketInfo();
 	}
 
 	function modify($id = null) {
@@ -146,5 +148,18 @@ class TicketsController extends AppController {
 
 		$this->redirect(array('action' => 'view', $id));
 	}
+
+	function _ticketInfo() {
+		$versions = $this->Ticket->Version->find('list', array(
+			'conditions' => array('Version.project_id' => $this->Project->id
+		)));
+		$types = $this->Project->ticket('types');
+		$statuses = $this->Project->ticket('statuses');
+		$priorities = $this->Project->ticket('priorities');
+		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
+
+		$this->set(compact('versions', 'types', 'statuses', 'priorities', 'owners'));
+	}
 }
+
 ?>

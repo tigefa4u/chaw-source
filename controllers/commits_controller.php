@@ -20,7 +20,7 @@ class CommitsController extends AppController {
 
 	var $helpers = array('Time', 'Text');
 
-	var $paginate = array('order' => 'Commit.created DESC');
+	var $paginate = array('order' => 'Commit.commit_date DESC');
 
 	function index() {
 		$this->Commit->recursive = 0;

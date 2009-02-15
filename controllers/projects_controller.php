@@ -43,7 +43,9 @@ class ProjectsController extends AppController {
 			);
 
 			if ($this->params['isAdmin'] === true) {
-				$this->paginate['conditions'] = array();
+				$this->paginate['conditions'] = array(
+					'Project.active' => 1, 'Project.approved' => 1
+				);
 				$this->paginate['order'] = 'Project.id ASC';
 			}
 
@@ -97,7 +99,6 @@ class ProjectsController extends AppController {
 	}
 
 	function add() {
-
 		if (!empty($this->data)) {
 			$this->Project->create(array(
 				'user_id' => $this->Auth->user('id'),
@@ -165,6 +166,19 @@ class ProjectsController extends AppController {
 		$this->set('messages', $this->Project->messages);
 
 		$this->render('edit');
+	}
+
+	function remove($id) {
+		$project = $this->Project->findById($id);
+		if (empty($project)) {
+			$this->Session->setFlash(__("Invalid Project", true));
+		} else {
+			if ($this->Project->Permission->deleteAll(array('Permission.project_id' => $id, 'Permission.user_id' => $this->Auth->user('id')))) {
+				$this->Session->setFlash(sprintf(__("%s was removed ", true), $project['Project']['name']));
+			}
+			$this->Session->write('Auth.User.Permission', $this->Project->User->groups($this->Auth->user('id')));
+		}
+		$this->redirect($this->referer());
 	}
 
 	function admin_index() {
@@ -298,6 +312,28 @@ class ProjectsController extends AppController {
 				$this->Project->set($this->Project->config);
 				if ($this->Project->save(array($options['field'] => $options['value']))) {
 					$this->Session->setFlash(sprintf(__('The project was %s',true),$options['action']));
+
+					if ($options['field'] == 'approved') {
+						$Email = $this->_loadEmail();
+						$this->Project->User->id = $this->Project->config['user_id'];
+						$Email->to = $this->Project->User->field('email');
+
+						if ($options['value'] == 1) {
+							$Email->subject = 'Approved';
+							$content[] = "{$this->Project->config['name']} was approved.\n";
+							$content[] = Router::url(array(
+								'admin' => false, 'project' => $this->Project->config['url'],
+								'controller' => 'source', 'action' => 'index',
+							), true);
+						} else {
+							$Email->subject = 'Sorry';
+							$content[] = "Sorry, {$this->Project->config['name']} is not approved at this time.\n";
+						}
+
+						$Email->lineLength = 120;
+						$Email->send($content);
+					}
+
 				} else {
 					$this->Session->setFlash(sprintf(__('The project was NOT %s',true),$options['action']));
 				}
@@ -308,6 +344,17 @@ class ProjectsController extends AppController {
 			$this->Session->setFlash(__('The project was invalid',true));
 		}
 		$this->redirect(array('project' => false, 'fork' => false, 'action' => 'index'));
+	}
+
+	function &_loadEmail() {
+		App::import('Component', 'Email');
+		$Email = new EmailComponent();
+		$Email->initialize($this);
+		$from = $this->Project->from();
+		$Email->from = 'Chaw ' . $from;
+		$Email->replyTo = 'Chaw ' . $from;
+		$Email->return = $from;
+		return $Email;
 	}
 }
 ?>

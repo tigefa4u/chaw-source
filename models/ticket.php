@@ -18,7 +18,28 @@ class Ticket extends AppModel {
 
 	var $name = 'Ticket';
 
-	var $actsAs = array('Containable', 'List' => array('position_column' => 'number', 'scope' => 'project_id'));
+	var $actsAs = array(
+		'Containable',
+		'List' => array('position_column' => 'number', 'scope' => 'project_id'),
+		'StateMachine' => array(
+			'field' => 'status',
+			'default' => 'pending',
+			'states' => array('pending', 'approved', 'in progress', 'on hold', 'closed'),
+			'auto' => 'after',
+			'transitions' => array(
+				'approve' => array('pending' => 'approved'),
+				'accept' => array('pending' => 'in progress', 'approved' => 'in progress'),
+				'hold' => array(
+					'pending' => 'on hold', 'approved' => 'on hold', 'in progress' => 'on hold'
+				),
+				'close' => array(
+					'pending' => 'closed', 'approved' => 'closed', 'in progress' => 'closed',
+					'on hold' => 'closed'
+				),
+				'reopen' => array('closed' => 'pending', 'on hold' => 'pending')
+			)
+		)
+	);
 
 	var $belongsTo = array(
 		'Project',
@@ -26,15 +47,17 @@ class Ticket extends AppModel {
 		'Owner' => array('className' => 'User', 'foreignKey' => 'Owner'),
 		'Reporter' => array('className' => 'User', 'foreignKey' => 'reporter'),
 	);
-/*
-	var $hasOne = array(
-		'Timeline' => array(
-			'foreignKey' => 'foreign_key',
-			'conditions' => array('Timeline.model = \'Ticket\'')
-		)
-	);
-*/
-	var $hasMany = array('Comment');
+
+	// var $hasOne = array(
+	// 	'Timeline' => array(
+	// 		'foreignKey' => 'foreign_key',
+	// 		'conditions' => array('Timeline.model = \'Ticket\'')
+	// 	)
+	// );
+
+	var $hasMany = array('Comment' => array(
+		'foreignKey' => 'foreign_key', 'conditions' => array('Comment.model = "Ticket"')
+	));
 
 	var $hasAndBelongsToMany = array('Tag');
 
@@ -44,9 +67,15 @@ class Ticket extends AppModel {
 		'project_id' => 'numeric'
 	);
 
+	function transitions($event) {
+		return true;
+	}
+
 	function beforeValidate() {
 		if (!empty($this->data['Ticket']['project'])) {
-			$this->data['Ticket']['project_id'] = $this->Project->field('id', array('url' => $this->data['Ticket']['project']));
+			$this->data['Ticket']['project_id'] = $this->Project->field('id', array(
+				'url' => $this->data['Ticket']['project']
+			));
 		}
 		return true;
 	}

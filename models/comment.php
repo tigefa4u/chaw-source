@@ -30,7 +30,7 @@ class Comment extends AppModel {
 */
 	function afterSave($created) {
 		$Timeline = ClassRegistry::init('Timeline');
-		
+
 		if ($created) {
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Comment']['project_id'],
