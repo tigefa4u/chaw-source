@@ -88,6 +88,23 @@ class Permission extends AppModel {
 			if ($config['repo']['type'] == 'git') {
 				$repo = 'refs/heads/master';
 			}
+
+			if ($config['repo']['type'] == 'svn') {
+				$perms = $this->find('all', array(
+					'fields' => array('Permission.group', 'User.username'),
+					'conditions' => array('Permission.project_id' => $config['id']),
+					'recursive' => 0
+				));
+				$groups = array();
+				if (!empty($perms)) {
+					foreach ($perms as $perm) {
+						$groups[$perm['Permission']['group']][] = $perm['User']['username'];
+					}
+				} else {
+					$groups = array_flip(array_keys($this->Project->groups()));
+				}
+			}
+
 			$username = $this->data['Permission']['username'];
 			ob_start();
 			include(CONFIGS . 'templates' . DS . $config['repo']['type'] . DS . 'permissions.ini');
@@ -184,7 +201,7 @@ class Permission extends AppModel {
 						if (strpos($check, $perm) !== false) {
 							return true;//return compact('check', 'perm', 'user', 'group');
 						}
-						if ($perm == 'c' || $perm == 'd') {
+						if ($perm == 'c' || $perm == 'u' || $perm == 'd') {
 							if (strpos($check, 'w') !== false) {
 								return true;
 							}

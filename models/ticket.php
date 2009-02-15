@@ -147,6 +147,7 @@ class Ticket extends AppModel {
 				return $this->Comment->save();
 			}
 		}
+
 		return true;
 	}
 

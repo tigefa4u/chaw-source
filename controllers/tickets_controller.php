@@ -44,14 +44,19 @@ class TicketsController extends AppController {
 			$current = $this->passedArgs['status'];
 		}
 
-		$conditions = array('Ticket.project_id' => $this->Project->id);
-		$conditions['Ticket.status'] = $current;
+		$conditions = array(
+			'Ticket.project_id' => $this->Project->id,
+			'Ticket.status' => $current
+		);
+
+		$this->pageTitle = 'Tickets/Status/';
 
 		if (!empty($this->passedArgs['user'])) {
 			$current = $this->passedArgs['user'];
 			$conditions['Owner.username'] = $this->passedArgs['user'];
+			$this->pageTitle = 'Tickets/User/';
 		}
-		
+
 		/*
 		if (!empty($this->Project->config['fork'])) {
 			$conditions = array('OR' => array(
@@ -60,8 +65,8 @@ class TicketsController extends AppController {
 			));
 		}
 		*/
-		
-		$this->pageTitle = 'Tickets/Status/' . Inflector::humanize($current);
+		$this->pageTitle .= Inflector::humanize($current);
+
 		$tickets = $this->paginate('Ticket', $conditions);
 
 		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
@@ -87,10 +92,8 @@ class TicketsController extends AppController {
 		}
 
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
-		$owners = $this->Project->users();
-
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
-		$this->set(compact('ticket', 'owners'));
+		$this->set(compact('ticket'));
 		$this->_ticketInfo();
 	}
 
@@ -115,8 +118,6 @@ class TicketsController extends AppController {
 			}
 		}
 
-		$owners = $this->Project->users();
-		$this->set(compact('owners'));
 		$this->_ticketInfo();
 	}
 
@@ -155,8 +156,9 @@ class TicketsController extends AppController {
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
+		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
 
-		$this->set(compact('versions', 'types', 'statuses', 'priorities'));
+		$this->set(compact('versions', 'types', 'statuses', 'priorities', 'owners'));
 	}
 }
 

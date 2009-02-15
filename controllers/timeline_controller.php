@@ -22,7 +22,7 @@ class TimelineController extends AppController {
 
 	var $paginate = array(
 		'limit' => 20,
-		'order' => 'Timeline.created DESC',
+		'order' => 'Timeline.created DESC, Timeline.id DESC'
 	);
 
 	function index() {

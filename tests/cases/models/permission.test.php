@@ -52,7 +52,17 @@ class PermissionTest extends CakeTestCase {
 					'path' => TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'forks' . DS . 'bob' . DS . 'project_two.git',
 					'working' => TMP . 'tests' . DS . 'git' .DS . 'working' . DS . 'forks' . DS . 'bob' . DS . 'project_two'
 				)
-			)
+			),
+			'Svn' => array(
+				'id' => 3,
+				'url' => 'project_svn',
+				'groups' => 'user, docs, team, admin',
+				'repo' => array(
+					'type' => 'svn',
+					'path' => TMP . 'tests' . DS . 'svn' . DS . 'repo' . DS . 'project_svn',
+					'working' => TMP . 'tests' . DS . 'svn' .DS . 'working' . DS . 'project_svn'
+				)
+			),
 		);
 	}
 
@@ -253,6 +263,7 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("wiki", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
 		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'c'))));
+		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('u'))));
 		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('w', 'd'))));
 
 		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'))));
@@ -396,6 +407,45 @@ class PermissionTest extends CakeTestCase {
 
 		$result = $Permission->group(1, 2);
 		$this->assertEqual($result, 'admin');
+	}
+
+	function testSvnPermissionSave() {
+		Configure::write('Project', $this->__projects['Svn']);
+		$Permission = new TestPermission();
+		$Permission->User->create();
+		$Permission->User->save(array('username' => 'gwoo', 'email' => 'gwoo@test.org'));
+		$Permission->User->create();
+		$Permission->User->save(array('username' => 'bob', 'email' => 'bob@test.org'));
+		$Permission->User->create();
+		$Permission->User->save(array('username' => 'jim', 'email' => 'jim@test.org'));
+
+		$Permission->Project->id = Configure::read('Project.id');
+		$Permission->Project->permit(array(
+			'user' => 'gwoo', 'group' => 'admin',
+		));
+		$Permission->Project->permit(array(
+			'user' => 'bob', 'group' => 'admin',
+		));
+		$Permission->Project->permit(array(
+			'user' => 'jim', 'group' => 'user',
+		));
+		$Permission->config();
+		$Permission->saveFile(array(
+			'Permission' => array('username' => '@admin'
+		)));
+
+
+		$result = $Permission->groups();
+		$this->assertEqual($result, array(
+			array('Group' => array(
+				'name' => 'admin',
+				'users' => array('gwoo', 'bob')
+			)),
+			array('Group' => array(
+				'name' => 'user',
+				'users' => array('jim')
+			))
+		));
 	}
 }
 ?>

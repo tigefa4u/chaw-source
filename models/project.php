@@ -282,7 +282,7 @@ class Project extends AppModel {
 			$this->Permission->config($this->config);
 			if ($this->Permission->fileExists() !== true) {
 				$this->Permission->saveFile(array('Permission' => array(
-					'username' => @$this->data['Project']['username']
+					'username' => "@admin"
 				)));
 			}
 
@@ -453,12 +453,20 @@ class Project extends AppModel {
  * @return void
  *
  **/
-	function users($type = 'list') {
-
+	function users($conditions = array()) {
+		$scope = array('Permission.project_id' => $this->id, 'User.username !=' => null);
+		if (!empty($conditions)) {
+			$scope = array_merge($scope, (array)$conditions);
+		}
 		$users = $this->Permission->find('all', array(
 			'fields' => array('User.id', 'User.username'),
-			'conditions' => array('Permission.project_id' => $this->id, 'User.username !=' => null)
+			'conditions' => $scope
 		));
+
+		if (empty($users)) {
+			return array();
+		}
+
 		return array_filter(Set::combine($users, '/User/id', '/User/username'));
 	}
 /**
@@ -555,9 +563,12 @@ class Project extends AppModel {
  **/
 	function groups($key = null) {
 		$Inflector = Inflector::getInstance();
-		$groups = explode(',', $this->config['groups']);
-		$groups = array_map(array($Inflector, 'slug'), $groups, array_fill(0, count($groups), '-'));
-		$result = array_combine($groups, $groups);
+		$result = array();
+		if (!empty($this->config['groups'])) {
+			$groups = explode(',', $this->config['groups']);
+			$groups = array_map(array($Inflector, 'slug'), $groups, array_fill(0, count($groups), '-'));
+			$result = array_combine($groups, $groups);
+		}
 		if (!isset($result['admin'])) {
 			$result['admin'] = 'admin';
 		}

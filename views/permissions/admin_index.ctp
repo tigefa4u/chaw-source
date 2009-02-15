@@ -7,14 +7,23 @@
 			echo $form->input('fine_grained', array('type' => 'textarea'));
 		?>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+
+<?php
+	echo '<div class="submit">';
+	echo '<input type="submit" value="'.__('Submit',true).'">';
+	echo '<input type="submit" value="'.__('Reload Defaults',true).'" name="default">';
+	echo '</div>';
+
+echo $form->end();
+
+?>
 	<div class="help">
 		<h4><?php __('Guide'); ?></h4>
 		<p><?php __('access rights') ?></p>
 		<p class="rule">
 			r - <?php __('read') ?><br/>
 			w - <?php __('write (c, u, d)') ?><br/>
-			<?php  
+			<?php
 				$example = 'rw';
 				if($CurrentProject->repo->type != 'svn'): $example = 'cr';
 			?>
@@ -29,9 +38,9 @@
 		<p class="rule">
 			[wiki]<br/>
 			* = <?php echo $example; ?>
-		</pre>
+		</p>
 		<p>
-			<?php __('use groups from') ?> 
+			<?php __('use groups from') ?>
 			<?php echo $chaw->admin('settings', array(
 				'admin' => false, 'controller' => 'projects', 'action' => 'edit'
 			))?>
@@ -43,16 +52,16 @@
 		<p class="rule">
 			[tickets]<br/>
 			@<?php echo $groups['user'];?> = <?php echo $example; ?>
-		</pre>
+		</p>
 		<p><?php __('create groups') ?></p>
 		<p class="rule">
 			[groups]<br/>
 			some-group-name = user1, user2
-		</pre>
+		</p>
 		<p>`some-group-name` can `<?php echo $example; ?>` tickets</p>
 		<p class="rule">
 			[tickets]<br/>
 			@some-group-name = <?php echo $example; ?>
-		</pre>
+		</p>
 	</div>
 </div>

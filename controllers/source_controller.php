@@ -69,11 +69,6 @@ class SourceController extends AppController {
 		}
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
-		if($current == 'branches' && $this->Project->Repo->type == 'git') {
-			$this->Source->branches();
-			$this->Project->Repo->branch = null;
-		}
-
 		$data = $this->Source->read($path);
 
 		$this->pageTitle = $current;
