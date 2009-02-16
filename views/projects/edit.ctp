@@ -24,11 +24,11 @@
 	<fieldset class="options">
  		<legend>Options</legend>
 	<?php
-		echo $form->input('groups', array('type' => 'textarea'));
-		echo $form->input('ticket_types', array('type' => 'textarea'));
-		echo $form->input('ticket_priorities', array('type' => 'textarea'));
-		echo $form->input('ticket_statuses', array('type' => 'textarea'));
-		echo $form->input('ticket_resolutions', array('type' => 'textarea'));
+		echo $form->input('config.groups', array('type' => 'textarea'));
+		echo $form->input('config.ticket.types', array('type' => 'textarea'));
+		echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
+		echo $form->input('config.ticket.statuses', array('type' => 'textarea'));
+		echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
 	?>
 	<p><?php __('Comma seperated') ?></p>
 

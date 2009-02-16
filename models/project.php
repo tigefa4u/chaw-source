@@ -26,12 +26,6 @@ class Project extends AppModel {
  *
  * @var string
  **/
-	var $config = array();
-/**
- * undocumented class variable
- *
- * @var string
- **/
 	var $Repo;
 /**
  * undocumented class variable
@@ -180,7 +174,20 @@ class Project extends AppModel {
 		$this->Repo = ClassRegistry::init($this->config['repo']);
 		return true;
 	}
-
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function deconstruct($field, $data) {
+		if ($field == 'config') {
+			$data = serialize($data);
+		} else {
+			$data = parent::deconstruct($field, $data);
+		}
+		return $data;
+	}
 /**
  * undocumented function
  *
@@ -231,7 +238,7 @@ class Project extends AppModel {
 			$this->invalidate('user', 'Invalid user');
 			return false;
 		}
-
+		
 		return true;
 	}
 /**

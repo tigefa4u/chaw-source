@@ -39,6 +39,10 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(is_a($this->Project, 'Project'));
 	}
 
+	function getTests() {
+		return array('start', 'testProjectSave', 'end');
+	}
+
 	function testProjectSave() {
 		$data = array('Project' =>array(
 			'id' => 1,
@@ -47,10 +51,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -58,6 +66,7 @@ class ProjectTestCase extends CakeTestCase {
 		));
 
 		$this->assertTrue($this->Project->save($data));
+
 		$path = Configure::read('Content.base');
 		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
@@ -69,10 +78,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -91,10 +104,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Svn',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -121,10 +138,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -146,10 +167,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -171,10 +196,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -196,7 +225,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertEqual($results[0]['Permission'], array('id'=> 1, 'user_id' => 1, 'project_id' => 1, 'group' => 'admin'));
 
 		$this->Project->create(array_merge(
-			$this->Project->config,
+			$this->Project->data,
 			array(
 				'user_id' => 2,
 				'fork' => 'bob',
@@ -247,10 +276,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -261,7 +294,6 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->Project->id = 1;
 		$this->Project->initialize(array('project' => 'original_project'));
-		$this->Project->set($this->Project->config);
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
 
@@ -272,10 +304,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 0,
 			'approved' => 1,
@@ -286,7 +322,6 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->Project->id = 2;
 		$this->Project->initialize(array('project' => 'another_project'));
-		$this->Project->set($this->Project->config);
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
 	}
@@ -299,10 +334,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -318,10 +357,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -340,10 +383,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -363,10 +410,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -375,7 +426,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 
-		$config = $this->Project->config;
+		$config = $this->Project->data;
 
 		$this->Project->create(array_merge(
 			$config,
@@ -417,10 +468,14 @@ class ProjectTestCase extends CakeTestCase {
 			'user_id' => 1,
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 1,
@@ -429,7 +484,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 
-		$config = $this->Project->config;
+		$config = $this->Project->data;
 
 		$this->Project->create(array_merge(
 			$config,
@@ -468,10 +523,14 @@ class ProjectTestCase extends CakeTestCase {
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
 			'private' => 0,
-			'groups' => 'user, docs team, developer, admin',
-			'ticket_types' => 'rfc, bug, enhancement',
-			'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-			'ticket_priorities' => 'low, normal, high',
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'priorities' => 'low, normal, high',
+				)
+			),
 			'description' => 'this is a test project',
 			'active' => 1,
 			'approved' => 0,
@@ -484,7 +543,6 @@ class ProjectTestCase extends CakeTestCase {
 
 		$project = 'new_project';
 		$this->Project->initialize(compact('project'));
-		$this->assertTrue($this->Project->set($this->Project->config));
 		$this->assertTrue($this->Project->save(array('approved' => 1)));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 	}
