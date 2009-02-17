@@ -157,9 +157,11 @@ class ProjectsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
+			$this->redirect();
 		}
 
-		$this->data = $this->Project->read();
+		$this->data = array('Project' => $this->Project->current);
+		$this->data['config']['ticket'] = $this->Project->current['config']['ticket'];
 
 		$this->set('repoTypes', $this->Project->repoTypes());
 

@@ -227,6 +227,11 @@ class Project extends AppModel {
 			}
 		}
 
+		if (!empty($this->data['config'])) {
+			$this->data['Project']['config'] = array_merge($this->data['Project']['config'], $this->data['config']);
+			unset($this->data['config']);
+		}
+
 		if (!empty($this->data['Project']['config']) && is_array($this->data['Project']['config'])) {
 			$this->data['Project']['config'] = serialize($this->data['Project']['config']);
 		}
@@ -296,7 +301,6 @@ class Project extends AppModel {
 				'count' => 1
 			));
 		}
-
 
 		if (!empty($this->current['url'])) {
 			$conditions = array($this->current['url']);
@@ -544,19 +548,16 @@ class Project extends AppModel {
  *
  **/
 	function ticket($key = null) {
-		switch ($key) {
-			case 'types':
-				$types = array_map('trim', explode(',', $this->current['config']['ticket']['types']));
-				return array_combine($types, $types);
-			break;
-			case 'priorities':
-				$priorities = array_map('trim', explode(',', $this->current['config']['ticket']['priorities']));
-				return array_combine($priorities, $priorities);
-			break;
-			case 'statuses':
-				$statuses = array_map('trim', explode(',', $this->current['config']['ticket']['statuses']));
-				return array_combine($statuses, $statuses);
-			break;
+		if ($key == null) {
+			foreach ($this->current['config']['ticket'] as $key => $ticket) {
+				$array = array_map('trim', explode(',', $this->current['config']['ticket'][$key]));
+				$data[$key] = array_combine($array, $array);
+			}
+			return $data;
+		}
+		if (!empty($this->current['config']['ticket'][$key])) {
+			$data = array_map('trim', explode(',', $this->current['config']['ticket'][$key]));
+			return array_combine($data, $data);
 		}
 	}
 /**
