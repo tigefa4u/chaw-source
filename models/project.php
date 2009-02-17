@@ -26,6 +26,12 @@ class Project extends AppModel {
  *
  * @var string
  **/
+	var $current = array();
+/**
+ * undocumented class variable
+ *
+ * @var string
+ **/
 	var $Repo;
 /**
  * undocumented class variable
@@ -90,7 +96,7 @@ class Project extends AppModel {
  **/
 	function initialize($params = array()) {
 		$this->recursive = -1;
-		$this->config = Configure::read('Project');
+		$this->current = Configure::read('Project');
 
 		if (!empty($this->data['Project']['url'])) {
 			$params['project'] = $this->data['Project']['url'];
@@ -133,60 +139,48 @@ class Project extends AppModel {
 		}
 
 		if (empty($project['Project'])) {
-			Configure::write('Project', $this->config);
+			Configure::write('Project', $this->current);
 			return false;
 		}
 
-		$this->config = array_merge($this->config, $project['Project']);
+		$this->current = array_merge($this->current, $project['Project']);
 
-		$repoType = strtolower($this->config['repo_type']);
+		$repoType = strtolower($this->current['repo_type']);
 
 		if (!empty($this->data['Project']['remote'])) {
-			$this->config['remote'][$repoType] = $this->data['Project']['remote'];
+			$this->current['remote'][$repoType] = $this->data['Project']['remote'];
 		}
-		if (is_string($this->config['remote'])) {
-			$this->config['remote'][$repoType] = $this->config['remote'];
+		if (is_string($this->current['remote'])) {
+			$this->current['remote'][$repoType] = $this->current['remote'];
 		}
 
 		$path = Configure::read("Content.{$repoType}");
 
 		$fork = null;
-		if (!empty($this->config['fork'])) {
-			$fork = 'forks' . DS . $this->config['fork'] . DS;
+		if (!empty($this->current['fork'])) {
+			$fork = 'forks' . DS . $this->current['fork'] . DS;
 		}
 
-		$this->config['repo'] = array(
-			'class' => 'repo.' . $this->config['repo_type'],
+		$this->current['repo'] = array(
+			'class' => 'repo.' . $this->current['repo_type'],
 			'type' => $repoType,
 			'chmod' => 0777,
-			'path' => $path . 'repo' . DS . $fork . $this->config['url'],
-			'working' => $path . 'working' . DS . $fork . $this->config['url'],
-			'remote' => is_string($this->config['remote']) ? $this->config['remote'] : $this->config['remote'][$repoType]
+			'path' => $path . 'repo' . DS . $fork . $this->current['url'],
+			'working' => $path . 'working' . DS . $fork . $this->current['url'],
+			'remote' => is_string($this->current['remote']) ? $this->current['remote'] : $this->current['remote'][$repoType]
 		);
 
 		if ($repoType == 'git') {
-			$this->config['repo']['path'] .= '.git';
+			$this->current['repo']['path'] .= '.git';
 		}
 
-		$this->id = $this->config['id'];
-		Configure::write('Project', $this->config);
-
-		$this->Repo = ClassRegistry::init($this->config['repo']);
+		if ($this->current['config'] == serialize(false)) {
+			$this->current['config'] = unserialize($this->current['config']);
+		}
+		$this->id = $this->current['id'];
+		Configure::write('Project', $this->current);
+		$this->Repo = ClassRegistry::init($this->current['repo']);
 		return true;
-	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
-	function deconstruct($field, $data) {
-		if ($field == 'config') {
-			$data = serialize($data);
-		} else {
-			$data = parent::deconstruct($field, $data);
-		}
-		return $data;
 	}
 /**
  * undocumented function
@@ -222,9 +216,9 @@ class Project extends AppModel {
 				return false;
 			}
 
-			if (!file_exists($this->config['repo']['path']) || !file_exists($this->config['repo']['working'])) {
+			if (!file_exists($this->current['repo']['path']) || !file_exists($this->current['repo']['working'])) {
 				$this->__created = $this->Repo->create(array(
-					'remote' => $this->config['repo']['remote'],
+					'remote' => $this->current['repo']['remote'],
 				));
 
 				if ($this->__created !== true) {
@@ -234,11 +228,15 @@ class Project extends AppModel {
 			}
 		}
 
+		if (!empty($this->data['Project']['config']) && is_array($this->data['Project']['config'])) {
+			$this->data['Project']['config'] = serialize($this->data['Project']['config']);
+		}
+
 		if ($this->__created && !$this->id && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
 			$this->invalidate('user', 'Invalid user');
 			return false;
 		}
-		
+
 		return true;
 	}
 /**
@@ -250,7 +248,7 @@ class Project extends AppModel {
 	function afterSave($created) {
 		if (!empty($this->data['Project']['approved'])) {
 
-			$this->config['id'] = $this->id;
+			$this->current['id'] = $this->id;
 
 			$hooksCreated = $this->createHooks($this->hooks[$this->Repo->type], array(
 				'project' => $this->data['Project']['url'],
@@ -279,14 +277,14 @@ class Project extends AppModel {
 				$Wiki->create(array(
 					'slug' => 'home', 'active' => 1,
 					'project_id' => $this->id,
-					'last_changed_by' => $this->config['user_id'],
-					'content' => sprintf(__("##The home page for %s",true),$this->config['name'])
-						. "\n\n" . $this->config['description']
+					'last_changed_by' => $this->current['user_id'],
+					'content' => sprintf(__("##The home page for %s",true),$this->current['name'])
+						. "\n\n" . $this->current['description']
 				));
 				$Wiki->save();
 			}
 
-			$this->Permission->config($this->config);
+			$this->Permission->config($this->current);
 			if ($this->Permission->fileExists() !== true) {
 				$this->Permission->saveFile(array('Permission' => array(
 					'username' => "@admin"
@@ -294,16 +292,16 @@ class Project extends AppModel {
 			}
 
 			$this->permit(array(
-				'user' => $this->config['user_id'],
+				'user' => $this->current['user_id'],
 				'group' => 'admin',
 				'count' => 1
 			));
 		}
 
 
-		if (!empty($this->config['url'])) {
-			$conditions = array($this->config['url']);
-			$conditions[] = (!empty($this->config['fork'])) ? $this->config['fork'] : false;
+		if (!empty($this->current['url'])) {
+			$conditions = array($this->current['url']);
+			$conditions[] = (!empty($this->current['fork'])) ? $this->current['fork'] : false;
 			$key = join('_', array_filter($conditions));
 			Cache::delete($key, 'project');
 		}
@@ -368,13 +366,13 @@ class Project extends AppModel {
 
 		$hasFork = $this->find(array(
 			'fork' => $this->data['Project']['fork'],
-			'url' => $this->config['url']
+			'url' => $this->current['url']
 		));
 		if (!empty($hasFork)) {
 			return false;
 		}
 
-		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->config['repo']['remote']))) {
+		if ($this->Repo->fork($this->data['Project']['fork'], array('remote' => $this->current['repo']['remote']))) {
 			$this->__created = true;
 			$this->data['Project']['project_id'] = $this->id;
 			$this->data['Project']['name'] = $this->data['Project']['fork'] . "'s fork of " . $this->data['Project']['name'];
@@ -440,8 +438,8 @@ class Project extends AppModel {
 			$id = $this->id;
 		}
 
-		if (!empty($this->config['fork'])) {
-			$id = $this->config['project_id'];
+		if (!empty($this->current['fork'])) {
+			$id = $this->current['project_id'];
 		}
 
 		$conditions = array('Project.project_id' => $id);
@@ -549,15 +547,15 @@ class Project extends AppModel {
 	function ticket($key = null) {
 		switch ($key) {
 			case 'types':
-				$types = array_map('trim', explode(',', $this->config['ticket_types']));
+				$types = array_map('trim', explode(',', $this->current['config']['ticket']['types']));
 				return array_combine($types, $types);
 			break;
 			case 'priorities':
-				$priorities = array_map('trim', explode(',', $this->config['ticket_priorities']));
+				$priorities = array_map('trim', explode(',', $this->current['config']['ticket']['priorities']));
 				return array_combine($priorities, $priorities);
 			break;
 			case 'statuses':
-				$statuses = array_map('trim', explode(',', $this->config['ticket_statuses']));
+				$statuses = array_map('trim', explode(',', $this->current['config']['ticket']['statuses']));
 				return array_combine($statuses, $statuses);
 			break;
 		}
@@ -569,10 +567,10 @@ class Project extends AppModel {
  *
  **/
 	function groups($key = null) {
-		$Inflector = Inflector::getInstance();
 		$result = array();
-		if (!empty($this->config['groups'])) {
-			$groups = explode(',', $this->config['groups']);
+		if (!empty($this->current['config']['groups'])) {
+			$groups = array_map('trim', explode(',', $this->current['config']['groups']));
+			$Inflector = Inflector::getInstance();
 			$groups = array_map(array($Inflector, 'slug'), $groups, array_fill(0, count($groups), '-'));
 			$result = array_combine($groups, $groups);
 		}

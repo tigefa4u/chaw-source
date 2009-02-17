@@ -49,9 +49,9 @@ class TimelineController extends AppController {
 	}
 
 	function parent() {
-		if (!empty($this->Project->config['fork'])) {
+		if (!empty($this->Project->current['fork'])) {
 			$this->paginate['conditions'] = array(
-				'Timeline.project_id' => $this->Project->config['project_id']
+				'Timeline.project_id' => $this->Project->current['project_id']
 			);
 		}
 		$this->index();
@@ -61,7 +61,7 @@ class TimelineController extends AppController {
 	}
 
 	function forks() {
-		if (empty($this->Project->config['fork'])) {
+		if (empty($this->Project->current['fork'])) {
 			$forks = $this->Project->forks();
 			$this->paginate['conditions'] = array(
 				'Timeline.project_id' => $forks

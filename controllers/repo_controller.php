@@ -25,7 +25,7 @@ class RepoController extends AppController {
 			$this->redirect($this->referer());
 		}
 		$this->Project->Repo->logResponse = true;
-		if ($this->Project->Repo->merge($this->Project->config['url'])) {
+		if ($this->Project->Repo->merge($this->Project->current['url'])) {
 			$this->Session->setFlash(__('Fast Forward successfull!',true));
 		} else {
 			$this->Session->setFlash(__('Fast Forward failed. Time to merge manually?',true));
@@ -45,7 +45,7 @@ class RepoController extends AppController {
 			$this->redirect($this->referer());
 		}
 		$this->Project->Repo->logResponse = true;
-		if ($this->Project->Repo->merge($this->Project->config['url'], $fork)) {
+		if ($this->Project->Repo->merge($this->Project->current['url'], $fork)) {
 			$data = $this->Project->Repo->read(null, false);
 			$this->Commit->create(array(
 				'project_id' =>  $this->Project->id,
@@ -73,7 +73,7 @@ class RepoController extends AppController {
 
 		if (!empty($this->data)) {
 			$this->Project->create(array_merge(
-				$this->Project->config,
+				$this->Project->current,
 				array(
 					'user_id' => $this->Auth->user('id'),
 					'fork' => $this->Auth->user('username'),
@@ -106,7 +106,7 @@ class RepoController extends AppController {
 		if (empty($this->data)) {
 			$hasFork = $this->Project->find(array(
 				'fork' => $this->Auth->user('username'),
-				'url' => $this->Project->config['url']
+				'url' => $this->Project->current['url']
 			));
 			if ($hasFork) {
 				$this->Session->setFlash(__('You already have a fork',true));

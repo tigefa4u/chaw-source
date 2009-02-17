@@ -82,7 +82,7 @@ class ProjectsController extends AppController {
 	}
 
 	function view($url  = null) {
-		$project = array('Project' => $this->Project->config);
+		$project = array('Project' => $this->Project->current);
 		if (empty($this->params['project']) && $url == null && $project['id'] != 1) {
 			$project = $this->Project->findByUrl($url);
 		}
@@ -125,7 +125,7 @@ class ProjectsController extends AppController {
 		}
 
 		if (empty($this->data)) {
-			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->config));
+			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->current));
 			if (!empty($this->data['Project']['id'])) {
 				unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
 			}
@@ -235,7 +235,7 @@ class ProjectsController extends AppController {
 		}
 
 		if (empty($this->data)) {
-			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->config));
+			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->current));
 			if (!empty($this->data['Project']['id'])) {
 				unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
 			}
@@ -309,25 +309,25 @@ class ProjectsController extends AppController {
 
 		if ($isValid) {
 			if ($this->Project->initialize(compact('project'))) {
-				$this->Project->set($this->Project->config);
+				$this->Project->set($this->Project->current);
 				if ($this->Project->save(array($options['field'] => $options['value']))) {
 					$this->Session->setFlash(sprintf(__('The project was %s',true),$options['action']));
 
 					if ($options['field'] == 'approved') {
 						$Email = $this->_loadEmail();
-						$this->Project->User->id = $this->Project->config['user_id'];
+						$this->Project->User->id = $this->Project->current['user_id'];
 						$Email->to = $this->Project->User->field('email');
 
 						if ($options['value'] == 1) {
 							$Email->subject = 'Approved';
-							$content[] = "{$this->Project->config['name']} was approved.\n";
+							$content[] = "{$this->Project->current['name']} was approved.\n";
 							$content[] = Router::url(array(
-								'admin' => false, 'project' => $this->Project->config['url'],
+								'admin' => false, 'project' => $this->Project->current['url'],
 								'controller' => 'source', 'action' => 'index',
 							), true);
 						} else {
 							$Email->subject = 'Sorry';
-							$content[] = "Sorry, {$this->Project->config['name']} is not approved at this time.\n";
+							$content[] = "Sorry, {$this->Project->current['name']} is not approved at this time.\n";
 						}
 
 						$Email->lineLength = 120;

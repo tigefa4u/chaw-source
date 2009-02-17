@@ -139,11 +139,11 @@ class AccessComponent extends Object {
 
 		$this->isAllowed = in_array($C->action, $this->allowedActions);
 
-		if (!empty($C->Project->config) && $this->user('id') == $C->Project->config['user_id']) {
+		if (!empty($C->Project->current) && $this->user('id') == $C->Project->current['user_id']) {
 			return $C->params['isOwner'] = $C->params['isAdmin'] = true;
 		}
 
-		if (!empty($C->Project->config['private'])) {
+		if (!empty($C->Project->current['private'])) {
 			$this->isPublic = false;
 		}
 

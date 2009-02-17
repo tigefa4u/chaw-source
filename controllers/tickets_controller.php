@@ -58,10 +58,10 @@ class TicketsController extends AppController {
 		}
 
 		/*
-		if (!empty($this->Project->config['fork'])) {
+		if (!empty($this->Project->current['fork'])) {
 			$conditions = array('OR' => array(
 				array('Ticket.project_id' => $this->Project->id),
-				array('Ticket.project_id' => $this->Project->config['project_id'])
+				array('Ticket.project_id' => $this->Project->current['project_id'])
 			));
 		}
 		*/

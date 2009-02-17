@@ -39,10 +39,6 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue(is_a($this->Project, 'Project'));
 	}
 
-	function getTests() {
-		return array('start', 'testProjectSave', 'end');
-	}
-
 	function testProjectSave() {
 		$data = array('Project' =>array(
 			'id' => 1,
@@ -55,7 +51,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -82,7 +78,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -108,7 +104,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -142,7 +138,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -171,7 +167,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -200,7 +196,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -225,13 +221,14 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertEqual($results[0]['Permission'], array('id'=> 1, 'user_id' => 1, 'project_id' => 1, 'group' => 'admin'));
 
 		$this->Project->create(array_merge(
-			$this->Project->data,
+			$this->Project->current,
 			array(
 				'user_id' => 2,
 				'fork' => 'bob',
 				'approved' => 1,
 			)
 		));
+
 		$this->assertTrue($data = $this->Project->fork());
 		$this->assertEqual($data['Project']['url'], 'original_project');
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
@@ -264,7 +261,7 @@ class ProjectTestCase extends CakeTestCase {
 
 
 		//die();
-		//pr($this->Project->Repo->debug);
+ 		//pr($this->Project->Repo->debug);
 		//pr($this->Project->Repo->response);
 	}
 
@@ -280,7 +277,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -294,6 +291,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->Project->id = 1;
 		$this->Project->initialize(array('project' => 'original_project'));
+		$this->Project->set($this->Project->current);
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
 
@@ -308,7 +306,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -322,6 +320,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->Project->id = 2;
 		$this->Project->initialize(array('project' => 'another_project'));
+		$this->Project->set($this->Project->current);
 		$result = $this->Project->save(array('active' => 1));
 		$this->assertTrue($result);
 	}
@@ -338,7 +337,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -361,7 +360,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -387,7 +386,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -414,7 +413,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -426,7 +425,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 
-		$config = $this->Project->data;
+		$config = $this->Project->current;
 
 		$this->Project->create(array_merge(
 			$config,
@@ -472,7 +471,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -484,7 +483,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 
-		$config = $this->Project->data;
+		$config = $this->Project->current;
 
 		$this->Project->create(array_merge(
 			$config,
@@ -527,7 +526,7 @@ class ProjectTestCase extends CakeTestCase {
 				'groups' => 'user, docs team, developer, admin',
 				'ticket' => array(
 					'types' => 'rfc, bug, enhancement',
-					'statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
 					'priorities' => 'low, normal, high',
 				)
 			),
@@ -543,12 +542,79 @@ class ProjectTestCase extends CakeTestCase {
 
 		$project = 'new_project';
 		$this->Project->initialize(compact('project'));
+		$this->Project->set($this->Project->current);
 		$this->assertTrue($this->Project->save(array('approved' => 1)));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
 	}
 
+	function testProjectTicketConfig() {
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
+					'priorities' => 'low, normal, high',
+				)
+			),
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+		$result = $this->Project->ticket('types');
+		$this->assertEqual($result, array('rfc' => 'rfc', 'bug' => 'bug', 'enhancement' => 'enhancement'));
+
+		$result = $this->Project->ticket('statuses');
+		$this->assertEqual($result, array(
+			'pending' => 'pending', 'approved' => 'approved',
+			'in progress' => 'in progress', 'on hold' => 'on hold', 'closed' => 'closed'
+		));
+
+		$result = $this->Project->ticket('priorities');
+		$this->assertEqual($result, array('low' => 'low', 'normal' => 'normal', 'high' => 'high'));
+	}
+
+	function testProjectGroupConfig() {
+		$data = array('Project' =>array(
+			'id' => 2,
+			'active' => 1,
+			'approved' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'description' => 'this is a test project',
+			'config' => array(
+				'groups' => 'user, docs, team, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
+					'priorities' => 'low, normal, high',
+				)
+			),
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$result = $this->Project->groups();
+		$this->assertEqual($result, array(
+			'user' => 'user', 'docs' => 'docs', 'team' => 'team', 'admin' => 'admin'
+		));
+	}
+
 	function igetTests() {
-		return array('start', 'startTest', 'testApprovedProjectPermissionsCreate', 'endTest', 'end');
+		return array('start', 'testProjectTicketConfig', 'end');
 	}
 
 	function __cleanUp() {
