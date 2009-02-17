@@ -178,6 +178,7 @@ class Project extends AppModel {
 		}
 		$this->id = $this->current['id'];
 		Configure::write('Project', $this->current);
+
 		$this->Repo = ClassRegistry::init($this->current['repo']);
 		return true;
 	}
@@ -209,6 +210,14 @@ class Project extends AppModel {
 			return false;
 		}
 
+		if (!empty($this->data['config'])) {
+			$this->data['Project']['config'] = array_merge($this->data['Project']['config'], $this->data['config']);
+			unset($this->data['config']);
+		}
+
+		if (!empty($this->data['Project']['config']) && is_array($this->data['Project']['config'])) {
+			$this->data['Project']['config'] = serialize($this->data['Project']['config']);
+		}
 
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
@@ -225,15 +234,6 @@ class Project extends AppModel {
 					return false;
 				}
 			}
-		}
-
-		if (!empty($this->data['config'])) {
-			$this->data['Project']['config'] = array_merge($this->data['Project']['config'], $this->data['config']);
-			unset($this->data['config']);
-		}
-
-		if (!empty($this->data['Project']['config']) && is_array($this->data['Project']['config'])) {
-			$this->data['Project']['config'] = serialize($this->data['Project']['config']);
 		}
 
 		if ($this->__created && !$this->id && (empty($this->data['Project']['username']) || empty($this->data['Project']['user_id']))) {
