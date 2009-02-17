@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* SVN FILE: $Id$ */
 /* Chaw schema generated on: 2009-02-07 09:02:00 : 1234015860*/
 class ChawSchema extends CakeSchema {
@@ -57,12 +57,13 @@ class ChawSchema extends CakeSchema {
 	var $projects = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'url' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
+			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 			'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'fork' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
+			'project_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
-			'approved' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-			'active' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-			'private' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'repo_type' => array('type' => 'string', 'null' => false, 'default' => 'git', 'length' => 10),
 			'users_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'ohloh_project' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
@@ -80,6 +81,15 @@ class ChawSchema extends CakeSchema {
 			'tickets_count' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
+	var $resolutions = array(
+			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+			'ticket_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
+			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
+	);
 	var $tags = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),

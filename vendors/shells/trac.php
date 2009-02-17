@@ -39,7 +39,7 @@ class TracShell extends Shell {
 		$this->out('This may take a while...');
 		$project = @$this->args[1];
 		$fork = null;
-		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
+		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid project');
 			return 1;
 		}

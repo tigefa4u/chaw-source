@@ -18,7 +18,13 @@ class Comment extends AppModel {
 
 	var $name = 'Comment';
 
-	var $belongsTo = array('User', 'Ticket');
+	var $belongsTo = array(
+		'User',
+		'Ticket' => array(
+			'foreignKey' => 'foreign_key',
+			'conditions' => array('Comment.model = \'Ticket\'')
+		)
+	);
 
 /*
 	var $hasOne = array(
@@ -31,7 +37,7 @@ class Comment extends AppModel {
 	function afterSave($created) {
 		$Timeline = ClassRegistry::init('Timeline');
 
-		if ($created) {
+		if ($created && !empty($this->data['Comment']['project_id'])) {
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Comment']['project_id'],
 				'model' => 'Comment',

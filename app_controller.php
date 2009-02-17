@@ -73,8 +73,8 @@ class AppController extends Controller {
 		}
 
 		$this->params['project'] = null;
-		if (!empty($this->Project->data) && $this->Project->id !== '1') {
-			$this->params['project'] = $this->Project->data['url'];
+		if (!empty($this->Project->current) && $this->Project->id !== '1') {
+			$this->params['project'] = $this->Project->current['url'];
 		}
 
 		if (isset($this->viewVars['rssFeed'])) {
@@ -87,7 +87,7 @@ class AppController extends Controller {
 		}
 
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
-		$this->set('CurrentProject', Set::map(Configure::read('Project'), true));
+		$this->set('CurrentProject', Set::map($this->Project->current, true));
 	}
 
 	/**

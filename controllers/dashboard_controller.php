@@ -127,7 +127,7 @@ class DashboardController extends AppController {
 		));
 
 		$forkCommits = null;
-		if (empty($this->Project->config['fork'])) {
+		if (empty($this->Project->current['fork'])) {
 			$forks = $this->Project->forks();
 			$forkCommits = $this->Project->Commit->find('all', array(
 				'conditions' => array('Commit.project_id' => $forks),

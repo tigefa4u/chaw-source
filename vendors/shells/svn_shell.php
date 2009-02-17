@@ -60,7 +60,7 @@ class SvnShellShell extends Shell {
 		$project = $this->args[0];
 		$fork = @$this->args[1];
 
-		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
+		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid Project');
 			return false;
 		}

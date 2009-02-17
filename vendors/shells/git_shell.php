@@ -55,7 +55,7 @@ class GitShellShell extends Shell {
 		}
 		$project = str_replace('.git', '', trim($project, "'"));
 
-		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
+		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid project');
 			return 1;
 		}
@@ -66,7 +66,7 @@ class GitShellShell extends Shell {
 				'user' => $this->params['user'],
 				'group' => $this->Permission->group($this->Project->id, $this->params['user']),
 				'access' => 'r',
-				'default' => (empty($this->Project->config['private'])) ? true : false
+				'default' => (empty($this->Project->current['private'])) ? true : false
 			));
 
 			if ($allowed !== true) {
@@ -94,7 +94,7 @@ class GitShellShell extends Shell {
 		$this->args[] = 'git_shell';
  		$this->log($this->args, LOG_INFO);
 
-		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->config['url'] !== $project) {
+		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid Project');
 			return false;
 		}
