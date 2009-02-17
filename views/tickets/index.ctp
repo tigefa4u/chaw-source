@@ -1,3 +1,11 @@
+<h2>
+	<?php __(
+		Inflector::humanize($current) .
+		(!empty($this->params['named']['user']) ? "'s" : '')
+	) ?>
+	<?php __('Tickets') ?>
+</h2>
+
 <?php echo $form->create(array('type' => 'get', 'action' => 'index')); ?>
 <fieldset class="mini-form">
 	<legend><?php echo __('Search'); ?></legend>
@@ -19,21 +27,12 @@
 	<?php echo $form->submit('Update (doesn\'t work yet)'); ?>
 </fieldset>
 <?php echo $form->end(); ?>
-
-<h2>
-	<?php __(
-		Inflector::humanize($current) .
-		(!empty($this->params['named']['user']) ? "'s" : '')
-	) ?>
-	<?php __('Tickets') ?>
-</h2>
-
 <div class="queues">
 <?php
 
 $links = array();
 // $paginator->options(array('url' => $this->passedArgs));
-pr($this->passedArgs);
+//pr($this->passedArgs);
 
 if (!empty($CurrentUser->username)) {
 	$links[] = $html->link(__('mine', true), array('user' => $CurrentUser->username));

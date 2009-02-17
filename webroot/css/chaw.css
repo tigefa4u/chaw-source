@@ -84,7 +84,10 @@ fieldset.options {
 }
 
 fieldset.mini-form {
+	margin-top: 0;
+	margin-bottom: 20px;
 	padding: 10px 10px 0px 20px;
+	oveflow: auto;
 }
 
 fieldset.mini-form legend {
