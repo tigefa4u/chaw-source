@@ -25,15 +25,20 @@ Configure::write('Content', array(
 Configure::write('Project', array(
 	'id' => null,
 	'user_id' => 1,
-	'name' => Inflector::humanize(Configure::read('App.dir')),
-	'url' => null,
-	'repo_type' => 'Git',
 	'private' => 0,
-	'groups' => 'user, docs team, developer, admin',
-	'ticket_types' => 'rfc, bug, enhancement',
-	'ticket_statuses' => 'open, fixed, invalid, needmoreinfo, wontfix',
-	'ticket_priorities' => 'low, normal, high',
 	'active' => 1,
+	'url' => null,
+	'name' => Inflector::humanize(Configure::read('App.dir')),
+	'repo_type' => 'Git',
+	'config' => array(
+		'groups' => 'user, docs, team, admin',
+		'ticket' => array(
+			'types' => 'rfc, bug, enhancement',
+			'statuses' => 'pending, approved, in progress, on hold, closed',
+			'priorities' => 'low, normal, high',
+			'resolutions' => 'fixed, invalid, worksforme, duplicate, wontfix'
+		)
+	),
 	'remote' => array(
 		'git' => 'git@thechaw.com',
 		'svn' => 'svn+ssh://svn@thechaw.com'
