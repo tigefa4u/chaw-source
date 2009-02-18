@@ -37,7 +37,7 @@
 				);
 
 				$project = null;
-				if (!emptY($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
+				if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
 					$url = $chaw->url($data['Project'], $url);
 					if (!empty($data['Project']['fork'])) {
 						$project = "forks/{$data['Project']['fork']}/";
