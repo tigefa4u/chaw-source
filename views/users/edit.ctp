@@ -5,8 +5,13 @@
 	<?php
 		echo $form->input('id');
 		echo $form->hidden('username');
-		echo $form->input('username', array('disabled' => true,'label'=>array('labeltext'=>__('Username',true))));
-		echo $form->input('email',array('label'=>array('labeltext'=>__('Email',true))));
+		echo $form->input('username', array(
+			'disabled' => true,
+			'label'=> __('Username',true)
+		));
+		echo $form->input('email', array(
+			'label'=> __('Email',true)
+		));
 		echo $html->tag('div', $html->link(__('Change Password',true), array(
 			'admin' => false, 'action' => 'change'
 		)));

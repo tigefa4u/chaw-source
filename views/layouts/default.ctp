@@ -77,42 +77,42 @@
 					<li><?php
 						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
 						echo $html->link(__('Source',true), array(
-							'admin' => false,
+							'admin' => false, 'plugin' => null,
 							'controller' => 'source', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
 						echo $html->link(__('Timeline',true), array(
-							'admin' => false,
+							'admin' => false, 'plugin' => null,
 							'controller' => 'timeline', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
 						echo $html->link(__('Wiki',true), array(
-							'admin' => false,
+							'admin' => false, 'plugin' => null,
 							'controller' => 'wiki', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
 						echo $html->link(__('Tickets',true), array(
-							'admin' => false,
+							'admin' => false, 'plugin' => null,
 							'controller' => 'tickets', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
 						echo $html->link(__('Versions',true), array(
-							'admin' => false,
+							'admin' => false, 'plugin' => null,
 							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
 
 					<li><?php
 						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
 						echo $html->link(__('Projects',true), array(
-							'admin' => false, 'project'=> false, 'fork' => false,
+							'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
 							'controller' => 'projects', 'action' => 'index'), $options);
 					?></li>
 
@@ -121,7 +121,7 @@
 						<li><?php
 							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
 							echo $html->link(__('Admin',true), array(
-								'admin' => true,
+								'admin' => true, 'plugin' => null,
 								'controller' => 'dashboard', 'action' => 'index'), $options);
 						?></li>
 
