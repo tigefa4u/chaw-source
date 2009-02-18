@@ -9,7 +9,10 @@
 		echo $form->input('id');
 		echo $form->input('repo_type',array('label' => array('labeltext' => __('Repo Type',true))));
 		echo $form->input('name', array(
-			'error' => array('unique' => __('The project name must be unique.',true))
+			'error' => array(
+				'minimum' => __('The project name must be at least 5 characters',true)
+				'unique' => __('The project name must be unique.',true)
+			)
 		));
 		echo $form->input('description');
 
