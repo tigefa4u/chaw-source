@@ -61,11 +61,15 @@ class Project extends AppModel {
  **/
 	var $validate = array(
 		'name' => array(
-			'required' => array(
-				'rule' => 'notEmpty',
+			'minimum' => array(
+				'rule' => array('minLength', 5),
+				'required' => true,
+				'message' => 'Must be at least 5 characters'
 			),
 			'unique' => array(
-				'rule' => 'isUnique'
+				'rule' => 'isUnique',
+				'required' => true,
+				'message' => 'Required: Project must be unique'
 			)
 		),
 		'user_id' => array('notEmpty')

@@ -56,7 +56,6 @@ class TicketsController extends AppController {
 
 		$this->pageTitle .= Inflector::humanize($current);
 
-
 		$tickets = $this->paginate('Ticket', $conditions);
 		$this->set(compact('current', 'statuses', 'tickets'));
 
