@@ -1080,6 +1080,7 @@ div.comments {
 	overflow-y: scroll;
 }
 .panel ul li {
+	clear: both;
 	margin: 0;
 	padding: 8px 0;
 	list-style-type: none;
