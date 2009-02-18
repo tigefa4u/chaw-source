@@ -102,7 +102,7 @@ class AccessComponent extends Object {
 					$C->Session->setFlash(__('Chaw needs to be installed',true));
 					$C->redirect(array(
 						'admin' => false, 'plugin'=> null,
-						'project' => false, 'fork' => false
+						'project' => false, 'fork' => false,
 						'controller' => 'pages', 'action'=> 'start'
 					));
 					return false;
