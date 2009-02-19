@@ -204,6 +204,7 @@ class Project extends AppModel {
  *
  **/
 	function beforeSave() {
+		$this->createShell();
 		if (empty($this->data['Project']['fork'])) {
 			$this->data['Project']['fork'] = null;
 		}
@@ -212,7 +213,6 @@ class Project extends AppModel {
 			$this->invalidate('name', 'the project could not be created');
 			return false;
 		}
-
 
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
@@ -306,7 +306,6 @@ class Project extends AppModel {
 		}
 
 		$this->__created = false;
-		$this->createShell();
 	}
 /**
  * undocumented function
