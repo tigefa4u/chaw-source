@@ -6,7 +6,7 @@
 		echo $form->input('username',array(
 			'label'=> __('Username',true),
 			'error' => array(
-				'allowedChars' => __('Required: Minimum three (3) characters, letters (no accents), numbers and .-_ permitted..',true)
+				'allowedChars' => __('Required: Minimum three (3) characters, letters (no accents), numbers and .-_ permitted..', true),
 				'unique' => __('The project name must be unique.',true)
 			)
 		));

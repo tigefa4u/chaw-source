@@ -205,6 +205,7 @@ class Project extends AppModel {
  *
  **/
 	function beforeSave() {
+		$this->createShell();
 		if (empty($this->data['Project']['fork'])) {
 			$this->data['Project']['fork'] = null;
 		}
@@ -214,6 +215,7 @@ class Project extends AppModel {
 			return false;
 		}
 
+<<<<<<< HEAD:models/project.php
 		if (!empty($this->data['config'])) {
 			$this->data['Project']['config'] = array_merge($this->data['Project']['config'], $this->data['config']);
 			unset($this->data['config']);
@@ -223,6 +225,8 @@ class Project extends AppModel {
 			$this->data['Project']['config'] = serialize($this->data['Project']['config']);
 		}
 
+=======
+>>>>>>> master:models/project.php
 		if (!empty($this->data['Project']['approved'])) {
 			if ($this->initialize() === false) {
 				return false;
@@ -314,7 +318,6 @@ class Project extends AppModel {
 		}
 
 		$this->__created = false;
-		$this->createShell();
 	}
 /**
  * undocumented function

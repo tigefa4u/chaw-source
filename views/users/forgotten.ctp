@@ -16,7 +16,7 @@
 		<fieldset style="float:left;">
 		<?php
 			echo $form->input('email',array(
-				'label'=>array('labeltext'=>__('Email',true)
+				'label'=> __('Email',true)
 			));
 		?>
 		</fieldset>
