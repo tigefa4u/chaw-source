@@ -58,16 +58,19 @@ class SourceTestCase extends CakeTestCase {
 			'chmod' => 0777
 		));
 
-
+		//pr($this->Git->debug);
 		//die();
 	}
 
-	function end() {
-		parent::end();
+	function endTest() {
 		$Cleanup = new Folder(TMP . 'tests/git');
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
 		}
+	}
+
+	function igetTests() {
+		return array('start', 'testInitialize', 'end');
 	}
 
 	function testSourceInstance() {

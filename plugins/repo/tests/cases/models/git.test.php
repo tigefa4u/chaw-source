@@ -41,7 +41,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function igetTests() {
-		return array('start', 'startTest', 'testRead', 'end');
+		return array('start', 'testCommitIntoBranch', 'end');
 	}
 
 	function testRead() {
@@ -208,8 +208,17 @@ class GitTest extends CakeTestCase {
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
 
+		$Git->cd();
+		$Git->checkout(array('-b', 'new'));
+		$Git->push('origin', 'new');
+
 		$Git->branch('new', true);
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/new/.git'));
+
+		$Git->cd();
+		$Git->checkout(array('-b', 'new', 'origin/new'));
+		$Git->cd();
+		$Git->run('pull');
 
 		$File = new File(TMP . 'tests/git/working/test/new/a.txt');
 		$this->assertTrue($File->write('this is something new'));
@@ -217,9 +226,13 @@ class GitTest extends CakeTestCase {
 		$Git->commit(array("-m", "'Adding a.txt'"));
 		$Git->push('origin', 'new');
 
-		//pr($Git->debug);
-		//pr($Git->response);
-		//die();
+		$Git->cd();
+		$result = $Git->read();
+		$this->assertEqual($result['message'], "Adding a.txt");
+
+		// pr($Git->debug);
+		// pr($Git->response);
+		// die();
 	}
 
 	function testFastForward() {
@@ -436,5 +449,7 @@ class GitTest extends CakeTestCase {
 	function testTree() {
 	//	pr($Git->tree('master'));
 	}
+
+
 }
 ?>

@@ -9,7 +9,7 @@ if (!empty($tickets)):
 		);
 
 		$project = null;
-		if (!emptY($ticket['Project']) && $ticket['Project']['id'] !== $CurrentProject->id) {
+		if (!empty($ticket['Project']) && $ticket['Project']['id'] !== $CurrentProject->id) {
 			$url = $chaw->url($ticket['Project'], $url);
 			$project = ' in '. $html->link($ticket['Project']['name'], $chaw->url($ticket['Project'], array(
 				'admin' => false, 'controller' => 'source'

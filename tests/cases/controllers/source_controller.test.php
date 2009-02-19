@@ -91,6 +91,18 @@ class SourceControllerTest extends CakeTestCase {
 
 	}
 
+	function endTest() {
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
+		unset($this->Source);
+	}
+
+	function igetTests() {
+		return array('start', 'testGitBranchesWithArgs', 'end');
+	}
+
 	function testSourceControllerInstance() {
 		$this->assertTrue(is_a($this->Source, 'SourceController'));
 	}
@@ -146,8 +158,13 @@ class SourceControllerTest extends CakeTestCase {
 	}
 
 	function testGitBranchesWithArgs() {
+		$this->Source->Project->Repo->branch('new', true);
+		$this->Source->Project->Repo->cd();
+		$this->Source->Project->Repo->checkout(array('-b', 'new'));
+		$this->Source->Project->Repo->push('origin', 'new');
 
-		//$this->Source->Project->Repo->branch = null;
+		$this->Source->Project->Repo->branch = null;
+
 		$this->Source->branches('new');
 
 		$data = $this->Source->viewVars['data'];
@@ -181,14 +198,6 @@ class SourceControllerTest extends CakeTestCase {
 
 		//pr($this->Git->debug);
 		//die();
-	}
-
-	function endTest() {
-		$Cleanup = new Folder(TMP . 'tests/git');
-		if ($Cleanup->pwd() == TMP . 'tests/git') {
-			$Cleanup->delete();
-		}
-		unset($this->Source);
 	}
 }
 ?>

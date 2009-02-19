@@ -64,7 +64,7 @@ class Git extends Repo {
 			$this->run("--bare init");
 		}
 
-		$this->pull();
+		$this->branch('master', true);
 
 		if (!empty($options['remote'])) {
 			$remote = $options['remote'];
@@ -74,16 +74,14 @@ class Git extends Repo {
 		}
 
 		$project = basename($path);
-		//$this->remote(array('add', 'origin', "{$remote}:{$project}"));
 
 		if (is_dir($this->working) && !file_exists($this->working . DS . '.gitignore')) {
 			$this->cd();
 			$this->before(array("touch .gitignore"));
 			$this->commit("Initial Project Commit");
-			//$this->run("--bare", array('update-server-info'));
-			$this->update();
 			$this->push();
 		}
+		$this->log($this->debug, LOG_DEBUG);
 
 		if (is_dir($path) && is_dir($this->working)) {
 			return true;
@@ -178,20 +176,20 @@ class Git extends Repo {
 			if (!is_dir($base)) {
 				$clone = new Folder($base, true, $chmod);
 			}
-			$this->run('clone', array($this->path, $path));
+			$this->run('clone', array('-n', $this->path, $path));
 			chmod($path, $chmod);
+			$this->cd($path);
+			$this->run("config branch.{$name}.remote origin");
+			$this->cd($path);
+			$this->run("config branch.{$name}.merge refs/heads/{$name}");
+			$this->cd($path);
+			if ($name !== 'master') {
+				$this->checkout(array("-b", $name, "origin/{$name}"));
+			}
+		} else {
+			$this->cd($path);
+			$this->checkout(array($name));
 		}
-
-		$this->cd($path);
-		/*
-		$this->before(array(
-			$this->run('pull', null, true)
-		));
-		*/
-		$this->checkout(array($name));
-
-		//$this->before(array("cd {$path}"));
-		//$this->run('branch', array($name), 'capture');
 		if ($switch === true) {
 			$this->config(array('working' => $path));
 			return $this->branch = $name;
