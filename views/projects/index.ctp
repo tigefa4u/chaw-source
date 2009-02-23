@@ -134,7 +134,7 @@
 				?>
 			</span>
 
-			<p class="nav">
+			<p class="links">
 				<?php
 					/*
 					echo $html->link('source', array(
@@ -164,12 +164,11 @@
 					));
 				?>
 			</p>
-
+			
 			<p class="description">
 				<?php echo $project['Project']['description'];?>
 			</p>
-
-
+			
 		</div>
 
 	<?php endforeach;?>

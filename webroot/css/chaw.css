@@ -2,6 +2,7 @@
 colors
 blue: #69C;
 red: #804000;
+silver: #656565;
 */
 .clear {
   clear:both;
@@ -1029,19 +1030,18 @@ div.comments {
 	list-style-type: none;
 }
 
-.project p.nav {
-	float: none;	
+.projects .row p.links {
 	line-height: 120%;
 	font-size: 100%;
-	margin: 0;
 }
-.project p.nav a {
+.projects .row p.links a {
+	/*color: #656565;*/
 	color: #804000;
 }
 
-.project .description {
-	line-height: 120%;
+.projects .row .description {
 	margin-left: 50px;
+	line-height: 120%;
 }
 
 .projects {
