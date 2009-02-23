@@ -90,7 +90,8 @@ class AccessComponent extends Object {
 			if ($C->Session->read('Install') !== true) {
 				$C->Session->setFlash(__('Chaw needs to be installed',true));
 				$C->redirect(array(
-					'admin' => false, 'project' => null,
+					'admin' => false, 'plugin'=> null,
+					'project' => null, 'fork' => false,
 					'controller' => 'pages', 'action'=> 'start'
 				));
 				return false;
@@ -100,7 +101,8 @@ class AccessComponent extends Object {
 				if (!in_array($this->url, array('projects/add'))) {
 					$C->Session->setFlash(__('Chaw needs to be installed',true));
 					$C->redirect(array(
-						'admin' => false, 'project' => false,
+						'admin' => false, 'plugin'=> null,
+						'project' => false, 'fork' => false,
 						'controller' => 'pages', 'action'=> 'start'
 					));
 					return false;
@@ -115,7 +117,8 @@ class AccessComponent extends Object {
 				));
 				$C->Session->setFlash(sprintf(__("Chaw needs to be installed. Please <a href='%s'>Login</a> or Register",true),$login));
 				$C->redirect(array(
-					'admin' => false, 'project' => null,
+					'admin' => false, 'plugin'=> null,
+					'project' => null, 'fork'=> false,
 					'controller' => 'users', 'action'=> 'add'
 				));
 				return false;
@@ -176,7 +179,8 @@ class AccessComponent extends Object {
 			if (!$this->user()) {
 				$C->Session->setFlash(__('Select a Project',true));
 				$C->redirect(array(
-					'admin' => false, 'project' => false, 'fork' => false,
+					'admin' => false, 'plugin'=> null,
+					'project' => false, 'fork' => false,
 					'controller' => 'projects', 'action' => 'index'
 				));
 				return false;
@@ -187,7 +191,8 @@ class AccessComponent extends Object {
 			$referer = $C->referer();
 			if ($referer == '/' || strpos($referer, 'login') !== false) {
 				$referer = array(
-					'admin' => false, 'project' => false, 'fork' => false,
+					'admin' => false, 'plugin'=> null,
+					'project' => false, 'fork' => false,
 					'controller' => 'dashboard', 'action' => 'index'
 				);
 			}

@@ -52,6 +52,7 @@ class Source extends Object {
 					$branches = $this->Repo->find('branches');
 					if (in_array($branch, $branches)) {
 						$this->Repo->branch($branch, true);
+						$this->Repo->pull('origin', $branch);
 					}
 				}
 			}
@@ -82,10 +83,11 @@ class Source extends Object {
 		if ($this->Repo->type != 'git') {
 			return array();
 		}
+		$this->Repo->logReponse = true;
 		$config = $this->Repo->config;
 		$this->Repo->branch('master', true);
 		$this->Repo->cd();
-		$this->Repo->run('pull', null);
+		$this->Repo->run('pull');
 		$branches = $this->Repo->find('branches');
 		foreach ($branches as $branch) {
 			if ($branch == 'master') {
