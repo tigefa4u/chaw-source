@@ -68,7 +68,7 @@ class ChawUpgradeShell extends Shell {
 
 		$db = ConnectionManager::getDataSource($Model->useDbConfig);
 		$sql = array();
-		if ($new == true) {
+		if ($new == false) {
 			$oldTable = 'old_' . $table;
 			$Schema->tables['old_' . $table] = $Model->schema();
 			$sql = array(

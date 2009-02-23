@@ -33,7 +33,7 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 
-$canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
+$canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
 <?php
 	if ($session->check('Ticket.back')) {
@@ -153,7 +153,22 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 					<?php __('Comment');?>
 				</legend>
 				<?php
-					echo $form->input('status',array('label'=>array('labeltext' => __('Status',true))));
+					if (!empty($canUpdate)) {
+						echo '<div class="status">';
+							echo $form->input('status', array(
+								'label'=> __('Status',true)
+							));
+							echo $form->input('resolution', array(
+								'label'=> __('Resolution',true),
+								'empty' => true
+							));
+						echo '</div>';
+					} elseif (!empty($ticket['Resolution']['type'])) {
+						echo $form->input('reopen', array(
+							'type' => 'checkbox',
+							'label'=> __('reopen',true),
+						));
+					}
 					echo $form->input('id');
 					echo $form->textarea('comment');
 				?>
