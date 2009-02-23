@@ -120,6 +120,6 @@ class UpgradeOneTask extends ChawUpgradeShell {
 	}
 
 	function resolutions() {
-		$this->_updateSchema($this->Project, 'resolutions', false);
+		$this->_updateSchema($this->Project, 'resolutions', true);
 	}
 }
