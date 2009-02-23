@@ -1,6 +1,7 @@
 /*
 colors
 blue: #69C;
+red: #804000;
 */
 .clear {
   clear:both;
@@ -1027,15 +1028,17 @@ div.comments {
 	padding: 8px 0;
 	list-style-type: none;
 }
-/*
-.project .nav {
+
+.project p.nav {
 	float: none;	
 	line-height: 120%;
 	font-size: 100%;
 	margin: 0;
-	margin-bottom: 10px;
 }
-*/
+.project p.nav a {
+	color: #804000;
+}
+
 .project .description {
 	line-height: 120%;
 	margin-left: 50px;

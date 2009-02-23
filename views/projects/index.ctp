@@ -134,7 +134,7 @@
 				?>
 			</span>
 
-			<p>
+			<p class="nav">
 				<?php
 					/*
 					echo $html->link('source', array(
@@ -165,9 +165,9 @@
 				?>
 			</p>
 
-			<span class="description">
+			<p class="description">
 				<?php echo $project['Project']['description'];?>
-			</span>
+			</p>
 
 
 		</div>
