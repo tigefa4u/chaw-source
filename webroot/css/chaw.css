@@ -398,15 +398,12 @@ div.help h4 {
 }
 .row .nav {
 	float: right;
-	font-size: 100%;
+	font-size: 120%;
+	margin-top: -26px;
 	padding-top: 2px;
 	padding-left: 4px;
 	display:block;
 	vertical-align: bottom;
-}
-.row .nav {
-	font-size: 120%;
-	margin-top: -26px;
 }
 
 fieldset.options select {
@@ -1030,9 +1027,18 @@ div.comments {
 	padding: 8px 0;
 	list-style-type: none;
 }
-.project .description {
-	clear: none;
+/*
+.project .nav {
+	float: none;	
 	line-height: 120%;
+	font-size: 100%;
+	margin: 0;
+	margin-bottom: 10px;
+}
+*/
+.project .description {
+	line-height: 120%;
+	margin-left: 50px;
 }
 
 .projects {

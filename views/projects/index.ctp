@@ -80,7 +80,6 @@
 					endif;
 					?>
 			</h3>
-
 			<span class="nav">
 				<?php
 					/*
@@ -89,7 +88,7 @@
 						'controller' => 'source', 'action' => 'index',
 					));
 					echo ' | ';
-					*/
+
 					echo $html->link(__('timeline',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'timeline', 'action' => 'index'
@@ -104,9 +103,9 @@
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
 					));
-
+					*/
 					if (!empty($this->params['isAdmin'])):
-						echo ' | ';
+						//echo ' | ';
 						echo $html->link(__('view',true), array(
 							'admin' => false, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'projects', 'action' => 'view',
@@ -134,6 +133,37 @@
 
 				?>
 			</span>
+
+			<p>
+				<?php
+					/*
+					echo $html->link('source', array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'source', 'action' => 'index',
+					));
+					echo ' | ';
+					*/
+					echo $html->link(__('timeline',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'timeline', 'action' => 'index'
+					));
+					echo ' | ';
+					echo $html->link(__('wiki',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'wiki', 'action' => 'index'
+					));
+					echo ' | ';
+					echo $html->link(__('tickets',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'tickets', 'action' => 'index'
+					));
+					echo ' | ';
+					echo $html->link(__('versions',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'versions', 'action' => 'index'
+					));
+				?>
+			</p>
 
 			<span class="description">
 				<?php echo $project['Project']['description'];?>
