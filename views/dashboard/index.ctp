@@ -1,10 +1,18 @@
 <h2><?php __('Dashboard');?></h2>
 
+<?php
+
+if (empty($timeline)) {
+	echo $html->link(__('My Account',true), array('controller' => 'users', 'action' => 'account'));
+	return;
+}
+?>
+
 <div class="page-navigation">
 	<?php
-		echo $html->link(__('My Projects', true), array('controller' => 'projects', 'action' => 'index')) .' | ';
-
 		echo $html->link(__('My Account',true), array('controller' => 'users', 'action' => 'account')) .' | ';
+
+		echo $html->link(__('My Projects', true), array('controller' => 'projects', 'action' => 'index')) .' | ';
 
 		echo $chaw->type(array('title' => __('Commits',true),'type' =>'commits'), array(
 			'controller' => 'dashboard',
