@@ -975,7 +975,7 @@ msgid "Change Password"
 msgstr "パスワードを変更"
 
 #: \views\users\change.ctp:6
-msgid "Passwoord"
+msgid "Password"
 msgstr "パスワード"
 
 #: \views\users\edit.ctp:4

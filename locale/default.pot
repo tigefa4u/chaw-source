@@ -969,7 +969,7 @@ msgid "Change Password"
 msgstr ""
 
 #: \views\users\change.ctp:6
-msgid "Passwoord"
+msgid "Password"
 msgstr ""
 
 #: \views\users\edit.ctp:4

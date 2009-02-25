@@ -973,7 +973,7 @@ msgid "Change Password"
 msgstr "Alterar senha"
 
 #: \views\users\change.ctp:6
-msgid "Passwoord"
+msgid "Password"
 msgstr "Senha"
 
 #: \views\users\edit.ctp:4
