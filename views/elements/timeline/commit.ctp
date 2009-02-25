@@ -36,26 +36,37 @@
 				?>
 			</strong>
 			<?php
-				echo $chaw->commit($data['Commit']['revision'], $data['Project']) . " to ";
+				echo $chaw->commit($data['Commit']['revision'], $data['Project']);
 
 				if (!empty($data['Project']['fork'])) {
 					$project = "forks/{$data['Project']['fork']}/{$data['Project']['url']}/{$data['Branch']['name']}";
-					echo $html->link($project, $chaw->url($data['Project'], array(
+					echo  " to " . $html->link($project, $chaw->url($data['Project'], array(
 						'admin' => false, 'controller' => 'source','action' => 'branches',
 						$data['Branch']['name']
 					)), array('class' => 'project'));
-				} else {
-					echo $html->link($data['Branch']['name'], array(
-							'controller' => 'source', 'action' => 'branches',
-							$data['Branch']['name']
-					));
+				} else  {
+
+					if (!empty($data['Branch']['name'])) {
+						echo " to " . $html->link($data['Branch']['name'], array(
+								'controller' => 'source', 'action' => 'branches',
+								$data['Branch']['name']
+						));
+					}
+
+					if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
+						echo ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
+							'admin' => false, 'controller' => 'source'
+						)), array('class' => 'project'));
+					}
+
 				}
 
-				if (empty($CurrentProject->fork) && !empty($project)) {
+				if (empty($CurrentProject->fork) && !empty($data['Project']['fork'])) {
 					'(' . $chaw->admin('merge', array(
 						'controller' => 'repo', 'action' => 'merge', $data['Project']['fork']
 					)) . ')';
 				}
+
 			?>
 		</p>
 
@@ -67,10 +78,10 @@
 	<?php if (!empty($this->params['isAdmin'])):?>
 		<span class="admin">
 			<?php
-				if ($this->name == 'Timeline') {
-					echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));
-				} else if ($this->name == 'Commits') {
+				if ($this->name == 'Commits') {
 					echo $chaw->admin(__('remove',true), array('controller' => 'commits', 'action' => 'remove', $data['Commit']['id']));
+				} else {
+					echo $chaw->admin(__('remove',true), array('controller' => 'timeline', 'action' => 'remove', $data['Timeline']['id']));
 				}
 			?>
 		</span>

@@ -70,43 +70,21 @@
 
 			<h3 class="name">
 				<?php
+					if (!empty($project['Project']['private'])) :
+						echo $html->image('/css/images/lock.gif', array('height' => 20, 'width' => 20));
+					endif;
+
 					echo $html->link($project['Project']['name'], array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'source', 'action' => 'index',
 					));
 
-					if (!empty($project['Project']['private'])) :
-						echo $html->image('/css/images/lock.gif', array('height' => 20, 'width' => 20));
-					endif;
 					?>
 			</h3>
-
 			<span class="nav">
 				<?php
-					/*
-					echo $html->link('source', array(
-						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'source', 'action' => 'index',
-					));
-					echo ' | ';
-					*/
-					echo $html->link(__('timeline',true), array(
-						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'timeline', 'action' => 'index'
-					));
-					echo ' | ';
-					echo $html->link(__('wiki',true), array(
-						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'wiki', 'action' => 'index'
-					));
-					echo ' | ';
-					echo $html->link(__('tickets',true), array(
-						'admin' => false, 'project' => $url, 'fork'=> $fork,
-						'controller' => 'tickets', 'action' => 'index'
-					));
-
 					if (!empty($this->params['isAdmin'])):
-						echo ' | ';
+						//echo ' | ';
 						echo $html->link(__('view',true), array(
 							'admin' => false, 'project' => $url, 'fork'=> $fork,
 							'controller' => 'projects', 'action' => 'view',
@@ -123,6 +101,7 @@
 						));
 
 					endif;
+
 					if (!empty($CurrentUser->Permission) && empty($this->passedArgs['type']) && $this->action !== 'forks') {
 						echo ' | ';
 						echo $html->link('remove', array(
@@ -135,10 +114,33 @@
 				?>
 			</span>
 
-			<span class="description">
-				<?php echo $project['Project']['description'];?>
-			</span>
+			<p class="links">
+				<?php
+					echo $html->link(__('timeline',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'timeline', 'action' => 'index'
+					));
+					echo ' | ';
+					echo $html->link(__('wiki',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'wiki', 'action' => 'index'
+					));
+					echo ' | ';
+					echo $html->link(__('tickets',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'tickets', 'action' => 'index'
+					));
+					echo ' | ';
+					echo $html->link(__('versions',true), array(
+						'admin' => false, 'project' => $url, 'fork'=> $fork,
+						'controller' => 'versions', 'action' => 'index'
+					));
+				?>
+			</p>
 
+			<p class="description">
+				<?php echo $project['Project']['description'];?>
+			</p>
 
 		</div>
 

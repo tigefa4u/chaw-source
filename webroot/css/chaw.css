@@ -1,6 +1,8 @@
 /*
 colors
 blue: #69C;
+red: #804000;
+silver: #656565;
 */
 .clear {
   clear:both;
@@ -453,15 +455,12 @@ div.help h4 {
 }
 .row .nav {
 	float: right;
-	font-size: 100%;
+	font-size: 120%;
+	margin-top: -26px;
 	padding-top: 2px;
 	padding-left: 4px;
 	display:block;
 	vertical-align: bottom;
-}
-.row .nav {
-	font-size: 120%;
-	margin-top: -26px;
 }
 
 fieldset.options select {
@@ -1085,8 +1084,18 @@ div.comments {
 	padding: 8px 0;
 	list-style-type: none;
 }
-.project .description {
-	clear: none;
+
+.projects .row p.links {
+	line-height: 120%;
+	font-size: 100%;
+}
+.projects .row p.links a {
+	/*color: #656565;*/
+	color: #804000;
+}
+
+.projects .row .description {
+	margin-left: 50px;
 	line-height: 120%;
 }
 

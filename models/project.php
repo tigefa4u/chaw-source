@@ -194,6 +194,8 @@ class Project extends AppModel {
 	function beforeValidate() {
 		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
+		} else if (empty($this->data['Project']['name']) && !empty($this->data['Project']['url'])) {
+			$this->data['Project']['name'] = $this->config['name'];
 		}
 		return true;
 	}
@@ -521,7 +523,6 @@ class Project extends AppModel {
 			}
 			return true;
 		}
-
 		if (!empty($data['url'])) {
 			$reserved = array('forks');
 			if (in_array($data['url'], $reserved)) {
