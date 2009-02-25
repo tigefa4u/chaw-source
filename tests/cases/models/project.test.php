@@ -158,7 +158,7 @@ class ProjectTestCase extends CakeTestCase {
 
 		$data = array('Project' =>array(
 			'id' => 2,
-			'name' => 'new project',
+			'url' => 'new_project',
 			'user_id' => 1,
 			'username' => 'gwoo',
 			'repo_type' => 'Git',
