@@ -28,7 +28,7 @@
 		echo $form->input('ticket_types', array('type' => 'textarea'));
 		echo $form->input('ticket_priorities', array('type' => 'textarea'));
 		echo $form->input('ticket_statuses', array('type' => 'textarea'));
-		echo $form->input('ticket_resolutions', array('type' => 'textarea'));
+		//echo $form->input('ticket_resolutions', array('type' => 'textarea'));
 	?>
 	<p><?php __('Comma seperated') ?></p>
 
