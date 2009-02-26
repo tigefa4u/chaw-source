@@ -128,7 +128,7 @@ class Project extends AppModel {
 			$key = Configure::read('App.dir');
 			$project = Cache::read($key, 'project');
 			if (empty($project)) {
-				$project = $this->find('first');
+				$project = $this->findById(1);
 				if (!empty($project)) {
 					Cache::write($key, $project, 'project');
 				}
@@ -196,6 +196,9 @@ class Project extends AppModel {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		} else if (empty($this->data['Project']['name']) && !empty($this->data['Project']['url'])) {
 			$this->data['Project']['name'] = $this->config['name'];
+		}
+		if (!empty($this->data['Project']['id']) && $this->id == $this->data['Project']['id']) {
+			unset($this->validate['name']['minimum']);
 		}
 		return true;
 	}

@@ -152,6 +152,7 @@ class ProjectsController extends AppController {
 
 		if (!empty($this->data)) {
 			$this->data['Project']['id'] = $this->Project->id;
+			$this->data['Project'] = array_merge($this->Project->config, $this->data['Project']);
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash(__('Project was updated',true));
 			} else {
