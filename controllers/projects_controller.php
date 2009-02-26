@@ -152,6 +152,7 @@ class ProjectsController extends AppController {
 
 		if (!empty($this->data)) {
 			$this->data['Project']['id'] = $this->Project->id;
+			$this->data['Project'] = array_merge($this->Project->config, $this->data['Project']);
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash(__('Project was updated',true));
 			} else {
@@ -179,6 +180,29 @@ class ProjectsController extends AppController {
 			$this->Session->write('Auth.User.Permission', $this->Project->User->groups($this->Auth->user('id')));
 		}
 		$this->redirect($this->referer());
+	}
+
+	function delete() {
+		if (!empty($this->params['form']['cancel'])) {
+			$this->redirect(array('controller' => 'source'));
+		}
+		if (!empty($this->data['Project']['id']) && $this->data['Project']['id'] != 1) {
+			$project = $this->Project->findById($this->data['Project']['id']);
+			if (empty($project)) {
+				$this->Session->setFlash(__("Invalid Project", true));
+				$this->redirect(array('controller' => 'source'));
+			}
+			if ($this->Project->initialize($project['Project']) && $this->Project->config['id'] != 1) {
+				if ($this->Project->delete($this->data['Project']['id'])) {
+					$this->Project->Permission->deleteAll(array('Permission.project_id' => $this->data['Project']['id']));
+					$this->Session->setFlash(sprintf(__("%s was deleted ", true), $project['Project']['name']));
+				}
+			}
+			$this->redirect(array(
+				'plugin'=> false, 'project' => false, 'fork' => false,
+				'controller' => 'projects', 'action' => 'index'
+			));
+		}
 	}
 
 	function admin_index() {

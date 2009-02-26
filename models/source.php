@@ -143,9 +143,8 @@ class Source extends Object {
 		$Folder = new Folder($this->Repo->working . DS . $path);
 		$path = Folder::slashTerm($Folder->pwd());
 
-
 		if ($this->Repo->type == 'git') {
-			if (basename(dirname($this->Repo->working)) == 'working') {
+			if ($this->Repo->branch == null) {
 				$isRoot = true;
 			} else {
 				$branch = basename($this->Repo->working);
