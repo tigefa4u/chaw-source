@@ -317,7 +317,7 @@ class Project extends AppModel {
  **/
 	function afterDelete() {
 		$CleanUp = new Folder($this->Repo->path);
-		if ($CleanUp->pwd() == $this->Repo->path && strpos($this->Repo->path) !== false) {
+		if ($CleanUp->pwd() == $this->Repo->path && strpos($this->Repo->path, 'forks') !== false) {
 			$CleanUp->delete();
 		}
 		$CleanUp = new Folder($this->Repo->working);
