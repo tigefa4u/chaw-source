@@ -192,7 +192,7 @@ class ProjectsController extends AppController {
 				$this->Session->setFlash(__("Invalid Project", true));
 				$this->redirect(array('controller' => 'source'));
 			}
-			if ($this->Project->initialize($project['Project'])) {
+			if ($this->Project->initialize($project['Project']) && $this->Project->config['id'] != 1) {
 				if ($this->Project->delete($this->data['Project']['id'])) {
 					$this->Project->Permission->deleteAll(array('Permission.project_id' => $this->data['Project']['id']));
 					$this->Session->setFlash(sprintf(__("%s was deleted ", true), $project['Project']['name']));
