@@ -81,13 +81,10 @@ class RepoController extends AppController {
 				)
 			));
 			if ($data = $this->Project->fork()) {
-				if (empty($data['Project']['approved'])) {
-					$this->Session->setFlash(__('Project is awaiting approval',true));
-				} else {
-					$this->Session->setFlash(__('Project was created',true));
-				}
+				$this->Session->setFlash(__('Fork was created',true));
 				$this->redirect(array(
-					'fork' => $data['Project']['fork'],
+					'plugin' => null,
+					'project' => $data['Project']['url'], 'fork' => $data['Project']['fork'],
 					'controller' => 'source', 'action' => 'index',
 				));
 			} else {

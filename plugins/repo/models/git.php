@@ -100,8 +100,11 @@ class Git extends Repo {
 			return false;
 		}
 		extract($this->config);
-		$this->branch = null;
-		$working = dirname(dirname($working));
+		$working = dirname($working);
+		if ($this->branch !== null) {
+			$this->branch = null;
+			$working = dirname($working);
+		}
 		$project = basename($path);
 		$fork = dirname($path) . DS . 'forks' . DS . $user . DS . $project;
 

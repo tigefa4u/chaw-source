@@ -181,6 +181,29 @@ class ProjectsController extends AppController {
 		$this->redirect($this->referer());
 	}
 
+	function delete() {
+		if (!empty($this->params['form']['cancel'])) {
+			$this->redirect(array('controller' => 'source'));
+		}
+		if (!empty($this->data['Project']['id']) && $this->data['Project']['id'] != 1) {
+			$project = $this->Project->findById($this->data['Project']['id']);
+			if (empty($project)) {
+				$this->Session->setFlash(__("Invalid Project", true));
+				$this->redirect(array('controller' => 'source'));
+			}
+			if ($this->Project->initialize($project['Project'])) {
+				if ($this->Project->delete($this->data['Project']['id'])) {
+					$this->Project->Permission->deleteAll(array('Permission.project_id' => $this->data['Project']['id']));
+					$this->Session->setFlash(sprintf(__("%s was deleted ", true), $project['Project']['name']));
+				}
+			}
+			$this->redirect(array(
+				'plugin'=> false, 'project' => false, 'fork' => false,
+				'controller' => 'projects', 'action' => 'index'
+			));
+		}
+	}
+
 	function admin_index() {
 		if ($this->Project->id != 1 || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());

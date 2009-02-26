@@ -315,6 +315,22 @@ class Project extends AppModel {
  * @return void
  *
  **/
+	function afterDelete() {
+		$CleanUp = new Folder($this->Repo->path);
+		if ($CleanUp->pwd() == $this->Repo->path && strpos($this->Repo->path) !== false) {
+			$CleanUp->delete();
+		}
+		$CleanUp = new Folder($this->Repo->working);
+		if ($CleanUp->pwd() == $this->Repo->working) {
+			$CleanUp->delete();
+		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function createHooks($hooks, $options = array()) {
 		extract(array_merge(array('project' => null, 'fork' => null, 'root' => null), $options));
 		$result = array();
@@ -379,7 +395,6 @@ class Project extends AppModel {
 			$this->data['Project']['username'] = $this->data['Project']['fork'];
 			$this->data['Project']['users_count'] = 1;
 		}
-
 		if (!empty($this->data['Project']['id'])) {
 			$this->id = null;
 			unset($this->data['Project']['id'], $this->data['Project']['created'], $this->data['Project']['modified']);
