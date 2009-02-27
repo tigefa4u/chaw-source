@@ -87,7 +87,7 @@ class AppController extends Controller {
 		}
 
 		$this->set('CurrentUser', Set::map($this->Auth->user()));
-		$this->set('CurrentProject', Set::map($this->Project->current, true));
+		$this->set('CurrentProject', Set::map(Configure::read('Project'), true));
 	}
 
 	/**
