@@ -19,6 +19,7 @@ class ProjectsController extends AppController {
 	var $name = 'Projects';
 
 	var $paginate = array(
+		'limit' => 3,
 		'order' => 'Project.users_count DESC, Project.created ASC'
 	);
 
@@ -32,21 +33,26 @@ class ProjectsController extends AppController {
 	function index() {
 		Router::connectNamed(array('type', 'page'));
 
-		$projects = $this->Access->user('Permission');
+		if (empty($this->passedArgs['type'])) {
+			$this->passedArgs['type'] = 'public';
+			$projects = $this->Project->User->groups($this->Auth->user('id'));
+			if (!empty($projects)) {
+				$this->Session->write('Auth.User.Permission', $projects);
+				$this->passedArgs['type'] = null;
+				$this->paginate['conditions'] = array('Project.id' => array_keys($projects));
+				$this->paginate['order'] = 'Project.private DESC, Project.id ASC';
+			}
+		}
 
-		if (empty($projects) || !empty($this->passedArgs['type'])) {
-
-			$this->Project->recursive = 0;
+		if (!empty($this->passedArgs['type'])) {
 
 			$this->paginate['conditions'] = array(
 				'Project.private' => 0, 'Project.active' => 1, 'Project.approved' => 1
 			);
 
-			if ($this->params['isAdmin'] === true) {
-				$this->paginate['conditions'] = array(
-					'Project.active' => 1, 'Project.approved' => 1
-				);
-				$this->paginate['order'] = 'Project.id ASC';
+			if ($this->params['isAdmin'] === true && $this->Project->id == 1) {
+				unset($this->paginate['conditions']['Project.private']);
+				$this->paginate['order'] = 'Project.private ASC, Project.id ASC';
 			}
 
 			if(empty($this->passedArgs['type'])) {
@@ -59,11 +65,9 @@ class ProjectsController extends AppController {
 				$this->paginate['conditions']['Project.fork ='] = null;
 			}
 
-		} else {
-			$this->passedArgs['type'] = null;
-			$this->paginate['conditions'] = array('Project.id' => array_keys($projects));
 		}
 
+		$this->Project->recursive = 0;
 		$projects  = $this->paginate();
 		$this->set('projects', $projects);
 
