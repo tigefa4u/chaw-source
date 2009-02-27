@@ -4,7 +4,7 @@
  		<legend><?php __('Change Password');?></legend>
 	<?php
 		echo $form->input('password',array(
-			'label'=> __('Passwoord',true)
+			'label'=> __('Password',true)
 		));
 	?>
 	</fieldset>

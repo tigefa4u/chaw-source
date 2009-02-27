@@ -27,6 +27,11 @@
 				endif;
 
 				if (!empty($CurrentProject->fork) && !empty($this->params['isAdmin'])):
+					echo $html->tag('span', $html->link(__('delete',true), array(
+						'admin' => false,
+						'controller' => 'projects', 'action' => 'delete'
+					), array('class' => 'detail')));
+
 					echo $html->tag('span', $html->link(__('fast forward',true), array(
 						'admin' => false,
 						'controller' => 'repo', 'action' => 'fast_forward'

@@ -20,6 +20,13 @@ class DashboardController extends AppController {
 
 	var $uses = array('Timeline');
 
+	var $helpers = array('Text');
+
+	var $paginate = array(
+		'limit' => 20,
+		'order' => 'Timeline.created DESC, Timeline.id DESC'
+	);
+
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Access->allow('index', 'feed');
@@ -33,40 +40,22 @@ class DashboardController extends AppController {
 		if (empty($ids)) {
 			return;
 		}
-		$wiki = $this->Timeline->Wiki->find('all', array(
-			'conditions' => array('Wiki.project_id' => $ids, 'Wiki.active' => 1),
-			'limit' => 10, 'order' => 'Wiki.created DESC',
-			'recursive' => 0
-		));
 
-		$tickets = $this->Timeline->Ticket->find('all', array(
-			'conditions' => array('Ticket.project_id' => $ids),
-			'limit' => 10, 'order' => 'Ticket.created DESC',
-			'recursive' => 0
-		));
+		$this->paginate['conditions']['Timeline.project_id'] = $ids;
 
-		$this->Timeline->Ticket->Comment->User->unbindModel(array(
-			'hasOne' => array('Permission'),
-		));
+		if (!empty($this->passedArgs['type'])) {
+			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
+		} else if ($this->action !== 'forks'){
+			$this->passedArgs['type'] = null;
+		}
 
-		$comments = $this->Timeline->Ticket->Comment->find('all', array(
-			'conditions' => array('Ticket.project_id' => $ids),
-			'limit' => 10, 'order' => 'Comment.created DESC',
-			'recursive' => 2
-		));
+		$this->Timeline->recursive = -1;
+		$timeline = $this->paginate();
 
-		$commits = $this->Timeline->Commit->find('all', array(
-			'conditions' => array('Commit.project_id' => $ids),
-			'limit' => 10, 'order' => 'Commit.created DESC',
-			'recursive' => 0
-		));
-
-		$this->set(compact('projects', 'wiki', 'tickets', 'comments', 'commits'));
-
+		$this->set('timeline', $this->Timeline->related($timeline));
 	}
 
 	function feed() {
-		$this->helpers[] = 'Text';
 		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 
 		extract($this->Project->User->projects($this->Auth->user('id')));
@@ -74,8 +63,6 @@ class DashboardController extends AppController {
 		if (empty($ids)) {
 			return;
 		}
-
-		$this->paginate['order'] = 'Timeline.created DESC';
 
 		if (empty($this->paginate['conditions'])) {
 			$this->paginate['conditions'] = array(
@@ -85,8 +72,6 @@ class DashboardController extends AppController {
 
 		if (!empty($this->passedArgs['type'])) {
 			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
-		} else if ($this->action !== 'forks'){
-			$this->passedArgs['type'] = null;
 		}
 
 		$this->Timeline->recursive = -1;
