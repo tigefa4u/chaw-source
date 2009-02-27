@@ -5,7 +5,7 @@
 			$html->tag('legend', sprintf(__("Are you ready to fork %s",true),$CurrentProject->name))
 			. __("<p>A fork is a central repository for your copy of the project.</p>",true)
 			. __("<p>If you plan to contribute to the main project, then a fork may be just what you need.</p>",true)
-			. sprintf(__("<p>Otherwise, you can always <strong>git clone</strong> %s:%s.git</p>",true),$CurrentProject->remote->git,$CurrentProject->url)
+			. sprintf(__("<p>Otherwise, you can always <strong>git clone</strong> %s:%s.git</p>",true), $CurrentProject->remote->git, $CurrentProject->url)
 		 	. $form->hidden('project_id', array('value' => $CurrentProject->id))
 		);
 

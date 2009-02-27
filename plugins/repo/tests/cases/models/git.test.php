@@ -16,6 +16,10 @@ class GitTest extends CakeTestCase {
 
 	function end() {
 		parent::end();
+		$this->__cleanUp();
+	}
+
+	function __cleanUp() {
 		$Cleanup = new Folder(TMP . 'tests/git');
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
@@ -41,7 +45,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function igetTests() {
-		return array('start', 'testCommitIntoBranch', 'end');
+		return array('start', 'testFork', 'end');
 	}
 
 	function testRead() {
@@ -100,15 +104,33 @@ class GitTest extends CakeTestCase {
 		$Git->commit('Updating git ignore');
 		$Git->push();
 
+		$File = new File(TMP . 'tests/git/working/test/master/new_file.txt', true, 0777);
+		$this->assertTrue($File->write('this is something new'));
+		$Git->commit('Adding new file');
+		$Git->push();
+
+
 		$Git->logResponse = true;
 		$result = $Git->fork("gwoo");
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/gwoo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/gwoo/test/master/'));
 
-		$result = $Git->find('count', array('path' => TMP . 'tests/git/working/forks/gwoo/test/master/.gitignore'));
-		$this->assertEqual($result, 2);
+		$result = $Git->find('all');
+		$this->assertEqual($result[0]['Repo']['message'], 'Adding new file');
+		$this->assertEqual($result[1]['Repo']['message'], 'Updating git ignore');
 
-		//pr($Git->debug);
+
+		$Git->config($this->__repos[1]);
+		$Git->branch = null;
+		$result = $Git->fork("bob");
+		$this->assertTrue(file_exists(TMP . 'tests/git/repo/forks/bob/test.git'));
+		$this->assertTrue(file_exists(TMP . 'tests/git/working/forks/bob/test/master/'));
+
+		$result = $Git->find('all');
+		$this->assertEqual($result[0]['Repo']['message'], 'Adding new file');
+		$this->assertEqual($result[1]['Repo']['message'], 'Updating git ignore');
+
+		// pr($Git->debug);
 		//pr($Git->response);
 		//die();
 	}
@@ -165,6 +187,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testFindWithFields() {
+		$this->__cleanUp();
 		$Git = ClassRegistry::init($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));

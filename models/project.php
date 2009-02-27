@@ -128,7 +128,7 @@ class Project extends AppModel {
 			$key = Configure::read('App.dir');
 			$project = Cache::read($key, 'project');
 			if (empty($project)) {
-				$project = $this->find('first');
+				$project = $this->findById(1);
 				if (!empty($project)) {
 					Cache::write($key, $project, 'project');
 				}
@@ -197,6 +197,9 @@ class Project extends AppModel {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		} else if (empty($this->data['Project']['name']) && !empty($this->data['Project']['url'])) {
 			$this->data['Project']['name'] = $this->config['name'];
+		}
+		if (!empty($this->data['Project']['id']) && $this->id == $this->data['Project']['id']) {
+			unset($this->validate['name']['minimum']);
 		}
 		return true;
 	}
@@ -324,6 +327,22 @@ class Project extends AppModel {
  * @return void
  *
  **/
+	function afterDelete() {
+		$CleanUp = new Folder($this->Repo->path);
+		if ($CleanUp->pwd() == $this->Repo->path && strpos($this->Repo->path, 'forks') !== false) {
+			$CleanUp->delete();
+		}
+		$CleanUp = new Folder($this->Repo->working);
+		if ($CleanUp->pwd() == $this->Repo->working) {
+			$CleanUp->delete();
+		}
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
 	function createHooks($hooks, $options = array()) {
 		extract(array_merge(array('project' => null, 'fork' => null, 'root' => null), $options));
 		$result = array();
@@ -388,7 +407,6 @@ class Project extends AppModel {
 			$this->data['Project']['username'] = $this->data['Project']['fork'];
 			$this->data['Project']['users_count'] = 1;
 		}
-
 		if (!empty($this->data['Project']['id'])) {
 			$this->id = null;
 			unset($this->data['Project']['id'], $this->data['Project']['created'], $this->data['Project']['modified']);

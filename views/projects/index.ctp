@@ -28,7 +28,7 @@
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
-			echo $chaw->type(array('title' => __('Fork',true),'type' =>'fork'), array(
+			echo $chaw->type(array('title' => __('Forks',true),'type' =>'forks'), array(
 				'controller' => 'projects', 'action' => 'index',
 			)) . ' | ';
 
