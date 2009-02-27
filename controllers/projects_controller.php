@@ -19,7 +19,6 @@ class ProjectsController extends AppController {
 	var $name = 'Projects';
 
 	var $paginate = array(
-		'limit' => 3,
 		'order' => 'Project.users_count DESC, Project.created ASC'
 	);
 
