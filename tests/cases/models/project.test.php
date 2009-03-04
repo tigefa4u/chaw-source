@@ -534,7 +534,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue($this->Project->delete(1));
 
 		$this->assertTrue(file_exists($this->Project->Repo->path));
-		$this->assertFalse(file_exists($this->Project->Repo->working));
+		$this->assertTrue(file_exists($this->Project->Repo->working));
 
 		$this->assertTrue($this->Project->initialize(array('project' => 'second_project')));
 

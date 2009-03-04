@@ -163,7 +163,7 @@ class AccessComponent extends Object {
 
 		if ($loginRequired) {
 			$C->Auth->deny($C->action);
-			$C->Auth->authError = "Please login to continue.";
+			$C->Auth->authError = __("Please login to continue.", true);
 			return false;
 		}
 

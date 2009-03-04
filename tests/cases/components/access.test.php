@@ -20,6 +20,8 @@ class TestAccessController extends Controller {
 
 	var $testRedirect = null;
 
+	var $scaffold;
+
 	function redirect($url, $status = false) {
 		return $this->testRedirect = $url;
 	}
@@ -30,7 +32,7 @@ class AccessComponentTest extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit'
+		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
 	);
 
 	function testUser() {
@@ -60,7 +62,7 @@ class AccessComponentTest extends CakeTestCase {
 		$result = $Access->user("Permission.2");
 		$expected = 'developer';
 		$this->assertEqual($result, $expected);
-		
+
 
 	}
 
@@ -198,7 +200,7 @@ class AccessComponentTest extends CakeTestCase {
 			'url' => array('url' => '/')
 		);
 		$this->__runStartup();
-		$expected = array('admin' => false, 'project' => false, 'controller' => 'pages', 'action' => 'start');
+		$expected = array('admin' => false, 'plugin' => null, 'project' => false, 'fork' => false, 'controller' => 'pages', 'action' => 'start');
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 
 		$this->Controller->Project = null;
@@ -497,7 +499,7 @@ class AccessComponentTest extends CakeTestCase {
 		);
 
 		$this->__runStartup();
-		$expected = array('admin' => false, 'project'=> false, 'fork'=> false, 'controller' => 'projects', 'action' => 'index');
+		$expected = array('admin' => false, 'plugin' => null, 'project' => false, 'fork' => false, 'controller' => 'projects', 'action' => 'index');
 		$this->assertEqual($this->Controller->testRedirect, $expected);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
@@ -574,7 +576,7 @@ class AccessComponentTest extends CakeTestCase {
 		$_SERVER['HTTP_REFERER'] = '/';
 
 		$this->__runStartup();
-		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index'));
+		$this->assertEqual($this->Controller->testRedirect, array('admin' => false, 'plugin' => null, 'project' => false, 'fork' => false, 'controller' => 'dashboard', 'action' => 'index'));
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
 		$_SERVER['HTTP_REFERER'] = '/wiki';
