@@ -222,9 +222,9 @@ class AccessComponent extends Object {
 			return false;
 		}
 
-		$group = $this->user("Permission.1");
+		$group = $this->user("Permission.{$C->Project->id}");
 		if (empty($group)) {
-			$group = $this->user("Permission.{$C->Project->id}");
+			$group = $this->user("Permission.1");
 		}
 
 		if ($username && $admin === true) {
