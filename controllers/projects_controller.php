@@ -249,7 +249,7 @@ class ProjectsController extends AppController {
 
 		$this->pageTitle = 'Project Setup';
 
-		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
+		if ($this->Project->id !== '1' && $this->params['isAdmin'] !== true) {
 			$this->redirect($this->referer());
 		}
 
@@ -297,7 +297,7 @@ class ProjectsController extends AppController {
 		$this->Project->id = $id;
 
 		if (!empty($this->data)) {
-			if ($data = $this->Project->save($this->data)) {
+			if ($data = $this->Project->save($this->data, false)) {
 				$this->Session->setFlash(__('Project was updated',true));
 				$this->redirect(array('action' => 'index'));
 			} else {
