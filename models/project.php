@@ -110,12 +110,7 @@ class Project extends AppModel {
 		}
 
 		if (!empty($params['project'])) {
-			$conditions['url'] = $params['project'];
-			$conditions['fork'] = null;
-			if (!empty($params['fork'])) {
-				$conditions['fork'] = $params['fork'];
-			}
-			$key = join('_', array_filter(array_values($conditions)));
+			extract($this->key($params));
 			$project = Cache::read($key, 'project');
 			if (empty($project)) {
 				$project = $this->find($conditions);
@@ -331,10 +326,15 @@ class Project extends AppModel {
 		$CleanUp = new Folder($this->Repo->path);
 		if ($CleanUp->pwd() == $this->Repo->path && strpos($this->Repo->path, 'forks') !== false) {
 			$CleanUp->delete();
-		}
-		$CleanUp = new Folder($this->Repo->working);
-		if ($CleanUp->pwd() == $this->Repo->working) {
-			$CleanUp->delete();
+
+			$CleanUp = new Folder($this->Repo->working);
+			if ($CleanUp->pwd() == $this->Repo->working) {
+				$CleanUp->delete();
+			}
+			$key = $this->key();
+			if (!empty($key)) {
+				Cache::delete($key['key'], 'project');
+			}
 		}
 	}
 /**
@@ -551,7 +551,7 @@ class Project extends AppModel {
 			return true;
 		}
 		if (!empty($data['url'])) {
-			$reserved = array('forks');
+			$reserved = array('forks', 'users', 'comments', 'commits', 'dashboard', 'pages', 'permissions', 'repo', 'source', 'tickets', 'timeline', 'versions', 'wiki');
 			if (in_array($data['url'], $reserved)) {
 				$this->invalidate('name');
 				return false;
@@ -628,6 +628,30 @@ class Project extends AppModel {
 		}
 		$from = sprintf('<noreply@%s>', $baseDomain);
 		return $from;
+	}
+/**
+ * undocumented function
+ *
+ * @return void
+ *
+ **/
+	function key($params = array()) {
+		if (empty($params)) {
+			$params = $this->config;
+		}
+		if (empty($params['project'])) {
+			if (empty($params['url'])) {
+				return array();
+			}
+			$params['project'] = $params['url'];
+		}
+		$conditions['fork'] = null;
+		if (!empty($params['fork'])) {
+			$conditions['fork'] = $params['fork'];
+		}
+		$conditions['url'] = $params['project'];
+		$key = join('_', array_filter(array_values($conditions)));
+		return compact('key', 'conditions');
 	}
 }
 ?>

@@ -191,24 +191,27 @@ class ProjectsController extends AppController {
 		if (!empty($this->params['form']['cancel'])) {
 			$this->redirect(array('controller' => 'source'));
 		}
-		if (!empty($this->data['Project']['id']) && $this->data['Project']['id'] != 1) {
-			$project = $this->Project->findById($this->data['Project']['id']);
-			if (empty($project)) {
-				$this->Session->setFlash(__("Invalid Project", true));
-				$this->redirect(array('controller' => 'source'));
-			}
-			$this->Project->set($project);
-			if ($this->Project->initialize() && $this->Project->config['id'] != 1) {
-				if ($this->Project->delete($this->data['Project']['id'])) {
-					$this->Project->Permission->deleteAll(array('Permission.project_id' => $this->data['Project']['id']));
-					$this->Session->setFlash(sprintf(__("%s was deleted ", true), $project['Project']['name']));
-				} else {
-					$this->Session->setFlash(sprintf(__("%s was NOT deleted ", true), $project['Project']['name']));
+		if (!empty($this->data['Project']['id'])) {
+
+			if ($this->data['Project']['id'] != 1) {
+				$project = $this->Project->findById($this->data['Project']['id']);
+				if (empty($project)) {
+					$this->Session->setFlash(__("Invalid Project", true));
+					$this->redirect(array('controller' => 'source'));
 				}
-			} else {
-				$this->Session->setFlash(sprintf(__("%s could not be found", true), $project['Project']['name']));
+				$this->Project->set($project);
+				if ($this->Project->initialize() && $this->Project->config['id'] != 1) {
+					if ($this->Project->delete($this->data['Project']['id'])) {
+						$this->Project->Permission->deleteAll(array('Permission.project_id' => $this->data['Project']['id']));
+						$this->Session->setFlash(sprintf(__("%s was deleted ", true), $project['Project']['name']));
+					} else {
+						$this->Session->setFlash(sprintf(__("%s was NOT deleted ", true), $project['Project']['name']));
+					}
+				} else {
+					$this->Session->setFlash(sprintf(__("%s could not be found", true), $project['Project']['name']));
+				}
 			}
-			
+
 			$this->redirect(array(
 				'plugin'=> false, 'project' => false, 'fork' => false,
 				'controller' => 'projects', 'action' => 'index'
@@ -248,7 +251,7 @@ class ProjectsController extends AppController {
 
 		$this->pageTitle = 'Project Setup';
 
-		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
+		if ($this->Project->id !== '1' && $this->params['isAdmin'] !== true) {
 			$this->redirect($this->referer());
 		}
 
@@ -296,7 +299,7 @@ class ProjectsController extends AppController {
 		$this->Project->id = $id;
 
 		if (!empty($this->data)) {
-			if ($data = $this->Project->save($this->data)) {
+			if ($data = $this->Project->save($this->data, false)) {
 				$this->Session->setFlash(__('Project was updated',true));
 				$this->redirect(array('action' => 'index'));
 			} else {
