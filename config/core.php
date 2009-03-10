@@ -232,6 +232,9 @@
 		$duration = '+15 seconds';
 	}
 
-	Cache::config('project', array('engine' => 'File', 'duration' => $duration, 'prefix' => 'project_', 'path' => CACHE . 'persistent'));
+	Cache::config('project', array(
+		'engine' => 'File', 'duration' => $duration, 
+		'prefix' => 'p_', 'path' => CACHE . 'projects'
+	));
 
 ?>

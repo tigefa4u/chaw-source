@@ -163,7 +163,7 @@ class AccessComponent extends Object {
 
 		if ($loginRequired) {
 			$C->Auth->deny($C->action);
-			$C->Auth->authError = "Please login to continue.";
+			$C->Auth->authError = __("Please login to continue.", true);
 			return false;
 		}
 
@@ -223,6 +223,9 @@ class AccessComponent extends Object {
 		}
 
 		$group = $this->user("Permission.{$C->Project->id}");
+		if (empty($group)) {
+			$group = $this->user("Permission.1");
+		}
 
 		if ($username && $admin === true) {
 			$admin = array(
