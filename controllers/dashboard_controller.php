@@ -33,6 +33,8 @@ class DashboardController extends AppController {
 	}
 
 	function index() {
+		Router::connectNamed(array('page', 'type'));
+
 		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 
 		extract($this->Project->User->projects($this->Auth->user('id')));
@@ -64,11 +66,7 @@ class DashboardController extends AppController {
 			return;
 		}
 
-		if (empty($this->paginate['conditions'])) {
-			$this->paginate['conditions'] = array(
-				'Timeline.project_id' => $ids
-			);
-		}
+		$this->paginate['conditions']['Timeline.project_id'] = $ids;
 
 		if (!empty($this->passedArgs['type'])) {
 			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
@@ -81,47 +79,23 @@ class DashboardController extends AppController {
 	}
 
 	function admin_index() {
-		$this->Project->bindModel(array('hasMany' => array(
-			'Wiki' => array('conditions' => array('Wiki.project_id' => $this->Project->id)),
-			'Ticket' => array('conditions' => array('Ticket.project_id' => $this->Project->id)),
-			'Commit' => array('conditions' => array('Commit.project_id' => $this->Project->id)),
-		)));
+		Router::connectNamed(array('page', 'type'));
 
-		$wiki = $this->Project->Wiki->find('all', array(
-			'conditions' => array('Wiki.project_id' => $this->Project->id, 'Wiki.active' => 1),
-			'limit' => 10, 'order' => 'Wiki.created DESC',
-			'recursive' => 0
-		));
+		$projects = $this->Project->forks();
+		array_unshift($projects, $this->Project->id);
 
-		$tickets = $this->Project->Ticket->find('all', array(
-			'conditions' => array('Ticket.project_id' => $this->Project->id),
-			'limit' => 10, 'order' => 'Ticket.created DESC',
-			'recursive' => -1
-		));
+		$this->paginate['conditions']['Timeline.project_id'] = $projects;
 
-		$comments = $this->Project->Ticket->Comment->find('all', array(
-			'conditions' => array('Ticket.project_id' => $this->Project->id),
-			'limit' => 10, 'order' => 'Comment.created DESC',
-			'recursive' => 0
-		));
-
-		$commits = $this->Project->Commit->find('all', array(
-			'conditions' => array('Commit.project_id' => $this->Project->id),
-			'limit' => 10, 'order' => 'Commit.created DESC',
-			'recursive' => 0
-		));
-
-		$forkCommits = null;
-		if (empty($this->Project->current['fork'])) {
-			$forks = $this->Project->forks();
-			$forkCommits = $this->Project->Commit->find('all', array(
-				'conditions' => array('Commit.project_id' => $forks),
-				'limit' => 10, 'order' => 'Commit.created DESC',
-				'recursive' => 0
-			));
+		if (!empty($this->passedArgs['type'])) {
+			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
+		} else if ($this->action !== 'forks'){
+			$this->passedArgs['type'] = null;
 		}
 
-		$this->set(compact('wiki', 'tickets', 'comments', 'commits', 'forkCommits'));
+		$this->Timeline->recursive = -1;
+		$timeline = $this->paginate();
+
+		$this->set('timeline', $this->Timeline->related($timeline));
 	}
 
 }
