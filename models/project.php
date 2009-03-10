@@ -437,13 +437,15 @@ class Project extends AppModel {
  *
  **/
 	function forks() {
-		return Set::extract(
-			$this->find('all', array(
-				'conditions' => array('Project.project_id' => $this->id),
-				'recursive' => -1
-			)),
-			'/Project/id'
-		);
+		$forks = $this->find('all', array(
+			'conditions' => array('Project.project_id' => $this->id),
+			'recursive' => -1
+		));
+
+		if (empty($forks)) {
+			return array();
+		}
+		return Set::extract($forks, '/Project/id');
 	}
 /**
  * undocumented function
