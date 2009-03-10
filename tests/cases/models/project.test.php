@@ -482,7 +482,7 @@ class ProjectTestCase extends CakeTestCase {
 		$path = Configure::read('Content.base');
 		$this->assertFalse(file_exists($path . 'permissions.ini'));
 
-		$project = 'new_project';
+		$project = 'original_project';
 		$this->Project->initialize(compact('project'));
 		$this->assertTrue($this->Project->set($this->Project->config));
 		$this->assertTrue($this->Project->save(array('approved' => 1)));
@@ -534,7 +534,7 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertTrue($this->Project->delete(1));
 
 		$this->assertTrue(file_exists($this->Project->Repo->path));
-		$this->assertFalse(file_exists($this->Project->Repo->working));
+		$this->assertTrue(file_exists($this->Project->Repo->working));
 
 		$this->assertTrue($this->Project->initialize(array('project' => 'second_project')));
 
