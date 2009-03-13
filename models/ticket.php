@@ -34,7 +34,11 @@ class Ticket extends AppModel {
 		)
 	);
 */
-	var $hasMany = array('Comment');
+	var $hasMany = array(
+		'Comment' => array(
+			'order' => 'Comment.created ASC'
+		)
+	);
 
 	var $hasAndBelongsToMany = array('Tag');
 
@@ -63,15 +67,13 @@ class Ticket extends AppModel {
 		}
 
 		$owner = null;
-		if (!empty($this->data['Ticket']['owner'])) {
+		if (isset($this->data['Ticket']['owner'])) {
 			if (!is_numeric($this->data['Ticket']['owner'])) {
 				$owner = $this->data['Ticket']['owner'];
 				$this->data['Ticket']['owner'] = $this->Owner->field('id', array('username' => $owner));
-			} else {
+			} elseif (!empty($this->data['Ticket']['owner'])) {
 				$owner = $this->Owner->field('username', array('id' => $this->data['Ticket']['owner']));
 			}
-		} else {
-			unset($this->data['Ticket']['owner']);
 		}
 
 		$version = false;
@@ -82,19 +84,33 @@ class Ticket extends AppModel {
 		}
 
 		if ($this->id) {
+
+			if (isset($this->data['Ticket']['previous'])) {
+				$previous = $this->data['Ticket']['previous'];
+				unset($this->data['Ticket']['previous']);
+			}
+
 			$changes = array();
 			foreach ($this->data['Ticket'] as $field => $value) {
-				if ($field == 'modified') {
+				if ($field == 'comment' || $field == 'modified') {
 					continue;
 				}
-				if (!empty($this->data['Ticket']['previous'][$field]) && $this->data['Ticket']['previous'][$field] != $value) {
+				if (isset($previous[$field]) && $previous[$field] != $value) {
 					$change = null;
 					if ($field == 'description') {
 						$change = "- **{$field}** was changed";
-					} elseif ($field == 'owner' && $owner) {
+					} elseif ($field == 'owner') {
 						$change = "- **owner** was changed to _{$owner}_";
-					} elseif ($field == 'version_id' && $version) {
+						if (empty($owner)) {
+							$change = "- **owner** was removed";
+						}
+					} elseif ($field == 'version_id') {
 						$change = "- **version** was changed to _{$version}_";
+						if (empty($version)) {
+							$change = "- **version** was removed";
+						}
+					} elseif (empty($value)) {
+						$change = "- **{$field}** was removed";
 					} else {
 						$change = "- **{$field}** was changed to _{$value}_";
 					}

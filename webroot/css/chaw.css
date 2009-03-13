@@ -709,6 +709,7 @@ div.wiki-text code {
 	margin-right: 4%;
 	width: 56%;
 }
+/*
 .tickets fieldset.options {
 	float: left;
 	width: 26%;
@@ -716,6 +717,21 @@ div.wiki-text code {
 .tickets .edit fieldset.options {
 	font-size: 100%;
 }
+*/
+.tickets fieldset.main fieldset.options {
+	float: none;
+	border: 0;
+	padding: 0;
+	margin: 0 0 10px 0;
+	width: 100%;
+	font-size: 100%;
+}
+.tickets fieldset.main fieldset.options div.select {
+	float: left;
+	clear: none;
+	margin: 0;
+}
+
 .tickets form .submit {
 	clear: left;
 }
@@ -724,16 +740,18 @@ div.wiki-text code {
 	height: 300px;
 }
 .tickets div.help {
-	float: right;
+	float: left;
 	clear: none;
 	margin-top: 20px;
 	margin-right: 4%;
-	width: 30%;
+	width: 20%;
+}
+.tickets div.help div {
+	clear: none;
 }
 .tickets .view {
 	width: 60%;
 }
-
 .tickets .description {
 	margin-bottom: 0.4em;
 	padding: 0 0 1em 0;
@@ -745,6 +763,7 @@ div.wiki-text code {
 }
 .tickets textarea#TicketComment {
 	height: 130px;
+	margin-bottom: 10px;
 }
 
 /* Comments */
@@ -786,11 +805,8 @@ div.comments {
 	font-size: 80%;
 }
 .tickets fieldset.comments {
+	float: left;
 	padding-right: 40px;
-}
-.tickets fieldset.comments .textarea textarea {
-	font-size: 12px;
-	height: 200px;
 }
 
 /* Source */
