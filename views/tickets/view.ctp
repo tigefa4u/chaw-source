@@ -127,7 +127,7 @@ $canEdit = !empty($this->params['isAdmin']) || (!empty($CurrentUser->id) && $Cur
 					<?php endif; ?>
 
 						<div class="body">
-							<?php echo $html->clean($comment['body']);?>
+							<?php echo h($comment['body']);?>
 						</div>
 					</div>
 
