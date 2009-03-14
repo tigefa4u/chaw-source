@@ -191,7 +191,7 @@ class Project extends AppModel {
 		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
 		} else if (empty($this->data['Project']['name']) && !empty($this->data['Project']['url'])) {
-			$this->data['Project']['name'] = $this->config['name'];
+			$this->data['Project']['name'] = $this->current['name'];
 		}
 		if (!empty($this->data['Project']['id']) && $this->id == $this->data['Project']['id']) {
 			unset($this->validate['name']['minimum']);
