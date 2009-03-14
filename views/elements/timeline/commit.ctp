@@ -47,10 +47,10 @@
 				} else  {
 
 					if (!empty($data['Branch']['name'])) {
-						echo " to " . $html->link($data['Branch']['name'], array(
+						echo " to " . $html->link($data['Branch']['name'], $chaw->url($data['Project'], array(
 								'controller' => 'source', 'action' => 'branches',
 								$data['Branch']['name']
-						));
+						)));
 					}
 
 					if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
@@ -60,13 +60,13 @@
 					}
 
 				}
-
+				/*
 				if (empty($CurrentProject->fork) && !empty($data['Project']['fork'])) {
-					'(' . $chaw->admin('merge', array(
+					'(' . $chaw->admin('merge', $chaw->url($data['Project'], array(
 						'controller' => 'repo', 'action' => 'merge', $data['Project']['fork']
-					)) . ')';
+					))) . ')';
 				}
-
+				*/
 			?>
 		</p>
 

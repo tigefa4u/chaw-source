@@ -21,7 +21,7 @@ $javascript->link('ghighlight.min', false);
 	</p>
 
 	<p class="message wiki-text">
-		<?php echo $commit['Commit']['message'];?>
+		<?php echo h($commit['Commit']['message']);?>
 	</p>
 
 	<?php if(!empty($commit['Commit']['changes'])):?>

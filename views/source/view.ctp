@@ -4,7 +4,15 @@ $javascript->link('ghighlight.min', false);
 ?>
 <div class="source view">
 	<span class="history">
-		<?php echo $html->link(__('history',true), array('controller' => 'commits', 'action' => 'history', $path));?>
+		<?php
+
+		if (!empty($branch)) {
+			$path = "branches/{$branch}/{$path}";
+		}
+
+		echo $html->link(__('history',true), array(
+				'controller' => 'commits', 'action' => 'history', $path
+		));?>
 	</span>
 
 <?php
