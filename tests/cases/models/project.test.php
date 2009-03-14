@@ -177,7 +177,7 @@ class ProjectTestCase extends CakeTestCase {
 			'remote' => 'git@git.chaw'
 		));
 
-		$this->assertTrue($this->Project->save($data));
+		$this->assertTrue($this->Project->save($data, false));
 		$this->assertTrue(file_exists($this->Project->Repo->path));
 	}
 
@@ -607,17 +607,6 @@ class ProjectTestCase extends CakeTestCase {
 
 		$this->assertTrue($this->Project->save($data));
 		$this->assertTrue(file_exists($this->Project->Repo->path));
-
-		$this->assertTrue($this->Project->initialize(array('project' => 'original_project')));
-		$this->assertTrue($this->Project->delete(1));
-
-		$this->assertTrue(file_exists($this->Project->Repo->path));
-		$this->assertTrue(file_exists($this->Project->Repo->working));
-
-		$this->assertTrue($this->Project->initialize(array('project' => 'second_project')));
-
-		$this->assertTrue(file_exists($this->Project->Repo->path));
-		$this->assertTrue(file_exists($this->Project->Repo->working));
 
 		$result = $this->Project->groups();
 		$this->assertEqual($result, array(
