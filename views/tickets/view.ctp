@@ -21,10 +21,13 @@ $(document).ready(function(){
 	$(".modify").click(function() {
 		$("#modify").show();
 		$(".comments").hide();
+		$("#TicketTitle").parent().before($("fieldset.prop"));
 	});
 	$(".close").click(function() {
 		$("#modify").hide();
 		$(".comments").show();
+		$("#TicketComment").after($("fieldset.prop"));
+
 	});
 	$(".body").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
@@ -76,122 +79,135 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 
 			<?php echo $form->create(array('action' => 'modify', 'url'=> array($form->value('Ticket.number'), 'id'=> false)));?>
 
-			<?php if (!empty($canEdit)):?>
-				<div id="modify" style="display:none">
-					<fieldset class="main">
-						<legend>
-							<?php __('Modify Ticket');?>
-							<em>(<a href="#" class="close">close</a>)</em>
-						</legend>
+				<?php if (!empty($canEdit)):?>
+					<div id="modify" style="display:none">
+						<fieldset class="main">
+							<legend>
+								<?php __('Modify Ticket');?>
+								<em>(<a href="#" class="close">close</a>)</em>
+							</legend>
+							<?php
+								echo $form->input('title',array('label'=>  __('Title',true)));
+								echo $form->input('description',array('label'=> __('Description',true)));
+							?>
+						</fieldset>
 
-						<?php
-							echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
-							echo $form->input('description',array('label'=>array('labeltext' => __('Description',true))));
-						?>
-					</fieldset>
+						<fieldset class="tags options">
+							<legend><?php __('Tags') ?></legend>
+							<?php
+								echo $form->textarea('tags');
+							?>
+							<?php __('comma separated') ?>
+						</fieldset>
 
-					<fieldset class="tags options">
-						<legend><? __('Tags') ?></legend>
-						<?php
-							echo $form->textarea('tags');
-						?>
-						<?php __('comma separated') ?>
-					</fieldset>
+						<div class="help">
+							<?php echo $this->element('markdown_help'); ?>
+						</div>
 
-					<div class="help">
-						<?php echo $this->element('markdown_help'); ?>
 					</div>
-
-				</div>
-			<?php endif; ?>
+				<?php endif; ?>
 
 		<?php endif; ?>
 
-		<div class="comments">
-			<?php foreach ((array)$ticket['Comment'] as $comment): ?>
+			<div class="comments">
+				<?php foreach ((array)$ticket['Comment'] as $comment): ?>
 
-				<div class="comment" id="c<?php echo $comment['id']?>">
-					<span class="date">
-						<?php echo $time->timeAgoInWords($comment['created']);?>
-					</span>
-					<span class="user">
-						by <?php echo $comment['User']['username'];?>
-					</span>
+					<div class="comment" id="c<?php echo $comment['id']?>">
+						<span class="date">
+							<?php echo $time->timeAgoInWords($comment['created']);?>
+						</span>
+						<span class="user">
+							by <?php echo $comment['User']['username'];?>
+						</span>
 
-				<?php if(!empty($this->params['isAdmin'])):?>
-					<span class="admin">
-						<?php echo $chaw->admin('delete', array('controller' => 'comments', 'action' => 'delete', $comment['id']))?>
-					</span>
-				<?php endif; ?>
+					<?php if(!empty($this->params['isAdmin'])):?>
+						<span class="admin">
+							<?php echo $chaw->admin('delete', array('controller' => 'comments', 'action' => 'delete', $comment['id']))?>
+						</span>
+					<?php endif; ?>
 
-					<div class="body">
-						<?php echo $html->clean($comment['body']);?>
+						<div class="body">
+							<?php echo h($comment['body']);?>
+						</div>
 					</div>
-				</div>
 
-			<?php endforeach; ?>
-		</div>
+				<?php endforeach; ?>
+			</div>
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
-			<div class="comments">
-				<div id="CommentPreviewWrapper" class="comment" style="display:none">
-					<h3 class="clearfix"><?php __('Preview') ?></h3>
+				<div class="comments">
+					<div id="CommentPreviewWrapper" class="comment" style="display:none">
+						<h3 class="clearfix"><?php __('Preview') ?></h3>
 
-					<span class="date">
-						<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
-					</span>
-					<span class="user">
-						by <?php echo $CurrentUser->username;?>
-					</span>
-					<div id="CommentPreview" class="body"></div>
+						<span class="date">
+							<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
+						</span>
+						<span class="user">
+							by <?php echo $CurrentUser->username;?>
+						</span>
+						<div id="CommentPreview" class="body"></div>
+					</div>
 				</div>
-			</div>
 
-			<fieldset class="comments main">
-		 		<legend>
-					<?php __('Comment');?>
-				</legend>
-				<?php
-					if (!empty($canUpdate)) {
-						echo '<div class="status">';
-							echo $form->input('status', array(
-								'label'=> __('Status',true)
-							));
-							echo $form->input('resolution', array(
-								'label'=> __('Resolution',true),
-								'empty' => true
-							));
-						echo '</div>';
-					} elseif (!empty($ticket['Resolution']['type'])) {
-						echo $form->input('reopen', array(
-							'type' => 'checkbox',
-							'label'=> __('reopen',true),
-						));
-					}
-					echo $form->input('id');
-					echo $form->textarea('comment');
-				?>
-			</fieldset>
-
-			<?php if (!empty($this->params['isAdmin'])):?>
-				<fieldset class="options">
-					<legend><?php __('Options') ?></legend>
+				<fieldset class="comments main">
+			 		<legend>
+						<?php __('Comment');?>
+					</legend>
+					<fieldset class="options">
 					<?php
-						echo $form->input('owner', array('empty' => true));
+						if (!empty($this->params['isAdmin'])):
+							echo $form->input('owner', array('empty' => true));
+						endif;
 
-						if (!empty($versions)) {
-							echo $form->input('version_id');
+						if (!empty($canUpdate)) {
+							echo '<div class="status">';
+								echo $form->input('status', array(
+									'label'=> __('Status',true)
+								));
+								echo $form->input('resolution', array(
+									'label'=> __('Resolution',true),
+									'empty' => true
+								));
+							echo '</div>';
+						} elseif (!empty($ticket['Resolution']['type'])) {
+							echo $form->input('reopen', array(
+								'type' => 'checkbox',
+								'label'=> __('reopen',true),
+							));
 						}
-						echo $form->input('type');
-						echo $form->input('priority');
 					?>
-				</fieldset>
-			<?php endif; ?>
+					</fieldset>
 
-			<div class="submit">
-				<input type="submit" value="<?php __('Submit') ?>">
-			</div>
+					<?php
+						echo $form->input('id');
+						echo $form->textarea('comment');
+					?>
+
+					<?php if (!empty($this->params['isAdmin'])):?>
+						<fieldset class="prop options">
+							<?php
+								echo $form->input('type');
+								echo $form->input('priority');
+								if (!empty($versions)) {
+									echo $form->input('version_id');
+								}
+
+							?>
+						</fieldset>
+					<?php endif; ?>
+
+				</fieldset>
+
+
+				<div class="comments help">
+					<?php echo $this->element('markdown_help', array('short' => true)); ?>
+				</div>
+
+
+				<div class="submit">
+					<input type="submit" value="<?php __('Submit') ?>">
+				</div>
 
 			<?php echo $form->end();?>
 

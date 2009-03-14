@@ -11,7 +11,9 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <div class="commits history">
 	<h2>
-		<?php __('History') ?> /
+		<?php __('History') ?>
+	</h2>
+	<h3>
 		<?php
 			$title = null;
 			if (!empty($CurrentProject->fork)) {
@@ -24,11 +26,11 @@ $javascript->codeBlock($script, array('inline' => false));
 			$path = '/';
 			foreach ((array)$args as $part):
 				$path .= $part . '/';
-				echo '/' . $html->link(' ' . $part . ' ', array($path));
+				echo '/' . $html->link(' ' . $part . ' ', array('controller' => 'source', 'action' => 'index', $path));
 			endforeach;
 			echo '/ ' . $html->link($current, array('controller' => 'source', 'action' => 'index', $path, $current));
 		?>
-	</h2>
+	</h3>
 	<?php foreach ((array)$commits as $commit):?>
 
 		<div class="commit">
@@ -48,21 +50,6 @@ $javascript->codeBlock($script, array('inline' => false));
 			<p class="message">
 				<?php echo $commit['Repo']['message'];?>
 			</p>
-
-			<?php
-				if(!empty($commit['Repo']['changes'])):
-			?>
-				<div class="changes">
-					<strong><?php __('Changes') ?>:</strong>
-					<ul>
-					<?php
-						foreach ($commit['Repo']['changes'] as $changed) :
-							echo $html->tag('li', $changed);
-						endforeach;
-					?>
-					</ul>
-				</div>
-			<?php endif?>
 
 		</div>
 
