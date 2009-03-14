@@ -130,10 +130,7 @@ class User extends AppModel {
 			$projects = $this->Permission->find('all', array(
 				'conditions' => array_merge($conditions, array('Permission.user_id' => $user, 'Project.name !=' => null))
 			));
-			$ids = array();
-			if (!empty($projects)) {
-				$ids = array_filter(Set::extract($projects, '/Project/id'));
-			}
+			$ids = array_filter(Set::extract('/Project/id', $projects));
 			return compact('ids', 'projects');
 		}
 	}

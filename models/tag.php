@@ -51,7 +51,7 @@ class Tag extends AppModel {
 		if (empty($data)) {
 			return null;
 		}
-		$cTag = Set::extract($data, '/name');
+		$cTag = Set::extract('/name', $data);
 		return join(', ', array_reverse((array)$cTag));
 	}
 
