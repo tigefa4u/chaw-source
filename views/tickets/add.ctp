@@ -20,6 +20,20 @@ $javascript->codeBlock($script, array('inline' => false));
 <?php echo $form->create('Ticket');?>
 	<fieldset class="main">
  		<legend><?php __('Add Ticket');?></legend>
+
+		<fieldset class="options">
+		<?php
+			echo $form->input('type');
+			echo $form->input('priority');
+			if (!empty($versions)) {
+				echo $form->input('version_id');
+			}
+			if (!empty($this->params['isAdmin'])) {
+				echo $form->input('owner', array('empty' => true));
+			}
+		?>
+		</fieldset>
+
 		<?php
 			echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
 			echo $form->input('description', array(
@@ -38,20 +52,6 @@ $javascript->codeBlock($script, array('inline' => false));
 			echo $form->textarea('tags');
 		?>
 		<? __('comma separated') ?>
-	</fieldset>
-
-
-	<fieldset class="options">
-		<legend><?php __('Options') ?></legend>
-		<?php
-			echo $form->input('owner', array('empty' => true));
-
-			if (!empty($versions)) {
-				echo $form->input('version_id');
-			}
-			echo $form->input('type');
-			echo $form->input('priority');
-		?>
 	</fieldset>
 
 	<div class="help">

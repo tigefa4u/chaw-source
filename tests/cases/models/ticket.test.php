@@ -117,8 +117,62 @@ class TicketTest extends CakeTestCase {
 		$data = array('Ticket' => array(
 			'id' => 3,
 			'project_id'  => 1,
+			'user_id'  => 1,
 			'owner'  => 'gwoo',
 			'previous' => '',
+			'status'  => 'fixed',
+			'comment' => '',
+			'created'  => '2008-09-23 07:54:29',
+			'modified'  => '2008-09-23 07:54:29',
+		));
+		$results = $this->Ticket->save($data);
+		$this->assertEqual($results, true);
+
+		$results = $this->Ticket->find('first');
+		$this->assertEqual($results['Ticket']['owner'], 1);
+
+		$data = array('Ticket' => array(
+			'id' => 3,
+			'project_id'  => 1,
+			'owner'  => '',
+			'user_id'  => 1,
+			'previous' => array(
+				'id' => 3,
+				'project_id'  => 1,
+				'owner'  => 'gwoo',
+				'previous' => '',
+				'status'  => 'fixed',
+				'modified'  => '2008-09-23 07:54:29',
+			),
+			'comment' => '',
+			'status'  => 'fixed',
+			'created'  => '2008-09-23 07:54:29',
+			'modified'  => '2008-09-23 07:54:29',
+		));
+		$results = $this->Ticket->save($data);
+		$this->assertEqual($results, true);
+
+		$this->Ticket->recursive = 1;
+		$results = $this->Ticket->find('first');
+		$this->assertEqual($results['Ticket']['owner'], 0);
+
+		$this->assertEqual($results['Comment'][0]['body'], "- **owner** was removed\n\n");
+
+
+		$data = array('Ticket' => array(
+			'id' => 3,
+			'project_id'  => 1,
+			'owner'  => 'gwoo',
+			'user_id'  => 1,
+			'previous' => array(
+				'id' => 3,
+				'project_id'  => 1,
+				'owner'  => '',
+				'previous' => '',
+				'status'  => 'fixed',
+				'modified'  => '2008-09-23 07:54:29',
+			),
+			'comment' => '',
 			'status'  => 'fixed',
 			'created'  => '2008-09-23 07:54:29',
 			'modified'  => '2008-09-23 07:54:29'
@@ -126,8 +180,11 @@ class TicketTest extends CakeTestCase {
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
 
+		$this->Ticket->recursive = 1;
 		$results = $this->Ticket->find('first');
 		$this->assertEqual($results['Ticket']['owner'], 1);
+
+		$this->assertEqual($results['Comment'][1]['body'], "- **owner** was changed to _gwoo_\n\n");
 	}
 
 	function testInitialStatus() {
