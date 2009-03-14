@@ -56,7 +56,7 @@ class Ticket extends AppModel {
 	// );
 
 	var $hasMany = array('Comment' => array(
-		'foreignKey' => 'foreign_key', 
+		'foreignKey' => 'foreign_key',
 		'conditions' => array('Comment.model = "Ticket"'),
 		'order' => 'Comment.created ASC'
 	));
@@ -152,7 +152,8 @@ class Ticket extends AppModel {
 			}
 			if (!empty($changes) || !empty($this->data['Ticket']['comment'])) {
 				$data = array('Comment' => array(
-					'ticket_id' => $this->id,
+					'model' => 'Ticket',
+					'foreign_key' => $this->id,
 					'project_id' => $this->data['Ticket']['project_id'],
 					'user_id' => $this->data['Ticket']['user_id'],
 					'body' => join("\n", $changes) ."\n\n" . $this->data['Ticket']['comment']

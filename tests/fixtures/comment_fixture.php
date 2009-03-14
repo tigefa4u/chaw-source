@@ -5,12 +5,13 @@
 class CommentFixture extends CakeTestFixture {
 	var $name = 'Comment';
 	var $fields = array(
-			'id' => array('type'=>'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'ticket_id' => array('type'=>'integer', 'null' => false, 'default' => '0'),
-			'body' => array('type'=>'text', 'null' => true, 'default' => NULL),
-			'created' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
-			'modified' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
-			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
-			);
+		'id' => array('type'=>'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'model' => array('type'=>'string', 'null' => false, 'default' => '', 'length' => 50),
+		'foreign_key' => array('type'=>'integer', 'null' => false, 'default' => '0'),
+		'body' => array('type'=>'text', 'null' => true, 'default' => NULL),
+		'created' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
+		'modified' => array('type'=>'datetime', 'null' => true, 'default' => NULL),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
+	);
 }
 ?>

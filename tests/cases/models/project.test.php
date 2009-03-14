@@ -446,10 +446,10 @@ class ProjectTestCase extends CakeTestCase {
 		));
 		$this->assertTrue($data = $this->Project->fork());
 
-		$results = Set::extract($this->Project->all(3), '/Project/id');
+		$results = Set::extract('/Project/id', $this->Project->all(3));
 		$this->assertEqual($results, array('1', '2', '3'));
 
-		$results = Set::extract($this->Project->all(1, false), '/Project/id');
+		$results = Set::extract('/Project/id', $this->Project->all(1, false));
 		$this->assertEqual($results, array('2', '3'));
 
 	}
