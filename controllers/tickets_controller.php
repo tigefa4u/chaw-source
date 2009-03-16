@@ -160,8 +160,9 @@ class TicketsController extends AppController {
 		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
 
 		$canUpdate = $this->Access->check($this, array(
-			'access' => 'u', 'default' => false
+			'access' => 'u', 'default' => false, 'admin' => true
 		));
+
 		$this->set(compact(
 			'versions', 'types', 'statuses',
 			'priorities', 'owners', 'resolutions',

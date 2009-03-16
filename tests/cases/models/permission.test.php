@@ -180,6 +180,35 @@ class PermissionTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 	}
 
+	function testRulesAtomic() {
+		Configure::write('Project', $this->__projects['Two']);
+		$Permission = new TestPermission();
+
+		$result = $Permission->rules('project_two', array(
+			'admin' => array('gwoo' => 'rw')
+		));
+//		pr($result);
+		$expected = array(
+			'project_two' => array(
+				'/refs/heads/master' => array(
+					'gwoo' => 'r',
+					'@project_two-developers' => 'rw'
+				),
+				'/test/override' => array(
+					'gwoo' => 'rw'
+				),
+				'admin' => array(
+					'gwoo' => 'rw'
+				)
+			),
+			'groups' => array(
+				'project_two-developers' => array('gwoo', 'nate', 'larry'),
+				'chaw-developers' => array('gwoo', 'bob', 'tom')
+			)
+		);
+		$this->assertEqual($result, $expected);
+	}
+
 	function testGroups() {
 		Configure::write('Project', $this->__projects['One']);
 		$Permission = new TestPermission();
@@ -235,6 +264,34 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'r')));
 
 		$this->assertTrue($Permission->check("/test/override", array('user' => 'gwoo', 'access' => 'r')));
+	}
+
+	function testCheckAtomic() {
+		Configure::write('Project', $this->__projects['One']);
+		$Permission = new TestPermission();
+
+		//chaw-developers has rw on /refs/heads/master
+		$this->assertTrue($Permission->check("/refs/heads/master", array(
+			'group' => 'chaw-developers', 'access' => 'rw', 'default' => false)
+		));
+
+		//gwoo is in chaw-developers which has rw on /refs/heads/master
+		$this->assertTrue($Permission->check("/refs/heads/master", array('user' => 'gwoo', 'access' => 'w')));
+
+
+
+		//change chaw-developers to only r now on /refs/heads/master
+		$Permission->rules('chaw', array('/refs/heads/master' => array(
+			'@chaw-developers' => 'r'
+		)));
+
+		$this->assertTrue($Permission->check("/refs/heads/master", array(
+			'group' => 'chaw-developers', 'access' => 'r', 'default' => false)
+		));
+
+		$this->assertFalse($Permission->check("/refs/heads/master", array(
+			'group' => 'chaw-developers', 'access' => 'w', 'default' => false)
+		));
 	}
 
 	function testCrudCheck() {
@@ -302,13 +359,16 @@ class PermissionTest extends CakeTestCase {
 
 		$data['Permission']['fine_grained'] = "";
 		$Permission->saveFile($data);
-
+		
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
 
 		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
 
 		$this->assertTrue($Permission->check("source", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
-
+		
+		$data['Permission']['fine_grained'] = "[tickets]\n* = r";
+		$this->assertTrue($Permission->saveFile($data));		
+		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'access' => 'c', 'default' => true)));
 	}
 
 	function testForkOverride() {

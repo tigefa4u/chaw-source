@@ -172,7 +172,7 @@ class Project extends AppModel {
 		if ($repoType == 'git') {
 			$this->current['repo']['path'] .= '.git';
 		}
-		if (is_string($this->current['config']) && substr($this->current['config'], 0, 3) === "a:2") {
+		if (!empty($this->current['config']) && is_string($this->current['config']) && substr($this->current['config'], 0, 3) === "a:2") {
 			$this->current['config'] = unserialize($this->current['config']);
 		}
 		$this->id = $this->current['id'];

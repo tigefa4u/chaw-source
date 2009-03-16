@@ -176,7 +176,7 @@ class AccessComponent extends Object {
 
 		if ($this->isPublic === false) {
 			$C->Auth->deny($C->action);
-			if (!$this->user()) {
+			if (empty($this->user)) {
 				$C->Session->setFlash(__('Select a Project',true));
 				$C->redirect(array(
 					'admin' => false, 'plugin'=> null,
@@ -218,7 +218,10 @@ class AccessComponent extends Object {
 			'default' => $this->isPublic
 		), $options));
 
-		if (empty($this->user) && $access !== 'r') {
+		if (empty($this->user)) {
+			if ($this->isPublic && $access === 'r') {
+				return true;
+			}
 			return false;
 		}
 
@@ -227,7 +230,7 @@ class AccessComponent extends Object {
 			$group = $this->user("Permission.1");
 		}
 
-		if ($username && $admin === true) {
+		if ($admin) {
 			$admin = array(
 				'group' => $group,
 				'user' => $username,
