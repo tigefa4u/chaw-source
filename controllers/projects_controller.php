@@ -155,7 +155,7 @@ class ProjectsController extends AppController {
 
 		if (!empty($this->data)) {
 			$this->data['Project']['id'] = $this->Project->id;
-			$this->data['Project'] = array_merge($this->Project->config, $this->data['Project']);
+			$this->data['Project'] = array_merge($this->Project->current, $this->data['Project']);
 			if ($data = $this->Project->save($this->data)) {
 				$this->Session->setFlash(__('Project was updated',true));
 			} else {
@@ -200,7 +200,7 @@ class ProjectsController extends AppController {
 					$this->redirect(array('controller' => 'source'));
 				}
 				$this->Project->set($project);
-				if ($this->Project->initialize() && $this->Project->config['id'] != 1) {
+				if ($this->Project->initialize() && $this->Project->current['id'] != 1) {
 					if ($this->Project->delete($this->data['Project']['id'])) {
 						$this->Project->Permission->deleteAll(array('Permission.project_id' => $this->data['Project']['id']));
 						$this->Session->setFlash(sprintf(__("%s was deleted ", true), $project['Project']['name']));

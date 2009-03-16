@@ -35,37 +35,6 @@ class AccessComponentTest extends CakeTestCase {
 		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
 	);
 
-	function testUser() {
-		$Access = new TestAccess();
-
-		$Access->user = array(
-			'User' => array(
-				'id' => 1, 'username' => 'gwoo',
-				'Permission' => array(
-			      2 => 'developer',
-			      1 => 'admin',
-			    )
-			),
-		);
-
-		$result = $Access->user();
-		$expected = array('id' => 1, 'username' => 'gwoo', 'Permission' => array(2 => 'developer', 1 => 'admin'));
-		$this->assertEqual($result, $expected);
-
-		$result = $Access->user('username');
-		$expected = 'gwoo';
-		$this->assertEqual($result, $expected);
-
-		$result = $Access->user("Permission.1");
-		$expected = 'admin';
-		$this->assertEqual($result, $expected);
-		$result = $Access->user("Permission.2");
-		$expected = 'developer';
-		$this->assertEqual($result, $expected);
-
-
-	}
-
 	function __runStartup() {
 		$this->Controller->Access->user = array();
 		$this->Controller->action = $this->Controller->params['action'];
@@ -106,6 +75,38 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Access->allowedActions = array();
 	}
 
+
+	function testUser() {
+		$Access = new TestAccess();
+
+		$Access->user = array(
+			'User' => array(
+				'id' => 1, 'username' => 'gwoo',
+				'Permission' => array(
+			      2 => 'developer',
+			      1 => 'admin',
+			    )
+			),
+		);
+
+		$result = $Access->user();
+		$expected = array('id' => 1, 'username' => 'gwoo', 'Permission' => array(2 => 'developer', 1 => 'admin'));
+		$this->assertEqual($result, $expected);
+
+		$result = $Access->user('username');
+		$expected = 'gwoo';
+		$this->assertEqual($result, $expected);
+
+		$result = $Access->user("Permission.1");
+		$expected = 'admin';
+		$this->assertEqual($result, $expected);
+		$result = $Access->user("Permission.2");
+		$expected = 'developer';
+		$this->assertEqual($result, $expected);
+
+
+	}
+
 	function testCheckPublicAnonymous() {
 		$Access = new TestAccess();
 		$this->Controller->Project = ClassRegistry::init('Project');
@@ -126,11 +127,28 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->params['controller'] = 'wiki';
 
 		$Access->isPublic = true;
+		$Access->user = array('User' => array('username' => 'gwoo'));
 		$this->assertTrue($Access->check($this->Controller, array('username' => 'gwoo', 'access' => 'r')));
 
 		//pr($this->Controller->Project->Permission->rules('chaw', array('*' => 'r')));
 		$this->assertFalse($Access->check($this->Controller, array('username' => 'gwoo', 'access' => 'w')));
+	}
 
+	function testCheckPublicLoggedInCanUpdate() {
+		$Access = new TestAccess();
+		$this->Controller->Project = ClassRegistry::init('Project');
+		$this->Controller->Component->init($this->Controller);
+		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->params['controller'] = 'wiki';
+
+		$Access->isPublic = true;
+		$this->assertTrue($Access->check($this->Controller, array('username' => 'gwoo', 'access' => 'r')));
+
+		$this->Controller->Project->Permission->rules('chaw', array(
+			'admin' => array('gwoo' => 'crud')
+		));
+		$Access->user = array('User' => array('username' => 'gwoo', 'Permission' => array('1' => 'admin')));
+		$this->assertTrue($Access->check($this->Controller, array('admin' => true, 'access' => 'u', 'default' => false)));
 	}
 
 	function testCheckPublicAllowed() {
@@ -150,12 +168,13 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
-		$this->Controller->params['controller'] = 'wiki';
 
 		$Access->user = array();
-		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('gwoo' => 'rw')));
 		$Access->isPublic = false;
-		$Access->user = array();
+
+		$this->Controller->params['controller'] = 'wiki';
+		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('gwoo' => 'rw')));
+
 		$this->assertFalse($Access->check($this->Controller, array('access' => 'r')));
 	}
 
@@ -619,6 +638,9 @@ class AccessComponentTest extends CakeTestCase {
 
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
+
+		$this->Controller->Project->Permission->rules('chaw', array('tickets' => array('*' => 'rw')));
+
 		$this->Controller->Session->write('Auth.User', array('id' => 4, 'username' => 'bob'));
 
 		$this->__runStartup();

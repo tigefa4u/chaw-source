@@ -110,9 +110,9 @@ class Permission extends AppModel {
 			include(CONFIGS . 'templates' . DS . $config['repo']['type'] . DS . 'permissions.ini');
 			$this->data['Permission']['fine_grained'] = ob_get_clean();
 		}
-
 		$result = $File->write(trim($this->data['Permission']['fine_grained']));
 		$this->data = array();
+		$this->__rules = array();
 		return $result;
 	}
 /**
@@ -294,8 +294,9 @@ class Permission extends AppModel {
 		$rules = $this->__rules[$project];
 
 		if (!empty($atomic)) {
-			$this->__rules[$project] = array_merge($this->__rules[$project], array($project => $atomic));
+			$this->__rules[$project] = Set::merge($this->__rules[$project], array($project => $atomic));
 		}
+
 		return $this->__rules[$project];
 	}
 /**
