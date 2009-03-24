@@ -20,36 +20,53 @@ class TicketsController extends AppController {
 
 	var $helpers = array('Time');
 
-	var $paginate = array('order' => 'Ticket.number DESC');
+	var $paginate = array('order' => array('Ticket.number' => 'desc'));
+
+	function _toNamedArgs($keys) {
+		foreach ($keys as $key) {
+			if (!empty($this->params['url'][$key])) {
+				$thie->passedArgs[$key] = $this->params['named'][$key] = join(',', $this->params['url'][$key]);
+			}
+
+		}
+		return $this->params['named'];
+	}
 
 	function index() {
-		Router::connectNamed(array('status', 'page', 'user', 'priority'));
+		Router::connectNamed(array('status', 'page', 'user', 'type', 'priority'));
 		$searchKeys = array('type', 'priority');
 
 		if (count($this->params['url']) > 2) {
-			die(Router::url($this->_toNamedParams($searchKeys) + $this->params['named']));
-			$this->redirect();
-		}
-
-		foreach ($searchKeys as $key) {
-			if (isset($this->params['named'][$key])) {
-				$this->data['Ticket'][$key] = explode(',', $this->params['named'][$key]);
-			}
-		}
-
-		$statuses = array_values($this->Project->ticket('statuses'));
-		$current = $statuses[0];
-
-		if (!empty($this->passedArgs['status'])) {
-			$current = $this->passedArgs['status'];
+			$this->redirect($this->_toNamedArgs($searchKeys));
 		}
 
 		$conditions = array(
 			'Ticket.project_id' => $this->Project->id,
-			'Ticket.status' => $current
 		);
 
+		foreach ($searchKeys as $key) {
+			if (isset($this->params['named'][$key]) && $this->params['named'][$key] != 'all') {
+				$this->data['Ticket'][$key] = explode(',', $this->params['named'][$key]);
+			}
+		}
+
+		$conditions = array_merge($conditions, (array)$this->postConditions($this->data, '=', 'AND', true));
 		$this->pageTitle = 'Tickets/Status/';
+
+		$current = null;
+
+		$isDefault = empty($this->passedArgs);
+
+		if ($isDefault) {
+			$statuses = array_values($this->Project->ticket('statuses'));
+			$this->passedArgs['status'] = $statuses[0];
+		}
+
+		if (!empty($this->passedArgs['status'])) {
+			$current = $this->passedArgs['status'];
+			$conditions['Ticket.status'] = $current;
+		}
+
 
 		if (!empty($this->passedArgs['user'])) {
 			$current = $this->passedArgs['user'];
@@ -57,6 +74,9 @@ class TicketsController extends AppController {
 			$this->pageTitle = 'Tickets/User/';
 		}
 
+		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] == 'all') {
+			unset($this->passedArgs['type']);
+		}
 		/*
 		if (!empty($this->Project->current['fork'])) {
 			$conditions = array('OR' => array(
@@ -153,6 +173,7 @@ class TicketsController extends AppController {
 		$versions = $this->Ticket->Version->find('list', array(
 			'conditions' => array('Version.project_id' => $this->Project->id
 		)));
+
 		$types = $this->Project->ticket('types');
 		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');

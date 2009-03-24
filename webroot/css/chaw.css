@@ -85,28 +85,25 @@ fieldset.options {
 	margin-top: 30px;
 }
 
-fieldset.mini-form {
+fieldset.ticket-search {
 	margin-top: 0;
 	margin-bottom: 20px;
 	padding: 10px 10px 0px 20px;
 	oveflow: auto;
 }
 
-fieldset.mini-form legend {
+fieldset.ticket-search legend {
 	font-size: 1em;
-	color: #806060;
-	font-weight: bold;
-	padding: 0 10px;
 }
 
-fieldset.mini-form div.input-row {
+fieldset.ticket-search div.input-row {
 	float: left;
 	clear: left;
 	margin: 0px;
 	padding: 0 0 8px 0;
 }
 
-fieldset.mini-form div.submit {
+fieldset.ticket-search div.submit {
 	display: inline;
 	float: right;
 	clear: none;
@@ -114,24 +111,26 @@ fieldset.mini-form div.submit {
 	padding: 0px;
 }
 
-fieldset.mini-form div.checkbox input {
+fieldset.ticket-search div.checkbox input {
 	display: inline;
 	float: left;
 	clear: none;
 }
 
-fieldset.mini-form label {
+fieldset.ticket-search label {
 	float: left;
 	clear: none;
 	font-size: 0.9em;
-	width: 50px;
 }
+fieldset.ticket-search label.title {
+	width: 50px;
+} 
 
-fieldset.mini-form div label.title {
+fieldset.ticket-search div label.title {
 	font-weight: bold;
 }
 
-fieldset.mini-form div.checkbox {
+fieldset.ticket-search div.checkbox {
 	display: inline;
 	clear: none;
 	border: 1px solid #000000;
@@ -139,7 +138,7 @@ fieldset.mini-form div.checkbox {
 	padding: 4px 5px 3px 5px;
 }
 
-fieldset.mini-form div.checkbox label, fieldset.mini-form div.checkbox input {
+fieldset.ticket-search div.checkbox label, fieldset.ticket-search div.checkbox input {
 	display: inline;
 }
 
@@ -161,12 +160,13 @@ table.smooth {
 	border: 0;
 }
 table.smooth th {
+	font-size: 80%;
 	border: 0;
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
 table.smooth th a {
-	padding: 6px 4px;
+	padding: 6px 14px;
 }
 table.smooth td {
 	border: 0;
@@ -182,15 +182,29 @@ table th.left, table td.left {
 	float: none;
 	text-align: left;
 	margin: 0;
-	padding-left: 16px;
 }
-table th.left {
-	padding-left: 10px;
+table td.left, table th.left a {
+	padding-left: 16px;
 }
 table td.title {
 	width: 80%;
 }
-
+table.smooth td.number {
+	padding: 0;
+	margin: 0;
+}
+td.number a {
+	background: #f4f4f4; 
+	color: #333; 
+	display: block;
+	padding: 14px;
+	font-weight: bold; 
+	font-size: 20px;
+}
+td.number a:hover {
+	background: #333; 
+	color: #f4f4f4; 
+}
 input[type=hidden] {
 	display: none;
 }

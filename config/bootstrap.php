@@ -39,7 +39,7 @@ Configure::write('Project', array(
 			'types' => 'rfc, bug, enhancement',
 			'statuses' => 'pending, approved, in progress, on hold, closed',
 			'priorities' => 'low, normal, high',
-			'resolutions' => 'fixed, invalid, worksforme, duplicate, wontfix'
+			'resolutions' => 'fixed, invalid, works-for-me, duplicate, wont-fix'
 		)
 	),
 	'remote' => array(

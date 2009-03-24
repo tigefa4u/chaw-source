@@ -155,24 +155,18 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 						<?php __('Comment');?>
 					</legend>
 					<fieldset class="options">
-					<?php
-						if (!empty($this->params['isAdmin'])):
-							echo $form->input('owner', array('empty' => true));
-						endif;
-
+					<?php						
 						if (!empty($canUpdate)) {
-							echo '<div class="status">';
-								echo $form->input('status', array(
-									'label'=> __('Status',true)
-								));
-								echo $form->input('resolution', array(
-									'label'=> __('Resolution',true),
-									'empty' => true
-								));
-							echo '</div>';
+							echo $form->input('status', array(
+								'label'=> __('Status',true)
+							));
+							echo $form->input('resolution', array(
+								'label'=> __('Resolution',true),
+								'empty' => true
+							));
 						} elseif (!empty($ticket['Resolution']['type'])) {
-							echo $form->input('reopen', array(
-								'type' => 'checkbox',
+							echo $form->input('status', array(
+								'type' => 'checkbox', 'value' => 'reopen',
 								'label'=> __('reopen',true),
 							));
 						}
@@ -187,6 +181,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 					<?php if (!empty($this->params['isAdmin'])):?>
 						<fieldset class="prop options">
 							<?php
+								echo $form->input('owner', array('empty' => true));
 								echo $form->input('type');
 								echo $form->input('priority');
 								if (!empty($versions)) {

@@ -160,7 +160,19 @@ class Ticket extends AppModel {
 				));
 
 				$this->Comment->create($data);
-				return $this->Comment->save();
+				$this->Comment->save();
+			}
+			
+			if (!empty($this->data['Ticket']['resolution'])) {
+				$data = array('Resolution' => array(
+					'model' => 'Ticket',
+					'foreign_key' => $this->id,
+					'project_id' => $this->data['Ticket']['project_id'],
+					'user_id' => $this->data['Ticket']['user_id'],
+				));
+
+				$this->Resolution->create($data);
+				$this->Resolution->save();
 			}
 		}
 

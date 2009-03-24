@@ -215,6 +215,14 @@ class TicketTest extends CakeTestCase {
 		$result = $this->Ticket->read();
 		$this->assertEqual($result['Ticket']['status'], 'approved');
 	}
+	
+	function testInitialStatus() {
+		$this->Ticket->create();
+		$this->Ticket->Owner->save(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+
+		$results = $this->Ticket->save(array('project_id'  => 1, 'owner'  => 'gwoo'));
+		$this->assertEqual($results['Ticket']['status'], 'pending');
+	}
 }
 
 ?>

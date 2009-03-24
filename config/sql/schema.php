@@ -83,9 +83,11 @@ class ChawSchema extends CakeSchema {
 		);
 	var $resolutions = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'ticket_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
+			'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
+			'title' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
+			'comment' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
