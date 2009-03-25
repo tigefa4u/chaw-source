@@ -50,6 +50,14 @@ class PostReceiveShell extends Shell {
 				'conditions' => array($newrev),
 				'limit' => 1
 			));
+		} elseif ($newrev == str_pad("0", 40, "0")) {
+			$this->Commit->create(array(
+				'project_id' =>  $this->Project->id,
+				'branch' => $refname,
+				'message' => "{$refname} removed"
+			));
+
+			$this->Commit->save();
 		} else {
 			$commits = $this->Project->Repo->find('all', array(
 				'conditions' => array($oldrev . '..' . $newrev),

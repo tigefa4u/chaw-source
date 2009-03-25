@@ -61,7 +61,6 @@ class Ticket extends AppModel {
 		'order' => 'Comment.created ASC'
 	));
 
-
 	var $hasAndBelongsToMany = array('Tag');
 
 	var $validate = array(
