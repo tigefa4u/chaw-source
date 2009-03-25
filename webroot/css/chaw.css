@@ -766,6 +766,7 @@ div.wiki-text code {
 	margin-top: 24px;
 	margin-right: 4%;
 	width: 56%;
+	white-space: normal;
 }
 /*
 .tickets fieldset.options {
