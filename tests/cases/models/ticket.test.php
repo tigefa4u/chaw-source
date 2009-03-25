@@ -128,6 +128,7 @@ class TicketTest extends CakeTestCase {
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
 
+		$this->Ticket->recursive = 1;
 		$results = $this->Ticket->find('first');
 		$this->assertEqual($results['Ticket']['owner'], 1);
 
