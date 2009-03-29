@@ -175,18 +175,22 @@ class TicketsController extends AppController {
 		)));
 
 		$types = $this->Project->ticket('types');
-		$statuses = $this->Project->ticket('statuses');
 		$priorities = $this->Project->ticket('priorities');
+		/*
+		$statuses = $this->Project->ticket('statuses');
 		$resolutions = $this->Project->ticket('resolutions');
+		*/
 		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
+
+		$events = $this->Ticket->events($this->data['Ticket']['status']);
 
 		$canUpdate = $this->Access->check($this, array(
 			'access' => 'u', 'default' => false, 'admin' => true
 		));
 
 		$this->set(compact(
-			'versions', 'types', 'statuses',
-			'priorities', 'owners', 'resolutions',
+			'versions', 'types', 'priorities', 'owners', 'events',
+			'statuses', 'resolutions',
 			'canUpdate'
 		));
 	}

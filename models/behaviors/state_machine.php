@@ -24,9 +24,13 @@ class StateMachineBehavior extends ModelBehavior {
 
 	function transition(&$model, $from, $to = null) {
 		$state = $model->field($this->settings[$model->name]['field']);
-
 		if (in_array($state, (array)$from)) {
-			return $model->saveField($this->settings[$model->name]['field'], $to);
+			if (empty($model->data[$model->alias]['event'])) {
+				return $model->saveField($this->settings[$model->name]['field'], $to);
+			} else {
+				$model->data[$model->alias][$this->settings[$model->name]['field']] = $to;
+				return true;
+			}
 		}
 		return false;
 	}
@@ -79,7 +83,7 @@ class StateMachineBehavior extends ModelBehavior {
 		}
 		foreach ($settings['transitions'] as $event => $transitions) {
 			if (isset($transitions[$state])) {
-				$results[] = $event;
+				$results[$event] = $event;
 			}
 		}
 		return $results;
@@ -88,8 +92,8 @@ class StateMachineBehavior extends ModelBehavior {
 	/**
 	 * Must be overridden in the attached model class to handle state transitions.  I was going to
 	 * do something else with this, but I can't remember what.
-	 * 
-	 * @param string $event 
+	 *
+	 * @param string $event
 	 * @return void
 	 */
 	function transitions($event = null) {

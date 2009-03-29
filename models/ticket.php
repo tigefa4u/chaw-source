@@ -55,11 +55,13 @@ class Ticket extends AppModel {
 	// 	)
 	// );
 
-	var $hasMany = array('Comment' => array(
-		'foreignKey' => 'foreign_key',
-		'conditions' => array('Comment.model = "Ticket"'),
-		'order' => 'Comment.created ASC'
-	));
+	var $hasMany = array(
+		'Comment' => array(
+			'foreignKey' => 'foreign_key',
+			'conditions' => array('Comment.model = "Ticket"'),
+			'order' => 'Comment.created ASC'
+		)
+	);
 
 	var $hasAndBelongsToMany = array('Tag');
 
@@ -83,13 +85,21 @@ class Ticket extends AppModel {
 	}
 
 	function beforeSave() {
-		if (empty($this->data['Ticket']['title']) && empty($this->data['Ticket']['comment']) && empty($this->data['Ticket']['status'])) {
+		if (empty($this->data['Ticket']['title']) && empty($this->data['Ticket']['comment']) && empty($this->data['Ticket']['status']) && empty($this->data['Ticket']['event'])) {
 			return false;
 		}
 
 		if (!empty($this->data['Ticket']['tags'])) {
 			if (empty($this->data['Ticket']['previous']) || !empty($this->data['Ticket']['previous']) && $this->data['Ticket']['tags'] != $this->data['Ticket']['previous']['tags']) {
 				$this->data['Tag']['Tag'] = $this->Tag->generate($this->data['Ticket']['tags']);
+			}
+		}
+		
+		if (!empty($this->data['Ticket']['event'])) {
+			if ($this->event($this->data['Ticket']['event'])) {
+				if ($this->data['Ticket']['event'] == 'accept') {
+					$this->data['Ticket']['owner'] = $this->data['Ticket']['user_id'];
+				}
 			}
 		}
 
@@ -111,38 +121,37 @@ class Ticket extends AppModel {
 		}
 
 		if ($this->id) {
-
+			$changes = array();
 			if (isset($this->data['Ticket']['previous'])) {
 				$previous = $this->data['Ticket']['previous'];
 				unset($this->data['Ticket']['previous']);
-			}
 
-			$changes = array();
-			foreach ($this->data['Ticket'] as $field => $value) {
-				if ($field == 'comment' || $field == 'modified') {
-					continue;
-				}
-				if (isset($previous[$field]) && $previous[$field] != $value) {
-					$change = null;
-					if ($field == 'description') {
-						$change = "- **{$field}** was changed";
-					} elseif ($field == 'owner') {
-						$change = "- **owner** was changed to _{$owner}_";
-						if (empty($owner)) {
-							$change = "- **owner** was removed";
-						}
-					} elseif ($field == 'version_id') {
-						$change = "- **version** was changed to _{$version}_";
-						if (empty($version)) {
-							$change = "- **version** was removed";
-						}
-					} elseif (empty($value)) {
-						$change = "- **{$field}** was removed";
-					} else {
-						$change = "- **{$field}** was changed to _{$value}_";
+				foreach ($this->data['Ticket'] as $field => $value) {
+					if ($field == 'comment' || $field == 'modified') {
+						continue;
 					}
-					if (isset($change)) {
-						$changes[] = $change;
+					if (isset($previous[$field]) && $previous[$field] != $value) {
+						$change = null;
+						if ($field == 'description') {
+							$change = "- **{$field}** was changed";
+						} elseif ($field == 'owner') {
+							$change = "- **owner** was changed to _{$owner}_";
+							if (empty($owner)) {
+								$change = "- **owner** was removed";
+							}
+						} elseif ($field == 'version_id') {
+							$change = "- **version** was changed to _{$version}_";
+							if (empty($version)) {
+								$change = "- **version** was removed";
+							}
+						} elseif (empty($value)) {
+							$change = "- **{$field}** was removed";
+						} else {
+							$change = "- **{$field}** was changed to _{$value}_";
+						}
+						if (isset($change)) {
+							$changes[] = $change;
+						}
 					}
 				}
 			}
@@ -161,7 +170,7 @@ class Ticket extends AppModel {
 				$this->Comment->create($data);
 				$this->Comment->save();
 			}
-			
+
 			if (!empty($this->data['Ticket']['resolution'])) {
 				$data = array('Resolution' => array(
 					'model' => 'Ticket',

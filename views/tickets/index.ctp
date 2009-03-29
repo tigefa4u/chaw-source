@@ -89,7 +89,8 @@ if ($this->params['paging']['Ticket']['page'] > 0) {
 	<?php if(!empty($this->passedArgs['status']) && $this->passedArgs['status'] == 'closed'): ?>
 		<th><?php echo $paginator->sort(__('Resolution', true),'resolution');?></th>
 	<?php endif; ?>
-	<th class="left"><?php echo $paginator->sort(__('Title',true),'title');?></th>
+	<th class="left"><?php echo $paginator->sort(__('Title',true), 'title');?></th>
+	<th><?php echo $paginator->sort(__('Created', true), 'created');?></th>
 </tr>
 <?php
 $i = 0;
@@ -134,6 +135,7 @@ foreach ($tickets as $ticket):
 				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
 			); ?>
 		</td>
+		<td><?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm-d-y'); ?></td>
 	</tr>
 <?php endforeach; ?>
 </table>
