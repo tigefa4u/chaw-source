@@ -37,11 +37,10 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 
 $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
-?>
-<?php
-	if ($session->check('Ticket.back')) {
-		echo $html->tag('div', $html->link('back', $session->read('Ticket.back')), array('class' => 'page-navigation'));
-	}
+
+if ($session->check('Ticket.back')) {
+	echo $html->tag('div', $html->link('back', $session->read('Ticket.back')), array('class' => 'page-navigation'));
+}
 
 ?>
 <h2>
@@ -64,7 +63,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 		</div>
 
 		<span class="date">
-			<?php echo $time->timeAgoInWords($ticket['Ticket']['created']);?>
+			<?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm-d-y');?>
 		</span>
 
 		<span class="reporter">
@@ -86,6 +85,16 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 								<?php __('Modify Ticket');?>
 								<em>(<a href="#" class="close">close</a>)</em>
 							</legend>
+							<fieldset class="options">
+								<?php
+									echo $form->input('owner', array('empty' => true));
+									echo $form->input('type');
+									echo $form->input('priority');
+									if (!empty($versions)) {
+										echo $form->input('version_id');
+									}
+								?>
+							</fieldset>
 							<?php
 								echo $form->input('title',array('label'=>  __('Title',true)));
 								echo $form->input('description',array('label'=> __('Description',true)));
@@ -114,7 +123,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 
 					<div class="comment" id="c<?php echo $comment['id']?>">
 						<span class="date">
-							<?php echo $time->timeAgoInWords($comment['created']);?>
+							<?php echo $time->timeAgoInWords($comment['created'], 'm-d-y');?>
 						</span>
 						<span class="user">
 							by <?php echo $comment['User']['username'];?>
@@ -122,7 +131,9 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 
 					<?php if(!empty($this->params['isAdmin'])):?>
 						<span class="admin">
-							<?php echo $chaw->admin('delete', array('controller' => 'comments', 'action' => 'delete', $comment['id']))?>
+							<?php echo $html->link('delete', array(
+								'controller' => 'comments', 'action' => 'delete', $comment['id']
+							))?>
 						</span>
 					<?php endif; ?>
 
@@ -156,23 +167,19 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 					</legend>
 					<fieldset class="options">
 					<?php
-						if (!empty($this->params['isAdmin'])):
-							echo $form->input('owner', array('empty' => true));
-						endif;
-
 						if (!empty($canUpdate)) {
-							echo '<div class="status">';
-								echo $form->input('status', array(
-									'label'=> __('Status',true)
-								));
-								echo $form->input('resolution', array(
-									'label'=> __('Resolution',true),
-									'empty' => true
-								));
-							echo '</div>';
+							echo $form->input('event', array(
+								'label'=> false, 'empty' => true
+							));
+							/*
+							echo $form->input('resolution', array(
+								'label'=> __('Resolution', true),
+								'empty' => true
+							));
+							*/
 						} elseif (!empty($ticket['Resolution']['type'])) {
-							echo $form->input('reopen', array(
-								'type' => 'checkbox',
+							echo $form->input('event', array(
+								'type' => 'checkbox', 'value' => 'reopen',
 								'label'=> __('reopen',true),
 							));
 						}
@@ -183,19 +190,6 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 						echo $form->input('id');
 						echo $form->textarea('comment');
 					?>
-
-					<?php if (!empty($this->params['isAdmin'])):?>
-						<fieldset class="prop options">
-							<?php
-								echo $form->input('type');
-								echo $form->input('priority');
-								if (!empty($versions)) {
-									echo $form->input('version_id');
-								}
-
-							?>
-						</fieldset>
-					<?php endif; ?>
 
 				</fieldset>
 

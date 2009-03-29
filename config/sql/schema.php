@@ -22,10 +22,11 @@ class ChawSchema extends CakeSchema {
 		);
 	var $comments = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'body' => array('type' => 'text', 'null' => true, 'default' => NULL),
-			'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
 			'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'changes' => array('type' => 'text', 'null' => true, 'default' => NULL),
+			'body' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
@@ -106,10 +107,11 @@ class ChawSchema extends CakeSchema {
 		);
 	var $tickets = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'version_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
-			'reporter' => array('type' => 'integer', 'null' => false, 'default' => '0'),
-			'owner' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'number' => array('type' => 'integer', 'null' => false, 'default' => NULL),
+			'project_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+			'version_id' => array('type' => 'integer', 'null' => false, 'default' => 0),
+			'reporter' => array('type' => 'integer', 'null' => false, 'default' => 0),
+			'owner' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'status' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'priority' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
@@ -117,7 +119,6 @@ class ChawSchema extends CakeSchema {
 			'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'number' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $timeline = array(
@@ -159,14 +160,14 @@ class ChawSchema extends CakeSchema {
 	var $wiki = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),
+			'path' => array('type' => 'string', 'null' => false, 'default' => '/', 'length' => 200),
 			'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 			'active' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+			'read_only' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'last_changed_by' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'content' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'path' => array('type' => 'string', 'null' => false, 'default' => '/', 'length' => 200),
-			'read_only' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 }
