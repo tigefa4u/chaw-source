@@ -169,20 +169,20 @@ class TicketsController extends AppController {
 		$this->redirect(array('action' => 'view', $id));
 	}
 
-	function _ticketInfo() {
-		$versions = $this->Ticket->Version->find('list', array(
-			'conditions' => array('Version.project_id' => $this->Project->id
-		)));
+	function _ticketInfo($all = true) {
+		if ($all) {
+			$versions = $this->Ticket->Version->find('list', array(
+				'conditions' => array('Version.project_id' => $this->Project->id
+			)));
+			$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
+		}
 
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
-		/*
-		$statuses = $this->Project->ticket('statuses');
-		$resolutions = $this->Project->ticket('resolutions');
-		*/
-		$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
-
 		$events = $this->Ticket->events($this->data['Ticket']['status']);
+
+		$statuses = $this->Ticket->states();
+		$resolutions = $this->Project->ticket('resolutions');
 
 		$canUpdate = $this->Access->check($this, array(
 			'access' => 'u', 'default' => false, 'admin' => true

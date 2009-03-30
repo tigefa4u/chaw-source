@@ -138,7 +138,16 @@ if ($session->check('Ticket.back')) {
 					<?php endif; ?>
 
 						<div class="body">
-							<?php echo h($comment['body']);?>
+							<?php
+								if (!empty($comment['changes'])) {
+									echo $chaw->changes($comment['changes']);
+								}
+								if (!empty($comment['reason'])) {
+									echo h($comment['reason']);
+								}
+								echo h($comment['body']);
+
+							?>
 						</div>
 					</div>
 
@@ -167,21 +176,21 @@ if ($session->check('Ticket.back')) {
 					</legend>
 					<fieldset class="options">
 					<?php
-						if (!empty($canUpdate)) {
+						if ($ticket['Ticket']['status'] == 'closed') {
+							echo $form->checkbox('event', array(
+								'value' => 'reopen',
+							));
+							echo $form->label('event', __('reopen', true));
+						} else if (!empty($canUpdate)) {
 							echo $form->input('event', array(
-								'label'=> false, 'empty' => true
+								'label'=> __('Action', true), 'empty' => true
 							));
-							/*
-							echo $form->input('resolution', array(
-								'label'=> __('Resolution', true),
-								'empty' => true
-							));
-							*/
-						} elseif (!empty($ticket['Resolution']['type'])) {
-							echo $form->input('event', array(
-								'type' => 'checkbox', 'value' => 'reopen',
-								'label'=> __('reopen',true),
-							));
+							if (in_array($ticket['Ticket']['status'], array('pending', 'approved', 'in progress'))) {
+								echo $form->input('resolution', array(
+									'label'=> __('Reason', true),
+									'empty' => true
+								));
+							}
 						}
 					?>
 					</fieldset>

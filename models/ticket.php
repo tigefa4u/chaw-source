@@ -42,8 +42,7 @@ class Ticket extends AppModel {
 	);
 
 	var $belongsTo = array(
-		'Project',
-		'Version',
+		'Project', 'Version',
 		'Owner' => array('className' => 'User', 'foreignKey' => 'Owner'),
 		'Reporter' => array('className' => 'User', 'foreignKey' => 'reporter'),
 	);
@@ -94,7 +93,7 @@ class Ticket extends AppModel {
 				$this->data['Tag']['Tag'] = $this->Tag->generate($this->data['Ticket']['tags']);
 			}
 		}
-		
+
 		if (!empty($this->data['Ticket']['event'])) {
 			if ($this->event($this->data['Ticket']['event'])) {
 				if ($this->data['Ticket']['event'] == 'accept') {
@@ -126,28 +125,20 @@ class Ticket extends AppModel {
 				$previous = $this->data['Ticket']['previous'];
 				unset($this->data['Ticket']['previous']);
 
-				foreach ($this->data['Ticket'] as $field => $value) {
-					if ($field == 'comment' || $field == 'modified') {
-						continue;
-					}
-					if (isset($previous[$field]) && $previous[$field] != $value) {
+				foreach ((array)$previous as $field => $value) {
+					if (isset($this->data['Ticket'][$field]) && $this->data['Ticket'][$field] != $value) {
+						if ($field == 'modified') {
+							continue;
+						}
 						$change = null;
 						if ($field == 'description') {
-							$change = "- **{$field}** was changed";
+							$change = "{$field}:";
 						} elseif ($field == 'owner') {
-							$change = "- **owner** was changed to _{$owner}_";
-							if (empty($owner)) {
-								$change = "- **owner** was removed";
-							}
+							$change = "owner:{$owner}";
 						} elseif ($field == 'version_id') {
-							$change = "- **version** was changed to _{$version}_";
-							if (empty($version)) {
-								$change = "- **version** was removed";
-							}
-						} elseif (empty($value)) {
-							$change = "- **{$field}** was removed";
+							$change = "version:{$version}";
 						} else {
-							$change = "- **{$field}** was changed to _{$value}_";
+							$change = "{$field}:{$this->data['Ticket'][$field]}";
 						}
 						if (isset($change)) {
 							$changes[] = $change;
@@ -158,29 +149,23 @@ class Ticket extends AppModel {
 			if (!empty($this->data['Ticket']['comment'])) {
 				$this->data['Ticket']['comment'] = trim($this->data['Ticket']['comment']);
 			}
+			$reason = null;
+			if (!empty($this->data['Ticket']['resolution'])) {
+				$reason = $this->data['Ticket']['resolution'];
+			}
 			if (!empty($changes) || !empty($this->data['Ticket']['comment'])) {
 				$data = array('Comment' => array(
 					'model' => 'Ticket',
 					'foreign_key' => $this->id,
 					'project_id' => $this->data['Ticket']['project_id'],
 					'user_id' => $this->data['Ticket']['user_id'],
-					'body' => join("\n", $changes) ."\n\n" . $this->data['Ticket']['comment']
+					'body' => $this->data['Ticket']['comment'],
+					'changes' => join("\n", $changes),
+					'reason' => $reason,
 				));
 
 				$this->Comment->create($data);
 				$this->Comment->save();
-			}
-
-			if (!empty($this->data['Ticket']['resolution'])) {
-				$data = array('Resolution' => array(
-					'model' => 'Ticket',
-					'foreign_key' => $this->id,
-					'project_id' => $this->data['Ticket']['project_id'],
-					'user_id' => $this->data['Ticket']['user_id'],
-				));
-
-				$this->Resolution->create($data);
-				$this->Resolution->save();
 			}
 		}
 

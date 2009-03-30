@@ -75,7 +75,7 @@ class StateMachineBehavior extends ModelBehavior {
 	 */
 	function events(&$model, $state = null) {
 		$settings = $this->settings[$model->name];
-		$state = empty($state) ? $model->field($settings['field']) : $state;
+		$state = is_null($state) ? $model->field($settings['field']) : $state;
 		$results = array();
 
 		if (empty($settings['transitions'])) {
@@ -88,6 +88,16 @@ class StateMachineBehavior extends ModelBehavior {
 		}
 		return $results;
 	}
+	/**
+	 * If 'transitions' is defined in settings, returns the possible transition events for the
+	 * current state.
+	 *
+	 * @return array
+	 */
+	function states(&$model) {
+		$settings = $this->settings[$model->name];
+		return $settings['states'];
+	}	
 
 	/**
 	 * Must be overridden in the attached model class to handle state transitions.  I was going to

@@ -135,7 +135,9 @@ foreach ($tickets as $ticket):
 				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
 			); ?>
 		</td>
-		<td><?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm-d-y'); ?></td>
+		<td nowrap>
+			<?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm-d-y'); ?>
+		</td>
 	</tr>
 <?php endforeach; ?>
 </table>

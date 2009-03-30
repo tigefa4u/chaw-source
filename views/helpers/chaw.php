@@ -212,4 +212,31 @@ class ChawHelper extends AppHelper {
 			'title' => $title, 'class' => 'rss', 'escape'=> false
 		));
 	}
+
+/**
+ * undocumented function
+ *
+ * @param string $title
+ * @param string $url
+ * @return string
+ */
+	function changes($changes) {
+		$result = array();
+		$lines = explode("\n", $changes);
+		foreach ($lines as $line) {
+			$change = null;
+			list($field, $value) = explode(":", $line);
+			if ($field == 'description') {
+				$change = "<li><b>{$field}</b> was changed</li>";
+			} elseif (empty($value)) {
+				$change = "<li><b>{$field}</b> was removed</li>";
+			} else {
+				$change = "<li><b>{$field}</b> was changed to <em>{$value}</em></li>";
+			}
+			if (isset($change)) {
+				$result[] = $change;
+			}
+		}
+		return '<ul>' . join("\n", $result) . '</ul>';
+	}
 }

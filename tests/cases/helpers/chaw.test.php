@@ -43,8 +43,19 @@ class ChawHelperTest extends CakeTestCase {
 		$expected = '<a href="/some_project/commits/view/1111111111111111111111" class="commit" title="1111111111111111111111">1111...1111</a>';
 
 		$this->assertEqual($result, $expected);
+	}
+	
+	function testChanges() {
+		$changes = "version:new\nstatus:closed";
+		$result = $this->Chaw->changes($changes);
+		$expected = "<ul><li><b>version</b> was changed to <em>new</em></li>\n<li><b>status</b> was changed to <em>closed</em></li></ul>";
+		$this->assertEqual($result, $expected);
 		
-
+		$changes = "version:\nstatus:closed\nowner:";
+		$result = $this->Chaw->changes($changes);
+		$expected = "<ul><li><b>version</b> was removed</li>\n<li><b>status</b> was changed to <em>closed</em></li>\n<li><b>owner</b> was removed</li></ul>";
+		$this->assertEqual($result, $expected);
+		
 	}
 
 }
