@@ -168,12 +168,16 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
+		$this->Controller->params['controller'] = 'wiki';
 
+		$this->Controller->Project->Permission->rules('chaw', array(
+			'wiki' => array(
+				'*'=> '',
+				'gwoo' => 'rw'
+			)
+		));
 		$Access->user = array();
 		$Access->isPublic = false;
-
-		$this->Controller->params['controller'] = 'wiki';
-		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('gwoo' => 'rw')));
 
 		$this->assertFalse($Access->check($this->Controller, array('access' => 'r')));
 	}
@@ -186,7 +190,12 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->params['controller'] = 'wiki';
 
 		$Access->user = array();
-		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('gwoo' => 'rw')));
+		$this->Controller->Project->Permission->rules('chaw', array(
+			'wiki' => array(
+				'*'=> '',
+				'gwoo' => 'rw'
+			)
+		));
 
 		$Access->isPublic = false;
 		$Access->user = array();
@@ -627,6 +636,19 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->Project = ClassRegistry::init('Project');
 		$this->assertTrue($this->Controller->Project->save($data));
 
+		$result = $this->Controller->Project->Permission->rules('chaw', array('tickets' => array('*' => 'rw')));
+		$this->assertEqual($result, array(
+			'chaw' => array(
+				'wiki' => array(
+					'*' => '',
+					'gwoo' => 'rw'
+				),
+				'tickets' => array(
+					'*' => 'rw'
+				)
+			)
+		));
+
 		$this->Controller->testRedirect = null;
 
 		$this->Controller->params = array(
@@ -722,6 +744,7 @@ class AccessComponentTest extends CakeTestCase {
 
 	function endTest() {
 		$this->__cleanUp();
+		unset($this->Controller);
 	}
 
 	function __cleanUp() {
