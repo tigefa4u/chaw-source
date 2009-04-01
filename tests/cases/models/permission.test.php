@@ -178,6 +178,46 @@ class PermissionTest extends CakeTestCase {
 			)
 		);
 		$this->assertEqual($result, $expected);
+
+		$result = $Permission->rules(null, array('/refs/heads/master' => array('bob' => 'r')));
+//		pr($result);
+		$expected = array(
+			'project_two' => array(
+				'/refs/heads/master' => array(
+					'gwoo' => 'r',
+					'@project_two-developers' => 'rw',
+					'bob' => 'r',
+				),
+				'/test/override' => array(
+					'gwoo' => 'rw'
+				)
+			),
+			'groups' => array(
+				'project_two-developers' => array('gwoo', 'nate', 'larry'),
+				'chaw-developers' => array('gwoo', 'bob', 'tom')
+			)
+		);
+		$this->assertEqual($result, $expected);
+
+		$result = $Permission->rules('project_two', array('/refs/heads/master' => array('bob' => 'r')));
+//		pr($result);
+		$expected = array(
+			'project_two' => array(
+				'/refs/heads/master' => array(
+					'gwoo' => 'r',
+					'@project_two-developers' => 'rw',
+					'bob' => 'r',
+				),
+				'/test/override' => array(
+					'gwoo' => 'rw'
+				)
+			),
+			'groups' => array(
+				'project_two-developers' => array('gwoo', 'nate', 'larry'),
+				'chaw-developers' => array('gwoo', 'bob', 'tom')
+			)
+		);
+		$this->assertEqual($result, $expected);
 	}
 
 	function testGroups() {
@@ -308,6 +348,31 @@ class PermissionTest extends CakeTestCase {
 		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
 
 		$this->assertTrue($Permission->check("source", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
+
+	}
+
+	function testDeleteIsAlwaysFalse() {
+		Configure::write('Project', $this->__projects['Two']);
+		$Permission = new TestPermission();
+
+		$data['Permission']['fine_grained'] = "";
+		$Permission->saveFile($data);
+
+		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
+
+		$this->assertFalse($Permission->check("wiki", array('access' => 'd', 'default' => true)));
+
+		$this->assertFalse($Permission->check("source", array('access' => 'd', 'default' => true)));
+
+		$this->assertFalse($Permission->check("wiki", array('user'=> 'public', 'access' => 'd', 'default' => true)));
+
+		$this->assertFalse($Permission->check("source", array('user'=> 'public', 'access' => 'd', 'default' => true)));
+
+		$Permission->rules('project_two', array('wiki' => 'd', 'source' => 'rw'));
+
+		$this->assertTrue($Permission->check("wiki", array('project'=> 'project_two', 'user'=> 'public', 'access' => 'd', 'default' => true)));
+
+		$this->assertFalse($Permission->check("source", array('project'=> 'project_two', 'user'=> 'public', 'access' => 'd', 'default' => true)));
 
 	}
 

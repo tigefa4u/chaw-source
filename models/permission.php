@@ -138,83 +138,84 @@ class Permission extends AppModel {
  *
  **/
 	function check($path, $options = array()) {
-		$defaults = array('user' => null, 'group' => null, 'project' => null, 'default' => false);
+		$defaults = array(
+			'user' => null, 'group' => null, 'access' => null,
+			'project' => null, 'default' => false
+		);
 		extract(array_merge($defaults, $options));
 
 		$rules = $this->rules($project);
-
-		if (empty($rules)) {
-			return $default;
-		}
 
 		if ($project === null) {
 			$config = $this->config();
 			$project = $config['url'];
 		}
 
-		if (empty($rules[$project]) || empty($access)) {
-			return $default;
+		if (!empty($rules[$project])) {
+			foreach ((array)$rules[$project] as $rule => $perms) {
+
+				$isMatch = ltrim($rule, '/') == ltrim($path, '/');
+
+				/* for multi paths
+				$paths = explode('/', $path);
+
+				if (strpos($rule, '/') !== false) {
+					if (substr($rule, -1) == '*') {
+
+					}
+				}
+				*/
+				if ($isMatch) {
+
+					$check = null;
+
+					if (isset($perms['*'])) {
+						$check = $perms['*'];
+					}
+
+					if (!empty($rules['groups'])) {
+						foreach ($rules['groups'] as $agroup => $users) {
+							if (in_array($user, $users)) {
+								if(isset($perms['@' . $agroup])) {
+									$check .= $perms['@' . $agroup];
+									break;
+								}
+							}
+						}
+					}
+
+					if(isset($perms['@' . $group])) {
+						$check .= $perms['@' . $group];
+					}
+
+					if (isset($perms[$user])) {
+						$check .= $perms[$user];
+					}
+
+					if ($check) {
+						foreach ((array)$access as $perm) {
+							if (strpos($check, $perm) !== false) {
+								return true;//return compact('check', 'perm', 'user', 'group');
+							}
+							if ($perm == 'c' || $perm == 'u' || $perm == 'd') {
+								if (strpos($check, 'w') !== false) {
+									return true;
+								}
+							}
+							if ($perm == 'w') {
+								if (strpos($check, 'c') !== false || strpos($check, 'u') !== false) {
+									return true;
+								}
+							}
+						}
+						return false;
+					}
+				}
+			}
 		}
 
-		foreach ((array)$rules[$project] as $rule => $perms) {
-
-			$isMatch = ltrim($rule, '/') == ltrim($path, '/');
-
-			/* for multi paths
-			$paths = explode('/', $path);
-
-			if (strpos($rule, '/') !== false) {
-				if (substr($rule, -1) == '*') {
-
-				}
-			}
-			*/
-			if ($isMatch) {
-
-				$check = null;
-
-				if (isset($perms['*'])) {
-					$check = $perms['*'];
-				}
-
-				if (!empty($rules['groups'])) {
-					foreach ($rules['groups'] as $agroup => $users) {
-						if (in_array($user, $users)) {
-							if(isset($perms['@' . $agroup])) {
-								$check .= $perms['@' . $agroup];
-								break;
-							}
-						}
-					}
-				}
-
-				if(isset($perms['@' . $group])) {
-					$check .= $perms['@' . $group];
-				}
-
-				if (isset($perms[$user])) {
-					$check .= $perms[$user];
-				}
-
-				if ($check) {
-					foreach ((array)$access as $perm) {
-						if (strpos($check, $perm) !== false) {
-							return true;//return compact('check', 'perm', 'user', 'group');
-						}
-						if ($perm == 'c' || $perm == 'u' || $perm == 'd') {
-							if (strpos($check, 'w') !== false) {
-								return true;
-							}
-						}
-						if ($perm == 'w') {
-							if (strpos($check, 'c') !== false || strpos($check, 'u') !== false) {
-								return true;
-							}
-						}
-					}
-					return false;
-				}
-			}
+		if (!empty($access) && $access == 'd') {
+			return false;
 		}
 		return $default;
 	}
@@ -291,10 +292,8 @@ class Permission extends AppModel {
 			$this->__rules[$project] = $rules;
 		}
 
-		$rules = $this->__rules[$project];
-
 		if (!empty($atomic)) {
-			$this->__rules[$project] = array_merge($this->__rules[$project], array($project => $atomic));
+			$this->__rules[$project] = Set::merge($this->__rules[$project], array($project => $atomic));
 		}
 		return $this->__rules[$project];
 	}
