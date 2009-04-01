@@ -349,6 +349,9 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertTrue($Permission->check("source", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
 
+		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('c', 'w'), 'default' => true)));
+
+		$this->assertTrue($Permission->check("tickets", array('user' => 'bob', 'access' => 'c', 'default' => true)));
 	}
 
 	function testDeleteIsAlwaysFalse() {

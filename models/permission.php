@@ -142,16 +142,18 @@ class Permission extends AppModel {
 			'user' => null, 'group' => null, 'access' => null,
 			'project' => null, 'default' => false
 		);
-		extract(array_merge($defaults, $options));
-
-		$rules = $this->rules($project);
+		$options = array_merge($defaults, $options);
+		extract($options);
 
 		if ($project === null) {
 			$config = $this->config();
 			$project = $config['url'];
 		}
 
+		$rules = $this->rules($project);
+
 		if (!empty($rules[$project])) {
+
 			foreach ((array)$rules[$project] as $rule => $perms) {
 
 				$isMatch = ltrim($rule, '/') == ltrim($path, '/');
@@ -195,7 +197,7 @@ class Permission extends AppModel {
 					if ($check) {
 						foreach ((array)$access as $perm) {
 							if (strpos($check, $perm) !== false) {
-								return true;//return compact('check', 'perm', 'user', 'group');
+								return true;
 							}
 							if ($perm == 'c' || $perm == 'u' || $perm == 'd') {
 								if (strpos($check, 'w') !== false) {
@@ -214,7 +216,7 @@ class Permission extends AppModel {
 			}
 		}
 
-		if (!empty($access) && $access == 'd') {
+		if ($access == 'd') {
 			return false;
 		}
 		return $default;
