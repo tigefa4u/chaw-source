@@ -9,6 +9,11 @@
 				echo date("H:i", strtotime($data['Comment']['created']));
 			?>
 		</span>
+		<?php
+			if (!empty($data['Comment']['reason'])) {
+				echo "<span><strong>{$data['Comment']['reason']}</strong></span>";
+				
+		?>
 	<p>
 
 	<div class="body">
@@ -44,9 +49,14 @@
 			?>
 		</p>
 
-		<p class="description">
-			<?php echo $text->truncate($data['Comment']['body'], 80, '...', false, true); ?>
-		</p>
+		<div class="description">
+			<?php
+				if (!empty($data['Comment']['changes'])) {
+					echo $chaw->changes($data['Comment']['changes']);
+				}
+				echo $text->truncate($data['Comment']['body'], 80, '...', false, true);
+			?>
+		</div>
 	</div>
 
 	<?php if (!empty($this->params['isAdmin'])):?>

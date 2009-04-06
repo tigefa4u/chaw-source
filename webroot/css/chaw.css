@@ -747,7 +747,7 @@ div.wiki-text code {
 	font-weight: bold;
 	color: #69C;
 }
-.timeline .event p.description {
+.timeline .event .description {
 	margin: 0;
 	margin-top: 1px;
 	font-family: "Andale Mono", monospace;
@@ -871,11 +871,14 @@ div.comments {
 	white-space: normal;
 }
 .comments .comment .body ul {
-	margin-bottom: 16px;
+	margin-bottom: 4px;
 }
 .comments .comment .body  li {
-	margin: 2px;
+	margin: 2px 0;
 	font-size: 80%;
+}
+.comments .comment .body p {
+	margin-top: 10px;
 }
 .tickets fieldset.comments {
 	float: left;

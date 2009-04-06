@@ -220,23 +220,34 @@ class ChawHelper extends AppHelper {
  * @param string $url
  * @return string
  */
-	function changes($changes) {
-		$result = array();
+	function changes($changes, $format = 'html') {
+		$results = array();
 		$lines = explode("\n", $changes);
 		foreach ($lines as $line) {
 			$change = null;
 			list($field, $value) = explode(":", $line);
 			if ($field == 'description') {
-				$change = "<li><b>{$field}</b> was changed</li>";
+				$change = "was changed";
 			} elseif (empty($value)) {
-				$change = "<li><b>{$field}</b> was removed</li>";
+				$change = "was removed";
 			} else {
-				$change = "<li><b>{$field}</b> was changed to <em>{$value}</em></li>";
+				$change = "was changed to";
 			}
-			if (isset($change)) {
-				$result[] = $change;
+			$result = null;
+			if ($format == 'html') {
+				if (empty($value)) {
+					$result = sprintf('<li><strong>%1$s</strong> %2$s</li>', $field, $change);
+				} else {
+					$result = sprintf('<li><strong>%1$s</strong> %2$s <em>%3$s</em></li>', $field, $change, $value);
+				}
+			} else {
+				$result = $field . ' ' . $change . ' ' . $value;
 			}
+			$results[] = $result;
 		}
-		return '<ul>' . join("\n", $result) . '</ul>';
+		if ($format == 'html') {
+			return '<ul>' . join("\n", $results) . '</ul>';
+		}
+		return join("\n", $results);
 	}
 }

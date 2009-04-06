@@ -95,10 +95,17 @@ class Ticket extends AppModel {
 		}
 
 		if (!empty($this->data['Ticket']['event'])) {
+			$reason = null;
 			if ($this->event($this->data['Ticket']['event'])) {
 				if ($this->data['Ticket']['event'] == 'accept') {
 					$this->data['Ticket']['owner'] = $this->data['Ticket']['user_id'];
+				} elseif ($this->data['Ticket']['event'] == 'reopen') {
+					$reason = 'reopen';
 				}
+			}
+
+			if (!empty($this->data['Ticket']['resolution'])) {
+				$reason = $this->data['Ticket']['resolution'];
 			}
 		}
 
@@ -149,10 +156,7 @@ class Ticket extends AppModel {
 			if (!empty($this->data['Ticket']['comment'])) {
 				$this->data['Ticket']['comment'] = trim($this->data['Ticket']['comment']);
 			}
-			$reason = null;
-			if (!empty($this->data['Ticket']['resolution'])) {
-				$reason = $this->data['Ticket']['resolution'];
-			}
+
 			if (!empty($changes) || !empty($this->data['Ticket']['comment'])) {
 				$data = array('Comment' => array(
 					'model' => 'Ticket',

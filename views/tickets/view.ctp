@@ -29,7 +29,7 @@ $(document).ready(function(){
 		$("#TicketComment").after($("fieldset.prop"));
 
 	});
-	$(".body").each(function () {
+	$(".wiki-text").each(function () {
 		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});
 });
@@ -143,9 +143,9 @@ if ($session->check('Ticket.back')) {
 									echo $chaw->changes($comment['changes']);
 								}
 								if (!empty($comment['reason'])) {
-									echo h($comment['reason']);
+									echo "<p><strong>{$comment['reason']}</strong></p>";
 								}
-								echo h($comment['body']);
+								echo $html->tag('div', h($comment['body']), array('class' => 'wiki-text'));
 
 							?>
 						</div>

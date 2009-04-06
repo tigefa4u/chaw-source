@@ -42,7 +42,16 @@ foreach ($feed as $data) {
 				'#' => 'c'.$data['Comment']['id']
 			);;
 			$pubDate = $data['Comment']['created'];
-			$description = $text->truncate(nl2br($data['Comment']['body']), 200, '...', false, true);
+
+			$description = null;
+			if (!empty($data['Comment']['changes'])) {
+				$description .= $chaw->changes($data['Comment']['changes']);
+			}
+			if (!empty($data['Comment']['reason'])) {
+				$description .= "<p><strong>{$data['Comment']['reason']}</strong></p>";
+			}
+			$description .= $text->truncate(nl2br($data['Comment']['body']), 200, '...', false, true);
+
 			$author = $data['User']['username'];
 
 			if (!empty($data['Ticket']['Project'])) {
