@@ -10,9 +10,9 @@
 			?>
 		</span>
 		<?php
-			if (!empty($data['Comment']['reason'])) {
-				echo "<span><strong>{$data['Comment']['reason']}</strong></span>";
-				
+			if (!empty($data['Comment']['reason'])) :
+				echo "<span class=\"small\"><strong>{$data['Comment']['reason']}</strong></span>";
+			endif;
 		?>
 	<p>
 
