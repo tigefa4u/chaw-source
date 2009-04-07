@@ -16,6 +16,9 @@ foreach ($feed as $data) {
 	switch ($type) {
 		case 'Commit':
 			$title = "{$type}: " . $data[$type]['revision']; //$chaw->commit($commit['Commit']['revision'], $commit['Project'])
+			if (!empty($data['Branch']['name'])) {
+				$title .= " to " . $data['Branch']['name'];
+			}
 			$link = array('controller' => 'commits', 'action' => 'view', $data[$type]['revision']);
 			$pubDate = $data[$type]['created'];
 			$description = $data[$type]['message'];
