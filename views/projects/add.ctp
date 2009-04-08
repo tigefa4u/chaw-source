@@ -18,7 +18,7 @@
 
 		echo $form->hidden('private');
 
-		if ($this->passedArgs[0] == 'public'){
+		if (!empty($this->passedArgs[0]) && $this->passedArgs[0] == 'public'){
 			echo $form->input('ohloh_project', array(
 				'after' => '<small>the url for the project on <a href="http://ohloh.net">ohloh.net</a></small>'
 			));
