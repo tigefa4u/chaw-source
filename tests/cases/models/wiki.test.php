@@ -11,8 +11,7 @@ class WikiTestCase extends CakeTestCase {
 		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
 	);
 
-	function start() {
-		parent::start();
+	function startCase() {
 		$this->Wiki = ClassRegistry::init('Wiki');
 	}
 
@@ -38,7 +37,26 @@ class WikiTestCase extends CakeTestCase {
 			'path' => 'guides/ssh',
 		));
 		$this->assertTrue($this->Wiki->save());
+	}
 
+	function testWikiSaveWithSpaceInTitle() {
+		$this->Wiki->create(array(
+			'title' => 'some space',
+			'path' => 'guides/ssh',
+		));
+		$this->assertTrue($this->Wiki->save());
+
+		$result = $this->Wiki->field('slug');
+		$this->assertEqual($result, 'some_space');
+
+		$this->Wiki->create(array(
+			'slug' => 'another space',
+			'path' => 'guides/ssh',
+		));
+		$this->assertTrue($this->Wiki->save());
+
+		$result = $this->Wiki->field('slug');
+		$this->assertEqual($result, 'another_space');
 	}
 
 
