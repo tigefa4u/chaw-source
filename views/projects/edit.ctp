@@ -16,22 +16,25 @@
 		echo $form->input('description');
 		if ($form->value('private') == 0) {
 			echo $form->input('ohloh_project', array(
-				'after' => '<small>' . __("the url for the project on", true) . ' <a href="http://ohloh.net">ohloh.net</a></small>'
+				'label' => '<a href="https://www.ohloh.net">https://www.ohloh.net/</a>p/',
+				'div' => 'inline' 
+				
 			));
 		}
 	?>
 	</fieldset>
 	<fieldset class="options">
  		<legend>Options</legend>
-	<?php
-		echo $form->input('config.groups', array('type' => 'textarea'));
-		echo $form->input('config.ticket.types', array('type' => 'textarea'));
-		echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
-		echo $form->input('config.ticket.statuses', array('type' => 'textarea'));
-		echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
-	?>
-	<p><?php __('Comma seperated') ?></p>
-
+		<?php
+			echo $form->input('config.groups', array('type' => 'textarea'));
+			echo $form->input('config.ticket.types', array('type' => 'textarea'));
+			echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
+			/*
+			echo $form->input('config.ticket.statuses', array('type' => 'textarea'));
+			echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
+			*/
+		?>
+		<p><?php __('Comma seperated') ?></p>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

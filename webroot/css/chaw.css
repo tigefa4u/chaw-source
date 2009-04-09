@@ -84,6 +84,18 @@ fieldset.options {
 	font-size: 80%;
 	margin-top: 30px;
 }
+div.inline label, div.inline input {
+	padding: 0;
+	clear: none;
+	display: inline;
+	width: auto;
+	font-size: 16px;
+	vertical-align: middle;
+}
+div.inline small {
+	padding: 4px 0;
+	display: block;
+}
 
 fieldset.ticket-search {
 	margin-top: 0;

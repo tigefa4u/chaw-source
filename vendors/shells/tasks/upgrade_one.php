@@ -32,7 +32,7 @@ class UpgradeOneTask extends ChawUpgradeShell {
 		}
 
 		$this->Project->recursive = -1;
-		$projects = $this->Project->find('all');
+		$projects = $this->Project->find('all', array('order' => 'id ASC'));
 
 		if ($this->_updateSchema($this->Project, 'projects') == false) {
 			return false;
@@ -42,22 +42,10 @@ class UpgradeOneTask extends ChawUpgradeShell {
 			'types' => 'rfc, bug, enhancement',
 			'statuses' => 'pending, approved, in progress, on hold, closed',
 			'priorities' => 'low, normal, high',
-			'resolutions' => 'fixed, invalid, worksforme, duplicate, wontfix'
+			'resolutions' => 'fixed, invalid, works-for-me, duplicate, wont-fix'
 		));
 
 		foreach ($projects as $project) {
-
-			if ($project['Project']['ticket_types']	!= $types) {
-				$types = $project['Project']['ticket_types'];
-			}
-
-			if ($project['Project']['ticket_statuses']	!= $statuses) {
-				$statuses = $project['Project']['ticket_statuses'];
-			}
-
-			if ($project['Project']['ticket_priorities'] != $priorities) {
-				$priorities = $project['Project']['ticket_priorities'];
-			}
 
 			$new = array('config' => array(
 				'groups' => $project['Project']['groups'],

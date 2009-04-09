@@ -22,19 +22,19 @@ class WikiTestCase extends CakeTestCase {
 
 	function testSave() {
 		$this->Wiki->create(array(
-			'slug' => 'home',
+			'title' => 'home',
 			'path' => '',
 		));
 		$this->assertTrue($this->Wiki->save());
 
 		$this->Wiki->create(array(
-			'slug' => 'setup',
+			'title' => 'setup',
 			'path' => 'guides',
 		));
 		$this->assertTrue($this->Wiki->save());
 
 		$this->Wiki->create(array(
-			'slug' => 'keygen',
+			'title' => 'keygen',
 			'path' => 'guides/ssh',
 		));
 		$this->assertTrue($this->Wiki->save());
@@ -44,19 +44,19 @@ class WikiTestCase extends CakeTestCase {
 
 	function testPath() {
 		$this->Wiki->create(array(
-			'slug' => 'home',
+			'title' => 'home',
 			'path' => '/',
 		));
 		$this->assertTrue($this->Wiki->save());
 
 		$this->Wiki->create(array(
-			'slug' => 'setup',
+			'title' => 'setup',
 			'path' => '/guides',
 		));
 		$this->assertTrue($this->Wiki->save());
 
 		$this->Wiki->create(array(
-			'slug' => 'keygen',
+			'title' => 'keygen',
 			'path' => '/guides/ssh',
 		));
 		$this->assertTrue($this->Wiki->save());
@@ -100,7 +100,7 @@ class WikiTestCase extends CakeTestCase {
 
 	function testActivate() {
 		$this->Wiki->create(array(
-			'slug' => 'keygen',
+			'title' => 'keygen',
 			'path' => '/guides/ssh',
 			'content' => 'ok cool'
 		));

@@ -42,21 +42,22 @@
 			echo $javascript->link('jquery-1.3.1.min');
 			echo $javascript->link('gshowdown.min');
 
-			$base = $this->webroot;
-			if (!empty($this->params['fork'])) {
-				$base .= 'forks/' . $this->params['fork'] . '/';
-			}
-			$base .= $this->params['project'] . '/';
+			if (isset($showdown)):
+				$base = $this->webroot;
+				if (!empty($this->params['fork'])) {
+					$base .= 'forks/' . $this->params['fork'] . '/';
+				}
+				$base .= $this->params['project'] . '/';
 
-			echo $javascript->codeBlock('
-				var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");
-
-				$(document).ready(function(){
-					$(".wiki-text").each(function () {
-						$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
+				echo $javascript->codeBlock('
+					var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");
+					$(document).ready(function(){
+						$(".wiki-text").each(function () {
+							$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
+						});
 					});
-				});
-			');
+				');
+			endif;
 		}
 		echo $scripts_for_layout;
 	?>
@@ -161,14 +162,16 @@
 			</p>
 		</div>
 	</div>
-<script type="text/javascript">
-	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-	try {
-		var pageTracker = _gat._getTracker("UA-743287-5");
-		pageTracker._trackPageview();	} catch(err) {}
-</script>
+<?php if (Configure::read() > 0):?>
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var pageTracker = _gat._getTracker("UA-743287-5");
+			pageTracker._trackPageview();	} catch(err) {}
+	</script>
+<?php endif;?>
 </body>
 </html>

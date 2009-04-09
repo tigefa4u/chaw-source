@@ -20,21 +20,23 @@
 
 		if (!empty($this->passedArgs[0]) && $this->passedArgs[0] == 'public'){
 			echo $form->input('ohloh_project', array(
-				'after' => '<small>the url for the project on <a href="http://ohloh.net">ohloh.net</a></small>'
+				'label' => '<a href="https://www.ohloh.net">https://www.ohloh.net/p/</a>',
 			));
 		}
 	?>
 	</fieldset>
 	<fieldset class="options">
  		<legend><?php  __('Options') ?></legend>
-	<?php
-		echo $form->input('groups', array('type' => 'textarea','label' => array('labeltext' => __('Groups',true))));
-		echo $form->input('ticket_types', array('type' => 'textarea','label' => array('labeltext' => __('Ticket Types',true))));
-		echo $form->input('ticket_priorities', array('type' => 'textarea','label' => array('labeltext' => __('Ticket Priorities',true))));
-		echo $form->input('ticket_statuses', array('type' => 'textarea','label' => array('labeltext' => __('Ticket Statuses',true))));
-	?>
-	<p><?php echo __('Comma seperated') ?></p>
-
+		<?php
+			echo $form->input('config.groups', array('type' => 'textarea'));
+			echo $form->input('config.ticket.types', array('type' => 'textarea'));
+			echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
+			/*
+			echo $form->input('config.ticket.statuses', array('type' => 'textarea'));
+			echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
+			*/
+		?>
+		<p><?php echo __('Comma seperated') ?></p>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

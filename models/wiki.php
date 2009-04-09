@@ -25,7 +25,10 @@ class Wiki extends AppModel {
 	var $actsAs = array('Directory');
 
 	var $validate = array(
-		'title' => array('notEmpty'),
+		'title' => array(
+			'required' => true,
+			'rule' => 'notEmpty'
+		),
 		'content' => array('notEmpty')
 	);
 
@@ -75,13 +78,7 @@ class Wiki extends AppModel {
 	}
 
 	function beforeSave(){
-		if (!empty($this->data['Wiki']['title'])) {
-			$this->data['Wiki']['slug'] = $this->slug($this->data['Wiki']['title']);
-		}
-
-		if (empty($this->data['Wiki']['slug'])) {
-			return false;
-		}
+		$this->data['Wiki']['slug'] = $this->slug($this->data['Wiki']['title']);
 
 		if (!empty($this->data['Wiki']['active'])) {
 			$this->recursive = -1;

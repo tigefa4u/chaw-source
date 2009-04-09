@@ -184,10 +184,13 @@ if ($session->check('Ticket.back')) {
 						} else if (!empty($canUpdate)) {
 							echo $form->input('event', array(
 								'label'=> __('Action', true), 'empty' => true
+								'tag' => 'span',
 							));
+							echo 'or'
 							if (in_array($ticket['Ticket']['status'], array('pending', 'approved', 'in progress'))) {
 								echo $form->input('resolution', array(
-									'label'=> __('Reason', true),
+									'label'=> __('Close with:', true),
+									'tag' => 'span',
 									'empty' => true
 								));
 							}

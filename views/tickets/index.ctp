@@ -136,7 +136,7 @@ foreach ($tickets as $ticket):
 			); ?>
 		</td>
 		<td nowrap>
-			<?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm-d-y'); ?>
+			<?php echo $time->format('m.d.y', $ticket['Ticket']['created']); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
