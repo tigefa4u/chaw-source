@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* SVN FILE: $Id$ */
 /* Ticket Fixture generated on: 2008-09-23 07:09:29 : 1222170869*/
 
@@ -13,6 +13,7 @@ class TicketFixture extends CakeTestFixture {
 			'owner' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 			'type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'status' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
+			'resolution' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'priority' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'title' => array('type' => 'string', 'null' => false, 'length' => 200),
 			'description' => array('type' => 'text', 'null' => true, 'default' => NULL),

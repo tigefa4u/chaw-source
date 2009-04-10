@@ -105,7 +105,8 @@ class Ticket extends AppModel {
 				if ($this->data['Ticket']['event'] == 'accept') {
 					$this->data['Ticket']['owner'] = $this->data['Ticket']['user_id'];
 				} elseif ($this->data['Ticket']['event'] == 'reopen') {
-					$reason = 'reopen';
+					$reason = 'reopened';
+					$this->data['Ticket']['resolution'] = null;
 				}
 			}
 		}
@@ -134,8 +135,8 @@ class Ticket extends AppModel {
 				unset($this->data['Ticket']['previous']);
 
 				foreach ((array)$previous as $field => $value) {
-					if (isset($this->data['Ticket'][$field]) && $this->data['Ticket'][$field] != $value) {
-						if ($field == 'modified') {
+					if (array_key_exists($field, $this->data['Ticket']) && $this->data['Ticket'][$field] != $value) {
+						if (in_array($field, array('created', 'modified'))) {
 							continue;
 						}
 						$change = null;

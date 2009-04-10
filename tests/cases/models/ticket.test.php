@@ -13,7 +13,7 @@ class TicketTest extends CakeTestCase {
 	function startTest() {
 		$this->Ticket = ClassRegistry::init('Ticket');
 	}
-	
+
 	function endTest() {
 		unset($this->Ticket);
 	}
@@ -97,6 +97,7 @@ class TicketTest extends CakeTestCase {
 			'description' => 'the description',
 			'previous' => '',
 			'status'  => 'approved',
+			'resolution' => '',
 			'created'  => '2008-09-23 07:54:29',
 			'modified'  => '2008-09-23 07:54:29',
 		));
@@ -110,17 +111,37 @@ class TicketTest extends CakeTestCase {
 			'title' => 'First Ticket',
 			'description' => 'the description',
 			'previous' => $data['Ticket'],
-			'status'  => 'fixed',
+			'resolution' => 'fixed',
 			'comment'  => 'Lorem ipsum dolor sit amet',
 			'created'  => '2008-09-23 07:54:29',
 			'modified'  => '2008-09-23 07:54:29',
 		));
 		$results = $this->Ticket->save($data);
 		$this->assertEqual($results, true);
-		
+
 		$this->Ticket->recursive = 1;
 		$results = $this->Ticket->read();
-		$this->assertEqual($results['Comment'][0]['changes'], "status:fixed");
+		$this->assertEqual($results['Comment'][0]['changes'], "status:closed\nresolution:fixed");
+
+		$data = array('Ticket' => array(
+			'id' => 3,
+			'project_id'  => 1,
+			'user_id'  => 1,
+			'title' => 'First Ticket',
+			'description' => 'the description',
+			'previous' => $this->Ticket->data['Ticket'],
+			'event' => 'reopen',
+			'resolution' => null,
+			'comment'  => 'Lorem ipsum dolor sit amet',
+			'created'  => '2008-09-23 07:54:29',
+			'modified'  => '2008-09-23 07:54:29',
+		));
+		$results = $this->Ticket->save($data);
+		$this->assertEqual($results, true);
+
+		$this->Ticket->recursive = 1;
+		$results = $this->Ticket->read();
+		$this->assertEqual($results['Comment'][1]['changes'], "status:pending\nresolution:");
 	}
 
 	function testOwner() {

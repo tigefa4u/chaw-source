@@ -106,6 +106,7 @@ class ChawSchema extends CakeSchema {
 			'owner' => array('type' => 'integer', 'null' => false, 'default' => 0),
 			'type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'status' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
+			'resolution' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'priority' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'title' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 			'description' => array('type' => 'text', 'null' => true, 'default' => NULL),

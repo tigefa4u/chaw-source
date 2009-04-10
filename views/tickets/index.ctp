@@ -87,7 +87,7 @@ if ($this->params['paging']['Ticket']['page'] > 0) {
 		<th><?php echo $paginator->sort(__('Status', true),'status');?></th>
 	<?php endif; ?>
 	<?php if(!empty($this->passedArgs['status']) && $this->passedArgs['status'] == 'closed'): ?>
-		<th><?php echo $paginator->sort(__('Resolution', true),'resolution');?></th>
+		<th><?php echo $paginator->sort(__('Resolution', true), 'resolution');?></th>
 	<?php endif; ?>
 	<th class="left"><?php echo $paginator->sort(__('Title',true), 'title');?></th>
 	<th><?php echo $paginator->sort(__('Created', true), 'created');?></th>
@@ -110,10 +110,9 @@ foreach ($tickets as $ticket):
 
 		<td><?php
 			if (!empty($ticket['Version']['title'])):
-				echo $html->link(
-					$ticket['Version']['title'],
-					array('controller' => 'versions', 'action' => 'view', $ticket['Version']['id'])
-				);
+				echo $html->link($ticket['Version']['title'], array(
+						'controller' => 'versions', 'action' => 'view', $ticket['Version']['id']
+				));
 			endif; ?>
 		</td>
 
@@ -127,6 +126,10 @@ foreach ($tickets as $ticket):
 
 		<?php if (empty($this->passedArgs['status'])): ?>
 			<td><?php echo $ticket['Ticket']['status']; ?></td>
+		<?php endif; ?>
+
+		<?php if(!empty($this->passedArgs['status']) && $this->passedArgs['status'] == 'closed'): ?>
+			<td><?php echo $ticket['Ticket']['resolution'];?></td>
 		<?php endif; ?>
 
 		<td class="title left">
