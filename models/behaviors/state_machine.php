@@ -82,7 +82,7 @@ class StateMachineBehavior extends ModelBehavior {
 			return array();
 		}
 		foreach ($settings['transitions'] as $event => $transitions) {
-			if (isset($transitions[$state])) {
+			if (isset($transitions[$state]) && $event != 'close') {
 				$results[$event] = $event;
 			}
 		}
@@ -97,7 +97,7 @@ class StateMachineBehavior extends ModelBehavior {
 	function states(&$model) {
 		$settings = $this->settings[$model->name];
 		return $settings['states'];
-	}	
+	}
 
 	/**
 	 * Must be overridden in the attached model class to handle state transitions.  I was going to

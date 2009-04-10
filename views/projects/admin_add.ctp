@@ -9,22 +9,30 @@
 		echo $form->input('id');
 		echo $form->input('repo_type');
 		echo $form->input('name', array(
-			'error' => array('unique' => 'The project name must be unique.')
+			'error' => array(
+				'minimum' => __('The project name must be at least 5 characters',true),
+				'unique' => __('The project name must be unique.',true)
+			)
 		));
 		echo $form->input('description');
 		echo $form->input('private');
 	?>
 	</fieldset>
 	<fieldset class="options">
- 		<legend>Options</legend>
-	<?php
-		echo $form->input('groups', array('type' => 'textarea'));
-		echo $form->input('ticket_types', array('type' => 'textarea'));
-		echo $form->input('ticket_priorities', array('type' => 'textarea'));
-		echo $form->input('ticket_statuses', array('type' => 'textarea'));
-	?>
-	<p>Comma seperated</p>
-
+ 		<legend><?php __('Groups')?></legend>
+		<?php
+			echo $form->input('config.groups', array('label' => false, 'type' => 'textarea'));
+		?>
+		<p><?php __('Comma seperated') ?></p>
+	</fieldset>
+	<fieldset class="options">
+ 		<legend><?php __('Tickets')?></legend>
+		<?php
+			echo $form->input('config.ticket.types', array('type' => 'textarea'));
+			echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
+			echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
+		?>
+		<p><?php __('Comma seperated') ?></p>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

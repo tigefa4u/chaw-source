@@ -18,9 +18,17 @@ App::import('Model', 'Schema');
 class UpgradeOneTask extends ChawUpgradeShell {
 
 	function execute() {
-		$this->projects();
-		$this->comments();
-		$this->resolutions();
+		$parentMethods = get_class_methods('ChawUpgradeShell');
+		$methods = array_diff(
+			get_class_methods($this),
+			get_class_methods('ChawUpgradeShell')
+		);
+
+		foreach ($methods as $method) {
+			if ($method != 'execute' && $method[0] != '_') {
+				$this->{$method}();
+			}
+		}
 	}
 
 	function projects() {
@@ -107,7 +115,28 @@ class UpgradeOneTask extends ChawUpgradeShell {
 		}
 	}
 
-	function resolutions() {
-		$this->_updateSchema($this->Project, 'resolutions', true);
+	function tickets() {
+		$this->Ticket = ClassRegistry::init('Ticket');
+
+		$this->Ticket->recursive = -1;
+		$tickets = $this->Ticket->find('all');
+
+		foreach ($tickets as $ticket) {
+
+			$this->Ticket->set($ticket);
+
+			if ($ticket['Ticket']['status'] == 'open') {
+				$new['Ticket']['status'] = 'pending';
+			} else {
+				$new['Ticket']['resolution'] = $ticket['Ticket']['status'];
+			}
+
+			if ($this->Ticket->save($new)) {
+				$this->out("Ticket {$ticket['Ticket']['id']} upgraded");
+			} else {
+				$this->out("ERROR: Ticket {$ticket['Ticket']['id']} NOT upgraded");
+			}
+		}
+
 	}
 }

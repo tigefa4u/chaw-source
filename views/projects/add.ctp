@@ -7,7 +7,7 @@
  		<legend><?php __('Project Setup') ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('repo_type',array('label' => array('labeltext' => __('Repo Type',true))));
+		echo $form->input('repo_type',array('label' => __('Repo Type',true)));
 		echo $form->input('name', array(
 			'error' => array(
 				'minimum' => __('The project name must be at least 5 characters',true),
@@ -26,17 +26,20 @@
 	?>
 	</fieldset>
 	<fieldset class="options">
- 		<legend><?php  __('Options') ?></legend>
+ 		<legend><?php __('Groups')?></legend>
 		<?php
-			echo $form->input('config.groups', array('type' => 'textarea'));
+			echo $form->input('config.groups', array('label' => false, 'type' => 'textarea'));
+		?>
+		<p><?php __('Comma seperated') ?></p>
+	</fieldset>
+	<fieldset class="options">
+ 		<legend><?php __('Tickets')?></legend>
+		<?php
 			echo $form->input('config.ticket.types', array('type' => 'textarea'));
 			echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
-			/*
-			echo $form->input('config.ticket.statuses', array('type' => 'textarea'));
 			echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
-			*/
 		?>
-		<p><?php echo __('Comma seperated') ?></p>
+		<p><?php __('Comma seperated') ?></p>
 	</fieldset>
 <?php echo $form->end('Submit');?>
 </div>

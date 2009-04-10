@@ -24,15 +24,18 @@
 	?>
 	</fieldset>
 	<fieldset class="options">
- 		<legend>Options</legend>
+ 		<legend><?php __('Groups')?></legend>
 		<?php
-			echo $form->input('config.groups', array('type' => 'textarea'));
+			echo $form->input('config.groups', array('label' => false, 'type' => 'textarea'));
+		?>
+		<p><?php __('Comma seperated') ?></p>
+	</fieldset>
+	<fieldset class="options">
+ 		<legend><?php __('Tickets')?></legend>
+		<?php
 			echo $form->input('config.ticket.types', array('type' => 'textarea'));
 			echo $form->input('config.ticket.priorities', array('type' => 'textarea'));
-			/*
-			echo $form->input('config.ticket.statuses', array('type' => 'textarea'));
 			echo $form->input('config.ticket.resolutions', array('type' => 'textarea'));
-			*/
 		?>
 		<p><?php __('Comma seperated') ?></p>
 	</fieldset>

@@ -1,4 +1,5 @@
 <?php
+$this->set('showdown', true);
 $html->css('highlight/idea', null, null, false);
 $javascript->link('highlight.pack', false);
 
@@ -183,15 +184,11 @@ if ($session->check('Ticket.back')) {
 							echo $form->label('event', __('reopen', true));
 						} else if (!empty($canUpdate)) {
 							echo $form->input('event', array(
-								'label'=> __('Action', true), 'empty' => true
-								'tag' => 'span',
+								'label'=> __('Action', true), 'empty' => true,
 							));
-							echo 'or'
 							if (in_array($ticket['Ticket']['status'], array('pending', 'approved', 'in progress'))) {
 								echo $form->input('resolution', array(
-									'label'=> __('Close with:', true),
-									'tag' => 'span',
-									'empty' => true
+									'label'=> __('Or close with', true), 'empty' => true,
 								));
 							}
 						}

@@ -184,9 +184,12 @@ class TicketsController extends AppController {
 		$statuses = $this->Ticket->states();
 		$resolutions = $this->Project->ticket('resolutions');
 
-		$canUpdate = $this->Access->check($this, array(
-			'access' => 'u', 'default' => false, 'admin' => true
-		));
+		$canUpdate = true;
+		if (empty($this->params['isAdmin'])) {
+			$canUpdate = $this->Access->check($this, array(
+				'access' => 'u', 'default' => false, 'admin' => true
+			));
+		}
 
 		$this->set(compact(
 			'versions', 'types', 'priorities', 'owners', 'events',

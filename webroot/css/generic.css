@@ -275,7 +275,7 @@ input, textarea {
 	clear: both;
 	display: block;
 	font-size: 140%;
-	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
+	font-family: Verdana, sans-serif;
 	padding: 2px;
 	width: 100%;
 }
@@ -290,6 +290,9 @@ select[multiple=multiple] {
 option {
 	font-size: 120%;
 	padding: 0 3px;
+}
+input[type=hidden] {
+	display: none;
 }
 input[type=radio] {
 	clear: left;

@@ -123,35 +123,33 @@ fieldset.ticket-search div.submit {
 	padding: 0px;
 }
 
-fieldset.ticket-search div.checkbox input {
-	display: inline;
-	float: left;
-	clear: none;
-}
-
-fieldset.ticket-search label {
-	float: left;
-	clear: none;
-	font-size: 0.9em;
-}
 fieldset.ticket-search label.title {
 	width: 50px;
-} 
+}
 
 fieldset.ticket-search div label.title {
+	float: left;
 	font-weight: bold;
 }
 
 fieldset.ticket-search div.checkbox {
 	display: inline;
+	float: left;
 	clear: none;
-	border: 1px solid #000000;
 	margin: 0px;
-	padding: 4px 5px 3px 5px;
+	padding: 0;
+	overflow: hidden;
 }
 
 fieldset.ticket-search div.checkbox label, fieldset.ticket-search div.checkbox input {
 	display: inline;
+	float: left;
+	clear: none;
+	vertical-align: bottom;
+}
+
+fieldset.ticket-search label {
+	font-size: 0.9em;
 }
 
 table {
@@ -206,19 +204,16 @@ table.smooth td.number {
 	margin: 0;
 }
 td.number a {
-	background: #f4f4f4; 
-	color: #333; 
+	background: #f4f4f4;
+	color: #333;
 	display: block;
 	padding: 14px;
-	font-weight: bold; 
+	font-weight: bold;
 	font-size: 20px;
 }
 td.number a:hover {
-	background: #333; 
-	color: #f4f4f4; 
-}
-input[type=hidden] {
-	display: none;
+	background: #333;
+	color: #f4f4f4;
 }
 .index td select {
 	font-size: 80%;
@@ -896,6 +891,7 @@ div.comments {
 	float: left;
 	padding-right: 40px;
 }
+
 
 /* Source */
 
