@@ -125,9 +125,9 @@ class UpgradeOneTask extends ChawUpgradeShell {
 
 			$this->Ticket->set($ticket);
 
-			if ($ticket['Ticket']['status'] == 'open') {
-				$new['Ticket']['status'] = 'pending';
-			} else {
+			$new['Ticket']['status'] = 'pending';
+
+			if ($ticket['Ticket']['status'] != 'open') {
 				$new['Ticket']['resolution'] = $ticket['Ticket']['status'];
 			}
 

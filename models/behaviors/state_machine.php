@@ -23,7 +23,12 @@ class StateMachineBehavior extends ModelBehavior {
 	}
 
 	function transition(&$model, $from, $to = null) {
-		$state = $model->field($this->settings[$model->name]['field']);
+		$model->recursive = -1;
+		if (!empty($model->data[$model->alias][$this->settings[$model->name]['field']])) {
+			$state = $model->data[$model->alias][$this->settings[$model->name]['field']];
+		} else {
+			$state = $model->field($this->settings[$model->name]['field']);
+		}
 		if (in_array($state, (array)$from)) {
 			if (empty($model->data[$model->alias]['event'])) {
 				return $model->saveField($this->settings[$model->name]['field'], $to);
@@ -75,6 +80,7 @@ class StateMachineBehavior extends ModelBehavior {
 	 */
 	function events(&$model, $state = null) {
 		$settings = $this->settings[$model->name];
+		$model->recursive = -1;
 		$state = is_null($state) ? $model->field($settings['field']) : $state;
 		$results = array();
 
