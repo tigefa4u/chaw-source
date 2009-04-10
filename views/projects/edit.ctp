@@ -9,18 +9,26 @@
  		<legend><?php echo $this->pageTitle; ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('repo_type', array('disabled' => true,'label' => __('Repo Type',true)));
-		echo $form->input('name', array('disabled' => true));
 		echo $form->hidden('url');
 		echo $form->hidden('fork');
-		echo $form->input('description');
+
+		echo $form->input('repo_type', array(
+			'label' => __('Repo Type', true),
+			'disabled' => true,
+		));
+
+		echo $form->input('name', array(
+			'disabled' => true
+		));
+
 		if ($form->value('private') == 0) {
 			echo $form->input('ohloh_project', array(
 				'label' => '<a href="https://www.ohloh.net">https://www.ohloh.net/</a>p/',
-				'div' => 'inline' 
-				
+				'div' => 'inline'
+
 			));
 		}
+		echo $form->input('description');
 	?>
 	</fieldset>
 	<fieldset class="options">
@@ -39,5 +47,6 @@
 		?>
 		<p><?php __('Comma seperated') ?></p>
 	</fieldset>
+
 <?php echo $form->end('Submit');?>
 </div>

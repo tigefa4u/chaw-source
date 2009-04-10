@@ -4,17 +4,25 @@
 <div class="projects form">
 <?php echo $form->create(array('action' => $this->action));?>
 	<fieldset class="main">
- 		<legend><?php echo $this->pageTitle; ?></legend>
+ 		<legend><?php __('Project Setup') ?></legend>
 	<?php
 		echo $form->input('id');
-		echo $form->input('repo_type');
+		echo $form->input('repo_type',array('label' => __('Repo Type',true)));
+
 		echo $form->input('name', array(
 			'error' => array(
 				'minimum' => __('The project name must be at least 5 characters',true),
 				'unique' => __('The project name must be unique.',true)
 			)
 		));
+
 		echo $form->input('description');
+
+		echo $form->input('ohloh_project', array(
+			'label' => '<a href="https://www.ohloh.net">https://www.ohloh.net/p/</a>',
+			'div' => 'inline'
+		));
+
 		echo $form->input('private');
 	?>
 	</fieldset>
