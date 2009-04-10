@@ -228,7 +228,7 @@ class TicketTest extends CakeTestCase {
 		$this->assertEqual($result['Ticket']['status'], 'pending');
 
 		$result = $this->Ticket->events();
-		$expected = array('approve', 'accept', 'hold', 'close');
+		$expected = array('approve', 'accept', 'hold');
 		$this->assertEqual(array_keys($result), $expected);
 		$this->assertEqual(array_values($result), $expected);
 

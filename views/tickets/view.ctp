@@ -71,6 +71,12 @@ if ($session->check('Ticket.back')) {
 			<strong><?php __('reported by') ?>:</strong> <?php echo $ticket['Reporter']['username'];?>
 		</span>
 
+		<?php if (!empty($ticket['Owner']['username'])):?>
+			<span class="owner">
+				<strong><?php __('owned by') ?>:</strong> <?php echo $ticket['Owner']['username'];?>
+			</span>
+		<?php endif;?>
+
 	</div>
 
 	<div class="edit">
@@ -123,6 +129,11 @@ if ($session->check('Ticket.back')) {
 				<?php foreach ((array)$ticket['Comment'] as $comment): ?>
 
 					<div class="comment" id="c<?php echo $comment['id']?>">
+						<?php
+							if (!empty($comment['reason'])) {
+								echo "<strong>({$comment['reason']})</strong>";
+							}
+						?>
 						<span class="date">
 							<?php echo $time->timeAgoInWords($comment['created'], 'm-d-y');?>
 						</span>
@@ -142,9 +153,6 @@ if ($session->check('Ticket.back')) {
 							<?php
 								if (!empty($comment['changes'])) {
 									echo $chaw->changes($comment['changes']);
-								}
-								if (!empty($comment['reason'])) {
-									echo "<p><strong>{$comment['reason']}</strong></p>";
 								}
 								echo $html->tag('div', h($comment['body']), array('class' => 'wiki-text'));
 

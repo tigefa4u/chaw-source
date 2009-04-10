@@ -87,11 +87,13 @@ class TicketsController extends AppController {
 		*/
 		$this->pageTitle .= Inflector::humanize($current);
 
+		$this->Ticket->recursive = 0;
+
 		$tickets = $this->paginate('Ticket', $conditions);
 
 		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
 		$this->set(compact('current', 'tickets'));
-		$this->_ticketInfo();
+		$this->_ticketInfo(false);
 	}
 
 	function view($id = null) {
@@ -177,12 +179,15 @@ class TicketsController extends AppController {
 			$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
 		}
 
+		$statuses = $this->Ticket->states();
 		$types = $this->Project->ticket('types');
 		$priorities = $this->Project->ticket('priorities');
-		$events = $this->Ticket->events($this->data['Ticket']['status']);
-
-		$statuses = $this->Ticket->states();
 		$resolutions = $this->Project->ticket('resolutions');
+
+		if(!empty($this->data['Ticket']['status'])) {
+			$events = $this->Ticket->events($this->data['Ticket']['status']);
+		}
+
 
 		$canUpdate = true;
 		if (empty($this->params['isAdmin'])) {
