@@ -1,4 +1,5 @@
 <?php
+$this->set('showdown', true);
 $html->css('highlight/idea', null, null, false);
 $javascript->link('highlight.pack', false);
 
