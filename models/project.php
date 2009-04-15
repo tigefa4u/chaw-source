@@ -373,7 +373,7 @@ class Project extends AppModel {
 			$data = ob_get_clean();
 
 			$File = new File($chaw . 'chaw', true, 0775);
-			chmod($File->pwd(), 0775);
+			@chmod($File->pwd(), 0775);
 			return $File->write($data);
 		}
 

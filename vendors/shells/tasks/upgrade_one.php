@@ -121,11 +121,18 @@ class UpgradeOneTask extends ChawUpgradeShell {
 		$this->Ticket->recursive = -1;
 		$tickets = $this->Ticket->find('all');
 
+		if ($this->_updateSchema($this->Ticket, 'tickets') == false) {
+			return false;
+		}
+
+		$this->Ticket->setSource('tickets');
+
 		foreach ($tickets as $ticket) {
 
 			$this->Ticket->set($ticket);
 
 			$new['Ticket']['status'] = 'pending';
+			$new['Ticket']['resolution'] = null;
 
 			if ($ticket['Ticket']['status'] != 'open') {
 				$new['Ticket']['resolution'] = $ticket['Ticket']['status'];
