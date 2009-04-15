@@ -36,7 +36,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		</fieldset>
 
 		<?php
-			echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
+			echo $form->input('title',array('label'=> __('Title', true)));
 			echo $form->input('description', array(
 				'value' => __("###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n",true)
 			));

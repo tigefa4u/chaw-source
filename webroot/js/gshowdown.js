@@ -129,7 +129,7 @@ this.makeHtml = function(text) {
 	text = "\n\n" + text + "\n\n";
 
 	// Convert all tabs to spaces.
-	text = _Detab(text);
+	//text = _Detab(text);
 
 	// Strip any lines consisting only of spaces and tabs.
 	// This makes subsequent regexen easier to write, because we can
@@ -917,8 +917,8 @@ var _DoCodeBlocks = function(text) {
 		function(wholeMatch,m1,m2,m3) {
 			var codeblock = m2;
 
-			codeblock = _EncodeCode( _Outdent(codeblock));
-			codeblock = _Detab(codeblock);
+			//codeblock = _EncodeCode( _Outdent(codeblock));
+			codeblock = _EncodeCode(_Detab(codeblock));
 			codeblock = codeblock.replace(/^\n+/g,""); // trim leading newlines
 			codeblock = codeblock.replace(/\n+$/g,""); // trim trailing whitespace
 
@@ -940,8 +940,8 @@ var _DoCodeBlocks = function(text) {
 			var codeblock = m1;
 			var nextChar = m2;
 
-			codeblock = _EncodeCode( _Outdent(codeblock));
-			codeblock = _Detab(codeblock);
+			//codeblock = _EncodeCode( _Outdent(codeblock));
+			codeblock = _EncodeCode(_Detab(codeblock));
 			codeblock = codeblock.replace(/^\n+/g,""); // trim leading newlines
 			codeblock = codeblock.replace(/\n+$/g,""); // trim trailing whitespace
 
@@ -1296,7 +1296,6 @@ var _Outdent = function(text) {
 
 	// attacklab: hack around Konqueror 3.5.4 bug:
 	// "----------bug".replace(/^-/g,"") == "bug"
-
 	text = text.replace(/^(\t|[ ]{1,4})/gm,"~0"); // attacklab: g_tab_width
 
 	// attacklab: clean up hack
