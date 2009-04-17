@@ -27,11 +27,8 @@ $(document).ready(function(){
 	$(".close").click(function() {
 		$("#modify").hide();
 		$(".comments").show();
-		$("#TicketComment").after($("fieldset.prop"));
+		$("fieldset.comments > legend").after($("fieldset.prop"));
 
-	});
-	$(".wiki-text").each(function () {
-		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 	});
 });
 ';
@@ -64,7 +61,7 @@ if ($session->check('Ticket.back')) {
 		</div>
 
 		<span class="date">
-			<?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm-d-y');?>
+			<?php echo $time->timeAgoInWords($ticket['Ticket']['created'], 'm.d.y');?>
 		</span>
 
 		<span class="reporter">
@@ -92,16 +89,20 @@ if ($session->check('Ticket.back')) {
 								<?php __('Modify Ticket');?>
 								<em>(<a href="#" class="close">close</a>)</em>
 							</legend>
-							<fieldset class="options">
-								<?php
-									echo $form->input('owner', array('empty' => true));
-									echo $form->input('type');
-									echo $form->input('priority');
-									if (!empty($versions)) {
-										echo $form->input('version_id');
-									}
-								?>
-							</fieldset>
+							<?php if ($ticket['Ticket']['status'] == 'closed'):?>
+								<fieldset class="options">
+									<?php
+										if (!empty($owners)) {
+											echo $form->input('owner', array('empty' => true));
+										}
+										echo $form->input('type');
+										echo $form->input('priority');
+										if (!empty($versions)) {
+											echo $form->input('version_id');
+										}
+									?>
+								</fieldset>
+							<?php endif; ?>
 							<?php
 								echo $form->input('title',array('label'=>  __('Title',true)));
 								echo $form->input('description',array('label'=> __('Description',true)));
@@ -135,7 +136,7 @@ if ($session->check('Ticket.back')) {
 							}
 						?>
 						<span class="date">
-							<?php echo $time->timeAgoInWords($comment['created'], 'm-d-y');?>
+							<?php echo $time->timeAgoInWords($comment['created'], 'm.d.y');?>
 						</span>
 						<span class="user">
 							by <?php echo $comment['User']['username'];?>
@@ -181,8 +182,24 @@ if ($session->check('Ticket.back')) {
 
 				<fieldset class="comments main">
 			 		<legend>
-						<?php __('Comment');?>
+						<?php __('Update Ticket');?>
 					</legend>
+					
+					<?php if ($ticket['Ticket']['status'] != 'closed'):?>
+						<fieldset class="options prop">
+							<?php
+								if (!empty($owners)) {
+									echo $form->input('owner', array('empty' => true));
+								}
+								echo $form->input('type');
+								echo $form->input('priority');
+								if (!empty($versions)) {
+									echo $form->input('version_id');
+								}
+							?>
+						</fieldset>
+					<?php endif; ?>
+					
 					<fieldset class="options">
 					<?php
 						if ($ticket['Ticket']['status'] == 'closed') {
@@ -192,11 +209,16 @@ if ($session->check('Ticket.back')) {
 							echo $form->label('event', __('reopen', true));
 						} else if (!empty($canUpdate)) {
 							echo $form->input('event', array(
-								'label'=> __('Action', true), 'empty' => true,
+								'label'=> __('Change status', true), 'empty' => true,
 							));
 							if (in_array($ticket['Ticket']['status'], array('pending', 'approved', 'in progress'))) {
 								echo $form->input('resolution', array(
-									'label'=> __('Or close with', true), 'empty' => true,
+									'label'=> __('Or close as', true), 'empty' => true,
+								));
+							}
+							if (!empty($owners)) {
+								echo $form->input('owner', array(
+									'label'=> __('Set owner to', true), 'empty' => true
 								));
 							}
 						}

@@ -1,8 +1,8 @@
 <h2>
 	<?php __(
 		Inflector::humanize($current) .
-		(!empty($this->params['named']['user']) ? "'s" : '') . ' ' .
-		(!empty($this->params['named']['type']) ? $this->params['named']['type'] : '')
+		(!empty($user) ? "'s" : '') . ' ' .
+		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
 	) ?>
 	<?php __('Tickets') ?>
 </h2>
@@ -30,7 +30,7 @@
 <?php
 
 $active = null;
-if (empty($this->passedArgs['type']) && empty($this->passedArgs['user'])) {
+if (!$type && !$user) {
 	$active = array('class' => 'active');
 }
 $links = array(
@@ -41,7 +41,7 @@ $links = array(
 
 if (!empty($CurrentUser->username)) {
 	$active = null;
-	if (!empty($this->passedArgs['user']) && $CurrentUser->username == $this->passedArgs['user']) {
+	if ($CurrentUser->username == $user) {
 		$active = array('class' => 'active');
 	}
 	$links[] = $html->link(__('mine', true), array_merge($this->passedArgs, array(
@@ -49,13 +49,13 @@ if (!empty($CurrentUser->username)) {
 	)), $active);
 }
 
-foreach ($statuses as $status) {
+foreach ($statuses as $state) {
 	$active = null;
-	if (!empty($this->passedArgs['status']) && $status == $this->passedArgs['status']) {
+	if ($status == $state) {
 		$active = array('class' => 'active');
 	}
-	$links[] = $html->link(__($status, true), array_merge($this->passedArgs, array(
-		'status' => $status
+	$links[] = $html->link(__($state, true), array_merge($this->passedArgs, array(
+		'status' => $state
 	)), $active);
 }
 echo join(' | ', $links);
@@ -78,32 +78,63 @@ if ($this->params['paging']['Ticket']['page'] > 0) {
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('#', 'number'); ?></th>
-	<th><?php echo $paginator->sort(__('Version', true), 'version_id'); ?></th>
 	<th><?php echo $paginator->sort(__('Type', true), 'type'); ?></th>
 	<th><?php echo $paginator->sort(__('Priority', true), 'priority'); ?></th>
-	<th><?php echo $paginator->sort(__('Reporter', true), 'reporter'); ?></th>
-	<th><?php echo $paginator->sort(__('Owner', true), 'owner'); ?></th>
-	<?php if(empty($this->passedArgs['status'])): ?>
+	<?php if($status != 'closed'): ?>
+		<th><?php echo $paginator->sort(__('Reporter', true), 'reporter'); ?></th>
+	<?php endif; ?>
+	<?php if($status != 'pending'): ?>
+		<th><?php echo $paginator->sort(__('Owner', true), 'owner'); ?></th>
+	<?php endif; ?>
+	<?php if(!$status): ?>
 		<th><?php echo $paginator->sort(__('Status', true),'status');?></th>
 	<?php endif; ?>
-	<?php if(!empty($this->passedArgs['status']) && $this->passedArgs['status'] == 'closed'): ?>
+	<?php if($status == 'closed'): ?>
 		<th><?php echo $paginator->sort(__('Resolution', true), 'resolution');?></th>
 	<?php endif; ?>
 	<th class="left"><?php echo $paginator->sort(__('Title',true), 'title');?></th>
+	<th><?php echo $paginator->sort(__('Version', true), 'version_id'); ?></th>
 	<th><?php echo $paginator->sort(__('Created', true), 'created');?></th>
 </tr>
 <?php
 $i = 0;
 foreach ($tickets as $ticket):
 	$class = null;
-	if ($i++ % 2 == 0) {
-		$class = ' class="altrow"';
+	if (++$i % 2 == 0) {
+		$class = ' class="zebra"';
 	}
 ?>
 	<tr<?php echo $class;?>>
 		<td class="number">
 			<?php echo $html->link(
 				$ticket['Ticket']['number'],
+				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
+			); ?>
+		</td>
+
+		<td><?php echo $ticket['Ticket']['type']; ?></td>
+
+		<td><?php echo $ticket['Ticket']['priority']; ?></td>
+
+		<?php if($status != 'closed'): ?>
+			<td><?php echo $ticket['Reporter']['username']; ?></td>
+		<?php endif; ?>
+
+		<?php if($status != 'pending'): ?>
+			<td><?php echo $ticket['Owner']['username']; ?></td>
+		<?php endif; ?>
+
+		<?php if (!$status): ?>
+			<td><?php echo $ticket['Ticket']['status']; ?></td>
+		<?php endif; ?>
+
+		<?php if($status == 'closed'): ?>
+			<td><?php echo $ticket['Ticket']['resolution'];?></td>
+		<?php endif; ?>
+
+		<td class="title left">
+			<?php echo $html->link(
+				$ticket['Ticket']['title'],
 				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
 			); ?>
 		</td>
@@ -116,28 +147,6 @@ foreach ($tickets as $ticket):
 			endif; ?>
 		</td>
 
-		<td><?php echo $ticket['Ticket']['type']; ?></td>
-
-		<td><?php echo $ticket['Ticket']['priority']; ?></td>
-
-		<td><?php echo $ticket['Reporter']['username']; ?></td>
-
-		<td><?php echo $ticket['Owner']['username']; ?></td>
-
-		<?php if (empty($this->passedArgs['status'])): ?>
-			<td><?php echo $ticket['Ticket']['status']; ?></td>
-		<?php endif; ?>
-
-		<?php if(!empty($this->passedArgs['status']) && $this->passedArgs['status'] == 'closed'): ?>
-			<td><?php echo $ticket['Ticket']['resolution'];?></td>
-		<?php endif; ?>
-
-		<td class="title left">
-			<?php echo $html->link(
-				$ticket['Ticket']['title'],
-				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
-			); ?>
-		</td>
 		<td nowrap>
 			<?php echo $time->format('m.d.y', $ticket['Ticket']['created']); ?>
 		</td>

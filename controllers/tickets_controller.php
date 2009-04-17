@@ -23,11 +23,13 @@ class TicketsController extends AppController {
 	var $paginate = array('order' => array('Ticket.number' => 'desc'));
 
 	function _toNamedArgs($keys) {
+		$named = array();
 		foreach ($keys as $key) {
 			if (!empty($this->params['url'][$key])) {
-				$thie->passedArgs[$key] = $this->params['named'][$key] = join(',', $this->params['url'][$key]);
+				$this->passedArgs[$key] = $named[$key] = join(',', $this->params['url'][$key]);
+			} elseif (!empty($this->passedArgs[$key])) {
+				$this->passedArgs[$key] = $this->params['named'][$key] = null;
 			}
-
 		}
 		return $this->params['named'];
 	}
@@ -53,7 +55,7 @@ class TicketsController extends AppController {
 		$conditions = array_merge($conditions, (array)$this->postConditions($this->data, '=', 'AND', true));
 		$this->pageTitle = 'Tickets/Status/';
 
-		$current = null;
+		$current = $status = $type = $user = null;
 
 		$isDefault = empty($this->passedArgs);
 
@@ -63,19 +65,24 @@ class TicketsController extends AppController {
 		}
 
 		if (!empty($this->passedArgs['status'])) {
+			$status = $this->passedArgs['status'];
 			$current = $this->passedArgs['status'];
 			$conditions['Ticket.status'] = $current;
+
+			if ($status == 'approved') {
+				$this->paginate['order'] = 'Ticket.priority ASC';
+			}
 		}
 
-
 		if (!empty($this->passedArgs['user'])) {
+			$user = $this->passedArgs['user'];
 			$current = $this->passedArgs['user'];
 			$conditions['Owner.username'] = $this->passedArgs['user'];
 			$this->pageTitle = 'Tickets/User/';
 		}
 
-		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] == 'all') {
-			unset($this->passedArgs['type']);
+		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] != 'all') {
+			$type = $this->passedArgs['type'];
 		}
 		/*
 		if (!empty($this->Project->current['fork'])) {
@@ -92,7 +99,7 @@ class TicketsController extends AppController {
 		$tickets = $this->paginate('Ticket', $conditions);
 
 		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
-		$this->set(compact('current', 'tickets'));
+		$this->set(compact('current', 'status', 'type', 'user', 'tickets'));
 		$this->_ticketInfo(false);
 	}
 
