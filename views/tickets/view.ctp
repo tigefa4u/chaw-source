@@ -216,11 +216,6 @@ if ($session->check('Ticket.back')) {
 									'label'=> __('Or close as', true), 'empty' => true,
 								));
 							}
-							if (!empty($owners)) {
-								echo $form->input('owner', array(
-									'label'=> __('Set owner to', true), 'empty' => true
-								));
-							}
 						}
 					?>
 					</fieldset>
