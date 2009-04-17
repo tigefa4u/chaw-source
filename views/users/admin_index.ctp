@@ -1,16 +1,33 @@
 <div class="users index">
-<h2><?php __('Users');?></h2>
-<h4>
-	<?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all' => true)) : null; ?>
-	who fork, git clone, svn commit or <?php echo $chaw->admin('added', '#UserAddForm');?>
-</h4>
-<p>
-<?php
-$paginator->options(array('url'=> $this->passedArgs));
-echo $paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-));
-?></p>
+	<div class="users-search">
+		<?php echo $form->create(array('type' => 'get', 'action' => 'index', 'url' => $this->passedArgs)); ?>
+			<fieldset>
+				<?php
+				echo $form->input('username', array(
+					'label'=> __('Username', true),
+				));
+				?>
+				<div class="submit">
+					<input type="submit" value="search">
+				</div>
+			</fieldset>
+		<?php echo $form->end(); ?>
+	</div>
+
+	<h2><?php __('Users');?></h2>
+	<h4>
+		<?php echo ($CurrentProject->id == 1) ? $chaw->admin(__('All Users', true), array('all' => true)) : null; ?>
+		who fork, git clone, svn commit or <?php echo $chaw->admin('added', '#UserAddForm');?>
+	</h4>
+
+	<p>
+		<?php
+			$paginator->options(array('url'=> $this->passedArgs));
+			echo $paginator->counter(array(
+					'format' => __('(page {:page} of {:pages}, showing {:current} of {:count} users)', true)
+			));
+		?>
+	</p>
 
 	<?php if (!empty($groups)):?>
 		<?php echo $form->create(array('action' => 'index')); ?>
@@ -68,22 +85,23 @@ echo $paginator->counter(array(
 			</td>
 		</tr>
 	<?php endforeach; ?>
-	
+
 	</table>
-	
+
 	<?php if (!empty($groups)):?>
-		<p>
+		<p class="clear">
 			groups are an easy way to setup <?php echo $chaw->admin('permissions', array('controller' => 'permissions'));?>
 		</p>
 		<?php echo $form->end('update');?>
 	<?php endif; ?>
-	
+
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
+<div class="clear"><!----></div>
 <?php if (!empty($groups)):?>
 	<div class="users add">
 	<?php

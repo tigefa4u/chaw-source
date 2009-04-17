@@ -22,36 +22,18 @@ class TicketsController extends AppController {
 
 	var $paginate = array('order' => array('Ticket.number' => 'desc'));
 
-	function _toNamedArgs($keys) {
-		$named = array();
-		foreach ($keys as $key) {
-			if (!empty($this->params['url'][$key])) {
-				$this->passedArgs[$key] = $named[$key] = join(',', $this->params['url'][$key]);
-			} elseif (!empty($this->passedArgs[$key])) {
-				$this->passedArgs[$key] = $this->params['named'][$key] = null;
-			}
-		}
-		return $this->params['named'];
-	}
+	var $components = array(
+		'Gpr' => array(
+			'keys' => array('type', 'priority'),
+			'connect' => array('status', 'page', 'user', 'type', 'priority'),
+			'actions' => array('index')
+		)
+	);
 
 	function index() {
-		Router::connectNamed(array('status', 'page', 'user', 'type', 'priority'));
-		$searchKeys = array('type', 'priority');
-
-		if (count($this->params['url']) > 2) {
-			$this->redirect($this->_toNamedArgs($searchKeys));
-		}
-
 		$conditions = array(
 			'Ticket.project_id' => $this->Project->id,
 		);
-
-		foreach ($searchKeys as $key) {
-			if (isset($this->params['named'][$key]) && $this->params['named'][$key] != 'all') {
-				$this->data['Ticket'][$key] = explode(',', $this->params['named'][$key]);
-			}
-		}
-
 		$conditions = array_merge($conditions, (array)$this->postConditions($this->data, '=', 'AND', true));
 		$this->pageTitle = 'Tickets/Status/';
 

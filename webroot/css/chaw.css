@@ -1211,3 +1211,26 @@ div.queues {
 	clear: none;
 	margin: 0 0 5px 0;
 }
+
+div.users-search {
+	float: right;
+}
+div.users-search fieldset {
+	padding: 2px 0px 4px 10px;
+}
+div.users-search .input {
+	float:left;
+	margin: 0;
+	padding: 0;
+}
+div.users-search label {
+	font-size: 10px;
+}
+div.users-search input {
+	font-size: 10px;
+}
+div.users-search .submit {
+	clear: none;
+	float: right;
+	margin: 4px;
+}

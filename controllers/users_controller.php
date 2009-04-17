@@ -18,7 +18,12 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 
-	var $components = array('Email', 'Cookie' => array('name' => 'Chaw', 'time' => '+2 weeks'));
+	var $components = array(
+		'Email', 'Cookie' => array('name' => 'Chaw', 'time' => '+2 weeks'),
+		'Gpr' => array(
+			'keys' => array('username'), 'actions' => array('admin_index')
+		)
+	);
 
 	function beforeFilter() {
 		parent::beforeFilter();
@@ -187,7 +192,7 @@ class UsersController extends AppController {
 				$this->User->Permission->save($permission);
 			}
 		}
-		if (!empty($this->data['User']['username'])) {
+		if (!empty($this->data['User']['username']) && !empty($this->data['User']['group'])) {
 			if ($id = $this->User->field('id', array('username' => $this->data['User']['username']))) {
 				if ($this->Project->permit($id, $this->data['User']['group'])) {
 					$this->Session->setFlash(sprintf(__('%s added',true)),$this->data['User']['username']);
@@ -201,17 +206,25 @@ class UsersController extends AppController {
 		$this->User->bindModel(array('hasOne' => array('Permission' => array(
 			'conditions' => array('Permission.project_id' => $this->Project->id
 		)))), false);
-
-		$this->paginate['fields'] = array('User.id', 'User.username', 'User.email', 'User.last_login', 'Permission.id', 'Permission.group');
-		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
+		
 		$this->paginate['order'] = 'Permission.group ASC';
-
+		$this->paginate['fields'] = array(
+			'User.id', 'User.username', 'User.email', 'User.last_login', 
+			'Permission.id', 'Permission.group'
+		);
+		
+		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
+		
 		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
 			$this->paginate['conditions'] = array();
 		} else {
 			$groups = $this->Project->groups();
 		}
-
+		
+		if (!empty($this->passedArgs['username'])) {
+			$this->paginate['conditions'] = array('User.username' => $this->passedArgs['username']);
+		}
+		
 		$users = $this->paginate();
 
 		$this->set(compact('users', 'groups'));
