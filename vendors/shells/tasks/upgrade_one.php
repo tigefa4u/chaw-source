@@ -33,6 +33,7 @@ class UpgradeOneTask extends ChawUpgradeShell {
 
 	function projects() {
 		$this->Project = ClassRegistry::init('Project');
+		$this->Project->addToTimeline = false;
 
 		if ($this->Project->schema('config')) {
 			$this->out('projects up to date');
@@ -77,8 +78,43 @@ class UpgradeOneTask extends ChawUpgradeShell {
 		}
 	}
 
+	function tickets() {
+		$this->Ticket = ClassRegistry::init('Ticket');
+		$this->Ticket->addToTimeline = false;
+
+		$this->Ticket->recursive = -1;
+		$tickets = $this->Ticket->find('all');
+
+		if ($this->_updateSchema($this->Ticket, 'tickets') == false) {
+			return false;
+		}
+
+		$this->Ticket->setSource('tickets');
+
+		foreach ($tickets as $ticket) {
+
+			$this->Ticket->set($ticket);
+
+			$new['Ticket']['status'] = 'pending';
+			$new['Ticket']['resolution'] = null;
+
+			if ($ticket['Ticket']['status'] != 'open') {
+				$new['Ticket']['resolution'] = $ticket['Ticket']['status'];
+				$new['Ticket']['status'] = 'closed';
+			}
+
+			if ($this->Ticket->save($new)) {
+				$this->out("Ticket {$ticket['Ticket']['id']} upgraded");
+			} else {
+				$this->out("ERROR: Ticket {$ticket['Ticket']['id']} NOT upgraded");
+			}
+		}
+
+	}
+
 	function comments() {
 		$this->Comment = ClassRegistry::init('Comment');
+		$this->Comment->addToTimeline = false;
 
 		if ($this->Comment->schema('model')) {
 			$this->out('comments up to date');
@@ -113,38 +149,5 @@ class UpgradeOneTask extends ChawUpgradeShell {
 			}
 
 		}
-	}
-
-	function tickets() {
-		$this->Ticket = ClassRegistry::init('Ticket');
-
-		$this->Ticket->recursive = -1;
-		$tickets = $this->Ticket->find('all');
-
-		if ($this->_updateSchema($this->Ticket, 'tickets') == false) {
-			return false;
-		}
-
-		$this->Ticket->setSource('tickets');
-
-		foreach ($tickets as $ticket) {
-
-			$this->Ticket->set($ticket);
-
-			$new['Ticket']['status'] = 'pending';
-			$new['Ticket']['resolution'] = null;
-
-			if ($ticket['Ticket']['status'] != 'open') {
-				$new['Ticket']['resolution'] = $ticket['Ticket']['status'];
-				$new['Ticket']['status'] = 'closed';
-			}
-
-			if ($this->Ticket->save($new)) {
-				$this->out("Ticket {$ticket['Ticket']['id']} upgraded");
-			} else {
-				$this->out("ERROR: Ticket {$ticket['Ticket']['id']} NOT upgraded");
-			}
-		}
-
-	}
+	}	
 }

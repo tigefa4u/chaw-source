@@ -35,9 +35,8 @@ class Comment extends AppModel {
 	);
 */
 	function afterSave($created) {
-		$Timeline = ClassRegistry::init('Timeline');
-
-		if ($created && !empty($this->data['Comment']['project_id'])) {
+		if ($created && $this->addToTimeline && !empty($this->data['Comment']['project_id'])) {
+			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Comment']['project_id'],
 				'model' => 'Comment',

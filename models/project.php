@@ -267,14 +267,12 @@ class Project extends AppModel {
 
 			if ($this->__created && $hooksCreated) {
 				foreach ($this->hooks[$this->Repo->type] as $hook) {
-					if ($this->__created) {
-						if ($hook === 'post-commit') {
-							$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} {$this->Repo->path} 1");
-						}
+					if ($hook === 'post-commit') {
+						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} {$this->Repo->path} 1");
+					}
 
-						if ($hook === 'post-receive') {
-							$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} refs/heads/master");
-						}
+					if ($hook === 'post-receive') {
+						$this->Repo->execute("env - {$this->Repo->path}/hooks/{$hook} refs/heads/master");
 					}
 				}
 			}
@@ -283,6 +281,7 @@ class Project extends AppModel {
 
 			$Wiki = ClassRegistry::init('Wiki');
 			if (!$Wiki->field('slug', array('slug' => 'home', 'project_id' => $this->id))) {
+				$Wiki->addToTimeline = $this->addToTimeline;
 				$Wiki->create(array(
 					'slug' => 'home', 'active' => 1,
 					'project_id' => $this->id,

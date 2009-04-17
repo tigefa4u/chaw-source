@@ -14,6 +14,8 @@
  * @license			commercial
  *
  */
-class AppModel extends Model{
+class AppModel extends Model {
+
+	var $addToTimeline = true;
 }
 ?>

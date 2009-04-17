@@ -160,6 +160,7 @@ class Ticket extends AppModel {
 			}
 
 			if (!empty($changes) || !empty($this->data['Ticket']['comment'])) {
+				$this->Comment->addToTimeline = $this->addToTimeline;
 				$data = array('Comment' => array(
 					'model' => 'Ticket',
 					'foreign_key' => $this->id,
@@ -169,7 +170,6 @@ class Ticket extends AppModel {
 					'changes' => join("\n", $changes),
 					'reason' => $reason,
 				));
-
 				$this->Comment->create($data);
 				$this->Comment->save();
 			}
@@ -179,9 +179,8 @@ class Ticket extends AppModel {
 	}
 
 	function afterSave($created) {
-		$Timeline = ClassRegistry::init('Timeline');
-
-		if ($created) {
+		if ($created && $this->addToTimeline) {
+			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Ticket']['project_id'],
 				'model' => 'Ticket',

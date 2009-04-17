@@ -57,9 +57,8 @@ class Commit extends AppModel {
 	}
 
 	function afterSave($created) {
-		$Timeline = ClassRegistry::init('Timeline');
-
-		if ($created) {
+		if ($created && $this->addToTimeline) {
+			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Commit']['project_id'],
 				'model' => 'Commit',

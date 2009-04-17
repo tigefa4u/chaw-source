@@ -104,9 +104,8 @@ class Wiki extends AppModel {
 	}
 
 	function afterSave($created) {
-		$Timeline = ClassRegistry::init('Timeline');
-
-		if ($created && !empty($this->data['Wiki']['active'])) {
+		if ($created && $this->addToTimeline && !empty($this->data['Wiki']['active'])) {
+			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
 				'project_id' => $this->data['Wiki']['project_id'],
 				'model' => 'Wiki',

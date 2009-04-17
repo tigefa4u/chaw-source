@@ -22,6 +22,11 @@ class Timeline extends AppModel {
 
 	var $actsAs = array('Containable');
 
+	var $validate = array(
+		'model' => array('notEmpty'),
+		'foreign_key' => array('numeric')
+	);
+
 	var $belongsTo = array(
 		'Comment' => array(
 			'foreignKey' => 'foreign_key',
@@ -62,5 +67,19 @@ class Timeline extends AppModel {
 		}
 		return $data;
 	}
+
+	// function beforeSave() {
+	// 		if (!empty($this->data['Timeline']['model']) && !empty($this->data['Timeline']['foreign_key'])) {
+	// 			$this->recursive = -1;
+	// 			$id = $this->field('id', array(
+	// 				'model' => $this->data['Timeline']['model'],
+	// 				'foreign_key' => $this->data['Timeline']['foreign_key']
+	// 			));
+	// 			if (!$id || ($id && $this->id == $id)) {
+	// 				return true;
+	// 			}
+	// 		}
+	// 		return false;
+	// 	}
 }
 ?>
