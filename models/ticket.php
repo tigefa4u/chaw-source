@@ -84,7 +84,13 @@ class Ticket extends AppModel {
 	}
 
 	function beforeSave() {
-		if (empty($this->data['Ticket']['title']) && empty($this->data['Ticket']['comment']) && empty($this->data['Ticket']['status']) && empty($this->data['Ticket']['event'])) {
+		if (
+			empty($this->data['Ticket']['title'])
+			&& empty($this->data['Ticket']['comment'])
+			&& empty($this->data['Ticket']['status'])
+			&& empty($this->data['Ticket']['event'])
+			&& empty($this->data['Ticket']['resolution'])
+		) {
 			return false;
 		}
 
@@ -95,9 +101,11 @@ class Ticket extends AppModel {
 		}
 
 		$reason = null;
+
 		if (!empty($this->data['Ticket']['resolution'])) {
 			$reason = $this->data['Ticket']['resolution'];
 			$this->data['Ticket']['event'] = 'close';
+			$this->data['Ticket']['owner'] = $this->data['Ticket']['user_id'];
 		}
 
 		if (!empty($this->data['Ticket']['event'])) {

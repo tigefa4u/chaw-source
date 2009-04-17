@@ -241,8 +241,9 @@ class TicketTest extends CakeTestCase {
 	}
 
 	function testValidStateTransitions() {
-		$this->Ticket->create();
+		$this->Ticket->Owner->create();
 		$this->Ticket->Owner->save(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
+
 		$this->assertTrue($this->Ticket->save(array('project_id'  => 1, 'owner' => 'gwoo')));
 
 		$result = $this->Ticket->read();
@@ -263,10 +264,13 @@ class TicketTest extends CakeTestCase {
 	}
 
 	function testStateTransitions() {
-		$this->Ticket->create();
+		$this->Ticket->Owner->create();
 		$this->Ticket->Owner->save(array('username' => 'gwoo', 'email' => 'gwoo@test.com'));
-		$this->assertTrue($this->Ticket->save(array('project_id'  => 1)));
 
+		$this->Ticket->data = array();
+		$this->assertTrue($this->Ticket->save(array(
+			'title' => 'new ticket', 'description' => 'something', 'project_id'  => 1
+		)));
 		$result = $this->Ticket->read();
 		$this->assertEqual($result['Ticket']['status'], 'pending');
 
@@ -276,6 +280,19 @@ class TicketTest extends CakeTestCase {
 
 		$result = $this->Ticket->read();
 		$this->assertEqual($result['Ticket']['status'], 'approved');
+
+		$this->Ticket->data = array();
+
+		$this->Ticket->save(array(
+			'project_id'  => 1, 'user_id' => 1,
+			'resolution' => 'fixed',
+		));
+
+		$this->Ticket->recursive = 0;
+		$result = $this->Ticket->read();
+		$this->assertEqual($result['Ticket']['status'], 'closed');
+		$this->assertEqual($result['Owner']['username'], 'gwoo');
+
 	}
 }
 
