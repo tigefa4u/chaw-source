@@ -19,7 +19,7 @@ $javascript->codeBlock($script, array('inline' => false));
 			|
 			<?php echo $html->link(__('Edit',true), array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
 			|
-			<?php echo $html->link(__('New',true), array('controller' => 'wiki', 'action' => 'add', $path, $slug, 'new-page'));?>
+			<?php echo $html->link(__('New',true), array('controller' => 'wiki', 'action' => 'add', $path, 'new-page'));?>
 		<?php endif;?>
 
 	<?php endif;?>
@@ -130,7 +130,7 @@ $javascript->codeBlock($script, array('inline' => false));
 					|
 					<?php echo $html->link(__('New',true), array(
 							'controller' => 'wiki', 'action' => 'add',
-							$content['Wiki']['path'], $content['Wiki']['slug'], 'new-page'));
+							$content['Wiki']['path'], 'new-page'));
 					?>
 				<?php endif; ?>
 			</div>
