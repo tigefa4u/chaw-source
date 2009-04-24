@@ -307,8 +307,15 @@ class Git extends Repo {
 	function find($type = 'all', $options = array()) {
 		if ($type == 'branches') {
 			$this->cd();
-			$result = $this->run('remote show origin', null, 'capture');
-			return array_values(array_filter(explode(" ", array_pop($result))));
+			$result = $this->run('branch -a', null, 'capture');
+			$branches = array();
+			foreach ($result as $branch) {
+				if (strpos($branch, 'origin/') == false) {
+					continue;
+				}
+				$branches[] = trim(str_replace("origin/", "", $branch));
+			}
+			return $branches;
 		}
 
 		if (is_array($type)) {
