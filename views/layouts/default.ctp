@@ -67,11 +67,14 @@
 
 		<div id="header">
 
-			<h1><?php echo $html->link($CurrentProject->name, array(
-					'admin' => false,
-					'controller' => 'source', 'action' => 'index'
-				));
-			?></h1>
+
+			<h1>
+				<?php echo $html->link($CurrentProject->name, array(
+						'admin' => false,
+						'controller' => 'source', 'action' => 'index'
+					));
+				?>
+			</h1>
 
 			<div id="navigation">
 				<ul>
@@ -110,13 +113,6 @@
 							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
 
-					<li><?php
-						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
-						echo $html->link(__('Projects',true), array(
-							'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
-							'controller' => 'projects', 'action' => 'index'), $options);
-					?></li>
-
 					<?php if (!empty($this->params['isAdmin'])):?>
 
 						<li><?php
@@ -129,6 +125,13 @@
 					<?php endif;?>
 
 				</ul>
+
+				<div id="projects-link"><?php
+					$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
+					echo $html->link(__('Projects',true), array(
+						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
+						'controller' => 'projects', 'action' => 'index'), $options);
+				?></div>
 			</div>
 
 		</div>

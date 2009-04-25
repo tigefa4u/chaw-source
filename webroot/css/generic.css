@@ -87,31 +87,6 @@ ul, ol, li {
 	text-align: left;
 }
 
-#header{
-	background-color: #3b3b3b;
-	padding: 10px 20px;
-	overflow: hidden;
-	height: 15px;
-}
-#header h1 {
-	float:left;
-	color: #ffffff;
-	font-size: 16px;
-	padding: 0px 0px;
-	margin: 0;
-}
-#header h1 a {
-	color: #69C;
-	background: #3b3b3b;
-	font-weight: normal;
-	text-decoration: none;
-}
-#header h1 a:hover {
-	color: #ffffff;
-	background: #3b3b3b;
-	text-decoration: underline;
-}
-
 #content{
 	background-color: #fff;
 	clear: both;
