@@ -180,7 +180,7 @@ class Git extends Repo {
 				$clone = new Folder($base, true, $chmod);
 			}
 			$this->run('clone', array('-n', $this->path, $path));
-			chmod($path, $chmod);
+			@chmod($path, $chmod);
 			$this->cd($path);
 			$this->run("config branch.{$name}.remote origin");
 			$this->cd($path);
