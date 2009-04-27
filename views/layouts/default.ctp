@@ -38,6 +38,10 @@
 		}
 		echo $html->css(array('generic', 'chaw'));
 
+		if (!empty($this->params['admin'])) {
+			echo $html->css(array('chaw.admin'));
+		}
+
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.3.1.min');
 			echo $javascript->link('gshowdown.min');
@@ -66,7 +70,6 @@
 	<div id="container">
 
 		<div id="header">
-
 
 			<h1>
 				<?php echo $html->link($CurrentProject->name, array(
@@ -139,16 +142,16 @@
 		<div id="content">
 			<?php
 				echo $this->element('current_user');
-
 				$session->flash();
 			?>
-			<div id="page-content">
-				<?php
-					echo $content_for_layout;
-				?>
-				<div class="clear"><!----></div>
-			</div>
-
+			<?php
+				if (!empty($this->params['admin'])):
+					echo $this->element('admin_navigation');
+					echo $html->tag('div', $content_for_layout, array('id' => 'admin-content'));
+				else:
+					echo $html->tag('div', $content_for_layout, array('id' => 'page-content'));
+				endif;
+			?>
 		</div>
 
 		<div id="footer">
