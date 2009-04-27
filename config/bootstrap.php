@@ -17,7 +17,7 @@
  *
  */
 
-$content = '/htdocs/chaw_';
+$content = APP;
 
 Configure::write('Content', array(
 	'base' => $content . 'content' . DS,
