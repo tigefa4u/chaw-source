@@ -8,9 +8,6 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<h2>
-	<?php __('Timeline') ?>
-</h2>
 <div class="page-navigation">
 	<?php
 		$active = ($this->action == 'index') ? array('class' => 'active') : null;

@@ -245,12 +245,12 @@ td.number a:hover {
 	text-decoration: underline;
 }
 
-#navigation {	
+#navigation {
 	border-top: 2px solid #666;
 	background: #888;
 	padding: 8px 0 6px 0;
 	margin-top: 10px;
-	margin-left: -30px;
+	margin-left: -24px;
 	white-space: nowrap;
 	overflow: auto;
 }
@@ -388,7 +388,7 @@ td.number a:hover {
 #flashMessage, #authMessage {
 	background: #f4f4f4;
 	margin-top: 0px;
-	padding: 8px 8px 8px 20px;
+	padding: 12px 8px 4px 20px;
 	font-size: 110%;
 	height: 20px;
 	color: #222;
@@ -795,6 +795,7 @@ div.wiki-text code {
 	margin-top: 1px;
 	font-family: "Andale Mono", monospace;
 	font-size: 90%;
+	line-height: 140%;
 }
 .timeline .event span.admin {
 	float: right;
@@ -932,7 +933,7 @@ div.comments {
 /* Source */
 
 .source h2 {
-	margin-top: 50px;
+	margin-top: 24px;
 	margin-bottom: 4px;
 }
 .source .forks {

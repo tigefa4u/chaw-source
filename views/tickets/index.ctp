@@ -4,7 +4,6 @@
 		(!empty($user) ? "'s" : '') . ' ' .
 		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
 	) ?>
-	<?php __('Tickets') ?>
 </h2>
 
 <?php echo $form->create(array('type' => 'get', 'action' => 'index', 'url' => $this->passedArgs)); ?>
