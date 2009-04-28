@@ -343,7 +343,7 @@ td.number a:hover {
 }
 #current-user span.link a:hover {
 	text-decoration: none;
-	color: #333;
+	color: #fff;
 }
 #current-user span.login {
 	font-size: 90%;
@@ -379,6 +379,7 @@ td.number a:hover {
 	padding-left: 20px;
 	padding-right: 20px;
 }
+
 #page-right {
 	float: right;
 	padding-top: 20px;
