@@ -94,7 +94,7 @@ class UpgradeOneTask extends ChawUpgradeShell {
 		foreach ($tickets as $ticket) {
 
 			$this->Ticket->set($ticket);
-
+			
 			$new['Ticket']['status'] = 'pending';
 			$new['Ticket']['resolution'] = null;
 
@@ -102,6 +102,8 @@ class UpgradeOneTask extends ChawUpgradeShell {
 				$new['Ticket']['resolution'] = $ticket['Ticket']['status'];
 				$new['Ticket']['status'] = 'closed';
 			}
+			
+			$new['Ticket']['user_id'] = $ticket['Ticket']['owner'];
 
 			if ($this->Ticket->save($new)) {
 				$this->out("Ticket {$ticket['Ticket']['id']} upgraded");
