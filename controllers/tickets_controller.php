@@ -42,7 +42,7 @@ class TicketsController extends AppController {
 		$isDefault = empty($this->passedArgs);
 
 		if ($isDefault) {
-			$statuses = array_values($this->Project->ticket('statuses'));
+			$statuses = $this->Ticket->states();
 			$this->passedArgs['status'] = $statuses[0];
 		}
 
@@ -101,7 +101,7 @@ class TicketsController extends AppController {
 			$this->Session->setFlash(__('Invalid ticket',true));
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
-		
+
 		$this->pageTitle = "Ticket/{$id}/{$ticket['Ticket']['title']}";
 
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);

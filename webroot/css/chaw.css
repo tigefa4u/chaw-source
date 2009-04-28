@@ -221,74 +221,63 @@ td.number a:hover {
 #header {
 	position: fixed;
 	width: 100%;
-	padding-right: 6px;
 	margin: 0;
 	border-bottom: 4px solid #f4f4f4;
-}
-
-#content {
-	clear: both;
-	padding-top: 39px;
-	padding-left: 0px;
-	padding-right: 0px;
+	background-color: #3b3b3b;
+	padding: 6px 20px 0 20px;
 	overflow: hidden;
-	border-bottom: 1px solid #ddd;
 }
-
-#footer {
-	position: relative;
-	padding: 0 10px;
+#header h1 {
+	color: #ffffff;
+	font-size: 180%;
+	padding: 0px 0px;
+	margin: 8px 0 4px 0;
 }
-
-#footer span {
-	float: left;
-	font-size: 11px;
-	color: #3b3b3b;
+#header h1 a {
+	color: #69C;
+	background: #3b3b3b;
+	font-weight: normal;
+	text-decoration: none;
 }
-
-#page-content {
-	padding-top: 10px;
-	padding-left: 20px;
-	padding-right: 20px;
-}
-#page-right {
-	float: right;
-	padding-top: 20px;
-	width: 35%;
-}
-
-#flashMessage, #authMessage {
-	background: #f4f4f4;
-	margin-top: 0px;
-	padding: 8px 8px 8px 20px;
-	font-size: 110%;
-	height: 20px;
-	color: #222;
-}
-#authMessage {
-	margin-top: -10px;
-	margin-left: -20px;
+#header h1 a:hover {
+	color: #ffffff;
+	background: #3b3b3b;
+	text-decoration: underline;
 }
 
 #navigation {
-	margin-top: 2px;
-	margin-left: 20px;
+	border-top: 2px solid #666;
+	background: #888;
+	padding: 8px 0 6px 0;
+	margin-top: 10px;
+	margin-left: -24px;
 	white-space: nowrap;
+	overflow: auto;
 }
-
+#navigation ul {
+	float: left;
+}
 #navigation ul, #navigation li {
 	display: inline;
+	padding: 0;
+	margin: 0 12px;
 }
 
-#navigation li a {
-	padding: 10px;
+#projects-link {
+	float: right;
+	margin-top: 0px;
+	margin-right: 40px;
+}
+
+#projects-link a, #navigation li a {
+	padding: 6px 10px;
 	color: #f4f4f4;
 	text-decoration: none;
 	font-family: Helvetica;
 	font-weight: bold;
 }
 
-#navigation li a:hover, #navigation li a.on {
+#projects-link a:hover, #projects-link a.on, #navigation li a:hover, #navigation li a.on {
 	background-color: #f4f4f4;
 	color: #333;
 	text-decoration: none;
@@ -296,15 +285,17 @@ td.number a:hover {
 
 #current-user {
 	position: fixed;
-	right: 0;
+	top: 8px;
+	right: 6px;
 	clear: both;
 	float: right;
 	margin: 0px;
 	padding: 4px 0px;
 	width: 36%;
-	height: 28px;
+	height: 26px;
 	overflow: hidden;
-	background: #f4f4f4;
+	background: #191919;
+	border: 2px solid #333;
 }
 #current-user span {
 	display: block;
@@ -352,7 +343,7 @@ td.number a:hover {
 }
 #current-user span.link a:hover {
 	text-decoration: none;
-	color: #333;
+	color: #fff;
 }
 #current-user span.login {
 	font-size: 90%;
@@ -362,6 +353,52 @@ td.number a:hover {
 	display: block;
 	color: #bbb;
 }
+
+#content {
+	clear: both;
+	padding-top: 79px;
+	padding-left: 0px;
+	padding-right: 0px;
+	overflow: hidden;
+	border-bottom: 1px solid #ddd;
+}
+
+#footer {
+	position: relative;
+	padding: 0 10px;
+}
+
+#footer span {
+	float: left;
+	font-size: 11px;
+	color: #3b3b3b;
+}
+
+#page-content {
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#page-right {
+	float: right;
+	padding-top: 20px;
+	width: 35%;
+}
+
+#flashMessage, #authMessage {
+	background: #f4f4f4;
+	margin-top: 0px;
+	padding: 12px 8px 4px 20px;
+	font-size: 110%;
+	height: 20px;
+	color: #222;
+}
+#authMessage {
+	margin-top: -10px;
+	margin-left: -20px;
+}
+
 .zebra {
 	background:#FAFAFA;
 }
@@ -759,6 +796,7 @@ div.wiki-text code {
 	margin-top: 1px;
 	font-family: "Andale Mono", monospace;
 	font-size: 90%;
+	line-height: 140%;
 }
 .timeline .event span.admin {
 	float: right;
@@ -896,7 +934,7 @@ div.comments {
 /* Source */
 
 .source h2 {
-	margin-top: 50px;
+	margin-top: 24px;
 	margin-bottom: 4px;
 }
 .source .forks {

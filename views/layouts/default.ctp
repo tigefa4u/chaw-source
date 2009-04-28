@@ -38,6 +38,10 @@
 		}
 		echo $html->css(array('generic', 'chaw'));
 
+		if (!empty($this->params['admin'])) {
+			echo $html->css(array('chaw.admin'));
+		}
+
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.3.1.min');
 			echo $javascript->link('gshowdown.min');
@@ -67,11 +71,13 @@
 
 		<div id="header">
 
-			<h1><?php echo $html->link($CurrentProject->name, array(
-					'admin' => false,
-					'controller' => 'source', 'action' => 'index'
-				));
-			?></h1>
+			<h1>
+				<?php echo $html->link($CurrentProject->name, array(
+						'admin' => false,
+						'controller' => 'source', 'action' => 'index'
+					));
+				?>
+			</h1>
 
 			<div id="navigation">
 				<ul>
@@ -110,13 +116,6 @@
 							'controller' => 'versions', 'action' => 'index'), $options);
 					?></li>
 
-					<li><?php
-						$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
-						echo $html->link(__('Projects',true), array(
-							'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
-							'controller' => 'projects', 'action' => 'index'), $options);
-					?></li>
-
 					<?php if (!empty($this->params['isAdmin'])):?>
 
 						<li><?php
@@ -129,6 +128,13 @@
 					<?php endif;?>
 
 				</ul>
+
+				<div id="projects-link"><?php
+					$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
+					echo $html->link(__('Projects',true), array(
+						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
+						'controller' => 'projects', 'action' => 'index'), $options);
+				?></div>
 			</div>
 
 		</div>
@@ -136,16 +142,16 @@
 		<div id="content">
 			<?php
 				echo $this->element('current_user');
-
 				$session->flash();
 			?>
-			<div id="page-content">
-				<?php
-					echo $content_for_layout;
-				?>
-				<div class="clear"><!----></div>
-			</div>
-
+			<?php
+				if (!empty($this->params['admin'])):
+					echo $this->element('admin_navigation');
+					echo $html->tag('div', $content_for_layout, array('id' => 'admin-content'));
+				else:
+					echo $html->tag('div', $content_for_layout, array('id' => 'page-content'));
+				endif;
+			?>
 		</div>
 
 		<div id="footer">
@@ -162,7 +168,7 @@
 			</p>
 		</div>
 	</div>
-<?php if (Configure::read() > 0):?>
+<?php if (Configure::read() == 0):?>
 	<script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

@@ -43,10 +43,10 @@
 			}
 	?>
 			<tr<?php echo $class?>>
-				<td><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'folder'));?></td>
-				<td><?php echo $item['info']['author'];?></td>
+				<td nowrap><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'folder'));?></td>
+				<td nowrap><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
-				<td class="date"><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
+				<td nowrap class="date"><?php echo (!empty($item['info']['date'])) ? date("F d Y", strtotime($item['info']['date'])) : null;?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
 	<?php
@@ -61,10 +61,10 @@
 			}
 	?>
 			<tr<?php echo $class?>>
-				<td><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'file'));?></td>
-				<td><?php echo $item['info']['author'];?></td>
+				<td nowrap><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'file'));?></td>
+				<td nowrap><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
-				<td class="date"><?php echo (!empty($item['info']['date'])) ? date("F d, Y", strtotime($item['info']['date'])) : null;?></td>
+				<td nowrap class="date"><?php echo (!empty($item['info']['date'])) ? date("F d Y", strtotime($item['info']['date'])) : null;?></td>
 				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
 			</tr>
 	<?php

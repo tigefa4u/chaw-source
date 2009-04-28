@@ -68,9 +68,6 @@ class AppController extends Controller {
 		if ($this->params['isAdmin'] !== true) {
 			$this->params['admin'] = false;
 		}
-		if (!empty($this->params['admin'])) {
-			$this->layout = 'admin';
-		}
 
 		$this->params['project'] = null;
 		if (!empty($this->Project->current) && $this->Project->id !== '1') {
