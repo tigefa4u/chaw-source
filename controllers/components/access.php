@@ -222,7 +222,7 @@ class AccessComponent extends Object {
 			if ($this->isPublic && $access === 'r') {
 				return true;
 			}
-			return false;
+			//return false;
 		}
 
 		$group = $this->user("Permission.{$C->Project->id}");

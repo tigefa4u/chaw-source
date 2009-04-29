@@ -210,8 +210,8 @@ class AccessComponentTest extends CakeTestCase {
 		$this->Controller->params['controller'] = 'wiki';
 
 		$Access->user = array();
-		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('gwoo' => 'rw')));
-
+		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('*' => '', 'gwoo' => 'rw')));
+		pr($this->Controller->Project->Permission->rules());
 		$Access->isPublic = false;
 		$Access->user = array();
 		$this->assertFalse($Access->check($this->Controller, array('access' => 'r')));
@@ -637,11 +637,11 @@ class AccessComponentTest extends CakeTestCase {
 		$this->assertTrue($this->Controller->Project->save($data));
 
 		$result = $this->Controller->Project->Permission->rules('chaw', array('tickets' => array('*' => 'rw')));
+
 		$this->assertEqual($result, array(
 			'chaw' => array(
 				'wiki' => array(
-					'*' => '',
-					'gwoo' => 'rw'
+					'*' => 'r',
 				),
 				'tickets' => array(
 					'*' => 'rw'
