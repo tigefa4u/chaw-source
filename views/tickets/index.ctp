@@ -34,7 +34,7 @@ if (!$type && !$user) {
 }
 $links = array(
 	$html->link(__('all', true), array_merge($this->passedArgs, array(
-		'user' => null, 'status' => null, 'type' => 'all'
+		'user' => null, 'status' => null, 'type' => null, 0 => 'all',
 	)), $active)
 );
 
@@ -156,8 +156,8 @@ foreach ($tickets as $ticket):
 
 <div class="paging">
 	<?php echo $paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled'));?>
-	| <?php echo $paginator->numbers();?>
+	| <?php echo $paginator->numbers(array('after' => ' |'));?>
 	<?php echo $paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
 </div>
 
-<?php echo $html->link(__('New Ticket', true), array('controller' => 'tickets', 'action' => 'add')); ?>
+<?php echo $html->link(__('New Ticket', true), array('controller' => 'tickets', 'action' => 'add'), array('class' => 'big')); ?>
