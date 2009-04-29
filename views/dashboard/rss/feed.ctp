@@ -25,7 +25,11 @@ foreach ($feed as $data) {
 			$author = !empty($data['User']['username']) ? $data['User']['username'] : $data['Commit']['author'];
 		break;
 		case 'Wiki':
-			$title = "{$type}/" . Inflector::humanize($data[$type]['slug']);
+			$path = null;
+			if (!empty($data[$type]['path']) && $data[$type]['path'] != '/') {
+				$path = Inflector::humanize($data[$type]['path']);
+			}
+			$title = $type . $path . '/' . Inflector::humanize($data[$type]['slug']);;
 			$link = array('controller' => 'wiki', 'action' => 'index', $data[$type]['path'], $data[$type]['slug']);
 			$pubDate = $data[$type]['created'];
 			$description = $text->truncate(nl2br($data[$type]['content']), 200, '...', false, true);
