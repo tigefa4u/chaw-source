@@ -12,10 +12,10 @@ foreach ($feed as $data) {
 	if (empty($data[$type])) {
 		continue;
 	}
-
+	
 	switch ($type) {
 		case 'Commit':
-			$title = "{$type}: " . $data[$type]['revision']; //$chaw->commit($commit['Commit']['revision'], $commit['Project'])
+			$title = "{$type}/" . $data[$type]['revision']; //$chaw->commit($commit['Commit']['revision'], $commit['Project'])
 			if (!empty($data['Branch']['name'])) {
 				$title .= " to " . $data['Branch']['name'];
 			}
@@ -25,51 +25,48 @@ foreach ($feed as $data) {
 			$author = !empty($data['User']['username']) ? $data['User']['username'] : $data['Commit']['author'];
 		break;
 		case 'Wiki':
-			$title = "{$type}: " . Inflector::humanize($data[$type]['slug']);
+			$title = "{$type}/" . Inflector::humanize($data[$type]['slug']);
 			$link = array('controller' => 'wiki', 'action' => 'index', $data[$type]['path'], $data[$type]['slug']);
 			$pubDate = $data[$type]['created'];
-			$description = $text->truncate(nl2br($page['Wiki']['content']), 400, '...', false, true);
+			$description = $text->truncate(nl2br($data[$type]['content']), 200, '...', false, true);
 			$author = $data['User']['username'];
 		break;
 		case 'Ticket':
-			$title = "{$type}: " . $data[$type]['title'];
+			$title = "{$type}/" . $data[$type]['title'];
 			$link = array('controller' => 'tickets', 'action' => 'view', $data[$type]['number']);
 			$pubDate = $data[$type]['created'];
 			$description = $text->truncate(nl2br($data[$type]['description']), 200, '...', false, true);
 			$author = $data['Reporter']['username'];
 		break;
 		case 'Comment':
-			$title = "{$type}: " . $data['Ticket']['title'];
+			$reason = null;
+			if (!empty($data['Comment']['reason'])) {
+				$reason = " ({$data['Comment']['reason']})";
+			}
+			$title = "Ticket/#{$data['Ticket']['number']}{$reason} {$data['Ticket']['title']}";
 			$link = array(
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
 				'#' => 'c'.$data['Comment']['id']
-			);;
+			);
 			$pubDate = $data['Comment']['created'];
 
 			$description = null;
 			if (!empty($data['Comment']['changes'])) {
 				$description .= $chaw->changes($data['Comment']['changes']);
 			}
-			if (!empty($data['Comment']['reason'])) {
-				$description .= "<p><strong>{$data['Comment']['reason']}</strong></p>";
-			}
 			$description .= $text->truncate(nl2br($data['Comment']['body']), 200, '...', false, true);
-
 			$author = $data['User']['username'];
-
 			if (!empty($data['Ticket']['Project'])) {
 				$data['Project'] = $data['Ticket']['Project'];
 			}
 		break;
 
 	}
-
-	$project = null;
+	
 	if (!empty($data['Project'])) {
 		$link = $chaw->url($data['Project'], $link);
-		$project = ' in '. $data['Project']['name'];
+		$title = $data['Project']['name'].'/' . $title;
 	}
-	$title .= $project;
 
 	$pubDate = date('r', strtotime($pubDate));
 

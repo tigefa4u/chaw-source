@@ -105,7 +105,7 @@ class Ticket extends AppModel {
 		if (!empty($this->data['Ticket']['resolution'])) {
 			$reason = $this->data['Ticket']['resolution'];
 			$this->data['Ticket']['event'] = 'close';
-			$this->data['Ticket']['owner'] = $this->data['Ticket']['user_id'];
+			$this->data['Ticket']['owner'] = !empty($this->data['Ticket']['user_id']) ? $this->data['Ticket']['user_id'] : 0;
 		}
 
 		if (!empty($this->data['Ticket']['event'])) {
