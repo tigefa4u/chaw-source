@@ -2,7 +2,7 @@
 Configure::write('debug', 0);
 
 $this->set('channel', array(
-	'title' => "Feed/{$CurrentUser->username}",
+	'title' =>"{$CurrentProject->name}/Feed",
 	'link' => $rssFeed
 ));
 
