@@ -2,7 +2,7 @@
 Configure::write('debug', 0);
 
 $this->set('channel', array(
-	'title' => "{$CurrentUser->username}'s Feed",
+	'title' => "Feed/{$CurrentUser->username}",
 	'link' => $rssFeed
 ));
 
@@ -12,12 +12,12 @@ foreach ($feed as $data) {
 	if (empty($data[$type])) {
 		continue;
 	}
-	
+
 	switch ($type) {
 		case 'Commit':
 			$title = "{$type}/" . $data[$type]['revision']; //$chaw->commit($commit['Commit']['revision'], $commit['Project'])
 			if (!empty($data['Branch']['name'])) {
-				$title .= " to " . $data['Branch']['name'];
+				$title = "Branches/" . Inflector::humanize($data['Branch']['name']) . "/" . $title;
 			}
 			$link = array('controller' => 'commits', 'action' => 'view', $data[$type]['revision']);
 			$pubDate = $data[$type]['created'];
@@ -49,20 +49,20 @@ foreach ($feed as $data) {
 				'#' => 'c'.$data['Comment']['id']
 			);
 			$pubDate = $data['Comment']['created'];
-
 			$description = null;
 			if (!empty($data['Comment']['changes'])) {
 				$description .= $chaw->changes($data['Comment']['changes']);
 			}
 			$description .= $text->truncate(nl2br($data['Comment']['body']), 200, '...', false, true);
 			$author = $data['User']['username'];
+
 			if (!empty($data['Ticket']['Project'])) {
 				$data['Project'] = $data['Ticket']['Project'];
 			}
 		break;
 
 	}
-	
+
 	if (!empty($data['Project'])) {
 		$link = $chaw->url($data['Project'], $link);
 		$title = $data['Project']['name'].'/' . $title;
