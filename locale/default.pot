@@ -1,7 +1,6 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  Revision: 6296 /chaw/views/layouts/admin.ctp
 #  Revision: 6296 /chaw/views/layouts/default.ctp
 #  Revision: 6296 /chaw/views/layouts/email/html/default.ctp
 #  Revision: 6296 /chaw/views/layouts/email/text/default.ctp
@@ -11,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-04-06 14:00-0700\n"
+"POT-Creation-Date: 2009-05-01 15:11-0700\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -177,27 +176,27 @@ msgstr ""
 msgid "Oops, delete failed try again"
 msgstr ""
 
-#: /controllers/tickets_controller.php:99;110
+#: /controllers/tickets_controller.php:90;101
 msgid "Invalid ticket"
 msgstr ""
 
-#: /controllers/tickets_controller.php:136
+#: /controllers/tickets_controller.php:129
 msgid "Ticket saved"
 msgstr ""
 
-#: /controllers/tickets_controller.php:155
+#: /controllers/tickets_controller.php:148
 msgid "Comment saved"
 msgstr ""
 
-#: /controllers/tickets_controller.php:157
+#: /controllers/tickets_controller.php:150
 msgid "Ticket updated"
 msgstr ""
 
-#: /controllers/tickets_controller.php:162
+#: /controllers/tickets_controller.php:155
 msgid "Comment was NOT saved"
 msgstr ""
 
-#: /controllers/tickets_controller.php:164
+#: /controllers/tickets_controller.php:157
 msgid "Ticket was NOT updated"
 msgstr ""
 
@@ -209,79 +208,79 @@ msgstr ""
 msgid "The timeline event was NOT deleted"
 msgstr ""
 
-#: /controllers/users_controller.php:95
+#: /controllers/users_controller.php:100
 msgid "You may now change your password"
 msgstr ""
 
-#: /controllers/users_controller.php:102
+#: /controllers/users_controller.php:107
 msgid "Did you forget your password?"
 msgstr ""
 
-#: /controllers/users_controller.php:119
+#: /controllers/users_controller.php:124
 msgid "%1$s is now registered"
 msgstr ""
 
-#: /controllers/users_controller.php:122
+#: /controllers/users_controller.php:127
 msgid "User NOT added"
 msgstr ""
 
-#: /controllers/users_controller.php:161
+#: /controllers/users_controller.php:166
 msgid "User updated"
 msgstr ""
 
-#: /controllers/users_controller.php:163
+#: /controllers/users_controller.php:168
 msgid "User NOT updated"
 msgstr ""
 
-#: /controllers/users_controller.php:193
+#: /controllers/users_controller.php:198
 msgid "%s added"
 msgstr ""
 
-#: /controllers/users_controller.php:196
+#: /controllers/users_controller.php:201
 msgid "%s was not found"
 msgstr ""
 
-#: /controllers/users_controller.php:244
+#: /controllers/users_controller.php:257
 msgid "Check your email."
 msgstr ""
 
-#: /controllers/users_controller.php:246
+#: /controllers/users_controller.php:259
 msgid "Email was not sent"
 msgstr ""
 
-#: /controllers/users_controller.php:249
+#: /controllers/users_controller.php:262
 msgid "User could not be found"
 msgstr ""
 
-#: /controllers/users_controller.php:255
+#: /controllers/users_controller.php:268
 msgid "Your Account was activated"
 msgstr ""
 
-#: /controllers/users_controller.php:257
+#: /controllers/users_controller.php:270
 msgid "Your Account could not be activated"
 msgstr ""
 
-#: /controllers/users_controller.php:284
+#: /controllers/users_controller.php:297
 msgid "Check your email to verify your request"
 msgstr ""
 
-#: /controllers/users_controller.php:308
+#: /controllers/users_controller.php:321
 msgid "Check your email for your new password."
 msgstr ""
 
-#: /controllers/users_controller.php:320
+#: /controllers/users_controller.php:333
 msgid "Your password was changed"
 msgstr ""
 
-#: /controllers/users_controller.php:323
+#: /controllers/users_controller.php:336
 msgid "Your password was NOT changed"
 msgstr ""
 
-#: /controllers/users_controller.php:333
+#: /controllers/users_controller.php:346
 msgid "User was removed"
 msgstr ""
 
-#: /controllers/users_controller.php:335
+#: /controllers/users_controller.php:348
 msgid "User was NOT changed"
 msgstr ""
 
@@ -346,130 +345,8 @@ msgstr ""
 msgid "Select a Project"
 msgstr ""
 
-#: /models/project.php:290
+#: /models/project.php:289
 msgid "##The home page for %s"
-msgstr ""
-
-#: /plugins/debug_kit/controllers/components/toolbar.php:85
-msgid "Component initialization and startup"
-msgstr ""
-
-#: /plugins/debug_kit/controllers/components/toolbar.php:123
-msgid "Controller Action"
-msgstr ""
-
-#: /plugins/debug_kit/controllers/components/toolbar.php:150
-msgid "Render Controller Action"
-msgstr ""
-
-#: /plugins/debug_kit/controllers/components/toolbar.php:163
-msgid "Could not load DebugToolbar panel %s"
-msgstr ""
-
-#: /plugins/debug_kit/vendors/fire_cake.php:298
-msgid "Headers already sent in %s on line %s. Cannot send log data to FirePHP."
-msgstr ""
-
-#: /plugins/debug_kit/vendors/fire_cake.php:319
-msgid "Incorrect parameter count for FireCake::fb()"
-msgstr ""
-
-#: /plugins/debug_kit/vendors/fire_cake.php:392
-msgid "Maximum number (99,999) of messages reached!"
-msgstr ""
-
-#: /plugins/debug_kit/views/debug.php:57
-msgid "Rendering %s"
-msgstr ""
-
-#: /plugins/debug_kit/views/debug.php:79
-msgid "Rendering View"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/debug_toolbar.ctp:32
-msgid "There are no active panels. You must enable a panel to see its output."
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/log_panel.ctp:29
-msgid "Logs"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/log_panel.ctp:36
-msgid "Time"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/log_panel.ctp:36
-#: /plugins/debug_kit/views/elements/timer_panel.ctp:42
-#: /views/source/index.ctp:33
-msgid "Message"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/log_panel.ctp:45
-msgid "There were no log entries made this request"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/memory_panel.ctp:30
-msgid "Memory"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/memory_panel.ctp:33
-msgid "Current Memory Use"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/memory_panel.ctp:40
-msgid "Peak Memory Use"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/request_panel.ctp:30
-msgid "Request"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/request_panel.ctp:44
-msgid "Current Route"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/session_panel.ctp:30
-msgid "Session"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/sql_log_panel.ctp:30
-msgid "Sql Logs"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/sql_log_panel.ctp:39
-msgid "No active database connections"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/timer_panel.ctp:31
-msgid "Timers"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/timer_panel.ctp:33
-msgid "%s (seconds)"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/timer_panel.ctp:34
-msgid "Total Request Time:"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/timer_panel.ctp:42
-msgid "time in seconds"
-msgstr ""
-
-#: /plugins/debug_kit/views/elements/variables_panel.ctp:30
-msgid "View Variables"
-msgstr ""
-
-#: /vendors/shells/chaw_upgrade.php:39
-msgid "Enter a number from the list above, or 'q' to exit"
-msgstr ""
-
-#: /vendors/shells/chaw_upgrade.php:42
-msgid "Exit"
-msgstr ""
-
-#: /vendors/shells/chaw_upgrade.php:47
-msgid "The number you selected was not an option. Please try again."
 msgstr ""
 
 #: /views/commits/history.ctp:14
@@ -477,13 +354,13 @@ msgid "History"
 msgstr ""
 
 #: /views/commits/history.ctp:43
-#: /views/commits/view.ctp:16
+#: /views/commits/view.ctp:17
 #: /views/source/index.ctp:32
 msgid "Author"
 msgstr ""
 
 #: /views/commits/history.ctp:47
-#: /views/commits/view.ctp:20
+#: /views/commits/view.ctp:21
 #: /views/source/index.ctp:34
 msgid "Date"
 msgstr ""
@@ -491,15 +368,15 @@ msgstr ""
 #: /views/commits/index.ctp:12
 #: /views/dashboard/admin_index.ctp:11
 #: /views/dashboard/index.ctp:17
-#: /views/timeline/index.ctp:29
+#: /views/timeline/index.ctp:26
 msgid "Commits"
 msgstr ""
 
-#: /views/commits/view.ctp:6
+#: /views/commits/view.ctp:7
 msgid "All Commits"
 msgstr ""
 
-#: /views/commits/view.ctp:29
+#: /views/commits/view.ctp:30
 msgid "Changes"
 msgstr ""
 
@@ -514,29 +391,29 @@ msgstr ""
 
 #: /views/dashboard/admin_index.ctp:15
 #: /views/dashboard/index.ctp:21
-#: /views/layouts/admin.ctp:100
-#: /views/layouts/default.ctp:100
-#: /views/tickets/index.ctp:7
-#: /views/timeline/index.ctp:33
+#: /views/layouts/default.ctp:107
+#: /views/projects/add.ctp:36
+#: /views/projects/admin_add.ctp:37
+#: /views/projects/edit.ctp:42
+#: /views/timeline/index.ctp:30
 msgid "Tickets"
 msgstr ""
 
 #: /views/dashboard/admin_index.ctp:19
 #: /views/dashboard/index.ctp:25
-#: /views/timeline/index.ctp:37
+#: /views/timeline/index.ctp:34
 msgid "Comments"
 msgstr ""
 
 #: /views/dashboard/admin_index.ctp:23
 #: /views/dashboard/index.ctp:29
-#: /views/layouts/admin.ctp:93
-#: /views/layouts/default.ctp:93
-#: /views/timeline/index.ctp:41
+#: /views/layouts/default.ctp:100
+#: /views/timeline/index.ctp:38
 msgid "Wiki"
 msgstr ""
 
 #: /views/dashboard/index.ctp:1
-#: /views/layouts/admin.ctp:149
+#: /views/elements/admin_navigation.ctp:6
 msgid "Dashboard"
 msgstr ""
 
@@ -544,16 +421,38 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
+#: /views/elements/admin_navigation.ctp:2
+#: /views/layouts/default.ctp:123
+msgid "Admin"
+msgstr ""
+
+#: /views/elements/admin_navigation.ctp:10
+msgid "Permissions"
+msgstr ""
+
+#: /views/elements/admin_navigation.ctp:14
+#: /views/users/admin_index.ctp:17
+msgid "Users"
+msgstr ""
+
+#: /views/elements/admin_navigation.ctp:17
+msgid "Settings"
+msgstr ""
+
+#: /views/elements/admin_navigation.ctp:22
 #: /views/elements/current_projects.ctp:37
-#: /views/layouts/admin.ctp:114;165
-#: /views/layouts/default.ctp:114
+#: /views/layouts/default.ctp:134
 #: /views/projects/admin_index.ctp:2
 #: /views/projects/index.ctp:14
 msgid "Projects"
 msgstr ""
 
+#: /views/elements/admin_navigation.ctp:33
+msgid "New Project"
+msgstr ""
+
 #: /views/elements/current_user.ctp:23
-#: /views/wiki/index.ctp:159
+#: /views/wiki/index.ctp:160
 msgid "activate"
 msgstr ""
 
@@ -624,7 +523,7 @@ msgid "Awaiting Approval"
 msgstr ""
 
 #: /views/elements/project_details.ctp:9
-#: /views/tickets/view.ctp:100
+#: /views/tickets/view.ctp:108
 #: /views/versions/admin_add.ctp:18
 #: /views/versions/admin_edit.ctp:24
 msgid "Description"
@@ -637,7 +536,7 @@ msgstr ""
 #: /views/elements/project_details.ctp:30
 #: /views/permissions/admin_index.ctp:32
 #: /views/users/edit.ctp:47
-#: /views/wiki/index.ctp:161
+#: /views/wiki/index.ctp:162
 msgid "delete"
 msgstr ""
 
@@ -686,7 +585,7 @@ msgstr ""
 #: /views/elements/timeline/commit.ctp:82;84
 #: /views/elements/timeline/ticket.ctp:53
 #: /views/elements/timeline/wiki.ctp:55
-#: /views/users/admin_index.ctp:63;65
+#: /views/users/admin_index.ctp:80;82
 msgid "remove"
 msgstr ""
 
@@ -707,51 +606,23 @@ msgstr ""
 msgid "created"
 msgstr ""
 
-#: /views/layouts/admin.ctp:79
-#: /views/layouts/default.ctp:79
+#: /views/layouts/default.ctp:86
 msgid "Source"
 msgstr ""
 
-#: /views/layouts/admin.ctp:86
-#: /views/layouts/default.ctp:86
-#: /views/timeline/index.ctp:12
+#: /views/layouts/default.ctp:93
 msgid "Timeline"
 msgstr ""
 
-#: /views/layouts/admin.ctp:107
-#: /views/layouts/default.ctp:107
+#: /views/layouts/default.ctp:114
 msgid "Versions"
 msgstr ""
 
-#: /views/layouts/admin.ctp:123;145
-#: /views/layouts/default.ctp:123
-msgid "Admin"
-msgstr ""
-
-#: /views/layouts/admin.ctp:153
-msgid "Permissions"
-msgstr ""
-
-#: /views/layouts/admin.ctp:157
-#: /views/users/admin_index.ctp:2
-msgid "Users"
-msgstr ""
-
-#: /views/layouts/admin.ctp:160
-msgid "Settings"
-msgstr ""
-
-#: /views/layouts/admin.ctp:176
-msgid "New Project"
-msgstr ""
-
-#: /views/layouts/admin.ctp:201
-#: /views/layouts/default.ctp:153
+#: /views/layouts/default.ctp:160
 msgid "About"
 msgstr ""
 
-#: /views/layouts/admin.ctp:204
-#: /views/layouts/default.ctp:156
+#: /views/layouts/default.ctp:163
 msgid "CakePHP: the rapid development php framework"
 msgstr ""
 
@@ -805,8 +676,8 @@ msgid "Manage Permissions"
 msgstr ""
 
 #: /views/permissions/admin_index.ctp:13
-#: /views/tickets/add.ctp:61
-#: /views/tickets/view.ctp:212
+#: /views/tickets/add.ctp:62
+#: /views/tickets/view.ctp:237
 #: /views/users/add.ctp:21
 #: /views/users/change.ctp:11
 #: /views/users/edit.ctp:64
@@ -814,7 +685,7 @@ msgstr ""
 #: /views/users/login.ctp:18
 #: /views/versions/admin_add.ctp:31
 #: /views/versions/admin_edit.ctp:37
-#: /views/wiki/add.ctp:58
+#: /views/wiki/add.ctp:59
 msgid "Submit"
 msgstr ""
 
@@ -859,76 +730,80 @@ msgid "create groups"
 msgstr ""
 
 #: /views/projects/add.ctp:7
+#: /views/projects/admin_add.ctp:7
 msgid "Project Setup"
 msgstr ""
 
 #: /views/projects/add.ctp:10
-#: /views/projects/edit.ctp:12
+#: /views/projects/admin_add.ctp:10
+#: /views/projects/edit.ctp:16
 msgid "Repo Type"
 msgstr ""
 
 #: /views/projects/add.ctp:13
+#: /views/projects/admin_add.ctp:14
 msgid "The project name must be at least 5 characters"
 msgstr ""
 
 #: /views/projects/add.ctp:14
+#: /views/projects/admin_add.ctp:15
 #: /views/users/add.ctp:10
 msgid "The project name must be unique."
 msgstr ""
 
 #: /views/projects/add.ctp:29
-#: /views/projects/config.ctp:7
-msgid "Options"
-msgstr ""
-
-#: /views/projects/add.ctp:31
+#: /views/projects/admin_add.ctp:30
 #: /views/projects/config.ctp:9
+#: /views/projects/edit.ctp:35
 msgid "Groups"
 msgstr ""
 
-#: /views/projects/add.ctp:32
-#: /views/projects/config.ctp:10
-msgid "Ticket Types"
-msgstr ""
-
-#: /views/projects/add.ctp:33
-#: /views/projects/config.ctp:11
-msgid "Ticket Priorities"
-msgstr ""
-
-#: /views/projects/add.ctp:34
-#: /views/projects/config.ctp:12
-msgid "Ticket Statuses"
-msgstr ""
-
-#: /views/projects/add.ctp:36
+#: /views/projects/add.ctp:33;42
+#: /views/projects/admin_add.ctp:34;43
 #: /views/projects/config.ctp:14
-#: /views/projects/edit.ctp:33
+#: /views/projects/edit.ctp:39;48
 msgid "Comma seperated"
 msgstr ""
 
 #: /views/projects/admin_index.ctp:27
-#: /views/users/admin_index.ctp:11
 msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
 msgstr ""
 
 #: /views/projects/admin_index.ctp:94
 #: /views/projects/index.ctp:93
-#: /views/tickets/view.ctp:57
-#: /views/users/admin_index.ctp:62
+#: /views/tickets/view.ctp:55
+#: /views/users/admin_index.ctp:79
 msgid "edit"
 msgstr ""
 
 #: /views/projects/admin_index.ctp:102
-#: /views/tickets/index.ctp:147
-#: /views/users/admin_index.ctp:83
+#: /views/tickets/index.ctp:158
+#: /views/timeline/index.ctp:73
+#: /views/users/admin_index.ctp:100
 msgid "previous"
 msgstr ""
 
 #: /views/projects/admin_index.ctp:104
-#: /views/tickets/index.ctp:149
-#: /views/users/admin_index.ctp:85
+#: /views/tickets/index.ctp:160
+#: /views/timeline/index.ctp:77
+#: /views/users/admin_index.ctp:102
 msgid "next"
+msgstr ""
+
+#: /views/projects/config.ctp:7
+msgid "Options"
+msgstr ""
+
+#: /views/projects/config.ctp:10
+msgid "Ticket Types"
+msgstr ""
+
+#: /views/projects/config.ctp:11
+msgid "Ticket Priorities"
+msgstr ""
+
+#: /views/projects/config.ctp:12
+msgid "Ticket Statuses"
 msgstr ""
 
 #: /views/projects/delete.ctp:5
@@ -947,10 +822,6 @@ msgstr ""
 #: /views/projects/delete.ctp:12
 #: /views/repo/fork_it.ctp:14
 msgid "Cancel"
-msgstr ""
-
-#: /views/projects/edit.ctp:19
-msgid "the url for the project on"
 msgstr ""
 
 #: /views/projects/index.ctp:4
@@ -975,7 +846,7 @@ msgid "Public"
 msgstr ""
 
 #: /views/projects/index.ctp:31;47
-#: /views/timeline/index.ctp:23
+#: /views/timeline/index.ctp:20
 msgid "Forks"
 msgstr ""
 
@@ -984,7 +855,7 @@ msgid "Projects Feed"
 msgstr ""
 
 #: /views/projects/index.ctp:88
-#: /views/wiki/index.ctp:158
+#: /views/wiki/index.ctp:159
 msgid "view"
 msgstr ""
 
@@ -1052,133 +923,137 @@ msgstr ""
 msgid "history"
 msgstr ""
 
-#: /views/tickets/add.ctp:22
+#: /views/tickets/add.ctp:23
 msgid "Add Ticket"
 msgstr ""
 
-#: /views/tickets/add.ctp:38
-#: /views/tickets/index.ctp:92
-#: /views/tickets/view.ctp:99
+#: /views/tickets/add.ctp:39
+#: /views/tickets/index.ctp:94
+#: /views/tickets/view.ctp:107
 #: /views/versions/admin_add.ctp:17
 #: /views/versions/admin_edit.ctp:23
 msgid "Title"
 msgstr ""
 
-#: /views/tickets/add.ctp:40
+#: /views/tickets/add.ctp:41
 msgid "###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n"
 msgstr ""
 
-#: /views/tickets/add.ctp:50
-#: /views/tickets/view.ctp:105
+#: /views/tickets/add.ctp:51
+#: /views/tickets/view.ctp:113
 msgid "Tags"
 msgstr ""
 
-#: /views/tickets/add.ctp:54
-#: /views/tickets/view.ctp:109
+#: /views/tickets/add.ctp:55
+#: /views/tickets/view.ctp:117
 msgid "comma separated"
 msgstr ""
 
-#: /views/tickets/index.ctp:14
+#: /views/tickets/index.ctp:13
 msgid "type"
 msgstr ""
 
-#: /views/tickets/index.ctp:21
+#: /views/tickets/index.ctp:20
 msgid "priority"
 msgstr ""
 
-#: /views/tickets/index.ctp:37
+#: /views/tickets/index.ctp:36
 msgid "all"
 msgstr ""
 
-#: /views/tickets/index.ctp:47
+#: /views/tickets/index.ctp:46
 msgid "mine"
 msgstr ""
 
-#: /views/tickets/index.ctp:71
+#: /views/tickets/index.ctp:70
 msgid "(page {:page} of {:pages}, showing {:current} of {:count} tickets)"
 msgstr ""
 
-#: /views/tickets/index.ctp:81
-msgid "Version"
-msgstr ""
-
-#: /views/tickets/index.ctp:82
+#: /views/tickets/index.ctp:80
 msgid "Type"
 msgstr ""
 
-#: /views/tickets/index.ctp:83
+#: /views/tickets/index.ctp:81
 msgid "Priority"
 msgstr ""
 
-#: /views/tickets/index.ctp:84
+#: /views/tickets/index.ctp:83
 msgid "Reporter"
 msgstr ""
 
-#: /views/tickets/index.ctp:85
+#: /views/tickets/index.ctp:86
 msgid "Owner"
 msgstr ""
 
-#: /views/tickets/index.ctp:87
+#: /views/tickets/index.ctp:89
 msgid "Status"
 msgstr ""
 
-#: /views/tickets/index.ctp:90
+#: /views/tickets/index.ctp:92
 msgid "Resolution"
 msgstr ""
 
-#: /views/tickets/index.ctp:93
+#: /views/tickets/index.ctp:95
+msgid "Version"
+msgstr ""
+
+#: /views/tickets/index.ctp:96
 #: /views/versions/index.ctp:30
 #: /views/versions/view.ctp:10
 msgid "Created"
 msgstr ""
 
-#: /views/tickets/index.ctp:152
+#: /views/tickets/index.ctp:163
 msgid "New Ticket"
 msgstr ""
 
-#: /views/tickets/view.ctp:47
+#: /views/tickets/view.ctp:45
 msgid "Ticket"
 msgstr ""
 
-#: /views/tickets/view.ctp:70
+#: /views/tickets/view.ctp:68
 msgid "reported by"
 msgstr ""
 
-#: /views/tickets/view.ctp:85
+#: /views/tickets/view.ctp:73
+msgid "owned by"
+msgstr ""
+
+#: /views/tickets/view.ctp:89
 msgid "Modify Ticket"
 msgstr ""
 
-#: /views/tickets/view.ctp:161
+#: /views/tickets/view.ctp:171
 msgid "Preview"
 msgstr ""
 
-#: /views/tickets/view.ctp:175
-msgid "Comment"
+#: /views/tickets/view.ctp:185
+msgid "Update Ticket"
 msgstr ""
 
-#: /views/tickets/view.ctp:183
+#: /views/tickets/view.ctp:209
 msgid "reopen"
 msgstr ""
 
-#: /views/tickets/view.ctp:186
-msgid "Action"
+#: /views/tickets/view.ctp:212
+msgid "Change status"
 msgstr ""
 
-#: /views/tickets/view.ctp:190
-msgid "Reason"
+#: /views/tickets/view.ctp:216
+msgid "Or close as"
 msgstr ""
 
-#: /views/timeline/index.ctp:17
+#: /views/timeline/index.ctp:14
 #: /views/versions/admin_edit.ctp:20
 msgid "Project"
 msgstr ""
 
-#: /views/timeline/index.ctp:26
+#: /views/timeline/index.ctp:23
 msgid "Parent"
 msgstr ""
 
 #: /views/users/add.ctp:7
-#: /views/users/admin_index.ctp:27
+#: /views/users/admin_index.ctp:7;44
 #: /views/users/edit.ctp:10
 #: /views/users/forgotten.ctp:9
 #: /views/users/login.ctp:9
@@ -1196,21 +1071,25 @@ msgid "Password"
 msgstr ""
 
 #: /views/users/add.ctp:17
-#: /views/users/admin_index.ctp:28
+#: /views/users/admin_index.ctp:45
 #: /views/users/edit.ctp:13
 #: /views/users/forgotten.ctp:19
 msgid "Email"
 msgstr ""
 
-#: /views/users/admin_index.ctp:4
+#: /views/users/admin_index.ctp:19
 msgid "All Users"
 msgstr ""
 
-#: /views/users/admin_index.ctp:23
+#: /views/users/admin_index.ctp:27
+msgid "(page {:page} of {:pages}, showing {:current} of {:count} users)"
+msgstr ""
+
+#: /views/users/admin_index.ctp:40
 msgid "Group"
 msgstr ""
 
-#: /views/users/admin_index.ctp:29
+#: /views/users/admin_index.ctp:46
 msgid "Last Login"
 msgstr ""
 
@@ -1228,7 +1107,7 @@ msgid "Ssh Keys"
 msgstr ""
 
 #: /views/users/edit.ctp:54
-#: /views/wiki/index.ctp:21;130
+#: /views/wiki/index.ctp:22;131
 msgid "New"
 msgstr ""
 
@@ -1259,31 +1138,31 @@ msgstr ""
 msgid "Due by"
 msgstr ""
 
-#: /views/wiki/add.ctp:35
+#: /views/wiki/add.ctp:36
 msgid "use a path to group pages into categories and subcategories. example: /logs/by/%s/"
 msgstr ""
 
-#: /views/wiki/index.ctp:12
+#: /views/wiki/index.ctp:13
 msgid "Active"
 msgstr ""
 
-#: /views/wiki/index.ctp:14
+#: /views/wiki/index.ctp:15
 msgid "Not Active"
 msgstr ""
 
-#: /views/wiki/index.ctp:19;125
+#: /views/wiki/index.ctp:20;126
 msgid "Edit"
 msgstr ""
 
-#: /views/wiki/index.ctp:63
+#: /views/wiki/index.ctp:64
 msgid "Wiki Nav"
 msgstr ""
 
-#: /views/wiki/index.ctp:81
+#: /views/wiki/index.ctp:82
 msgid "Recent Entries"
 msgstr ""
 
-#: /views/wiki/index.ctp:119
+#: /views/wiki/index.ctp:120
 msgid "View"
 msgstr ""
 

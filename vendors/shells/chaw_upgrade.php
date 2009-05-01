@@ -36,15 +36,15 @@ class ChawUpgradeShell extends Shell {
 		}
 
 		while ($choice == '') {
-			$choice = $this->in(__("Enter a number from the list above, or 'q' to exit", true), null, 'q');
+			$choice = $this->in("Enter a number from the list above, or 'q' to exit", null, 'q');
 
 			if ($choice === 'q') {
-				$this->out(__("Exit", true));
+				$this->out("Exit");
 				$this->_stop();
 			}
 
 			if ($choice == '' || intval($choice) > count($choices)) {
-				$this->err(__("The number you selected was not an option. Please try again.", true));
+				$this->err("The number you selected was not an option. Please try again.");
 				$choice = '';
 			}
 		}

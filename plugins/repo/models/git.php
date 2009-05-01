@@ -310,7 +310,7 @@ class Git extends Repo {
 			$result = $this->run('branch -a', null, 'capture');
 			$branches = array();
 			foreach ($result as $branch) {
-				if (strpos($branch, 'origin/') == false) {
+				if (strpos($branch, 'origin/') === false || strpos($branch, 'HEAD') !== false) {
 					continue;
 				}
 				$branches[] = trim(str_replace("origin/", "", $branch));

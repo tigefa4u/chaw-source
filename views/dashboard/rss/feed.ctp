@@ -36,18 +36,22 @@ foreach ($feed as $data) {
 			$author = $data['User']['username'];
 		break;
 		case 'Ticket':
-			$title = "{$type}/" . $data[$type]['title'];
+			$status = " ({$data['Ticket']['status']})";
+			if (!empty($data['Comment']['reason'])) {
+				$status = " ({$data['Comment']['reason']})";
+			}
+			$title = "Ticket/#{$data['Ticket']['number']}{$status} {$data['Ticket']['title']}";
 			$link = array('controller' => 'tickets', 'action' => 'view', $data[$type]['number']);
 			$pubDate = $data[$type]['created'];
 			$description = $text->truncate(nl2br($data[$type]['description']), 200, '...', false, true);
 			$author = $data['Reporter']['username'];
 		break;
 		case 'Comment':
-			$reason = null;
+			$status = " ({$data['Ticket']['status']})";
 			if (!empty($data['Comment']['reason'])) {
-				$reason = " ({$data['Comment']['reason']})";
+				$status = " ({$data['Comment']['reason']})";
 			}
-			$title = "Ticket/#{$data['Ticket']['number']}{$reason} {$data['Ticket']['title']}";
+			$title = "Ticket/#{$data['Ticket']['number']}{$status} {$data['Ticket']['title']}";
 			$link = array(
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
 				'#' => 'c'.$data['Comment']['id']
