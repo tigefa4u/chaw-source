@@ -17,7 +17,7 @@ foreach ($timeline as $data) {
 		case 'Commit':
 			$title = "{$type}/" . $data[$type]['revision']; //$chaw->commit($commit['Commit']['revision'], $commit['Project'])
 			if (!empty($data['Branch']['name'])) {
-				$title = "Branches/" . Inflector::humanize($data['Branch']['name']) . "/" . $title;
+				$title = "Branches/" . $data['Branch']['name'] . "/" . $title;
 			}
 			$link = array('controller' => 'commits', 'action' => 'view', $data[$type]['revision']);
 			$pubDate = $data[$type]['created'];
@@ -27,9 +27,9 @@ foreach ($timeline as $data) {
 		case 'Wiki':
 			$path = null;
 			if (!empty($data[$type]['path']) && $data[$type]['path'] != '/') {
-				$path = Inflector::humanize($data[$type]['path']);
+				$path = $data[$type]['path'];
 			}
-			$title = $type . $path . '/' . Inflector::humanize($data[$type]['slug']);;
+			$title = $type . $path . '/' . $data[$type]['slug'];
 			$link = array('controller' => 'wiki', 'action' => 'index', $data[$type]['path'], $data[$type]['slug']);
 			$pubDate = $data[$type]['created'];
 			$description = $text->truncate(nl2br($data[$type]['content']), 200, '...', false, true);

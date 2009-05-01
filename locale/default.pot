@@ -1165,8 +1165,3 @@ msgstr ""
 #: /views/wiki/index.ctp:120
 msgid "View"
 msgstr ""
-
-#: /webroot/test.php:101
-msgid "Debug setting does not allow access to this url."
-msgstr ""
-

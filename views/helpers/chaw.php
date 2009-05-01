@@ -1,11 +1,26 @@
 <?php
-
+/**
+ * Short description
+ *
+ * Long description
+ *
+ * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
+ * Redistributions not permitted
+ *
+ * @copyright		Copyright 2008, Garrett J. Woodworth
+ * @package			chaw
+ * @subpackage		chaw.controllers
+ * @since			Chaw 0.1
+ * @license			commercial
+ *
+ */
 class ChawHelper extends AppHelper {
 
 	var $helpers = array('Html');
 /**
- * undocumented function
+ * Only returns the link if current user an admin or owner
  *
+ * @see HtmlHelper::link()
  * @param string $title
  * @param string $url
  * @param string $htmlAttributes
@@ -20,9 +35,11 @@ class ChawHelper extends AppHelper {
 		return null;
 	}
 /**
- * undocumented function
+ * Displays humanized type as title and adds type to url
+ * makes the css class active if passedArgs['type'] matches $type
  *
- * @param string $title
+ * @see HtmlHelper::link()
+ * @param string $type
  * @param string $url
  * @param string $htmlAttributes
  * @param string $confirmMessage
@@ -51,9 +68,9 @@ class ChawHelper extends AppHelper {
 		return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
 	}
 /**
- * undocumented function
+ * display unordered list of messages
  *
- * @param string $messages
+ * @param array $messages data(type => array(messages))
  * @return string
  */
 	function messages($messages = array()) {
@@ -71,10 +88,11 @@ class ChawHelper extends AppHelper {
 		return join("\n", $result);
 	}
 /**
- * undocumented function
+ * returns commit id, git format: xxxx...xxxx
+ * if array $project, returns a link
  *
  * @param string $revision
- * @param string $project
+ * @param string $project [optional]
  * @return string
  */
 	function commit($revision = null, $project = array()) {
@@ -86,6 +104,10 @@ class ChawHelper extends AppHelper {
 
 		if (strlen($revision) > 10) {
 			$title = substr($revision, 0, 4) .'...' . substr($revision, -4, 4);
+		}
+
+		if (empty($project)) {
+			return $title;
 		}
 
 		$url = array(
@@ -102,7 +124,7 @@ class ChawHelper extends AppHelper {
 		));
 	}
 /**
- * undocumented function
+ * toggles activate/deactivate, on/off wrapped in links
  *
  * @param string $value
  * @param string $options
@@ -125,10 +147,10 @@ class ChawHelper extends AppHelper {
 	}
 
 /**
- * undocumented function
+ * Grab url params from $data
  *
- * @param string $data
- * @return array
+ * @param array $data
+ * @return array keys: project, fork
  */
 	function params($data = array()) {
 		if (!empty($data['Project'])) {
@@ -148,11 +170,11 @@ class ChawHelper extends AppHelper {
 		return compact('project', 'fork');
 	}
 /**
- * undocumented function
+ * merges self::params() with $url
  *
- * @param string $data
- * @param string $url
- * @return array
+ * @param array $data
+ * @param array $url
+ * @return array merged $url
  */
 	function url($data = array(), $url = array()) {
 		if (!empty($data)) {
@@ -161,10 +183,10 @@ class ChawHelper extends AppHelper {
 		return $url;
 	}
 /**
- * undocumented function
+ * Display breadcrumbs for using data from Wiki
  *
- * @param string $path
- * @param string $slug
+ * @param string $path the wiki path
+ * @param string $slug the wiki page name
  * @return string
  */
 	function breadcrumbs($path, $slug = null) {
@@ -186,8 +208,6 @@ class ChawHelper extends AppHelper {
 		}
 
 		if ($slug) {
-
-
 			$out[] = $slug;
 			$parts[] = $slug;
 			$parts['action'] = 'index';
@@ -197,10 +217,10 @@ class ChawHelper extends AppHelper {
 		return join(' > ', $out) . $rss;
 	}
 /**
- * undocumented function
+ * Displays feed-icon.png and links to $url
  *
  * @param string $title
- * @param string $url
+ * @param array $url
  * @return string
  */
 	function rss($title, $url) {
@@ -208,16 +228,15 @@ class ChawHelper extends AppHelper {
 			$this->Html->image('feed-icon.png', array(
 				'width' => 14, 'height' => 14
 			)),
-			$url, array(
-			'title' => $title, 'class' => 'rss', 'escape'=> false
-		));
+			$url, array('title' => $title, 'class' => 'rss', 'escape'=> false)
+		);
 	}
 
 /**
- * undocumented function
+ * Displays list of changes
  *
- * @param string $title
- * @param string $url
+ * @param string $changes key:value pair separated by newline
+ * @param string $format [optional] html, txt [default] html
  * @return string
  */
 	function changes($changes, $format = 'html') {
