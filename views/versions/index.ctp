@@ -1,12 +1,5 @@
 <?php
-$script = '
-$(document).ready(function(){
-	$(".summary").each(function () {
-		$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
-	});
-});
-';
-$javascript->codeBlock($script, array('inline' => false));
+$this->set('showdown', true);
 ?>
 <?php if (!empty($this->params['isAdmin'])): ?>
 <div class="page-navigation">
@@ -35,7 +28,7 @@ $javascript->codeBlock($script, array('inline' => false));
 
 			</p>
 
-			<p class="summary">
+			<p class="summary wiki-text">
 				<?php echo $version['Version']['description'];?>
 			</p>
 

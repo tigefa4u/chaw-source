@@ -1,3 +1,6 @@
+<?php
+$this->set('showdown', true);
+?>
 <div class="version view">
 	<h3>
 		<?php echo $version['Version']['title'];?>
@@ -15,7 +18,7 @@
 
 	</p>
 
-	<p class="summary">
+	<p class="summary wiki-text">
 		<?php echo $version['Version']['description'];?>
 	</p>
 

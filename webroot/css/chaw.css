@@ -101,7 +101,7 @@ fieldset.ticket-search {
 	margin-top: 0;
 	margin-bottom: 20px;
 	padding: 10px 10px 0px 20px;
-	oveflow: auto;
+	overflow: hidden;
 }
 
 fieldset.ticket-search legend {
@@ -1038,6 +1038,10 @@ div.comments {
 	border-bottom: 1px solid #ccc;
 }
 
+.versions #VersionDescription {
+	font-size: 90%;
+	height: 200px;
+}
 .versions div.help {
 	float: left;
 	clear: none;

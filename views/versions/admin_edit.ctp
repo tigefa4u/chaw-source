@@ -1,4 +1,5 @@
 <?php
+$this->set('showdown', true);
 $script = '
 $(document).ready(function(){
 	$("#Preview").html(converter.makeHtml($("#VersionDescription").val()));
@@ -17,13 +18,13 @@ $javascript->codeBlock($script, array('inline' => false));
 		echo $form->input('id');
 
 		if (!empty($projects)) :
-			echo $form->input('project_id',array('label'=>array('labeltext' => __('Project',true))));
+			echo $form->input('project_id', array('label'=> __('Project',true)));
 		endif;
 
-		echo $form->input('title',array('label'=> __('Title', true)));
-		echo $form->input('description',array('label'=> __('Description', true)));
-		echo $form->input('due_date',array('label'=> __('Due Date',true)));
-		echo $form->input('completed',array('label'=> __('Completed',true)) );
+		echo $form->input('title', array('label'=> __('Title', true)));
+		echo $form->input('description', array('label'=> __('Description', true)));
+		echo $form->input('due_date', array('label'=> __('Due Date',true)));
+		echo $form->input('completed', array('label'=> __('Completed',true)) );
 	?>
 
 	<div id="Preview"></div>
