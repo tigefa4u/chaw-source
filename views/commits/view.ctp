@@ -1,7 +1,13 @@
 <?php
 $this->set('showdown', true);
 $html->css('highlight/idea', null, null, false);
-$javascript->link('ghighlight.min', false);
+$javascript->link('jquery.highlight_diff.min', false);
+$script = '
+$(document).ready(function(){
+	$(".diff").highlight_diff();
+});
+';
+$javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="page-navigation">
 	<?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?>
@@ -38,7 +44,12 @@ $javascript->link('ghighlight.min', false);
 		</ul>
 	</p>
 	<?php endif?>
+	<div class="diff">
+		<?php echo $commit['Commit']['diff']?>
+	</div>
 	<?php
-		echo (!empty($commit['Commit']['diff'])) ? $html->tag('pre', $html->tag('code', h($commit['Commit']['diff']), array('class' => 'diff'))) : null;
+		//pr($commit['Commit']['diff']);
+		//echo $diff->render($commit['Commit']['diff']);
+		//echo (!empty($commit['Commit']['diff'])) ? $html->tag('pre', $html->tag('code', h($commit['Commit']['diff']), array('class' => 'diff'))) : null;
 	?>
 </div>

@@ -1281,3 +1281,59 @@ div.users-search .submit {
 	float: right;
 	margin: 4px;
 }
+
+/* Diff handling */
+.diff .file {
+	margin: 10px 0;
+	padding: 10px 0 0 0;
+	overflow: auto;
+}
+.diff .file .name {
+	color: #000;
+	margin: 0;
+}
+.diff .file .line {
+	clear: both;
+	overflow: visible;
+	white-space: nowrap;
+	width: 100%;
+}
+.line:after {
+  content : '';
+  display: block;
+  clear:both;
+  height:0;
+  padding:0;
+  margin:0;
+}
+.diff .file .number {
+	float: left;
+	padding: 0 2px;
+	width: 20px;
+	color: #A9A9A9;
+	background-color: #ECECEC;
+	border-right: 1px solid #DDDDDD;
+	text-align: right;
+	line-height: 20px;
+}
+.diff .file .header {
+	background-color: #f7f7f7;
+	color: #bbb;
+}
+.diff .file .code {
+	float: left;
+	font-family: "Andale Mono", monospace;
+	white-space: pre;
+	line-height: 20px;
+	width: 80%;
+	overflow: visible;
+}
+.diff .file .removed {
+	background-color: #FEE;
+	color: #B00;
+}
+
+.diff .file .added {
+	background-color: #DFD;
+	color: #080;
+}
