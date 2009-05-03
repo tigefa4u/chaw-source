@@ -47,7 +47,7 @@
 				<td nowrap><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td nowrap class="date"><?php echo (!empty($item['info']['date'])) ? date("F d Y", strtotime($item['info']['date'])) : null;?></td>
-				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
+				<td><?php echo $chaw->commit($item['info']['revision'], true);?></td>
 			</tr>
 	<?php
 		endforeach;
@@ -65,7 +65,7 @@
 				<td nowrap><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td nowrap class="date"><?php echo (!empty($item['info']['date'])) ? date("F d Y", strtotime($item['info']['date'])) : null;?></td>
-				<td><?php echo $chaw->commit($item['info']['revision']);?></td>
+				<td><?php echo $chaw->commit($item['info']['revision'], true);?></td>
 			</tr>
 	<?php
 		endforeach;

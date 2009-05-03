@@ -115,7 +115,7 @@ class ChawHelper extends AppHelper {
 			'controller' => 'commits', 'action'=> 'view', $revision
 		);
 
-		if (!empty($project)) {
+		if (!empty($project) && $project !== true) {
 			$url = array_merge($url, $this->params($project));
 		}
 
