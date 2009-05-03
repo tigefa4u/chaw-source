@@ -56,7 +56,7 @@ jQuery.fn.highlight_diff = function () {
 		}
 	}
 
-	function _git(line) {
+	function _git(line) {		
 		if (!filename) {
 			if (match = line.match(/^--- (a\/)?(.*)$/)) {
 				filename = match[2];
@@ -74,7 +74,6 @@ jQuery.fn.highlight_diff = function () {
 	function _svn(line) {
 		if (!filename) {
 			if (match = line.match(/^\+\+\+ (.*)\t(.*)$/)) {
-				console.log(match);
 				filename = match[1];
 			}
 		}
@@ -82,13 +81,13 @@ jQuery.fn.highlight_diff = function () {
 	}
 
 	function _diff(line) {
-		if (match = line.match(/@@ \-([0-9]+),(\d+) \+(\d+),(\d+) @@/)) {
+		if (match = line.match(/@@ \-([0-9]+),?\d* \+(\d+),?\d* @@/)) {
 			first = parseInt(match[1]) - 1;
-			second = parseInt(match[3]) - 1;
+			second = parseInt(match[2]) - 1;
 			return ['header', '...', '...', match[0]];
 		}
 		if (first !== null && second !== null) {
-			var source = jQuery('<div/>').text(line).html();
+			var source = jQuery('<div/>').text(line).html();			
 			if (line.match(/^-(.*)$/)) {
 				return ['removed', ++first, "&nbsp;", source];
 			} else if (line.match(/^\+(.*)$/)) {

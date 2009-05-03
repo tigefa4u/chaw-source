@@ -45,7 +45,7 @@ $javascript->codeBlock($script, array('inline' => false));
 	</p>
 	<?php endif?>
 	<div class="diff">
-		<?php echo $commit['Commit']['diff']?>
+		<?php echo h($commit['Commit']['diff']);?>
 	</div>
 	<?php
 		//pr($commit['Commit']['diff']);
