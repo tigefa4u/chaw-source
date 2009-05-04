@@ -46,7 +46,8 @@ jQuery.fn.highlight_diff = function () {
 		}, 0);
 	} else {
 		jQuery(this).each(function(i) {
-			jQuery(this).html("<pre><code>" + diffs[i] + "</code></pre>");
+			var plain = "<pre><code>" + jQuery("<div/>").text(diffs[i]).html() + "</code></pre>";
+			jQuery(this).html(plain);
 		});
 	}
 	
@@ -54,7 +55,8 @@ jQuery.fn.highlight_diff = function () {
 		jQuery('body').append('<div id="curtain">Speedy Gonzales..</div>');
 		setTimeout(function() {
 			jQuery(".diff").each(function(i) {
-				jQuery(this).html("<pre><code>" + diffs[i] + "</code></pre>");
+				var plain = "<pre><code>" + jQuery("<div/>").text(diffs[i]).html() + "</code></pre>";
+				jQuery(this).html(plain);
 			});
 			jQuery('#curtain').fadeOut(3, function() {
 				jQuery(this).remove();
