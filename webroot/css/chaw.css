@@ -1284,8 +1284,8 @@ div.users-search .submit {
 
 /* Diff handling */
 .diff .file {
-	margin: 10px 0;
-	padding: 10px 0 0 0;
+	margin: 0px 0 20px 0;
+	padding: 4px 0 0 0;
 	overflow: auto;
 }
 .diff .file .name {
@@ -1309,12 +1309,13 @@ div.users-search .submit {
 .diff .file .number {
 	float: left;
 	padding: 0 2px;
-	min-width: 20px;
+	min-width: 40px;
 	color: #A9A9A9;
 	background-color: #ECECEC;
 	border-right: 1px solid #DDDDDD;
 	text-align: right;
-	line-height: 20px;
+	font-size: 80%;
+	line-height: 150%;
 }
 .diff .file .header {
 	background-color: #f7f7f7;
@@ -1324,9 +1325,10 @@ div.users-search .submit {
 	float: left;
 	font-family: "Andale Mono", monospace;
 	white-space: pre;
-	line-height: 20px;
 	width: 80%;
 	overflow: visible;
+	font-size: 80%;
+	line-height: 150%;
 }
 .diff .file .removed {
 	background-color: #FEE;

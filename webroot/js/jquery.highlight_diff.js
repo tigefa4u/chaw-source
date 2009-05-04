@@ -12,12 +12,68 @@
  *
  */
 jQuery.fn.highlight_diff = function () {
-
+	
+	var diffs = [];
 	var args = arguments;
 	var filename = null;
 	var first = null;
 	var second = null;
 	var end = null;
+	
+	if (args.length > 0) {
+		jQuery(this).each(function(i) {
+			var output = _parse(args[i]);
+			jQuery(this).html(output.join("\n"));				
+		});
+	}
+	
+	jQuery(this).each(function(i) {
+		diffs[i] = jQuery.trim(jQuery(this).text());
+		jQuery(this).before("<span class=\"plain\"><a href=\"#plain\">plain</a></span>"
+			+ " | <span class=\"highlight\"><a href=\"#highlight\">highlight</a></span>");
+	});
+	
+	if (location.hash == '#highlight') {
+		jQuery('body').append('<div id="curtain">Can make pretty teh code?</div>');
+		setTimeout(function() {
+			jQuery(".diff").each(function(i) {
+				var output = _parse(diffs[i]);
+				jQuery(this).html(output.join("\n"));
+			});
+			jQuery('#curtain').fadeOut(3, function() {
+				jQuery(this).remove();
+			});
+		}, 0);
+	} else {
+		jQuery(this).each(function(i) {
+			jQuery(this).html("<pre><code>" + diffs[i] + "</code></pre>");
+		});
+	}
+	
+	jQuery("span.plain > a").bind("click", function() {		
+		jQuery('body').append('<div id="curtain">Speedy Gonzales..</div>');
+		setTimeout(function() {
+			jQuery(".diff").each(function(i) {
+				jQuery(this).html("<pre><code>" + diffs[i] + "</code></pre>");
+			});
+			jQuery('#curtain').fadeOut(3, function() {
+				jQuery(this).remove();
+			});
+		}, 0);
+	});
+	
+	jQuery("span.highlight > a").bind("click", function() {
+		jQuery('body').append('<div id="curtain">Time for a break? This could take a while...</div>');
+		setTimeout(function() {
+			jQuery(".diff").each(function(i) {
+				var output = _parse(diffs[i]);
+				jQuery(this).html(output.join("\n"));
+			});
+			jQuery('#curtain').fadeOut(3, function() {
+				jQuery(this).remove();
+			});
+		}, 0);
+	});
 
 	function _parse(raw) {
 		filename = first = second = end = null;
@@ -110,16 +166,4 @@ jQuery.fn.highlight_diff = function () {
 		var pattern = /\{\d+\}/g;
 		return string.replace(pattern, function(capture){ return row[capture.match(/\d+/)]; });
 	}
-
-	return jQuery(this).each(function() {
-		var content = null;
-		var i = 0;
-		if (args.length > 0) {
-			content = args[i++];
-		} else {
-			content = jQuery.trim(jQuery(this).text());
-		}
-		var output = _parse(content);
-		jQuery(this).html(output.join("\n"));
-	});
 }
