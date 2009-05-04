@@ -1308,14 +1308,14 @@ div.users-search .submit {
 }
 .diff .file .number {
 	float: left;
-	padding: 0 2px;
+	padding: 1px 2px;
 	min-width: 40px;
 	color: #A9A9A9;
 	background-color: #ECECEC;
 	border-right: 1px solid #DDDDDD;
 	text-align: right;
-	font-size: 80%;
-	line-height: 150%;
+	font-size: 11px;
+	line-height: 20px;
 }
 .diff .file .header {
 	background-color: #f7f7f7;
@@ -1327,8 +1327,8 @@ div.users-search .submit {
 	white-space: pre;
 	width: 80%;
 	overflow: visible;
-	font-size: 80%;
-	line-height: 150%;
+	font-size: 12px;
+	line-height: 20px;
 }
 .diff .file .removed {
 	background-color: #FEE;
