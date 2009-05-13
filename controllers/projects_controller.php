@@ -128,7 +128,8 @@ class ProjectsController extends AppController {
 		}
 
 		if (empty($this->data)) {
-			$this->data = array_merge((array)$this->data, array('Project' => $this->Project->current));
+			$this->data = array('Project' => $this->Project->current);
+			$this->data['config']['ticket'] = $this->Project->current['config']['ticket'];
 			if (!empty($this->data['Project']['id'])) {
 				unset($this->data['Project']['id'], $this->data['Project']['name'], $this->data['Project']['description']);
 			}
