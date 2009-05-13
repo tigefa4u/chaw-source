@@ -20,7 +20,8 @@
 
 		if (!empty($this->passedArgs[0]) && $this->passedArgs[0] == 'public'){
 			echo $form->input('ohloh_project', array(
-				'label' => '<a href="https://www.ohloh.net">https://www.ohloh.net/p/</a>',
+				'label' => '<a href="https://www.ohloh.net">https://www.ohloh.net/</a>p/',
+				'div' => 'inline'
 			));
 		}
 	?>
