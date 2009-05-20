@@ -1251,6 +1251,28 @@ div.paging {
 	font-size: 1em;
 	padding: 0 2px;
 	margin: 0 0 5px 0;
+	color: #fff;
+}
+
+div.paging span.current {
+	background: #ccc;
+	padding: 3px 6px;
+}
+div.paging a {
+	color: #333;
+	font-size: 16px;
+}
+div.paging span a {
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 2px 6px;
+	text-decoration: none;
+	font-size: 14px;
+}
+div.paging span a:hover {
+	background: #ccc;
+	border: 1px solid #000;
+	background: #ccc;
 }
 
 div.queues {

@@ -138,10 +138,11 @@
 			</div>
 
 		</div>
-
+		<?php
+			echo $this->element('current_user');
+		?>
 		<div id="content">
 			<?php
-				echo $this->element('current_user');
 				$session->flash();
 			?>
 			<?php
