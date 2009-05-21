@@ -24,14 +24,14 @@ class RepoController extends AppController {
 			$this->Session->setFlash(__('You cannot fork an svn project yet',true));
 			$this->redirect($this->referer());
 		}
-		$this->Project->Repo->logResponse = true;
+		//$this->Project->Repo->logResponse = true;
 		if ($this->Project->Repo->merge($this->Project->current['url'])) {
 			$this->Session->setFlash(__('Fast Forward successfull!',true));
 		} else {
 			$this->Session->setFlash(__('Fast Forward failed. Time to merge manually?',true));
 		}
-		$this->log($this->Project->Repo->debug, LOG_DEBUG);
-		$this->log($this->Project->Repo->response, LOG_DEBUG);
+		//$this->log($this->Project->Repo->debug, LOG_DEBUG);
+		//$this->log($this->Project->Repo->response, LOG_DEBUG);
 		$this->redirect($this->referer());
 	}
 
@@ -44,7 +44,7 @@ class RepoController extends AppController {
 			$this->Session->setFlash(__('Invalid Fork',true));
 			$this->redirect($this->referer());
 		}
-		$this->Project->Repo->logResponse = true;
+		//$this->Project->Repo->logResponse = true;
 		if ($this->Project->Repo->merge($this->Project->current['url'], $fork)) {
 			$data = $this->Project->Repo->read(null, false);
 			$this->Commit->create(array(
@@ -56,8 +56,8 @@ class RepoController extends AppController {
 		} else {
 			$this->Session->setFlash(__('Merge failed. Time to merge manually?',true));
 		}
-		$this->log($this->Project->Repo->debug, LOG_DEBUG);
-		$this->log($this->Project->Repo->response, LOG_DEBUG);
+		//$this->log($this->Project->Repo->debug, LOG_DEBUG);
+		//$this->log($this->Project->Repo->response, LOG_DEBUG);
 		$this->redirect($this->referer());
 	}
 
