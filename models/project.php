@@ -280,6 +280,7 @@ class Project extends AppModel {
 			$this->messages = array('response' => $this->Repo->response, 'debug' => $this->Repo->debug);
 
 			$Wiki = ClassRegistry::init('Wiki');
+			$Wiki->recursive = -1;
 			if (!$Wiki->field('slug', array('slug' => 'home', 'project_id' => $this->id))) {
 				$Wiki->addToTimeline = $this->addToTimeline;
 				$Wiki->create(array(

@@ -31,7 +31,7 @@ class PostReceiveShell extends Shell {
 		$oldrev = @$this->args[2];
 		$newrev = @$this->args[3];
 
-		$this->args[] = 'post-receive';
+		//$this->args[] = 'post-receive';
  		//$this->log($this->args, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
@@ -47,12 +47,8 @@ class PostReceiveShell extends Shell {
 			$refname = 'refs/heads/master';
 		}
 
-		if ($oldrev == str_pad("0", 40, "0")) {
-			$commits = $this->Project->Repo->find('all', array(
-				'conditions' => array($newrev),
-				'limit' => 1
-			));
-		} elseif ($newrev == str_pad("0", 40, "0")) {
+		if ($newrev == str_pad("0", 40, "0")) {
+			$this->Commit->addToTimeline = false;
 			$this->Commit->create(array(
 				'project_id' =>  $this->Project->id,
 				'branch' => $refname,
@@ -61,21 +57,34 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Commit->save();
-		} else {
-			$commits = $this->Project->Repo->find('all', array(
-				'conditions' => array($oldrev . '..' . $newrev),
-				'order' => 'asc'
-			));
+			return;
 		}
 
+		$conditions = array($oldrev . '..' . $newrev);
+		if ($oldrev == str_pad("0", 40, "0")) {
+			$conditions = array($newrev);
+		}
+
+		$commits = $this->Project->Repo->find('all', array(
+			'conditions' => $conditions,
+			'order' => 'asc'
+		));
+
 		if (!empty($commits)) {
-			
-			foreach ($commits as $data) {
+
+			$push = null;
+			foreach ($commits as $i => $data) {
+				$this->Commit->addToTimeline = false;
 				$this->Commit->create(array(
 					'project_id' =>  $this->Project->id,
 					'branch' => $refname,
-					'chawuser' => $user
+					'chawuser' => $user,
+					'push_id' => $push
 				));
+
+				if ($i == 0) {
+					$push = $this->Commit->id
+				}
 
 				$this->Commit->save($data['Repo']);
 			}

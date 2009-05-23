@@ -175,6 +175,9 @@ class Repo extends Overloadable {
 		if (is_null($dir)) {
 			$dir = $this->working;
 		}
+		if ($dir{0} != '/') {
+			$dir = $this->working . DS . $dir;
+		}
 		$this->_before[0] = "cd {$dir}";
 	}
 /**

@@ -81,7 +81,6 @@ class Git extends Repo {
 			$this->commit("Initial Project Commit");
 			$this->push();
 		}
-		$this->log($this->debug, LOG_DEBUG);
 
 		if (is_dir($path) && is_dir($this->working)) {
 			return true;
@@ -324,10 +323,13 @@ class Git extends Repo {
 		}
 
 		$options = array_merge(array(
+			'branch' => 'master',
 			'conditions' => array(), 'fields' => null,
 			'commit' => null, 'path' => '.',
 			'order' => 'desc', 'limit' => 100,  'page' => 1
 		), $options);
+
+		$this->branch($options['branch'], true);
 
 		list($options['fields'], $format) = $this->__fields($options['fields']);
 
