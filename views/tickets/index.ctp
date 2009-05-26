@@ -154,7 +154,7 @@ foreach ($tickets as $ticket):
 </table>
 </div>
 
-<div class="paging">
+<div class="paging white">
 	<?php echo $paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled'));?>
 	| <?php echo $paginator->numbers(array('after' => ' |'));?>
 	<?php echo $paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>

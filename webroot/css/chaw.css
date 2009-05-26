@@ -1251,6 +1251,8 @@ div.paging {
 	font-size: 1em;
 	padding: 0 2px;
 	margin: 0 0 5px 0;
+}
+div.white {
 	color: #fff;
 }
 
