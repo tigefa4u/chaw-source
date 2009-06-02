@@ -16,13 +16,18 @@ class ChawHelperTest extends CakeTestCase {
 		parent::start();
 		$this->Chaw = new TestChaw();
 		$this->Chaw->Html = new HtmlHelper();
+		$this->Chaw->params = array(
+			'url' => array('url' => '/', 'ext' => 'html')
+		);
+		
+		$this->Chaw->webroot = '/';
 	}
 
 	function testChawInstance() {
 		$this->assertTrue(is_a($this->Chaw, 'ChawHelper'));
 	}
 
-	function testUrl() {
+	function testParams() {
 		$result = $this->Chaw->params(array('id' => 1, 'url' => 'chaw', 'fork' => null));
 		$expected = array('project' => null, 'fork' => null);
 		$this->assertEqual($result, $expected);
@@ -32,7 +37,38 @@ class ChawHelperTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 
 	}
+	
+	function testBase() {
+		$result = $this->Chaw->base(array('project' => null, 'fork' => null));
+		$expected = '/';
+		$this->assertEqual($result, $expected);
+		
+		$result = $this->Chaw->base(array('id' => 1, 'project' => 'chaw', 'fork' => null));
+		$expected = '/';
+		$this->assertEqual($result, $expected);
 
+		$result = $this->Chaw->base(array('id' => 2, 'url' => 'some_project', 'fork' => null));
+		$expected = '/some_project';
+		$this->assertEqual($result, $expected);		
+		
+		$result = $this->Chaw->base(array('id' => 2, 'url' => 'some_project', 'fork' => 'gwoo'));
+		$expected = '/forks/gwoo/some_project';
+		$this->assertEqual($result, $expected);
+		
+
+	}
+	
+	function testUrl() {
+		$result = $this->Chaw->url(array('id' => 1, 'url' => 'chaw', 'fork' => null));
+		$expected = array('project' => null, 'fork' => null);
+		$this->assertEqual($result, $expected);
+
+		$result = $this->Chaw->url(array('id' => 2, 'url' => 'some_project', 'fork' => null));
+		$expected = array('project' => 'some_project', 'fork' => null);
+		$this->assertEqual($result, $expected);
+
+	}
+	
 	function testCommit() {
 		$result = $this->Chaw->commit('1111111111111111111111', array('id' => 1, 'url' => 'chaw', 'fork' => null));
 		$expected = '<a href="/commits/view/1111111111111111111111" class="commit" title="1111111111111111111111">1111...1111</a>';

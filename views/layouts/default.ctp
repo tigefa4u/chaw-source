@@ -44,17 +44,12 @@
 
 		if (!empty($javascript)) {
 			echo $javascript->link('jquery-1.3.1.min');
-			echo $javascript->link('gshowdown.min');
 
 			if (isset($showdown)):
-				$base = $this->webroot;
-				if (!empty($this->params['fork'])) {
-					$base .= 'forks/' . $this->params['fork'] . '/';
-				}
-				$base .= $this->params['project'] . '/';
-
+				echo $javascript->link('gshowdown.min');
+	
 				echo $javascript->codeBlock('
-					var converter = new Showdown.converter("' . str_replace('//', '/', $base) . '");
+					var converter = new Showdown.converter("' . $chaw->base() . '"));
 					$(document).ready(function(){
 						$(".wiki-text").each(function () {
 							$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
@@ -72,6 +67,13 @@
 		<div id="header">
 
 			<h1>
+				<?php
+					$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
+					echo $html->link(__('Projects',true), array(
+						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
+						'controller' => 'projects', 'action' => 'index'), $options);
+				?>
+				/
 				<?php echo $html->link($CurrentProject->name, array(
 						'admin' => false,
 						'controller' => 'source', 'action' => 'index'
@@ -129,12 +131,12 @@
 
 				</ul>
 
-				<div id="projects-link"><?php
+<!-- 				<div id="projects-link"><?php
 					$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
 					echo $html->link(__('Projects',true), array(
 						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
 						'controller' => 'projects', 'action' => 'index'), $options);
-				?></div>
+				?></div> -->
 			</div>
 
 		</div>

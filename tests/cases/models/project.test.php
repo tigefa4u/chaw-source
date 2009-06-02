@@ -6,7 +6,8 @@ class ProjectTestCase extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
+		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch',
+		'app.branch_commit'
 	);
 
 	function startTest() {
@@ -612,6 +613,69 @@ class ProjectTestCase extends CakeTestCase {
 		$this->assertEqual($result, array(
 			'user' => 'user', 'docs' => 'docs', 'team' => 'team', 'admin' => 'admin'
 		));
+	}
+
+	function testProjectInitializeWithId() {
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
+					'priorities' => 'low, normal, high',
+				)
+			),
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($path . 'permissions.ini'));
+		$this->assertFalse(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+
+		$data = array('Project' =>array(
+			'id' => 2,
+			'name' => 'new project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
+					'priorities' => 'low, normal, high',
+				)
+			),
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($this->Project->save($data));
+
+		$path = Configure::read('Content.base');
+		$this->assertTrue(file_exists($path . 'permissions.ini'));
+		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
+		
+		
+		$this->assertEqual(2, $this->Project->id);
+		
+		$this->assertTrue($this->Project->initialize(array('project' => 'new_project')));
+		
+		$this->assertEqual(1, $this->Project->current['id']);
 	}
 
 	function igetTests() {

@@ -183,6 +183,31 @@ class ChawHelper extends AppHelper {
 		return $url;
 	}
 /**
+ * returns base for the current project
+ *
+ * @param array $params
+ * @return array merged $url
+ */
+	function base($params = array()) {
+		$params = array_merge(
+			array('project' => null, 'fork' => null), $this->params, $params
+		);
+		if (!empty($params['url']) && is_string($params['url'])) {
+			$params['project'] = $params['url'];
+		}
+		
+		if (!empty($params['id']) && $params['id'] == 1) {
+			$params['project'] = null;
+		}
+		
+		$fork = '/';
+		if (!empty($params['fork'])) {
+			$fork = 'forks/' . $params['fork'] . '/';
+		}
+		$base = $this->webroot($fork . $params['project']);
+		return $base;
+	}
+/**
  * Display breadcrumbs for using data from Wiki
  *
  * @param string $path the wiki path
