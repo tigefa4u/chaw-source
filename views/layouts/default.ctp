@@ -47,9 +47,8 @@
 
 			if (isset($showdown)):
 				echo $javascript->link('gshowdown.min');
-	
 				echo $javascript->codeBlock('
-					var converter = new Showdown.converter("' . $chaw->base() . '"));
+					var converter = new Showdown.converter("' . $chaw->base() . '");
 					$(document).ready(function(){
 						$(".wiki-text").each(function () {
 							$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
@@ -68,16 +67,19 @@
 
 			<h1>
 				<?php
-					$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
 					echo $html->link(__('Projects',true), array(
 						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
-						'controller' => 'projects', 'action' => 'index'), $options);
+						'controller' => 'projects', 'action' => 'index'
+					), array('class' => 'project-link'));
 				?>
 				/
-				<?php echo $html->link($CurrentProject->name, array(
-						'admin' => false,
-						'controller' => 'source', 'action' => 'index'
-					));
+				<?php
+				 	if ($this->name != 'Projects') {
+						echo $html->link($CurrentProject->name, array(
+							'admin' => false,
+							'controller' => 'source', 'action' => 'index'
+						));
+					}
 				?>
 			</h1>
 

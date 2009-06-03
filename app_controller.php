@@ -36,7 +36,7 @@ class AppController extends Controller {
 
 		if (!empty($this->params['admin'])) {
 			$this->Auth->authorize = 'controller';
-		}
+		}		
 	}
 
 	/**
@@ -111,28 +111,6 @@ class AppController extends Controller {
 	 */
 	function referer($default = null, $local = true) {
 		return parent::referer($default, $local);
-	}
-
-	/**
-	 * Converts the $_GET parameters specified in $params to an array suitable for use in named
-	 * parameters.  If a key is an array of values, those values will be compacted into a comma-
-	 * separated string.
-	 *
-	 * @param array $params The keys of GET parameters (from $this->params['url']) to convert.
-	 * @param array $get Optional.  If specified, replaces $this->params['url'] as the source for
-	 *              GET data.
-	 * @return array A 1-depth of all the keys in $params which are present in $this->params['url'].
-	 */
-	function _toNamedParams($params, $get = null) {
-		$named = array();
-		$get = is_null($get) ? $this->params['url'] : $get;
-
-		foreach ($params as $key) {
-			if (isset($get[$key])) {
-				$named[$key] = join(',', (array)$get[$key]);
-			}
-		}
-		return $named;
 	}
 }
 

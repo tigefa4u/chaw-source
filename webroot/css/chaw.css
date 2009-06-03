@@ -244,6 +244,12 @@ td.number a:hover {
 	background: #3b3b3b;
 	text-decoration: underline;
 }
+#header h1 a.project-link {
+	color: #f4f4f4;
+	text-decoration: none;
+	font-family: Helvetica;
+	font-weight: normal;
+}
 
 #navigation {
 	border-top: 2px solid #666;
