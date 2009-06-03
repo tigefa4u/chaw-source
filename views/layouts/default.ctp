@@ -29,7 +29,12 @@
 <head>
 	<?php echo $html->charset();?>
 	<title>
-		<?php echo $CurrentProject->name .'/' . $title_for_layout;?>
+		<?php
+			if ($CurrentProject->id != 1) {
+				$title_for_layout = $CurrentProject->name . ' / ' . $title_for_layout;
+			}
+			echo env('HTTP_HOST') . ' / ' .  $title_for_layout;
+		?>
 	</title>
 	<?php
 		echo $html->meta('icon');
@@ -67,15 +72,14 @@
 
 			<h1>
 				<?php
+					$options = ($this->name == 'Projects') ? array('class' => 'project-link on') : array('class' => 'project-link');
 					echo $html->link(__('Projects',true), array(
 						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
 						'controller' => 'projects', 'action' => 'index'
-					), array('class' => 'project-link'));
-				?>
-				/
-				<?php
+					), $options);
+
 				 	if ($this->name != 'Projects') {
-						echo $html->link($CurrentProject->name, array(
+						echo ' / ' . $html->link($CurrentProject->name, array(
 							'admin' => false,
 							'controller' => 'source', 'action' => 'index'
 						));
@@ -83,68 +87,62 @@
 				?>
 			</h1>
 
-			<div id="navigation">
-				<ul>
-					<li><?php
-						$options = ($this->name == 'Source') ? array('class' => 'on') : null;
-						echo $html->link(__('Source',true), array(
-							'admin' => false, 'plugin' => null,
-							'controller' => 'source', 'action' => 'index'), $options);
-					?></li>
+			<?php echo $this->element('current_user');?>
 
-					<li><?php
-						$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
-						echo $html->link(__('Timeline',true), array(
-							'admin' => false, 'plugin' => null,
-							'controller' => 'timeline', 'action' => 'index'), $options);
-					?></li>
-
-					<li><?php
-						$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
-						echo $html->link(__('Wiki',true), array(
-							'admin' => false, 'plugin' => null,
-							'controller' => 'wiki', 'action' => 'index'), $options);
-					?></li>
-
-					<li><?php
-						$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
-						echo $html->link(__('Tickets',true), array(
-							'admin' => false, 'plugin' => null,
-							'controller' => 'tickets', 'action' => 'index'), $options);
-					?></li>
-
-					<li><?php
-						$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
-						echo $html->link(__('Versions',true), array(
-							'admin' => false, 'plugin' => null,
-							'controller' => 'versions', 'action' => 'index'), $options);
-					?></li>
-
-					<?php if (!empty($this->params['isAdmin'])):?>
-
+				<div id="navigation">
+					<?php if ($this->name !== 'Projects'):?>
+					
+					<ul>
 						<li><?php
-							$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
-							echo $html->link(__('Admin',true), array(
-								'admin' => true, 'plugin' => null,
-								'controller' => 'dashboard', 'action' => 'index'), $options);
+							$options = ($this->name == 'Source') ? array('class' => 'on') : null;
+							echo $html->link(__('Source',true), array(
+								'admin' => false, 'plugin' => null,
+								'controller' => 'source', 'action' => 'index'), $options);
 						?></li>
 
-					<?php endif;?>
+						<li><?php
+							$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
+							echo $html->link(__('Timeline',true), array(
+								'admin' => false, 'plugin' => null,
+								'controller' => 'timeline', 'action' => 'index'), $options);
+						?></li>
 
-				</ul>
+						<li><?php
+							$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
+							echo $html->link(__('Wiki',true), array(
+								'admin' => false, 'plugin' => null,
+								'controller' => 'wiki', 'action' => 'index'), $options);
+						?></li>
 
-<!-- 				<div id="projects-link"><?php
-					$options = ($this->name == 'Projects') ? array('class' => 'on') : null;
-					echo $html->link(__('Projects',true), array(
-						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
-						'controller' => 'projects', 'action' => 'index'), $options);
-				?></div> -->
-			</div>
+						<li><?php
+							$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
+							echo $html->link(__('Tickets',true), array(
+								'admin' => false, 'plugin' => null,
+								'controller' => 'tickets', 'action' => 'index'), $options);
+						?></li>
 
+						<li><?php
+							$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
+							echo $html->link(__('Versions',true), array(
+								'admin' => false, 'plugin' => null,
+								'controller' => 'versions', 'action' => 'index'), $options);
+						?></li>
+
+						<?php if (!empty($this->params['isAdmin'])):?>
+
+							<li><?php
+								$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
+								echo $html->link(__('Admin',true), array(
+									'admin' => true, 'plugin' => null,
+									'controller' => 'dashboard', 'action' => 'index'), $options);
+							?></li>
+
+						<?php endif;?>
+
+					</ul>
+				<?php endif;?>
+				</div>
 		</div>
-		<?php
-			echo $this->element('current_user');
-		?>
 		<div id="content">
 			<?php
 				$session->flash();

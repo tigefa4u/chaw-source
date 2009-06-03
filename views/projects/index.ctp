@@ -10,10 +10,6 @@
 ?>
 <?php if ($this->action != 'forks'):?>
 
-	<h2>
-		<?php __('Projects') ?>
-	</h2>
-
 	<div class="page-navigation">
 		<?php
 			if (!empty($CurrentUser->Permission)) {

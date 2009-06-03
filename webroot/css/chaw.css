@@ -224,17 +224,17 @@ td.number a:hover {
 	margin: 0;
 	border-bottom: 4px solid #f4f4f4;
 	background-color: #3b3b3b;
-	padding: 6px 20px 0 20px;
+	padding: 6px 20px 0px 20px;
 	overflow: hidden;
 }
 #header h1 {
-	color: #ffffff;
+	color: #69C;
 	font-size: 180%;
 	padding: 0px 0px;
-	margin: 8px 0 4px 0;
+	margin: 8px 0 14px 0;
 }
 #header h1 a {
-	color: #69C;
+	color: #fff;
 	background: #3b3b3b;
 	font-weight: normal;
 	text-decoration: none;
@@ -245,20 +245,25 @@ td.number a:hover {
 	text-decoration: underline;
 }
 #header h1 a.project-link {
-	color: #f4f4f4;
+	color: #69C;
 	text-decoration: none;
 	font-family: Helvetica;
 	font-weight: normal;
+}
+#header h1 a.on, #header h1 a.project-link:hover {
+	color: #fff;
+	text-decoration: none;
 }
 
 #navigation {
 	border-top: 2px solid #666;
 	background: #888;
 	padding: 8px 0 6px 0;
-	margin-top: 10px;
-	margin-left: -24px;
+	margin-top: 0px;
+	margin-left: -30px;
 	white-space: nowrap;
 	overflow: auto;
+	height: 15px;
 }
 #navigation ul {
 	float: left;
@@ -291,7 +296,7 @@ td.number a:hover {
 
 #current-user {
 	position: fixed;
-	top: 8px;
+	top: 7px;
 	right: 6px;
 	clear: both;
 	float: right;
@@ -409,7 +414,7 @@ td.number a:hover {
 	background:#FAFAFA;
 }
 .page-navigation {
-	padding-top: 10px;
+	padding-top: 24px;
 	padding-bottom: 10px;
 }
 span.active {
