@@ -319,55 +319,72 @@ class Git extends Repo {
 		}
 
 		if (is_array($type)) {
-			extract(array_merge(array('commit' => null), $type));
+			$options = $type;
+			$type = 'first';
+		}
 
-			$fieldMap = array(
-				'hash' => '%H',
-				'email' => '%ae',
-				'author' => '%an',
-				'committer' => '%cn',
-				'committer_email' => '%ce',
-				'subject' => '%s',
-			);
+		$options = array_merge(array(
+			'conditions' => array(), 'fields' => null,
+			'commit' => null, 'path' => '.',
+			'order' => 'desc', 'limit' => 100,  'page' => 1
+		), $options);
 
-			$format = '--pretty=format:';
-			if (!empty($options)) {
-				foreach((array)$options as $field) {
-					$format .= $fieldMap[$field] . '%x00';
-				}
-			} else {
-				foreach($fieldMap as $field => $code) {
-					$options[] = $field;
-					$format .= $code . '%x00';
-				}
-			}
-			$data = $this->run('log', array($commit, $format, '-1'));
+		list($options['fields'], $format) = $this->__fields($options['fields']);
+
+		if ($type == 'first') {
+			$data = $this->run('log', array($options['commit'], $format, '-1'));
 			if (!empty($data)) {
-				return array_combine($options, array_filter(explode(chr(0), $data)));
+				return array_combine($options['fields'], array_filter(explode(chr(0), $data)));
 			}
 			return $data;
+
 		}
 
-		if (!empty($options['conditions']['path'])) {
-			$options['path'] = $options['conditions']['path'];
-			unset($options['conditions']['path']);
-		}
-
-		extract(array_merge(array('conditions' => array(), 'path' => '.', 'order' => 'desc', 'limit' => 100, 'page' => 1), $options));
-
-		if (empty($path)) {
+		if (empty($options['path'])) {
 			return false;
 		}
-
-		$data = explode("\n", $this->run('log', array_merge($conditions, array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $path)))));
+		$this->cd();
+		$data = explode("\n", $this->run('log', array_merge(
+			$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
+		)));
 
 		if ($type == 'count') {
 			return count($data);
 		}
 
 		if ($type == 'all') {
-			return parent::_findAll($data, compact('limit', 'page', 'order'));
+			return parent::_findAll($data, $options);
 		}
+	}
+/**
+ * undocumented function
+ *
+ * @return string
+ *
+ **/
+	function __fields($fields = null) {
+		$fieldMap = array(
+			'hash' => '%H',
+			'commit_date' => '%ai',
+			'email' => '%ae',
+			'author' => '%an',
+			'committer' => '%cn',
+			'committer_email' => '%ce',
+			'subject' => '%s',
+			'message' => '%s',
+			'revision' => '%H'
+		);
+
+		if (empty($fields)) {
+			$fields = array_keys($fieldMap);
+		}
+
+		$format = '--pretty=format:';
+
+		foreach($fields as $field) {
+			$format .= $fieldMap[$field] . '%x00';
+		}
+		return array($fields, $format);
 	}
 /**
  * undocumented function
@@ -375,25 +392,34 @@ class Git extends Repo {
  * @return void
  *
  **/
-	function read($newrev = null, $diff = false) {
-		if ($diff) {
-			$info = $this->run('show', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s", "-1"), 'capture');
+	function read($newrev = null, $options = false) {
+		if (!is_array($options)) {
+			$options = array('diff' => $options);
+		}
+		$options = array_merge(array(
+			'diff' => false, 'fields' => null
+		), $options);
+
+		list($options['fields'], $format) = $this->__fields($options['fields']);
+
+		if (!empty($options['diff'])) {
+			$info = $this->run('show', array($newrev, $format, "-1"), 'capture');
 		} else {
-			$info = $this->run('log', array($newrev, "--pretty=format:%H%x00%an%x00%ai%x00%s", "-1"), 'capture');
+			$info = $this->run('log', array($newrev, $format, "-1"), 'capture');
 		}
 		if (empty($info)) {
 			return null;
 		}
-		list($revision, $author, $commit_date, $message) = explode(chr(0), $info[0]);
+
+		$data = array_combine($options['fields'], array_filter(explode(chr(0), $info[0])));
 		unset($info[0]);
 
 		$changes = array();
 
-		if ($diff) {
-			$diff = join("\n", $info);
+		if (!empty($options['diff'])) {
+			$data['diff'] = join("\n", $info);
 		}
 
-		$data = compact('revision', 'author', 'commit_date', 'message', 'changes', 'diff');
 		return $data;
 	}
 /**

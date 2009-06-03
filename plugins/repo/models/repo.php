@@ -265,7 +265,10 @@ class Repo extends Overloadable {
  *
  **/
 	function _findAll($data, $query = array()) {
-		$query = array_merge(array('offset' => 0, 'limit' => 100, 'order' => 'desc', 'page' => 1), $query);
+		$query = array_merge(array(
+			'fields' => null,
+			'offset' => 0, 'limit' => 100, 'order' => 'desc', 'page' => 1
+		), $query);
 
 		if ($query['page'] > 1) {
 			$query['offset'] = ($query['page'] - 1) * $query['limit'];
@@ -277,7 +280,7 @@ class Repo extends Overloadable {
 
 		foreach ($data as $key => $value) {
 			if ($key >= $offset) {
-				if ($result = $this->read($value, false)) {
+				if ($result = $this->read($value)) {
 					$results[]['Repo'] = $result;
 					$key++;
 				}

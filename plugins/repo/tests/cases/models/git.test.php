@@ -45,7 +45,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function igetTests() {
-		return array('start', 'testFork', 'end');
+		return array('start', 'testRead', 'end');
 	}
 
 	function testRead() {
@@ -66,11 +66,23 @@ class GitTest extends CakeTestCase {
 		$Git->push();
 
 		$data = $Git->read();
+
+		$this->assertEqual($data, array(
+			'hash' => $data['hash'],
+			'revision' => $data['revision'],
+			'commit_date' => date('Y-m-d H:i:s O', strtotime('now')),
+			'email' => 'gwoo@cakephp.org',
+			'author' => 'gwoo',
+			'committer' => 'gwoo',
+			'committer_email' => 'gwoo@cakephp.org',
+			'message' => 'Updating git ignore again',
+			'subject' => 'Updating git ignore again',
+		));
+
 		$result = $Git->find('all', array('conditions' => array($result['revision'] . '..' . $data['revision'])));
 
 		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
 		$this->assertEqual($result[1]['Repo']['message'], 'Updating git ignore');
-
 
 		$commits = $Git->find('all', array(
 			'conditions' => array($data['revision']),
@@ -174,6 +186,9 @@ class GitTest extends CakeTestCase {
 
 		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore');
 		$this->assertEqual($result[1]['Repo']['message'], 'Initial Project Commit');
+		$this->assertEqual($result[0]['Repo']['committer'], 'gwoo');
+		$this->assertEqual($result[1]['Repo']['committer'], 'gwoo');
+
 
 		$result = $Git->find('all', array('path' => TMP . 'tests/git/working/test/master/.gitignore', 'limit' => 1));
 
@@ -181,9 +196,12 @@ class GitTest extends CakeTestCase {
 		$this->assertTrue(empty($result[1]['Repo']['message']));
 
 		$result = $Git->find('all', array('path' => TMP . 'tests/git/working/test/master/.gitignore', 'limit' => 1, 'page' => 2));
-
+		//pr($result);
 		$this->assertEqual($result[0]['Repo']['message'], 'Initial Project Commit');
 		$this->assertTrue(empty($result[1]['Repo']['message']));
+
+		//pr($Git->debug);
+
 	}
 
 	function testFindWithFields() {
@@ -199,17 +217,32 @@ class GitTest extends CakeTestCase {
 		$Git->commit(array("-m", "'Updating git ignore'"));
 		$Git->push();
 
-		$result = $Git->find(array(), array('email', 'author'));
-		$this->assertEqual($result, array('email' => 'gwoo@cakephp.org', 'author' => 'gwoo'));
-
-		$result = $Git->find(array());
-		unset($result['hash']);
+		$result = $Git->find('first', array('fields' => array('email', 'author')));
 		$this->assertEqual($result, array(
+			'email' => 'gwoo@cakephp.org',
+			'author' => 'gwoo'
+		));
+
+		$result = $Git->find('first');
+		$newrev = $result['hash'];
+		$this->assertEqual($result, array(
+			'hash' => $result['hash'],
+			'revision' => $result['revision'],
+			'commit_date' => date('Y-m-d H:i:s O', strtotime('now')),
 			'email' => 'gwoo@cakephp.org',
 			'author' => 'gwoo',
 			'committer' => 'gwoo',
 			'committer_email' => 'gwoo@cakephp.org',
+			'message' => 'Updating git ignore',
 			'subject' => 'Updating git ignore'
+		));
+
+		//Test Find By Commit
+		$result = $Git->find(array('commit' => $newrev, 'fields' => array('email', 'author', 'hash')));
+		$this->assertEqual($result, array(
+			'email' => 'gwoo@cakephp.org',
+			'author' => 'gwoo',
+			'hash' => $newrev,
 		));
 
 		/*

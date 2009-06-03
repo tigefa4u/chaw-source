@@ -127,12 +127,15 @@ class Svn extends Repo {
 			$options['path'] = $options['conditions']['path'];
 			unset($options['conditions']['path']);
 		}
-		extract(array_merge(array('path' => '.', 'limit' => 100, 'page' => 1), $options));
-		if (empty($path)) {
+		$options = array_merge(array(
+			'path' => '.', 'limit' => 100, 'page' => 1
+		), $options);
+
+		if (empty($options['path'])) {
 			return false;
 		}
 
-		$data = $this->look('history', array('path' => $path));
+		$data = $this->look('history', array('path' => $options['path']));
 		if (preg_match_all('/[\\s+](\\d+)[\\s+]/', $data, $matches)) {
 			$data = array_filter($matches[1]);
 		}
