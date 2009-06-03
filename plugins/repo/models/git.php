@@ -313,7 +313,7 @@ class Git extends Repo {
 				if (strpos($branch, 'origin/') === false || strpos($branch, 'HEAD') !== false) {
 					continue;
 				}
-				$branches[] = trim(str_replace("origin/", "", $branch));
+				$branches[] = trim(str_replace(array("remotes/", "origin/"), "", $branch));
 			}
 			return $branches;
 		}
@@ -331,18 +331,25 @@ class Git extends Repo {
 
 		list($options['fields'], $format) = $this->__fields($options['fields']);
 
+		if (empty($options['conditions']['branch'])) {
+			$options['conditions']['branch'] = 'master';
+		}
+
+		$this->branch($options['conditions']['branch'], true);
+		unset($options['conditions']['branch']);
+
 		if ($type == 'first') {
 			$data = $this->run('log', array($options['commit'], $format, '-1'));
 			if (!empty($data)) {
 				return array_combine($options['fields'], array_filter(explode(chr(0), $data)));
 			}
 			return $data;
-
 		}
 
 		if (empty($options['path'])) {
 			return false;
 		}
+
 		$this->cd();
 		$data = explode("\n", $this->run('log', array_merge(
 			$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
