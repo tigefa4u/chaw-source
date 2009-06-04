@@ -35,7 +35,7 @@ class GitShellShell extends Shell {
 		}
 
 		$this->args[] = 'git_shell';
- 		$this->log($this->args, LOG_INFO);
+ 		//$this->log($this->args, LOG_INFO);
 
 		$command = @$this->args[0];
 

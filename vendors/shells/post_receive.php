@@ -32,7 +32,7 @@ class PostReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		$this->args[] = 'post-receive';
- 		$this->log($this->args, LOG_INFO);
+ 		//$this->log($this->args, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
@@ -40,6 +40,8 @@ class PostReceiveShell extends Shell {
 			$this->err('Invalid project');
 			return 1;
 		}
+
+		$user = $this->Project->User->field('id', array('username' => $_SERVER['PHP_CHAWUSER']));
 
 		if (!isset($refname)) {
 			$refname = 'refs/heads/master';
@@ -54,7 +56,8 @@ class PostReceiveShell extends Shell {
 			$this->Commit->create(array(
 				'project_id' =>  $this->Project->id,
 				'branch' => $refname,
-				'message' => "{$refname} removed"
+				'message' => "{$refname} removed",
+				'chawuser' => $user
 			));
 
 			$this->Commit->save();
@@ -66,11 +69,12 @@ class PostReceiveShell extends Shell {
 		}
 
 		if (!empty($commits)) {
-
+			
 			foreach ($commits as $data) {
 				$this->Commit->create(array(
 					'project_id' =>  $this->Project->id,
-					'branch' => $refname
+					'branch' => $refname,
+					'chawuser' => $user
 				));
 
 				$this->Commit->save($data['Repo']);

@@ -6,15 +6,44 @@ class TimelineTest extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
+		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch',
+		'app.branches_commits'
 	);
 
 	function startCase() {
 		$this->Timeline = ClassRegistry::init('Timeline');
+		Configure::write('Content', array(
+			'base' => TMP . 'tests' . DS,
+			'git' => TMP . 'tests' . DS . 'git' . DS,
+			'svn' => TMP . 'tests' . DS . 'svn' . DS ,
+		));
 	}
 
 	function endCase() {
 		unset($this->Timeline);
+	}
+
+	function endTest() {
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
+
+		$MoreCleanup = new Folder(TMP . 'tests/svn');
+		if ($MoreCleanup->pwd() == TMP . 'tests/svn') {
+			$MoreCleanup->delete();
+		}
+		$this->__cleanUp();
+	}
+
+	function __cleanUp() {
+		$path = Configure::read('Content.base');
+		$Cleanup = new Folder(TMP . 'tests/git');
+		if ($Cleanup->pwd() == TMP . 'tests/git') {
+			$Cleanup->delete();
+		}
+		@unlink($path . 'chaw');
+		@unlink($path . 'permissions.ini');
 	}
 
 	function testTimelineInstance() {
@@ -31,10 +60,113 @@ class TimelineTest extends CakeTestCase {
 
 		// $this->Timeline->create(array('model' => 'Ticket', 'foreign_key' => 1));
 		// 		$this->assertFalse($this->Timeline->save());
-		// 		
+		//
 		// 		$results = $this->Timeline->find('all');
 		// 		$this->assertEqual(count($results), 1);
 		// 		$this->assertEqual($results[0]['Timeline']['id'], 1);
+	}
+
+	function testRelated() {
+		$this->_setup();
+
+		$results = $this->Timeline->find('all');
+		$this->assertEqual(count($results), 7);
+
+		$results = $this->Timeline->paginateCount();
+		$this->assertEqual($results, 7);
+		
+		$results = $this->Timeline->paginate(array(), array(), array('Timeline.id' => 'DESC'));
+		$this->assertEqual('merged', $results[0]['Timeline']['event']);
+		$this->assertEqual(3, $results[0]['Commit']['id']);
+		$this->assertEqual(3, $results[3]['Commit']['revision']);
+		$this->assertEqual(2, $results[0]['Branch']['id']);
+		
+		$this->assertEqual('merged', $results[1]['Timeline']['event']);
+		$this->assertEqual(2, $results[1]['Commit']['id']);
+		$this->assertEqual(2, $results[1]['Commit']['revision']);
+		$this->assertEqual(2, $results[1]['Branch']['id']);
+				
+		$this->assertEqual('merged', $results[2]['Timeline']['event']);
+		$this->assertEqual(1, $results[2]['Commit']['id']);
+		$this->assertEqual(1, $results[2]['Commit']['revision']);
+		$this->assertEqual(2, $results[2]['Branch']['id']);
+		
+		$this->assertEqual('added', $results[3]['Timeline']['event']);
+		$this->assertEqual(3, $results[3]['Commit']['id']);
+		$this->assertEqual(3, $results[3]['Commit']['revision']);
+		$this->assertEqual(1, $results[3]['Branch']['id']);
+						
+		$this->assertEqual('added', $results[4]['Timeline']['event']);
+		$this->assertEqual(2, $results[4]['Commit']['id']);
+		$this->assertEqual(2, $results[4]['Commit']['revision']);
+		$this->assertEqual(1, $results[4]['Branch']['id']);
+		
+		$this->assertEqual('added', $results[5]['Timeline']['event']);
+		$this->assertEqual(1, $results[5]['Commit']['id']);
+		$this->assertEqual(1, $results[5]['Commit']['revision']);
+		$this->assertEqual(1, $results[5]['Branch']['id']);
+	}
+
+	function _setup() {
+		$Project = ClassRegistry::init('Project');
+
+		$data = array('Project' =>array(
+			'id' => 1,
+			'name' => 'original project',
+			'user_id' => 1,
+			'username' => 'gwoo',
+			'repo_type' => 'Git',
+			'private' => 0,
+			'config' => array(
+				'groups' => 'user, docs team, developer, admin',
+				'ticket' => array(
+					'types' => 'rfc, bug, enhancement',
+					'statuses' => 'pending, approved, in progress, on hold, closed',
+					'priorities' => 'low, normal, high',
+				)
+			),
+			'description' => 'this is a test project',
+			'active' => 1,
+			'approved' => 1,
+			'remote' => 'git@git.chaw'
+		));
+
+		$this->assertTrue($Project->save($data));
+
+		$Commit = ClassRegistry::init('Commit');
+
+		$events = array(1, 2, 3);
+		foreach ($events as $event) {
+			$data = array('Commit' => array(
+				//'id'  => 1,
+				'revision'  => $event,
+				'commit_date' => '2008-10-13 09:26:08',
+				'message'  => 'Lorem ipsum dolor sit amet',
+				'project_id'  => 1,
+				'user_id' => 1,
+				'branch' => 'refs/heads/master'
+			));
+			$Commit->create($data);
+			$this->assertTrue($Commit->save());
+			sleep(1);
+		}
+
+		$events = array(1, 2, 3);
+		foreach ($events as $event) {
+			$data = array('Commit' => array(
+				//'id'  => 1,
+				'revision'  => $event,
+				'commit_date' => '2008-10-13 09:26:08',
+				'message'  => 'Lorem ipsum dolor sit amet',
+				'project_id'  => 1,
+				'user_id' => 1,
+				'branch' => 'refs/heads/other'
+			));
+			$Commit->create($data);
+			$this->assertFalse($Commit->save());
+			sleep(1);
+		}
+
 	}
 }
 ?>
