@@ -79,11 +79,11 @@ class PostReceiveShell extends Shell {
 					'project_id' =>  $this->Project->id,
 					'branch' => $refname,
 					'chawuser' => $user,
-					'push_id' => $push
+					'pushed_by' => $push
 				));
 
 				if ($i == 0) {
-					$push = $this->Commit->id
+					$push = $this->Commit->id;
 				}
 
 				$this->Commit->save($data['Repo']);

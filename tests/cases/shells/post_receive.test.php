@@ -24,8 +24,7 @@ class PostReceiveTest extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch',
-		'app.branch_commit'
+		'app.tag', 'app.tags_tickets', 'app.commit'
 	);
 
 	function startTest() {
@@ -114,7 +113,6 @@ class PostReceiveTest extends CakeTestCase {
 		$result = $this->PostReceive->commit();
 		$this->assertNull($result);
 
-		$this->PostReceive->Commit->bindModel(array('hasAndBelongsToMany' => array('Branch')));
 		$result = $this->PostReceive->Commit->find('all');
 
 		$expected = 'Initial Project Commit';
@@ -137,7 +135,6 @@ class PostReceiveTest extends CakeTestCase {
 		$result = $this->PostReceive->commit();
 		$this->assertNull($result);
 
-		$this->PostReceive->Commit->bindModel(array('hasAndBelongsToMany' => array('Branch')));
 		$result = $this->PostReceive->Commit->find('all');
 
 		$expected = 'Updating git ignore';
@@ -173,7 +170,6 @@ class PostReceiveTest extends CakeTestCase {
 		$result = $this->PostReceive->commit();
 		$this->assertNull($result);
 
-		$this->PostReceive->Commit->bindModel(array('hasAndBelongsToMany' => array('Branch')));
 		$result = $this->PostReceive->Commit->find('all');
 
 		$expected = 'Updating git ignore';

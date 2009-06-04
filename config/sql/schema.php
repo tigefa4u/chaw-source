@@ -11,15 +11,6 @@ class ChawSchema extends CakeSchema {
 	function after($event = array()) {
 	}
 
-	var $branches = array(
-			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'name' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
-			'ref' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
-			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
-		);
 	var $comments = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'model' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 40),
@@ -36,15 +27,15 @@ class ChawSchema extends CakeSchema {
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'branch' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'revision' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
 			'author' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
+			'committer' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'commit_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'message' => array('type' => 'text', 'null' => true, 'default' => NULL),
+			'message' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'changes' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'branch_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'branch' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $permissions = array(
