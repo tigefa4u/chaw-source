@@ -66,45 +66,36 @@ class TimelineTest extends CakeTestCase {
 		// 		$this->assertEqual($results[0]['Timeline']['id'], 1);
 	}
 
-	function testRelated() {
+	function testEvents() {
 		$this->_setup();
 
-		$results = $this->Timeline->find('all');
+		$results = $this->Timeline->find('events');
 		$this->assertEqual(count($results), 7);
 
 		$results = $this->Timeline->paginateCount();
 		$this->assertEqual($results, 7);
-		
+
 		$results = $this->Timeline->paginate(array(), array(), array('Timeline.id' => 'DESC'));
-		$this->assertEqual('merged', $results[0]['Timeline']['event']);
-		$this->assertEqual(3, $results[0]['Commit']['id']);
-		$this->assertEqual(3, $results[3]['Commit']['revision']);
-		$this->assertEqual(2, $results[0]['Branch']['id']);
+		pr($results);
 		
-		$this->assertEqual('merged', $results[1]['Timeline']['event']);
+		$this->assertEqual(7, $results[0]['Timeline']['id']);
+		$this->assertEqual(6, $results[0]['Commit']['id']);
+		
+		$this->assertEqual(3, $results[1]['Timeline']['id']);
 		$this->assertEqual(2, $results[1]['Commit']['id']);
-		$this->assertEqual(2, $results[1]['Commit']['revision']);
-		$this->assertEqual(2, $results[1]['Branch']['id']);
-				
-		$this->assertEqual('merged', $results[2]['Timeline']['event']);
-		$this->assertEqual(1, $results[2]['Commit']['id']);
-		$this->assertEqual(1, $results[2]['Commit']['revision']);
-		$this->assertEqual(2, $results[2]['Branch']['id']);
 		
-		$this->assertEqual('added', $results[3]['Timeline']['event']);
+		$this->assertEqual(4, $results[3]['Timeline']['id']);
 		$this->assertEqual(3, $results[3]['Commit']['id']);
-		$this->assertEqual(3, $results[3]['Commit']['revision']);
-		$this->assertEqual(1, $results[3]['Branch']['id']);
-						
-		$this->assertEqual('added', $results[4]['Timeline']['event']);
-		$this->assertEqual(2, $results[4]['Commit']['id']);
-		$this->assertEqual(2, $results[4]['Commit']['revision']);
-		$this->assertEqual(1, $results[4]['Branch']['id']);
 		
-		$this->assertEqual('added', $results[5]['Timeline']['event']);
-		$this->assertEqual(1, $results[5]['Commit']['id']);
-		$this->assertEqual(1, $results[5]['Commit']['revision']);
-		$this->assertEqual(1, $results[5]['Branch']['id']);
+		$this->assertEqual(5, $results[4]['Timeline']['id']);
+		$this->assertEqual(4, $results[4]['Commit']['id']);
+		
+		$this->assertEqual(6, $results[4]['Timeline']['id']);
+		$this->assertEqual(5, $results[4]['Commit']['id']);
+		
+		$this->assertEqual(1, $results[6]['Timeline']['id']);
+		$this->assertEqual(1, $results[6]['Wiki']['id']);
+		
 	}
 
 	function _setup() {
@@ -163,7 +154,7 @@ class TimelineTest extends CakeTestCase {
 				'branch' => 'refs/heads/other'
 			));
 			$Commit->create($data);
-			$this->assertFalse($Commit->save());
+			$this->assertTrue($Commit->save());
 			sleep(1);
 		}
 

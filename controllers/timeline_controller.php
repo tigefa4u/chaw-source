@@ -40,10 +40,8 @@ class TimelineController extends AppController {
 			$this->passedArgs['type'] = null;
 		}
 
-		$this->Timeline->recursive = -1;
-		$timeline = $this->paginate();
-
-		$this->set('timeline', $this->Timeline->related($timeline));
+		$this->Timeline->recursive = 0;
+		$this->set('timeline', $this->paginate());
 
 		$this->set('rssFeed', array('controller' => 'timeline'));
 	}

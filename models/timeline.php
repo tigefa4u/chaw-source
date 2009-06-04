@@ -26,6 +26,8 @@ class Timeline extends AppModel {
 		'model' => array('notEmpty'),
 		'foreign_key' => array('numeric')
 	);
+	
+	var $_findMethods = array('events' => true);
 
 	var $belongsTo = array(
 		'Comment' => array(
@@ -50,8 +52,24 @@ class Timeline extends AppModel {
 		)
 	);
 
-	function related(&$data) {
-		foreach ($data as $key => $timeline) {
+	function paginateCount($conditions = array(), $recursive = 0, $extra = array()) {
+		$this->unbindModel(array('belongsTo' => array(
+			'Comment', 'Ticket', 'Wiki'
+		)), false);
+		return $this->find('count', compact('conditions'));
+	}
+
+	function paginate($conditions = array(), $fields = array(), $order = array(), $limit = null, $page = null, $recursive = 0, $extra = array()) {
+		return $this->find('events', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive'));
+	}
+
+	function _findEvents($state, $query, $results = array()) {
+		if ($state == 'before') {
+			return $query;
+		}
+
+		$data = $branches = $branch = array();
+		foreach ((array)$results as $key => $timeline) {
 			$type = $timeline['Timeline']['model'];
 			$this->{$type}->recursive = 0;
 
@@ -62,8 +80,26 @@ class Timeline extends AppModel {
 				));
 			}
 
+			if ($type == 'Commit' && $timeline['Project']['repo_type'] == 'Git') {
+				$this->{$type}->recursive = 1;
+				$this->{$type}->bindBranch(array(
+					'project_id' => $timeline['Timeline']['project_id'],
+					'created' => $timeline['Timeline']['created']
+				));
+			}
+
 			$related = $this->{$type}->findById($timeline['Timeline']['foreign_key']);
-			$data[$key] = array_merge($timeline, (array)$related);
+
+			if (!empty($related['Branch'])) {
+				$related['Branch'] = array(
+					'current' => current($related['Branch']),
+					'previous' => next($related['Branch'])
+				);
+			}
+
+			if (!empty($related)) {
+				$data[$key] = array_merge($timeline, (array)$related);
+			}
 		}
 		return $data;
 	}

@@ -10,6 +10,7 @@ class TimelineFixture extends CakeTestFixture {
 	var $fields = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
