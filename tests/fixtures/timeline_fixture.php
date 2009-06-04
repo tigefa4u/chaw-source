@@ -13,8 +13,8 @@ class TimelineFixture extends CakeTestFixture {
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'event' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 }

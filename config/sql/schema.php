@@ -27,7 +27,7 @@ class ChawSchema extends CakeSchema {
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-			'branch' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'branch' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'revision' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 40),
 			'author' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
 			'committer' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 200),
@@ -35,7 +35,6 @@ class ChawSchema extends CakeSchema {
 			'message' => array('type' => 'string', 'null' => true, 'default' => NULL),
 			'changes' => array('type' => 'text', 'null' => true, 'default' => NULL),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $permissions = array(
@@ -111,8 +110,8 @@ class ChawSchema extends CakeSchema {
 			'user_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 			'model' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => NULL),
+			'event' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 50),
 			'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-			'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 		);
 	var $users = array(

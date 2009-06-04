@@ -6,8 +6,7 @@ class TimelineTest extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch',
-		'app.branches_commits'
+		'app.tag', 'app.tags_tickets', 'app.commit'
 	);
 
 	function startCase() {
@@ -66,36 +65,52 @@ class TimelineTest extends CakeTestCase {
 		// 		$this->assertEqual($results[0]['Timeline']['id'], 1);
 	}
 
-	function testEvents() {
+	function testDefaultPaginateOrderCreatedDesc() {
 		$this->_setup();
 
-		$results = $this->Timeline->find('events');
+		$results = $this->Timeline->find('all');
 		$this->assertEqual(count($results), 7);
-
+//pr($results);
 		$results = $this->Timeline->paginateCount();
 		$this->assertEqual($results, 7);
-
-		$results = $this->Timeline->paginate(array(), array(), array('Timeline.id' => 'DESC'));
-		pr($results);
 		
+		$results = $this->Timeline->paginate();
+	
 		$this->assertEqual(7, $results[0]['Timeline']['id']);
+		$this->assertEqual('merged', $results[0]['Timeline']['event']);
 		$this->assertEqual(6, $results[0]['Commit']['id']);
+		$this->assertEqual(3, $results[0]['Commit']['revision']);
+		$this->assertEqual('other', $results[0]['Commit']['branch']);
 		
-		$this->assertEqual(3, $results[1]['Timeline']['id']);
-		$this->assertEqual(2, $results[1]['Commit']['id']);
+		$this->assertEqual(6, $results[1]['Timeline']['id']);
+		$this->assertEqual('merged', $results[1]['Timeline']['event']);
+		$this->assertEqual(5, $results[1]['Commit']['id']);
+		$this->assertEqual(2, $results[1]['Commit']['revision']);
+		$this->assertEqual('other', $results[1]['Commit']['branch']);
+				
+		$this->assertEqual(5, $results[2]['Timeline']['id']);
+		$this->assertEqual('merged', $results[2]['Timeline']['event']);
+		$this->assertEqual(4, $results[2]['Commit']['id']);
+		$this->assertEqual(1, $results[2]['Commit']['revision']);
+		$this->assertEqual('other', $results[2]['Commit']['branch']);
 		
 		$this->assertEqual(4, $results[3]['Timeline']['id']);
+		$this->assertEqual('committed', $results[3]['Timeline']['event']);
 		$this->assertEqual(3, $results[3]['Commit']['id']);
+		$this->assertEqual(3, $results[3]['Commit']['revision']);
+		$this->assertEqual('master', $results[3]['Commit']['branch']);
+
+		$this->assertEqual(3, $results[4]['Timeline']['id']);
+		$this->assertEqual('committed', $results[4]['Timeline']['event']);
+		$this->assertEqual(2, $results[4]['Commit']['id']);
+		$this->assertEqual(2, $results[4]['Commit']['revision']);
+		$this->assertEqual('master', $results[4]['Commit']['branch']);
 		
-		$this->assertEqual(5, $results[4]['Timeline']['id']);
-		$this->assertEqual(4, $results[4]['Commit']['id']);
-		
-		$this->assertEqual(6, $results[4]['Timeline']['id']);
-		$this->assertEqual(5, $results[4]['Commit']['id']);
-		
-		$this->assertEqual(1, $results[6]['Timeline']['id']);
-		$this->assertEqual(1, $results[6]['Wiki']['id']);
-		
+		$this->assertEqual(2, $results[5]['Timeline']['id']);
+		$this->assertEqual('committed', $results[5]['Timeline']['event']);
+		$this->assertEqual(1, $results[5]['Commit']['id']);
+		$this->assertEqual(1, $results[5]['Commit']['revision']);
+		$this->assertEqual('master', $results[5]['Commit']['branch']);
 	}
 
 	function _setup() {

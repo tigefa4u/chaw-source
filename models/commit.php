@@ -51,6 +51,13 @@ class Commit extends AppModel {
 			$ref = explode('/', $this->data['Commit']['branch']);
 			$this->data['Commit']['branch'] = array_pop($ref);
 		}
+		$this->data['Commit']['event'] = 'committed';
+		
+		if ($this->field('id', array('revision' => $this->data['Commit']['revision']))) {
+			$this->data['Commit']['event'] = 'merged';
+		}
+	
+		
 		return true;
 	}
 
@@ -61,6 +68,7 @@ class Commit extends AppModel {
 				'project_id' => $this->data['Commit']['project_id'],
 				'model' => 'Commit',
 				'foreign_key' => $this->id,
+				'event' => $this->data['Commit']['event'],
 			));
 
 			$Timeline->create($timeline);

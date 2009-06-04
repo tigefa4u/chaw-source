@@ -19,6 +19,8 @@ class Timeline extends AppModel {
 	var $name = 'Timeline';
 
 	var $useTable = 'timeline';
+	
+	var $_findMethods = array('events' => true);
 
 	var $actsAs = array('Containable');
 
@@ -27,9 +29,8 @@ class Timeline extends AppModel {
 		'foreign_key' => array('numeric')
 	);
 	
-	var $_findMethods = array('events' => true);
-
 	var $belongsTo = array(
+		'Project',
 		'Comment' => array(
 			'foreignKey' => 'foreign_key',
 			'conditions' => array('Timeline.model = \'Comment\''),
@@ -51,54 +52,49 @@ class Timeline extends AppModel {
 			'dependent' => true
 		)
 	);
-
+	
 	function paginateCount($conditions = array(), $recursive = 0, $extra = array()) {
 		$this->unbindModel(array('belongsTo' => array(
-			'Comment', 'Ticket', 'Wiki'
+			'Comment', 'Ticket', 'Wiki', 'Commit',
 		)), false);
 		return $this->find('count', compact('conditions'));
 	}
-
+	
 	function paginate($conditions = array(), $fields = array(), $order = array(), $limit = null, $page = null, $recursive = 0, $extra = array()) {
 		return $this->find('events', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive'));
 	}
 
 	function _findEvents($state, $query, $results = array()) {
 		if ($state == 'before') {
-			return $query;
+			$defaults = array(
+				'order' => array(
+					'Timeline.created' => 'DESC',
+					'Timeline.id' => 'DESC'
+				)
+			);
+			return Set::merge($defaults, $query);
 		}
-
+		
 		$data = $branches = $branch = array();
 		foreach ((array)$results as $key => $timeline) {
 			$type = $timeline['Timeline']['model'];
+			if (!isset($this->{$type})) {
+				continue;
+			}
+			
 			$this->{$type}->recursive = 0;
-
+			
 			if ($type == 'Comment') {
 				$this->{$type}->recursive = 2;
 				$this->{$type}->Ticket->unbindModel(array(
 					'hasMany' => array('Comment'),
 				));
 			}
-
-			if ($type == 'Commit' && $timeline['Project']['repo_type'] == 'Git') {
-				$this->{$type}->recursive = 1;
-				$this->{$type}->bindBranch(array(
-					'project_id' => $timeline['Timeline']['project_id'],
-					'created' => $timeline['Timeline']['created']
-				));
-			}
-
+			
 			$related = $this->{$type}->findById($timeline['Timeline']['foreign_key']);
-
-			if (!empty($related['Branch'])) {
-				$related['Branch'] = array(
-					'current' => current($related['Branch']),
-					'previous' => next($related['Branch'])
-				);
-			}
-
+			
 			if (!empty($related)) {
-				$data[$key] = array_merge($timeline, (array)$related);
+				$data[] = array_merge($timeline, (array)$related);
 			}
 		}
 		return $data;
