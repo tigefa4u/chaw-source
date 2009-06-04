@@ -211,7 +211,8 @@ class AccessComponentTest extends CakeTestCase {
 
 		$Access->user = array();
 		$this->Controller->Project->Permission->rules('chaw', array('wiki' => array('*' => '', 'gwoo' => 'rw')));
-		pr($this->Controller->Project->Permission->rules());
+		//pr($this->Controller->Project->Permission->rules());
+		
 		$Access->isPublic = false;
 		$Access->user = array();
 		$this->assertFalse($Access->check($this->Controller, array('access' => 'r')));

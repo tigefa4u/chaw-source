@@ -409,10 +409,8 @@ class PermissionTest extends CakeTestCase {
 		$data['Permission']['fine_grained'] = "[tickets]\n* = r";
 		$this->assertTrue($Permission->saveFile($data));		
 		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'access' => 'c', 'default' => true)));
-
-		$this->assertTrue($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('c', 'w'), 'default' => true)));
-
-		$this->assertTrue($Permission->check("tickets", array('user' => 'bob', 'access' => 'c', 'default' => true)));
+		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('c', 'w'), 'default' => true)));
+		$this->assertFalse($Permission->check("tickets", array('user' => 'bob', 'access' => 'c', 'default' => true)));
 	}
 
 	function testDeleteIsAlwaysFalse() {

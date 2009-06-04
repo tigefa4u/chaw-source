@@ -8,7 +8,7 @@ class UserTestCase extends CakeTestCase {
 	var $fixtures = array(
 		'app.project', 'app.permission', 'app.user', 'app.wiki',
 		'app.timeline', 'app.comment', 'app.ticket', 'app.version',
-		'app.tag', 'app.tags_tickets', 'app.commit'
+		'app.tag', 'app.tags_tickets', 'app.commit', 'app.branch'
 	);
 
 	function start() {
