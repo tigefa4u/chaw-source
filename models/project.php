@@ -634,7 +634,7 @@ class Project extends AppModel {
  **/
 	function key($params = array()) {
 		if (empty($params)) {
-			$params = $this->config;
+			$params = $this->current;
 		}
 		if (empty($params['project'])) {
 			if (empty($params['url'])) {
