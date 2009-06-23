@@ -117,14 +117,12 @@ class PostReceiveTest extends CakeTestCase {
 
 		$expected = 'Initial Project Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
+		
+		
+		$this->assertEqual($expected, $result[0]['Timeline']['message']);
 	}
 
 	function testPushSingle() {
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 		$results = $this->PostReceive->Project->Repo->find('all', array('order' => 'asc'));
-// 		$oldrev = $results[0];
-// 		$newrev = $results[1];
-// =======
 		$this->PostReceive->Project->Repo->update();
 		$results = $this->PostReceive->Project->Repo->find('all', array(
 			'branch' => 'master', 'order' => 'asc'
@@ -132,34 +130,21 @@ class PostReceiveTest extends CakeTestCase {
 
 		$oldrev = $results[0]['Repo']['revision'];
 		$newrev = $results[1]['Repo']['revision'];
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
 
 		$this->PostReceive->args = array(
 			'\'test.git\'',
 			'refs/heads/master',
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 			$oldrev['Repo']['revision'],
-// 			$newrev['Repo']['revision']
-// =======
 			$oldrev,
 			$newrev
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
 		);
 
 		$result = $this->PostReceive->commit();
 		$this->assertNull($result);
 
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 		$result = $this->PostReceive->Commit->find('all');
-// 
-// 		$expected = 'Updating git ignore';
-// 		$this->assertEqual($expected, $result[0]['Commit']['message']);
-// =======
 		$result = $this->PostReceive->Commit->find('all');
 
 		$expected = 'Second Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
 
 		$this->assertTrue(empty($result[1]));
 

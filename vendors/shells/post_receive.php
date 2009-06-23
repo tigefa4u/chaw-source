@@ -57,6 +57,18 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Commit->save();
+			
+			$this->Timeline->create(array(
+				'project_id' =>  $this->Project->id,
+				'event' => 'removed',
+				'data' => $refname,
+				'model' => 'Commit',
+				'foreign_key' => $this->Commit->id,
+				'message' => "{$refname} removed",
+				'user_id' => $user
+			));
+
+			$this->Commit->save();
 			return;
 		}
 
