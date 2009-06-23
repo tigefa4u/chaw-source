@@ -228,13 +228,13 @@ td.number a:hover {
 	overflow: hidden;
 }
 #header h1 {
-	color: #69C;
+	color: #888;
 	font-size: 180%;
 	padding: 0px 0px;
 	margin: 8px 0 14px 0;
 }
 #header h1 a {
-	color: #fff;
+	color: #69C;
 	background: #3b3b3b;
 	font-weight: normal;
 	text-decoration: none;
@@ -245,7 +245,7 @@ td.number a:hover {
 	text-decoration: underline;
 }
 #header h1 a.project-link {
-	color: #69C;
+	color: #888;
 	text-decoration: none;
 	font-family: Helvetica;
 	font-weight: normal;

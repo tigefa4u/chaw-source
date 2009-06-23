@@ -81,6 +81,7 @@ class Git extends Repo {
 			$this->commit("Initial Project Commit");
 			$this->push();
 		}
+		$this->log($this->debug, LOG_DEBUG);
 
 		if (is_dir($path) && is_dir($this->working)) {
 			return true;
@@ -323,22 +324,12 @@ class Git extends Repo {
 		}
 
 		$options = array_merge(array(
-			'branch' => 'master',
 			'conditions' => array(), 'fields' => null,
 			'commit' => null, 'path' => '.',
 			'order' => 'desc', 'limit' => 100,  'page' => 1
 		), $options);
 
-		$this->branch($options['branch'], true);
-
 		list($options['fields'], $format) = $this->__fields($options['fields']);
-
-		if (empty($options['conditions']['branch'])) {
-			$options['conditions']['branch'] = 'master';
-		}
-
-		$this->branch($options['conditions']['branch'], true);
-		unset($options['conditions']['branch']);
 
 		if ($type == 'first') {
 			$data = $this->run('log', array($options['commit'], $format, '-1'));
@@ -352,7 +343,12 @@ class Git extends Repo {
 			return false;
 		}
 
-		$this->cd();
+		if (!empty($options['branch'])) {
+			$this->branch($options['branch'], true);
+			unset($options['branch']);
+			$this->cd();
+		}
+
 		$data = explode("\n", $this->run('log', array_merge(
 			$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
 		)));

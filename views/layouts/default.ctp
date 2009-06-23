@@ -30,10 +30,7 @@
 	<?php echo $html->charset();?>
 	<title>
 		<?php
-			if ($CurrentProject->id != 1) {
-				$title_for_layout = $CurrentProject->name . ' / ' . $title_for_layout;
-			}
-			echo env('HTTP_HOST') . ' / ' .  $title_for_layout;
+			echo env('HTTP_HOST') . '/' .  $CurrentProject->name . '/' . $title_for_layout;
 		?>
 	</title>
 	<?php

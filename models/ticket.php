@@ -65,9 +65,13 @@ class Ticket extends AppModel {
 	var $hasAndBelongsToMany = array('Tag');
 
 	var $validate = array(
+		'project_id' => array('numeric'),
 		'title' => array('notEmpty'),
 		'description' => array('notEmpty'),
-		'project_id' => 'numeric'
+		// 'comment' => array('notEmpty'),
+		// 'status' => array('notEmpty')
+		// 'event' => array('notEmpty'),
+		// 'resolution' => array('notEmpty'),
 	);
 
 	function transitions($event) {
