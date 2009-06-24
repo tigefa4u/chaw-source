@@ -1,5 +1,4 @@
 <?php
-App::import('Model', 'Schema');
 /**
  * Short description
  *

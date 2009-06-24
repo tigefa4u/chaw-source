@@ -67,7 +67,7 @@
 		<?php if ($CurrentProject->repo->type == 'git' && !empty($data['Commit']['changes'])) :?>
 			<p class="description"><?php
 					echo $html->link($data['Commit']['changes'], array(
-						'controller' => 'commits', 'log', $data['Commit']['changes']
+						'controller' => 'commits', 'logs', $data['Commit']['changes']
 					));
 			?></p>
 		<?php endif;?>
