@@ -41,6 +41,7 @@ class PostReceiveTest extends CakeTestCase {
 		);
 		$this->PostReceive->Project = ClassRegistry::init('Project');
 		$this->PostReceive->Commit = ClassRegistry::init('Commit');
+		$this->PostReceive->Timeline = ClassRegistry::init('Timeline');
 
 		$this->PostReceive->Project->User->save(array('username' => 'gwoo'), false);
 
@@ -68,6 +69,7 @@ class PostReceiveTest extends CakeTestCase {
 		$this->assertTrue($this->PostReceive->Project->save($data));
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
+
 
 		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
 		$File->write('this is something new');
@@ -97,6 +99,10 @@ class PostReceiveTest extends CakeTestCase {
 		}
 	}
 
+	function igetTests() {
+		return array('start', 'testPushNewBranch', 'end');
+	}
+
 	function testPushNewBranch() {
 		$commit = $this->PostReceive->Project->Repo->find('first');
 
@@ -117,9 +123,14 @@ class PostReceiveTest extends CakeTestCase {
 
 		$expected = 'Initial Project Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
-		
-		
-		$this->assertEqual($expected, $result[0]['Timeline']['message']);
+
+		$expected = 'Commit';
+		$result = $this->PostReceive->Timeline->find('events');
+		$this->assertEqual($expected, $result[0]['Timeline']['model']);
+
+		$expected = 'created';
+		$this->assertEqual($expected, $result[0]['Timeline']['event']);
+
 	}
 
 	function testPushSingle() {
@@ -149,50 +160,30 @@ class PostReceiveTest extends CakeTestCase {
 		$this->assertTrue(empty($result[1]));
 
 
-		$timeline = ClassRegistry::init('Timeline');
-		$result = $timeline->find('events');
-
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 		$expected = 'Updating git ignore';
-// 		$this->assertEqual($expected, $result[1]['Commit']['message']);
-// 
-// 		$this->assertTrue(empty($result[4]));
-// =======
+		$result = $this->PostReceive->Timeline->find('events');
 		$expected = 'Second Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
 		$this->assertEqual(1, $result[0]['Timeline']['user_id']);
+		$this->assertEqual('pushed', $result[0]['Timeline']['event']);
+		$this->assertEqual(0, $result[0]['Timeline']['data']);
 
 		$this->assertTrue(empty($result[3]));
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
 	}
 
 	function testPushMultipe() {
 		$this->PostReceive->Project->Repo->update();
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 		$results = $this->PostReceive->Project->Repo->find('all', array('order' => 'asc'));
-// 
-// 		$oldrev = $results[0];
-// 		$newrev = $results[2];
-// 
-// =======
 		$results = $this->PostReceive->Project->Repo->find('all', array(
 			'branch' => 'master', 'order' => 'asc'
 		));
 
 		$oldrev = $results[0]['Repo']['revision'];
 		$newrev = $results[2]['Repo']['revision'];
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
 
 		$this->PostReceive->args = array(
 			'\'test.git\'',
 			'refs/heads/master',
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 			$oldrev['Repo']['revision'],
-// 			$newrev['Repo']['revision']
-// =======
 			$oldrev,
 			$newrev
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
 		);
 
 		$result = $this->PostReceive->commit();
@@ -203,34 +194,27 @@ class PostReceiveTest extends CakeTestCase {
 		$expected = 'Third Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
 
-		$expected = 'Second Commit';
-		$this->assertEqual($expected, $result[1]['Commit']['message']);
+		$expected = $oldrev. "..".$newrev;
+		$this->assertEqual($expected, $result[0]['Commit']['changes']);
+
+		//only one commit is stored
+		$this->assertTrue(empty($result[1]));
 
 
 		$timeline = ClassRegistry::init('Timeline');
 		$result = $timeline->find('events');
 
-// <<<<<<< HEAD:tests/cases/shells/post_receive.test.php
-// 		$expected = 'Pushed 2 commits';
-// 		$this->assertEqual($expected, $result[0]['Timeline']['event']);
-// 
-// 		$expected = 'Updating git ignore';
-// 		$this->assertEqual($expected, $result[1]['Commit']['message']);
-// 
-// 		$expected = 'adding new.txt';
-// 		$this->assertEqual($expected, $result[2]['Commit']['message']);
-// =======
 		$expected = 'Third Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
-		$this->assertEqual('pushed', $result[0]['Timeline']['event']);
+
+		$expected = $oldrev. "..".$newrev;
+		$this->assertEqual($expected, $result[0]['Commit']['changes']);
+
 		$this->assertEqual(1, $result[0]['Timeline']['user_id']);
+		$this->assertEqual('pushed', $result[0]['Timeline']['event']);
+		$this->assertEqual(2, $result[0]['Timeline']['data']);
 
-		$expected = 'Second Commit';
-		$this->assertEqual($expected, $result[1]['Commit']['message']);
-		$this->assertEqual(1, $result[1]['Timeline']['user_id']);
-		$this->assertEqual('committed', $result[1]['Timeline']['event']);
-
-// >>>>>>> master:tests/cases/shells/post_receive.test.php
+		$this->assertTrue(empty($result[2]));
 	}
 }
 ?>

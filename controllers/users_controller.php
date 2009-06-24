@@ -182,7 +182,6 @@ class UsersController extends AppController {
 		}
 
 		$this->set(compact('sshKeys', 'types'));
-		$this->render('edit');
 	}
 
 	function admin_index() {

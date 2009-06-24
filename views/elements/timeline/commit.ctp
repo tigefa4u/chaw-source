@@ -24,55 +24,57 @@
 			</span>
 			<strong>
 				<?php
-				if ($CurrentProject->repo->type == 'git'):
+				if ($CurrentProject->repo->type == 'git') {
 				 	if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
 						__("merged");
 					} else {
 						__("pushed");
 					}
-				else :
+					if (!empty($data['Timeline']['data'])) {
+						echo ' ' . $data['Timeline']['data'] . ' ' . __("commits", true);
+					}
+
+				} else {
 					__('committed');
-				endif;
+				}
 				?>
 			</strong>
 			<?php
-				echo $chaw->commit($data['Commit']['revision'], $data['Project']);
+				if (empty($data['Timeline']['data'])) {
+					echo $chaw->commit($data['Commit']['revision'], $data['Project']);
+				}
+
+				if (!empty($data['Commit']['branch'])) {
+					echo " to " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
+							'controller' => 'source', 'action' => 'branches',
+							$data['Commit']['branch']
+					)));
+				}
 
 				if (!empty($data['Project']['fork'])) {
-					$project = "forks/{$data['Project']['fork']}/{$data['Project']['url']}/{$data['Branch']['name']}";
-					echo  " to " . $html->link($project, $chaw->url($data['Project'], array(
-						'admin' => false, 'controller' => 'source','action' => 'branches',
-						$data['Branch']['name']
+					//$project = "forks/{$data['Project']['fork']}/{$data['Project']['url']}/";
+				}
+
+				if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
+					echo ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
+						'admin' => false, 'controller' => 'source'
 					)), array('class' => 'project'));
-				} else  {
-
-					if (!empty($data['Branch']['name'])) {
-						echo " to " . $html->link($data['Branch']['name'], $chaw->url($data['Project'], array(
-								'controller' => 'source', 'action' => 'branches',
-								$data['Branch']['name']
-						)));
-					}
-
-					if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
-						echo ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
-							'admin' => false, 'controller' => 'source'
-						)), array('class' => 'project'));
-					}
-
 				}
-				/*
-				if (empty($CurrentProject->fork) && !empty($data['Project']['fork'])) {
-					'(' . $chaw->admin('merge', $chaw->url($data['Project'], array(
-						'controller' => 'repo', 'action' => 'merge', $data['Project']['fork']
-					))) . ')';
-				}
-				*/
+
 			?>
 		</p>
 
-		<p class="description">
-			<?php echo $text->truncate($data['Commit']['message'], 80, '...', false, true); ?>
-		</p>
+		<?php if ($CurrentProject->repo->type == 'git' && !empty($data['Commit']['changes'])) :?>
+			<p class="description"><?php
+					echo $html->link($data['Commit']['changes'], array(
+						'controller' => 'commits', $data['Commit']['changes']
+					));
+			?></p>
+		<?php endif;?>
+
+		<p class="description"><?php
+			echo $text->truncate($data['Commit']['message'], 80, '...', false, true);
+		?></p>
 	</div>
 
 	<?php if (!empty($this->params['isAdmin'])):?>

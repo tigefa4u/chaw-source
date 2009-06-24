@@ -797,6 +797,7 @@ div.wiki-text code {
 }
 .timeline .event div.body {
 	float: left;
+	width: 80%;
 }
 .timeline .event p.action {
 	padding: 0;
@@ -812,6 +813,7 @@ div.wiki-text code {
 	font-family: "Andale Mono", monospace;
 	font-size: 90%;
 	line-height: 140%;
+	white-space: pre;
 }
 .timeline .event span.admin {
 	float: right;

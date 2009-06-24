@@ -33,7 +33,7 @@ class CommitTestCase extends CakeTestCase {
 
 		$results = $this->Commit->save($data);
 		$this->assertEqual($results['Commit']['revision'], $data['Commit']['revision']);
-		$this->assertEqual($results['Commit']['branch_id'], 1);
+		$this->assertEqual($results['Commit']['branch'], 'master');
 
 
 		$Timeline = ClassRegistry::init('Timeline');
@@ -42,11 +42,68 @@ class CommitTestCase extends CakeTestCase {
 		unset($results['Timeline']['created'], $results['Timeline']['modified']);
 		$this->assertEqual($results, array('Timeline' => array(
 			'id' => 1,
+			'user_id' => 0,
 			'project_id' => 1,
 			'model' => 'Commit',
 			'foreign_key' => 1,
+			'event' => 'committed',
+			'data' => 0
 		)));
 
+	}
+	
+	
+	function testCommitSaveUnique() {
+		$data = array('Commit' => array(
+			//'id'  => 1,
+			'revision'  => 2,
+			'author' => 'gwoo',
+			'commit_date' => '2008-10-13 09:26:08',
+			'message'  => 'Lorem ipsum dolor sit amet',
+			'created'  => '2008-10-13 09:26:08',
+			'modified'  => '2008-10-13 09:26:08',
+			'project_id'  => 1,
+			'user_id' => '',
+			'branch' => 'refs/heads/master'
+			));
+		$this->Commit->create($data);
+		$results = $this->Commit->save($data);
+		$this->assertEqual(1, $this->Commit->id);
+		$this->assertEqual($results['Commit']['revision'], $data['Commit']['revision']);
+		$this->assertEqual($results['Commit']['branch'], 'master');
+
+
+		$Timeline = ClassRegistry::init('Timeline');
+		$Timeline->recursive = -1;
+		$results = $Timeline->find('first');
+		unset($results['Timeline']['created'], $results['Timeline']['modified']);
+		$this->assertEqual($results, array('Timeline' => array(
+			'id' => 1,
+			'user_id' => 0,
+			'project_id' => 1,
+			'model' => 'Commit',
+			'foreign_key' => 1,
+			'event' => 'committed',
+			'data' => 0
+		)));
+	
+		$this->Commit->create($data);
+		$this->assertFalse($this->Commit->save($data));
+
+		$Timeline = ClassRegistry::init('Timeline');
+		$Timeline->recursive = -1;
+		$results = $Timeline->find('first');
+		unset($results['Timeline']['created'], $results['Timeline']['modified']);
+		$this->assertEqual($results, array('Timeline' => array(
+			'id' => 1,
+			'user_id' => 0,
+			'project_id' => 1,
+			'model' => 'Commit',
+			'foreign_key' => 1,
+			'event' => 'committed',
+			'data' => 0
+		)));
+		
 	}
 
 	function testCommitAggregate() {
@@ -59,8 +116,11 @@ class CommitTestCase extends CakeTestCase {
 			'created'  => '2008-10-13 09:26:08',
 			'modified'  => '2008-10-13 09:26:08',
 			'project_id'  => 1,
-			'user_id' => ''
-			));
+			'user_id' => '',
+			'event' => 'committed',
+			'data' => 0,
+			'branch' => ''
+		));
 
 		$results = $this->Commit->save($data);
 		$this->assertEqual($results, $data);
@@ -71,9 +131,12 @@ class CommitTestCase extends CakeTestCase {
 		unset($results['Timeline']['created'], $results['Timeline']['modified']);
 		$this->assertEqual($results, array('Timeline' => array(
 			'id' => 1,
+			'user_id' => 0,
 			'project_id' => 1,
 			'model' => 'Commit',
 			'foreign_key' => 1,
+			'event' => 'committed',
+			'data' => 0
 		)));
 	}
 }

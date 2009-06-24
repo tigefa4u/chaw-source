@@ -1,5 +1,5 @@
 <?php
-App::import('Model', 'Schema');
+App::import('Model', 'CakeSchema');
 /**
  * Short description
  *
@@ -28,10 +28,11 @@ class ChawUpgradeShell extends Shell {
 		$Tasks = new Folder(dirname(__FILE__) . DS . 'tasks');
 		list($folders, $files) = $Tasks->read();
 		$i = 1;
+		$choices = array();
 		foreach ($files as $file) {
 			if (preg_match('/upgrade_/', $file)) {
-				$choices[] = basename($file, '.php');
-				$this->out($i . '. ' . basename($file, '.php'));
+				$choices[$i] = basename($file, '.php');
+				$this->out($i++ . '. ' . basename($file, '.php'));
 			}
 		}
 
@@ -50,7 +51,7 @@ class ChawUpgradeShell extends Shell {
 		}
 
 		if (intval($choice) > 0 && intval($choice) <= count($choices)) {
-			$upgrade = Inflector::classify($choices[intval($choice) - 1]);
+			$upgrade = Inflector::classify($choices[intval($choice)]);
 		}
 
 		$this->tasks = array($upgrade);
@@ -58,30 +59,64 @@ class ChawUpgradeShell extends Shell {
 
 		return $this->{$upgrade}->execute();
 	}
+	
+	
+	function execute() {
+		$parentMethods = get_class_methods('ChawUpgradeShell');
+		$methods = array_diff(
+			get_class_methods($this),
+			get_class_methods('ChawUpgradeShell')
+		);
+
+		foreach ($methods as $method) {
+			if ($method != 'execute' && $method[0] != '_') {
+				$this->{$method}();
+			}
+		}
+	}
 
 
-	function _updateSchema(&$Model, $table, $new = false) {
+	function _updateSchema($table, $options = array()) {
+		$defaults = array(
+			'connection' => 'default', 
+			'backup' => false,
+			'new' => false,
+		);
+		extract(array_merge($defaults, $options));
+		
 		$Schema = new CakeSchema(array(
 			'name' => 'Chaw',
 		));
 		$Schema = $Schema->load();
 
-		$db = ConnectionManager::getDataSource($Model->useDbConfig);
+		$db = ConnectionManager::getDataSource($connection);
 		$sql = array();
-		if ($new == false) {
+		if ($backup == true) {
 			$oldTable = 'old_' . $table;
-			$Schema->tables['old_' . $table] = $Model->schema();
+			$Schema->tables['old_' . $table] = $db->describe($table);
 			$sql = array(
 				$db->dropSchema($Schema, $oldTable),
 				$db->createSchema($Schema, $oldTable)
 			);
 		}
-		$db->cacheSources = false;
+		
+		if ($new == true) {
+			$newTable = 'new_' . $table;
+			$Schema->tables['new_' . $table] = $Schema->tables[$table];
+			$sql = array(
+				$db->dropSchema($Schema, $newTable),
+				$db->createSchema($Schema, $newTable)
+			);
+		}
+		
+		if ($new == false) {
+			$db->cacheSources = false;
 
-		$sql = array_merge($sql, array(
-			$db->dropSchema($Schema, $table),
-			$db->createSchema($Schema, $table)
-		));
+			$sql = array_merge($sql, array(
+				$db->dropSchema($Schema, $table),
+				$db->createSchema($Schema, $table)
+			));
+		}
 
 		$result = false;
 		foreach ($sql as $message => $query) {

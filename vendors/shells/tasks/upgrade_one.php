@@ -17,20 +17,6 @@ App::import('Model', 'Schema');
  */
 class UpgradeOneTask extends ChawUpgradeShell {
 
-	function execute() {
-		$parentMethods = get_class_methods('ChawUpgradeShell');
-		$methods = array_diff(
-			get_class_methods($this),
-			get_class_methods('ChawUpgradeShell')
-		);
-
-		foreach ($methods as $method) {
-			if ($method != 'execute' && $method[0] != '_') {
-				$this->{$method}();
-			}
-		}
-	}
-
 	function projects() {
 		$this->Project = ClassRegistry::init('Project');
 		$this->Project->addToTimeline = false;

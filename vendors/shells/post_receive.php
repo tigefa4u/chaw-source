@@ -16,7 +16,7 @@
  */
 class PostReceiveShell extends Shell {
 
-	var $uses = array( 'Project', 'Commit');
+	var $uses = array( 'Project', 'Commit', 'Timeline');
 
 	function _welcome() {}
 
@@ -47,6 +47,7 @@ class PostReceiveShell extends Shell {
 			$refname = 'refs/heads/master';
 		}
 
+		//handle branch delete
 		if ($newrev == str_pad("0", 40, "0")) {
 			$this->Commit->addToTimeline = false;
 			$this->Commit->create(array(
@@ -57,7 +58,7 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Commit->save();
-			
+
 			$this->Timeline->create(array(
 				'project_id' =>  $this->Project->id,
 				'event' => 'removed',
@@ -68,39 +69,69 @@ class PostReceiveShell extends Shell {
 				'user_id' => $user
 			));
 
-			$this->Commit->save();
+			$this->Timeline->save();
 			return;
 		}
 
-		$conditions = array($oldrev . '..' . $newrev);
-		if ($oldrev == str_pad("0", 40, "0")) {
-			$conditions = array($newrev);
+		$commit = $this->Project->Repo->find('first', array(
+			'hash' => $newrev
+		));
+
+		$this->log($commit);
+
+		if (empty($commit)) {
+			return;
 		}
 
-		$commits = $this->Project->Repo->find('all', array(
-			'conditions' => $conditions,
+		//handle new branch
+		if ($oldrev == str_pad("0", 40, "0")) {
+			$this->Commit->addToTimeline = false;
+			$this->Commit->create(array(
+				'project_id' =>  $this->Project->id,
+				'branch' => $refname,
+			));
+
+			$this->Commit->save($commit);
+
+			$this->Timeline->create(array(
+				'project_id' =>  $this->Project->id,
+				'user_id' => $user,
+				'model' => 'Commit',
+				'foreign_key' => $this->Commit->id,
+				'event' => 'created',
+				'data' => $refname,
+			));
+
+			$this->Timeline->save();
+			return;
+		}
+
+		//handle other commits, including push with multiple
+
+		$count = $this->Project->Repo->find('count', array(
+			'conditions' => array($oldrev . '..' . $newrev),
 			'order' => 'asc'
 		));
 
-		if (!empty($commits)) {
+		$this->Commit->addToTimeline = false;
+		$this->Commit->create(array(
+			'project_id' =>  $this->Project->id,
+			'branch' => $refname,
+			'changes' => $oldrev . ".." . $newrev
+		));
 
-			$push = null;
-			foreach ($commits as $i => $data) {
-				$this->Commit->addToTimeline = false;
-				$this->Commit->create(array(
-					'project_id' =>  $this->Project->id,
-					'branch' => $refname,
-					'chawuser' => $user,
-					'pushed_by' => $push
-				));
+		$this->Commit->save($commit);
 
-				if ($i == 0) {
-					$push = $this->Commit->id;
-				}
+		$this->Timeline->create(array(
+			'project_id' =>  $this->Project->id,
+			'user_id' => $user,
+			'model' => 'Commit',
+			'foreign_key' => $this->Commit->id,
+			'event' => 'pushed',
+			'data' => ($count > 1) ? $count : 0,
+		));
 
-				$this->Commit->save($data['Repo']);
-			}
-		}
+		$this->Timeline->save();
 
 		return;
 	}

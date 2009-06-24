@@ -325,14 +325,19 @@ class Git extends Repo {
 
 		$options = array_merge(array(
 			'conditions' => array(), 'fields' => null,
-			'commit' => null, 'path' => '.',
+			'hash' => null, 'path' => '.',
 			'order' => 'desc', 'limit' => 100,  'page' => 1
 		), $options);
-
+		
+		if (!empty($options['revision'])) {
+			$options['hash'] = $options['revision'];
+			unset($options['revision']);
+		}
+		
 		list($options['fields'], $format) = $this->__fields($options['fields']);
 
 		if ($type == 'first') {
-			$data = $this->run('log', array($options['commit'], $format, '-1'));
+			$data = $this->run('log', array($options['hash'], $format, '-1'));
 			if (!empty($data)) {
 				return array_combine($options['fields'], array_filter(explode(chr(0), $data)));
 			}
