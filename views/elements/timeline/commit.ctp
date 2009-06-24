@@ -67,14 +67,17 @@
 		<?php if ($CurrentProject->repo->type == 'git' && !empty($data['Commit']['changes'])) :?>
 			<p class="description"><?php
 					echo $html->link($data['Commit']['changes'], array(
-						'controller' => 'commits', $data['Commit']['changes']
+						'controller' => 'commits', 'log', $data['Commit']['changes']
 					));
 			?></p>
 		<?php endif;?>
 
-		<p class="description"><?php
-			echo $text->truncate($data['Commit']['message'], 80, '...', false, true);
-		?></p>
+		<?php if (empty($data['Timeline']['data'])) :?>
+			<p class="description"><?php
+				echo $text->truncate($data['Commit']['message'], 80, '...', false, true);
+			?></p>
+		<?php endif;?>
+
 	</div>
 
 	<?php if (!empty($this->params['isAdmin'])):?>

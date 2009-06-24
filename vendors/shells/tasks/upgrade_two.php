@@ -18,6 +18,9 @@ App::import('Model', 'Schema');
 class UpgradeTwoTask extends ChawUpgradeShell {
 
 	function commits() {
+		$this->Timeline->cacheSources = false;
+		$this->Commit->cacheSources = false;
+		
 		$this->Timeline = ClassRegistry::init('Timeline');
 		$this->Timeline->setSource('timeline');
 
@@ -104,7 +107,7 @@ class UpgradeTwoTask extends ChawUpgradeShell {
 				$commit = $event['Commit'];
 
 				$event['Timeline']['event'] = 'pushed';
-				$event['Timeline']['data'] = 1;
+				$event['Timeline']['data'] = 0;
 				$event['Timeline']['user_id']  = $commit['user_id'];
 
 				$this->Commit->create($commit);
