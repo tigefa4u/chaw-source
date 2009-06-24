@@ -18,6 +18,9 @@ App::import('Model', 'Schema');
 class UpgradeTwoReverseTask extends ChawUpgradeShell {
 
 	function commits() {
+		$this->Timeline->cacheSources = false;
+		$this->Commit->cacheSources = false;
+		
 		$this->Timeline = ClassRegistry::init('Timeline');
 		$this->Timeline->setSource('timeline');
 
@@ -76,7 +79,7 @@ class UpgradeTwoReverseTask extends ChawUpgradeShell {
 
 			$previous = $event;
 
-			if (!empty($batch) > 1) {
+			if (!empty($batch) && $batch > 1) {
 				$first = $batch[0];
 				$event = end($batch);
 
