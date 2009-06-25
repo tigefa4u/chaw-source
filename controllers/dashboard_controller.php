@@ -51,10 +51,7 @@ class DashboardController extends AppController {
 			$this->passedArgs['type'] = null;
 		}
 
-		$this->Timeline->recursive = -1;
-		$timeline = $this->paginate();
-
-		$this->set('timeline', $this->Timeline->related($timeline));
+		$this->set('timeline', $this->paginate('Timeline'));
 	}
 
 	function feed() {
@@ -72,10 +69,7 @@ class DashboardController extends AppController {
 			$this->paginate['conditions']['Timeline.model'] = Inflector::classify($this->passedArgs['type']);
 		}
 
-		$this->Timeline->recursive = -1;
-		$data = $this->paginate();
-
-		$this->set('feed', $this->Timeline->related($data));
+		$this->set('feed', $this->paginate('Timeline'));
 	}
 
 	function admin_index() {
@@ -92,10 +86,7 @@ class DashboardController extends AppController {
 			$this->passedArgs['type'] = null;
 		}
 
-		$this->Timeline->recursive = -1;
-		$timeline = $this->paginate();
-
-		$this->set('timeline', $this->Timeline->related($timeline));
+		$this->set('timeline', $this->paginate('Timeline'));
 	}
 
 }
