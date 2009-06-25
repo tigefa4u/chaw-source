@@ -45,6 +45,13 @@ class Git extends Repo {
 		'clone', 'config', 'diff', 'status', 'log', 'show', 'blame', 'whatchanged',
 		'add', 'rm', 'commit', 'pull', 'push', 'branch', 'checkout', 'merge', 'remote'
 	);
+
+/**
+ * undocumented class variable
+ *
+ * @var array
+ **/
+	var $__data = array();
 /**
  * undocumented function
  *
@@ -328,12 +335,12 @@ class Git extends Repo {
 			'hash' => null, 'path' => '.',
 			'order' => 'desc', 'limit' => 100,  'page' => 1
 		), $options);
-		
+
 		if (!empty($options['revision'])) {
 			$options['hash'] = $options['revision'];
 			unset($options['revision']);
 		}
-		
+
 		list($options['fields'], $format) = $this->__fields($options['fields']);
 
 		if ($type == 'first') {
@@ -354,15 +361,24 @@ class Git extends Repo {
 			$this->cd();
 		}
 
-		$data = explode("\n", $this->run('log', array_merge(
-			$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
-		)));
+		$data = $this->__data;
+
+		if (empty($this->__data)) {
+			$data = array_merge((array)$data, explode("\n", $this->run('log', array_merge(
+				$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
+			))));
+			if (!empty($options['conditions'][0]) && strpos($options['conditions'][0], "..")) {
+				$data[] = array_shift(explode("..", $options['conditions'][0]));
+			}
+			$this->__data = $data;
+		}
 
 		if ($type == 'count') {
 			return count($data);
 		}
 
 		if ($type == 'all') {
+			$this->__data = array();
 			return parent::_findAll($data, $options);
 		}
 	}

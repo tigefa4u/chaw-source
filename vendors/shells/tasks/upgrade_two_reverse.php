@@ -61,9 +61,11 @@ class UpgradeTwoReverseTask extends ChawUpgradeShell {
 			$event['Timeline']['event'] = 'added';
 
 			if ('BranchCommit' == $event['Timeline']['model']) {
-
+				
 				if (!empty($previous) && $previous['Timeline']['model'] == 'BranchCommit' && $previous['Timeline']['created'] == $event['Timeline']['created']) {
+					$batch[] = $previous;
 					$batch[] = $event;
+					$this->out("Timeline {$previous['Timeline']['id']} & {$event['Timeline']['id']} batched");
 					$previous = $event;
 					continue;
 				}
@@ -72,6 +74,7 @@ class UpgradeTwoReverseTask extends ChawUpgradeShell {
 					$next = $events[$i+1];
 					if ($next['Timeline']['model'] == 'BranchCommit' && $next['Timeline']['created'] == $event['Timeline']['created']) {
 						$batch[] = $event;
+						$this->out("Timeline {$event['Timeline']['id']} batched");
 						$previous = $event;
 						continue;
 					}
@@ -80,9 +83,10 @@ class UpgradeTwoReverseTask extends ChawUpgradeShell {
 
 			$previous = $event;
 
-			if (!empty($batch)) {				
+			if (!empty($batch)) {
+				$count = count($batch);
 				$first = $batch[0];
-				//$event = end($batch);
+				$event = end($batch);
 
 				$this->Commit->setSource('commits');
 				$first = $this->Commit->findById($first['BranchCommit']['commit_id']);
@@ -94,7 +98,7 @@ class UpgradeTwoReverseTask extends ChawUpgradeShell {
 					$event['Timeline']['model'] = 'Commit';
 					$event['Timeline']['foreign_key'] = $commit['Commit']['id'];
 					$event['Timeline']['event'] = 'pushed';
-					$event['Timeline']['data'] = count($batch);
+					$event['Timeline']['data'] = $count - 1;
 
 					$commit['Commit']['changes'] = $first['Commit']['revision'] . '..' . $commit['Commit']['revision'];
 
@@ -146,7 +150,7 @@ class UpgradeTwoReverseTask extends ChawUpgradeShell {
 			} else {
 				$this->out("Timeline {$event['Timeline']['id']} NOT upgraded");
 			}
-
+			$batch = array();
 			usleep(25);
 		}
 	}
