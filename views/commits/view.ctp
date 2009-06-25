@@ -31,7 +31,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<?php echo h($commit['Commit']['message']);?>
 	</p>
 
-	<?php if(!empty($commit['Commit']['changes'])):?>
+	<?php if(!empty($commit['Commit']['changes']) && is_array($commit['Commit']['changes'])):?>
 	<p>
 		<strong><?php __('Changes') ?>:</strong>
 		<ul>

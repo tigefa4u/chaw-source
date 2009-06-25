@@ -280,7 +280,11 @@ class Repo extends Overloadable {
 		extract($query);
 
 		$results = array();
-
+		
+		if (strtolower($order) == 'asc') {
+			$data = array_reverse($data);
+		}
+		
 		foreach ($data as $key => $value) {
 			if ($key >= $offset) {
 				if ($result = $this->read($value)) {
@@ -292,11 +296,7 @@ class Repo extends Overloadable {
 				break;
 			}
 		}
-
-		if (strtolower($order) == 'asc') {
-			$results = array_reverse($results);
-		}
-
+		
 		return $results;
 	}
 /**

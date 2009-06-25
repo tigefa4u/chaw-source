@@ -18,7 +18,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<div class="commit">
 
 			<h4>
-				<?php echo $chaw->commit($commit['Repo']['revision']);?>
+				<?php echo $chaw->commit($commit['Repo']['revision'], (array)$CurrentProject);?>
 			</h4>
 
 			<p>

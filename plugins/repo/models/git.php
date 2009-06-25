@@ -364,7 +364,7 @@ class Git extends Repo {
 		$data = $this->__data;
 
 		if (empty($this->__data)) {
-			$data = array_merge((array)$data, explode("\n", $this->run('log', array_merge(
+			$data = explode("\n", trim($this->run('log', array_merge(
 				$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
 			))));
 			if (!empty($options['conditions'][0]) && strpos($options['conditions'][0], "..")) {
