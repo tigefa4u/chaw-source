@@ -137,6 +137,7 @@ class UsersController extends AppController {
 			$this->redirect(array('action' => 'login'));
 		}
 		$this->edit($id);
+		$this->render('edit');
 	}
 
 	function edit($id = null) {
