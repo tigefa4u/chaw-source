@@ -8,7 +8,7 @@
 		?>
 		<span class="date">
 			<?php
-				echo date("H:i", strtotime($data['Commit']['created']));
+				echo date("H:i", strtotime($data['Timeline']['created']));
 			?>
 		</span>
 	<p>
@@ -25,13 +25,23 @@
 			<strong>
 				<?php
 				if ($CurrentProject->repo->type == 'git') {
-				 	if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
-						__("merged");
-					} else {
-						__("pushed");
-					}
-					if (!empty($data['Timeline']['data'])) {
-						echo ' ' . $data['Timeline']['data'] . ' ' . __("commits", true);
+					if ($data['Timeline']['event'] == 'pushed') {
+					 	if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
+							__("merged");
+						} else {
+							__("pushed");
+						}
+						if (!empty($data['Timeline']['data'])) {
+							$link = ' ' . $data['Commit']['changes'];
+							if (!empty($data['Commit']['changes']) && strlen($data['Commit']['changes']) > 40) {
+								$link = ' ' . $html->link($data['Timeline']['data'], array(
+									'controller' => 'commits', 'logs', $data['Commit']['changes']
+								));
+							}
+							echo $link . ' ' . __("commits", true);
+						}
+					} else if ($data['Timeline']['event'] == 'created') {
+						__("created");
 					}
 
 				} else {
@@ -41,36 +51,26 @@
 			</strong>
 			<?php
 				if (empty($data['Timeline']['data'])) {
-					echo $chaw->commit($data['Commit']['revision'], $data['Project']);
+					echo $chaw->commit($data['Commit']['revision'], $data['Project']) . ' ';
+					__('to');
 				}
 
 				if (!empty($data['Commit']['branch'])) {
-					echo " to " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
+					echo " " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
 							'controller' => 'source', 'action' => 'branches',
 							$data['Commit']['branch']
 					)));
 				}
 
-				if (!empty($data['Project']['fork'])) {
-					//$project = "forks/{$data['Project']['fork']}/{$data['Project']['url']}/";
-				}
-
 				if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
-					echo ' in '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
+					__('in');
+					echo ' '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
 						'admin' => false, 'controller' => 'source'
 					)), array('class' => 'project'));
 				}
 
 			?>
 		</p>
-
-		<?php if ($CurrentProject->repo->type == 'git' && !empty($data['Commit']['changes'])) :?>
-			<p class="description"><?php
-					echo $html->link($data['Commit']['changes'], array(
-						'controller' => 'commits', 'logs', $data['Commit']['changes']
-					));
-			?></p>
-		<?php endif;?>
 
 		<?php if (empty($data['Timeline']['data'])) :?>
 			<p class="description"><?php
