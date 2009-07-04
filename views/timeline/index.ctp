@@ -49,9 +49,9 @@ $javascript->codeBlock($script, array('inline' => false));
 		foreach ((array)$timeline as $event):
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
+			$date = $event['Timeline']['created'];
+			$currentDate = date('l F d', strtotime($date));
 			if (!empty($event[$type])) {
-				$date = $event[$type]['created'];
-				$currentDate = date('l F d', strtotime($date));
 				if ($currentDate !== $prevDate)  {
 					if ($i > 1 ) {
 						echo "</ul></li>";

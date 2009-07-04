@@ -40,6 +40,13 @@ class CommitsController extends AppController {
 		$this->set('commit', $commit);
 	}
 
+	function logs($commits = null) {
+		$Source = ClassRegistry::init('Source');
+		$this->paginate = array('order' => 'asc');
+		$commits = $this->paginate($this->Project->Repo, array($commits));		
+		$this->set(compact('commits', 'args', 'current'));
+	}
+
 	function history() {
 		$args = func_get_args();
 		if (empty($args)) {

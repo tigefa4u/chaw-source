@@ -137,6 +137,7 @@ class UsersController extends AppController {
 			$this->redirect(array('action' => 'login'));
 		}
 		$this->edit($id);
+		$this->render('edit');
 	}
 
 	function edit($id = null) {
@@ -182,7 +183,6 @@ class UsersController extends AppController {
 		}
 
 		$this->set(compact('sshKeys', 'types'));
-		$this->render('edit');
 	}
 
 	function admin_index() {

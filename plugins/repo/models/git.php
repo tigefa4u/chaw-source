@@ -45,6 +45,13 @@ class Git extends Repo {
 		'clone', 'config', 'diff', 'status', 'log', 'show', 'blame', 'whatchanged',
 		'add', 'rm', 'commit', 'pull', 'push', 'branch', 'checkout', 'merge', 'remote'
 	);
+
+/**
+ * undocumented class variable
+ *
+ * @var array
+ **/
+	var $__data = array();
 /**
  * undocumented function
  *
@@ -325,21 +332,19 @@ class Git extends Repo {
 
 		$options = array_merge(array(
 			'conditions' => array(), 'fields' => null,
-			'commit' => null, 'path' => '.',
+			'hash' => null, 'path' => '.',
 			'order' => 'desc', 'limit' => 100,  'page' => 1
 		), $options);
 
-		list($options['fields'], $format) = $this->__fields($options['fields']);
-
-		if (empty($options['conditions']['branch'])) {
-			$options['conditions']['branch'] = 'master';
+		if (!empty($options['revision'])) {
+			$options['hash'] = $options['revision'];
+			unset($options['revision']);
 		}
 
-		$this->branch($options['conditions']['branch'], true);
-		unset($options['conditions']['branch']);
+		list($options['fields'], $format) = $this->__fields($options['fields']);
 
 		if ($type == 'first') {
-			$data = $this->run('log', array($options['commit'], $format, '-1'));
+			$data = $this->run('log', array($options['hash'], $format, '-1'));
 			if (!empty($data)) {
 				return array_combine($options['fields'], array_filter(explode(chr(0), $data)));
 			}
@@ -350,16 +355,30 @@ class Git extends Repo {
 			return false;
 		}
 
-		$this->cd();
-		$data = explode("\n", $this->run('log', array_merge(
-			$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
-		)));
+		if (!empty($options['branch'])) {
+			$this->branch($options['branch'], true);
+			unset($options['branch']);
+			$this->cd();
+		}
+
+		$data = $this->__data;
+
+		if (empty($this->__data)) {
+			$data = explode("\n", trim($this->run('log', array_merge(
+				$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
+			))));
+			if (!empty($options['conditions'][0]) && strpos($options['conditions'][0], "..")) {
+				$data[] = array_shift(explode("..", $options['conditions'][0]));
+			}
+			$this->__data = $data;
+		}
 
 		if ($type == 'count') {
 			return count($data);
 		}
 
 		if ($type == 'all') {
+			$this->__data = array();
 			return parent::_findAll($data, $options);
 		}
 	}

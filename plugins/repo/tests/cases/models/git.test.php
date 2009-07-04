@@ -238,7 +238,7 @@ class GitTest extends CakeTestCase {
 		));
 
 		//Test Find By Commit
-		$result = $Git->find(array('commit' => $newrev, 'fields' => array('email', 'author', 'hash')));
+		$result = $Git->find(array('hash' => $newrev, 'fields' => array('email', 'author', 'hash')));
 		$this->assertEqual($result, array(
 			'email' => 'gwoo@cakephp.org',
 			'author' => 'gwoo',
