@@ -1,0 +1,63 @@
+#header span.admin {
+	float: right;
+	font-size: 11px;
+}
+#header span.admin a {
+	color: #fff;
+}
+#header span.admin a {
+	color: #ccc;
+}
+#admin-content {
+	width:75%;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#admin-navigation {
+	clear: right;
+	float: right;
+	position: fixed;
+	right: 0;
+	width: 20%;
+	margin-top: 60px;
+	margin-left: 20px;
+	overflow: hidden;
+}
+
+#admin-navigation ul {
+	margin: 0;
+	padding: 0;
+	background: #f4f4f4;
+	border-top: 1px solid #e2e2e2;
+}
+
+#admin-navigation li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#admin-navigation li a {
+	display: block;
+	padding: 8px 10px;
+	text-decoration: none;
+	background: #f4f4f4;
+	border-bottom: 1px solid #e2e2e2;
+	border-left: 1px solid #e2e2e2;
+}
+
+#admin-navigation li a:hover, #admin-navigation li a.on {
+	text-decoration: none;
+	background: #fff;
+	border-left: 1px solid #fff;
+}
+.actions {
+	margin-top: 20px;
+}
+
+.panel {
+	float: left;
+	width: 49%;
+}

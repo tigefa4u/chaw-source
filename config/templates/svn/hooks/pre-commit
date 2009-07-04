@@ -1,0 +1,18 @@
+#!/bin/sh
+
+REPOS="$1"
+TXN="$2"
+export TERM="xterm"
+export PATH="<?php echo env('PATH'); ?>:<?php echo @$root; ?>"
+
+# Make sure that the log message contains some text.
+svnlook log -t "$TXN" "$REPOS" | \
+   grep "[a-zA-Z0-9]" > /dev/null || exit 1
+
+
+cd <?php echo APP; ?>
+
+chaw pre_commit <?php echo @$project; ?> $REPOS $TXN
+
+
+exit $?

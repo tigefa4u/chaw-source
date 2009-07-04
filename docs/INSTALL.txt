@@ -1,0 +1,45 @@
+GETTING STARTED
+
+If you have CakePHP, and have setup the cake to be in your PATH
+git clone git@thechaw.com:chaw.git
+cd chaw
+cake bake db_config
+cake schema run create
+visit, http://localhost/chaw/
+
+othewise,
+cd /your/webroot
+svn co https://svn.cakephp.org/repo/branches/1.2.x.x chaw
+cd chaw
+git clone git@thechaw.com:chaw.git
+cd cake/console
+cake --app=chaw bake db_config
+cake  --app=chaw schema run create
+visit, http://localhost/chaw/
+
+
+
+FOR GIT
+make sure "git" is in $PATH
+
+create the users...
+
+on OSX
+http://osxdaily.com/2007/10/29/how-to-add-a-user-from-the-os-x-command-line-works-with-leopard/
+sudo dscl . -create /Users/git
+sudo dscl . -create /Users/git UserShell /bin/bash
+sudo dscl . -create /Users/git NFSHomeDirectory /path/to/chaw/content/git/repo
+
+sudo dscl . -create /Users/svn
+sudo dscl . -create /Users/svn UserShell /bin/bash
+sudo dscl . -create /Users/svn NFSHomeDirectory /path/to/chaw/content/svn/repo
+
+on *nix
+http://blog.drewolson.org/2008/05/remote-git-repos-on-ubuntu-right-way.html
+adduser ...
+
+
+GOTCHAS
+-/etc/sshd_config
+AllowUsers is all or has the git and svn users
+StrictModes no

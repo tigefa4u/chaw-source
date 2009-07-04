@@ -1,0 +1,12 @@
+#!/bin/sh
+
+export TERM="xterm"
+export PATH="<?php echo env('PATH'); ?>:<?php echo $chaw; ?>"
+
+LIB=<?php echo $console; ?>
+
+APP=<?php echo APP; ?>
+
+exec php -q ${LIB}cake.php -working "${APP}" "$@"
+
+exit $?;

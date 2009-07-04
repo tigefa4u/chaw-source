@@ -1,0 +1,1282 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2009-01-25 23:07+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Yusuke Ando <yandod@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: \controllers\comments_controller.php:23
+msgid "Authorization Failed"
+msgstr "認証に失敗しました"
+
+#: \controllers\comments_controller.php:30
+msgid "Invalid Comment"
+msgstr "不正なコメントです"
+
+#: \controllers\comments_controller.php:43
+msgid "The comment was deleted"
+msgstr "コメントは削除されませんでした"
+
+#: \controllers\comments_controller.php:45
+msgid "The comment was NOT deleted"
+msgstr "コメントは削除されませんでした"
+
+#: \controllers\comments_controller.php:48
+msgid "The comment was removed from timeline"
+msgstr "コメントはタイムラインから取り除かれました"
+
+#: \controllers\commits_controller.php:72
+msgid "The commit was deleted"
+msgstr "コミットは削除されました"
+
+#: \controllers\commits_controller.php:74
+msgid "The commit was NOT deleted"
+msgstr "コミットは削除されませんでした"
+
+#: \controllers\commits_controller.php:77
+msgid "The commit was removed from timeline"
+msgstr "コメントはタイムラインから取り除かれませんでした"
+
+#: \controllers\permissions_controller.php:29
+msgid "Permissions updated"
+msgstr "権限は更新されました"
+
+#: \controllers\permissions_controller.php:31
+msgid "Permissions NOT updated"
+msgstr "権限は更新されませんでした"
+
+#: \controllers\permissions_controller.php:44
+msgid "Invalid request"
+msgstr "不正なリクエストです"
+
+#: \controllers\permissions_controller.php:49
+msgid "User removed"
+msgstr "ユーザは取り除かれました"
+
+#: \controllers\projects_controller.php:109
+#: \controllers\repo_controller.php:85
+msgid "Project is awaiting approval"
+msgstr "プロジェクトは承認待ちです"
+
+#: \controllers\projects_controller.php:115;213
+#: \controllers\repo_controller.php:87
+msgid "Project was created"
+msgstr "プロジェクトが作成されました"
+
+#: \controllers\projects_controller.php:122;219
+#: \controllers\repo_controller.php:102
+msgid "Project was NOT created"
+msgstr "プロジェクトは作成されませんでした"
+
+#: \controllers\projects_controller.php:155;251
+msgid "Project was updated"
+msgstr "プロジェクトは更新されました"
+
+#: \controllers\projects_controller.php:157;254
+msgid "Project was NOT updated"
+msgstr "プロジェクトは更新されませんでした"
+
+#: \controllers\projects_controller.php:237;305;308
+msgid "The project was invalid"
+msgstr "プロジェクトが不正です"
+
+#: \controllers\projects_controller.php:241
+msgid "Project Admin"
+msgstr "プロジェクト管理"
+
+#: \controllers\projects_controller.php:300
+msgid "The project was %s"
+msgstr "プロジェクトは %s されました"
+
+#: \controllers\projects_controller.php:302
+msgid "The project was NOT %s"
+msgstr "プロジェクトは %s されませんでした"
+
+#: \controllers\repo_controller.php:24;40
+msgid "You cannot fork an svn project yet"
+msgstr "SVNプロジェクトはまだフォークできません"
+
+#: \controllers\repo_controller.php:29
+msgid "Fast Forward successfull!"
+msgstr "高速前進に成功しました!!"
+
+#: \controllers\repo_controller.php:31
+msgid "Fast Forward failed. Time to merge manually?"
+msgstr "高速前進に失敗しました。手動でのマージを行いましょう。"
+
+#: \controllers\repo_controller.php:44
+msgid "Invalid Fork"
+msgstr "不正なフォーク"
+
+#: \controllers\repo_controller.php:55
+msgid "Merge successfull!"
+msgstr "マージが成功しました!"
+
+#: \controllers\repo_controller.php:57
+msgid "Merge failed. Time to merge manually?"
+msgstr "マージに失敗しました。手動でのマージを行いましょう。"
+
+#: \controllers\repo_controller.php:66
+msgid "You cannot fork an svn project"
+msgstr "SVNプロジェクトはフォークできません"
+
+#: \controllers\repo_controller.php:95;112
+msgid "You already have a fork"
+msgstr "あなたはフォークをすでに持っています"
+
+#: \controllers\source_controller.php:98
+msgid "You should have a nice clean working copy"
+msgstr "あなたは綺麗な作業コピーを持ったほうがよいです"
+
+#: \controllers\source_controller.php:100
+msgid "Oops, rebuild failed try again"
+msgstr "おっと、再ビルドに失敗しました。再試行してください"
+
+#: \controllers\source_controller.php:117
+msgid "%s was deleted"
+msgstr "%s は削除されました"
+
+#: \controllers\source_controller.php:119
+msgid "Oops, delete failed try again"
+msgstr "おっと、削除に失敗しました。再試行してください"
+
+#: \controllers\tickets_controller.php:63;74
+msgid "Invalid ticket"
+msgstr "不正なチケットです"
+
+#: \controllers\tickets_controller.php:102
+msgid "Ticket saved"
+msgstr "チケットは保存されました"
+
+#: \controllers\tickets_controller.php:128
+msgid "Comment saved"
+msgstr "コメントは保存されました"
+
+#: \controllers\tickets_controller.php:130
+msgid "Ticket updated"
+msgstr "チケットは更新されました"
+
+#: \controllers\tickets_controller.php:135
+msgid "Comment was NOT saved"
+msgstr "コメントは保存されませんでした"
+
+#: \controllers\tickets_controller.php:137
+msgid "Ticket was NOT updated"
+msgstr "チケットは更新されませんでした"
+
+#: \controllers\timeline_controller.php:82
+msgid "The timeline event was deleted"
+msgstr "タイムラインイベントは削除されました"
+
+#: \controllers\timeline_controller.php:84
+msgid "The timeline event was NOT deleted"
+msgstr "タイムライン上のイベントは削除されませんでした"
+
+#: \controllers\users_controller.php:95
+msgid "You may now change your password"
+msgstr "あなたはパスワードを今変更することも出来ます"
+
+#: \controllers\users_controller.php:102
+msgid "Did you forget your password?"
+msgstr "パスワードを忘れてしまいましたか?"
+
+#: \controllers\users_controller.php:119
+msgid "%1$s is now registered"
+msgstr "%s$1 は登録されました"
+
+#: \controllers\users_controller.php:122
+msgid "User NOT added"
+msgstr "ユーザは追加されませんでした"
+
+#: \controllers\users_controller.php:161
+msgid "User updated"
+msgstr "ユーザは更新されました"
+
+#: \controllers\users_controller.php:163
+msgid "User NOT updated"
+msgstr "ユーザは更新されませんでした"
+
+#: \controllers\users_controller.php:193
+msgid "%s added"
+msgstr "%s は追加されました"
+
+#: \controllers\users_controller.php:196
+msgid "%s was not found"
+msgstr "%s は見つかりませんでした"
+
+#: \controllers\users_controller.php:243
+msgid "Check your email."
+msgstr "Eメールを確認してください。"
+
+#: \controllers\users_controller.php:245
+msgid "Email was not sent"
+msgstr "Eメールは送信されていません"
+
+#: \controllers\users_controller.php:248
+msgid "User could not be found"
+msgstr "ユーザが見つかりませんでした"
+
+#: \controllers\users_controller.php:254
+msgid "Your Account was activated"
+msgstr "あなたのアカウントは有効になりました"
+
+#: \controllers\users_controller.php:256
+msgid "Your Account could not be activated"
+msgstr "あなたのアカウントは有効にできませんでした"
+
+#: \controllers\users_controller.php:283
+msgid "Check your email to verify your request"
+msgstr "Eメールを確認してあなたのリクエストを承認してください"
+
+#: \controllers\users_controller.php:307
+msgid "Check your email for your new password."
+msgstr "あなたの新しいパスワードの為にEメールを確認してください"
+
+#: \controllers\users_controller.php:319
+msgid "Your password was changed"
+msgstr "あなたのパスワードは変更されました"
+
+#: \controllers\users_controller.php:322
+msgid "Your password was NOT changed"
+msgstr "あなたのパスワードは変更されませんでした"
+
+#: \controllers\users_controller.php:332
+msgid "User was removed"
+msgstr "ユーザは取り除かれました"
+
+#: \controllers\users_controller.php:334
+msgid "User was NOT changed"
+msgstr "ユーザは変更されませんでした"
+
+#: \controllers\versions_controller.php:32
+msgid "Invalid Version."
+msgstr "不正なバージョンです"
+
+#: \controllers\versions_controller.php:54
+#: \views\versions\index.ctp:47
+msgid "New Version"
+msgstr "新規バージョン"
+
+#: \controllers\versions_controller.php:59;82
+msgid "The Version has been saved"
+msgstr "バージョンは保存されました"
+
+#: \controllers\versions_controller.php:62;85
+msgid "The Version could not be saved. Please, try again."
+msgstr "バージョンが保存できませんでした。しばらくしてから再試行してください"
+
+#: \controllers\versions_controller.php:70
+msgid "Invalid Action."
+msgstr "不正なアクションです"
+
+#: \controllers\versions_controller.php:74
+msgid "Modify Version"
+msgstr "バージョンを修正"
+
+#: \controllers\versions_controller.php:77
+msgid "Invalid Version"
+msgstr "不正なバージョンです"
+
+#: \controllers\wiki_controller.php:46
+msgid "You are not authorized to delete."
+msgstr "あなたは削除を許可されていません"
+
+#: \controllers\wiki_controller.php:56
+msgid "You are not authorized to activate."
+msgstr "あなたはアクティベートを許可されていません"
+
+#: \controllers\wiki_controller.php:163
+msgid "%s saved"
+msgstr "%s は保存されました"
+
+#: \controllers\wiki_controller.php:166
+msgid "%s NOT saved"
+msgstr "%s は保存されませんでした"
+
+#: \controllers\components\access.php:91;101
+msgid "Chaw needs to be installed"
+msgstr "Chawはインストールが必要です"
+
+#: \controllers\components\access.php:116
+msgid "Chaw needs to be installed. Please <a href='%s'>Login</a> or Register"
+msgstr "Chawはインストールが必要です。 <a href='%s'>ログイン</a>か登録をしてください"
+
+#: \controllers\components\access.php:177
+msgid "Select a Project"
+msgstr "プロジェクトを選択"
+
+#: \models\project.php:276
+msgid "##The home page for %s"
+msgstr "## %s のホームページ"
+
+#: \views\commits\history.ctp:14
+msgid "History"
+msgstr "履歴"
+
+#: \views\commits\history.ctp:41
+#: \views\commits\view.ctp:16
+#: \views\source\index.ctp:32
+msgid "Author"
+msgstr "作者"
+
+#: \views\commits\history.ctp:45
+#: \views\commits\view.ctp:20
+#: \views\source\index.ctp:34
+msgid "Date"
+msgstr "日付"
+
+#: \views\commits\history.ctp:56
+#: \views\commits\view.ctp:29
+msgid "Changes"
+msgstr "変更"
+
+#: \views\commits\index.ctp:12
+#: \views\timeline\index.ctp:29
+msgid "Commits"
+msgstr "コミット"
+
+#: \views\commits\view.ctp:6
+msgid "All Commits"
+msgstr "全てのコミット"
+
+#: \views\dashboard\admin_index.ctp:2
+#: \views\dashboard\index.ctp:1
+#: \views\layouts\admin.ctp:149
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: \views\dashboard\index.ctp:5
+msgid "View Account"
+msgstr "アカウントを見る"
+
+#: \views\elements\current_projects.ctp:30
+#: \views\layouts\admin.ctp:114;165
+#: \views\layouts\default.ctp:114
+#: \views\projects\admin_index.ctp:2
+#: \views\projects\index.ctp:14
+msgid "Projects"
+msgstr "プロジェクト"
+
+#: \views\elements\current_user.ctp:22
+#: \views\wiki\index.ctp:157
+msgid "activate"
+msgstr "有効化"
+
+#: \views\elements\current_user.ctp:30
+msgid "account"
+msgstr "アカウント"
+
+#: \views\elements\current_user.ctp:36
+msgid "dashboard"
+msgstr "ダッシュボード"
+
+#: \views\elements\current_user.ctp:43
+msgid "logout"
+msgstr "ログアウト"
+
+#: \views\elements\current_user.ctp:51
+#: \views\users\login.ctp:7
+msgid "Login"
+msgstr "ログイン"
+
+#: \views\elements\current_user.ctp:56
+#: \views\users\add.ctp:4
+msgid "Register"
+msgstr "登録"
+
+#: \views\elements\markdown_help.ctp:2
+msgid "Markdown Help"
+msgstr "Markdown記法 ヘルプ"
+
+#: \views\elements\markdown_help.ctp:6
+msgid "ticket"
+msgstr "チケット"
+
+#: \views\elements\markdown_help.ctp:8
+msgid "commit"
+msgstr "コミット"
+
+#: \views\elements\markdown_help.ctp:11
+msgid "inline code"
+msgstr "インラインコード"
+
+#: \views\elements\markdown_help.ctp:18
+msgid "header 1"
+msgstr "見出し1"
+
+#: \views\elements\markdown_help.ctp:20
+msgid "header 2"
+msgstr "見出し2"
+
+#: \views\elements\markdown_help.ctp:23;25
+msgid "italic"
+msgstr "斜体"
+
+#: \views\elements\markdown_help.ctp:27;29
+msgid "bold"
+msgstr "太字"
+
+#: \views\elements\markdown_help.ctp:32
+msgid "unordered list 1"
+msgstr "番号なしリスト"
+
+#: \views\elements\markdown_help.ctp:34
+msgid "unordered list 2"
+msgstr "番号なしリスト2"
+
+#: \views\elements\project_details.ctp:5
+msgid "Awaiting Approval"
+msgstr "承認待ち"
+
+#: \views\elements\project_details.ctp:9
+#: \views\tickets\view.ctp:89
+#: \views\versions\admin_add.ctp:18
+#: \views\versions\admin_edit.ctp:24
+msgid "Description"
+msgstr "説明"
+
+#: \views\elements\project_details.ctp:23
+msgid "fork it"
+msgstr "このプロジェクトをフォーク"
+
+#: \views\elements\project_details.ctp:30
+msgid "fast forward"
+msgstr "高速前進"
+
+#: \views\elements\project_details.ctp:38
+msgid "view forks"
+msgstr "フォークを見る"
+
+#: \views\elements\project_details.ctp:43
+msgid "view parent"
+msgstr "メインプロジェクトを見る"
+
+#: \views\elements\project_details.ctp:51
+msgid "remove branch"
+msgstr "ブランチを除去"
+
+#: \views\elements\project_details.ctp:68
+msgid "view history"
+msgstr "履歴を見る"
+
+#: \views\elements\recent\comments.ctp:27
+msgid "Recent Comments"
+msgstr "最近のコメント"
+
+#: \views\elements\recent\commits.ctp:22
+msgid "Recent Commits"
+msgstr "最近のコミット"
+
+#: \views\elements\recent\tickets.ctp:26
+msgid "Recent Tickets"
+msgstr "最近のチケット"
+
+#: \views\elements\recent\wiki.ctp:30
+msgid "Wiki Updates"
+msgstr "Wiki上の更新"
+
+#: \views\elements\timeline\comment.ctp:28
+#: \views\elements\timeline\commit.ctp:28;30
+#: \views\elements\timeline\ticket.ctp:30
+#: \views\elements\timeline\wiki.ctp:35
+#: \views\users\admin_index.ctp:63;65
+msgid "remove"
+msgstr "除去"
+
+#: \views\elements\timeline\ticket.ctp:4
+#: \views\tickets\view.ctp:45
+msgid "Ticket"
+msgstr "チケット"
+
+#: \views\elements\timeline\wiki.ctp:26
+msgid "current revision modified"
+msgstr "現在のリビジョンは修正されました"
+
+#: \views\elements\timeline\wiki.ctp:28
+msgid "new revision created"
+msgstr "新しいリビジョンが作成されました"
+
+#: \views\layouts\admin.ctp:79
+#: \views\layouts\default.ctp:79
+msgid "Source"
+msgstr "ソース"
+
+#: \views\layouts\admin.ctp:86
+#: \views\layouts\default.ctp:86
+#: \views\timeline\index.ctp:12
+msgid "Timeline"
+msgstr "タイムライン"
+
+#: \views\layouts\admin.ctp:93
+#: \views\layouts\default.ctp:93
+#: \views\timeline\index.ctp:41
+msgid "Wiki"
+msgstr "ウィキ"
+
+#: \views\layouts\admin.ctp:100
+#: \views\layouts\default.ctp:100
+#: \views\tickets\index.ctp:3
+#: \views\timeline\index.ctp:33
+msgid "Tickets"
+msgstr "チケット"
+
+#: \views\layouts\admin.ctp:107
+#: \views\layouts\default.ctp:107
+#: \views\versions\index.ctp:12
+msgid "Versions"
+msgstr "バージョン"
+
+#: \views\layouts\admin.ctp:123;145
+#: \views\layouts\default.ctp:123
+msgid "Admin"
+msgstr "管理"
+
+#: \views\layouts\admin.ctp:153
+msgid "Permissions"
+msgstr "権限管理"
+
+#: \views\layouts\admin.ctp:157
+#: \views\users\admin_index.ctp:2
+msgid "Users"
+msgstr "ユーザー"
+
+#: \views\layouts\admin.ctp:160
+msgid "Settings"
+msgstr "設定"
+
+#: \views\layouts\admin.ctp:176
+msgid "New Project"
+msgstr "新しいプロジェクト"
+
+#: \views\layouts\admin.ctp:201
+#: \views\layouts\default.ctp:153
+msgid "About"
+msgstr "アバウト"
+
+#: \views\layouts\admin.ctp:204
+#: \views\layouts\default.ctp:156
+msgid "CakePHP: the rapid development php framework"
+msgstr "CakePHP:高速開発PHPフレームワーク"
+
+#: \views\layouts\email\html\default.ctp:37
+msgid "This email was sent using the <a href=\"http://cakephp.org\">CakePHP Framework</a>"
+msgstr "このメールは<a href=\"http://cakephp.org\">CakePHPフレームワーク</a>によって送信されています"
+
+#: \views\layouts\email\text\default.ctp:30
+msgid "This email was sent using the CakePHP Framework, http://cakephp.org."
+msgstr "このメールはCakePHPフレームワークで送信されています。 http://cakephp.org"
+
+#: \views\pages\start.ctp:6
+msgid "Your database configuration file is NOT present."
+msgstr "データベース設定ファイルが作成されていません"
+
+#: \views\pages\start.ctp:8
+msgid "Rename APP/config/database.php.default to APP/config/database.php"
+msgstr "APP/config/database.php.default を APP/config/database.php へリネームしてください"
+
+#: \views\pages\start.ctp:17
+msgid "Chaw is NOT able to connect to the database."
+msgstr "Chawはデータベースへ接続できません"
+
+#: \views\pages\start.ctp:19
+msgid "Check that your database exists and the proper settings are in APP/config/database.php"
+msgstr "データベースが存在しているか、APP/config/database.php の設定が正しいかを確認してください"
+
+#: \views\pages\start.ctp:25
+msgid "Finished"
+msgstr "終了"
+
+#: \views\pages\start.ctp:38
+msgid "Your tmp directory is NOT writable."
+msgstr "tmpディレクトリが書き込み可能ではありません"
+
+#: \views\pages\start.ctp:51
+msgid "%s is NOT writable."
+msgstr "%s が書き込み可能ではありません"
+
+#: \views\pages\start.ctp:60
+msgid "Register for an account"
+msgstr "新しいアカウントを登録"
+
+#: \views\pages\start.ctp:62
+msgid "Create a Project"
+msgstr "プロジェクトを新規作成"
+
+#: \views\permissions\admin_add.ctp:4
+#: \views\permissions\admin_index.ctp:5
+msgid "Manage Permissions"
+msgstr "権限管理"
+
+#: \views\permissions\admin_index.ctp:12
+msgid "Guide"
+msgstr "ガイド"
+
+#: \views\permissions\admin_index.ctp:13
+msgid "access rights"
+msgstr "アクセス権"
+
+#: \views\permissions\admin_index.ctp:15
+msgid "read"
+msgstr "読み取り"
+
+#: \views\permissions\admin_index.ctp:16
+msgid "write (c, u, d)"
+msgstr "書き込み (c, u, d)"
+
+#: \views\permissions\admin_index.ctp:21
+msgid "create"
+msgstr "新規作成"
+
+#: \views\permissions\admin_index.ctp:22
+msgid "update"
+msgstr "更新"
+
+#: \views\permissions\admin_index.ctp:23
+#: \views\users\edit.ctp:42
+#: \views\wiki\index.ctp:159
+msgid "delete"
+msgstr "削除"
+
+#: \views\permissions\admin_index.ctp:28
+msgid "with `*`, only logged in users can `write`"
+msgstr "`*` の場合、ユーザは書き込み可能と記録されます"
+
+#: \views\permissions\admin_index.ctp:34
+msgid "use groups from"
+msgstr "このグループを使う"
+
+#: \views\permissions\admin_index.ctp:47
+msgid "create groups"
+msgstr "グループ作成"
+
+#: \views\projects\add.ctp:7
+msgid "Project Setup"
+msgstr "プロジェクト設定"
+
+#: \views\projects\add.ctp:10
+#: \views\projects\edit.ctp:12
+msgid "Repo Type"
+msgstr "リポジトリタイプ"
+
+#: \views\projects\add.ctp:12
+msgid "The project name must be unique."
+msgstr "プロジェクト名はユニークでなければなりません"
+
+#: \views\projects\add.ctp:26
+#: \views\tickets\add.ctp:45
+#: \views\tickets\view.ctp:164
+msgid "Options"
+msgstr "オプション"
+
+#: \views\projects\add.ctp:28
+msgid "Groups"
+msgstr "グループ"
+
+#: \views\projects\add.ctp:29
+msgid "Ticket Types"
+msgstr "チケットの種別"
+
+#: \views\projects\add.ctp:30
+msgid "Ticket Priorities"
+msgstr "チケットの優先度"
+
+#: \views\projects\add.ctp:31
+msgid "Ticket Statuses"
+msgstr "チケットの状態"
+
+#: \views\projects\add.ctp:33
+#: \views\projects\edit.ctp:27
+msgid "Comma seperated"
+msgstr "カンマ区切り"
+
+#: \views\projects\admin_index.ctp:27
+#: \views\tickets\index.ctp:24
+#: \views\users\admin_index.ctp:11
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr "%page%ページ　(全%pages%ページ中) %current%件を表示(全%count%件中) %start%件から%end%件を表示"
+
+#: \views\projects\admin_index.ctp:94
+#: \views\projects\index.ctp:115
+#: \views\tickets\view.ctp:55
+#: \views\users\admin_index.ctp:62
+#: \views\versions\index.ctp:23
+msgid "edit"
+msgstr "編集"
+
+#: \views\projects\admin_index.ctp:102
+#: \views\tickets\index.ctp:82
+#: \views\users\admin_index.ctp:83
+msgid "previous"
+msgstr "前へ"
+
+#: \views\projects\admin_index.ctp:104
+#: \views\tickets\index.ctp:84
+#: \views\users\admin_index.ctp:85
+msgid "next"
+msgstr "次へ"
+
+#: \views\projects\index.ctp:4
+msgid "There are no forks"
+msgstr "フォークはありません"
+
+#: \views\projects\index.ctp:6
+msgid "Sorry, no projects are available"
+msgstr "申し訳ありません、有効なプロジェクトがありません"
+
+#: \views\projects\index.ctp:20
+#: \views\tickets\index.ctp:8
+msgid "Mine"
+msgstr "私のもの"
+
+#: \views\projects\index.ctp:23
+msgid "All"
+msgstr "全て"
+
+#: \views\projects\index.ctp:27
+#: \views\projects\start.ctp:41
+msgid "Public"
+msgstr "公開"
+
+#: \views\projects\index.ctp:31
+msgid "Fork"
+msgstr "フォーク"
+
+#: \views\projects\index.ctp:40
+msgid "Projects Feed"
+msgstr "プロジェクトフィード"
+
+#: \views\projects\index.ctp:49
+#: \views\timeline\index.ctp:23
+msgid "Forks"
+msgstr "フォーク"
+
+#: \views\projects\index.ctp:93
+msgid "timeline"
+msgstr "タイムライン"
+
+#: \views\projects\index.ctp:98
+msgid "wiki"
+msgstr "ウィキ"
+
+#: \views\projects\index.ctp:103
+msgid "tickets"
+msgstr "チケット"
+
+#: \views\projects\index.ctp:110
+#: \views\wiki\index.ctp:156
+msgid "view"
+msgstr "見る"
+
+#: \views\projects\index.ctp:120
+msgid "admin"
+msgstr "管理"
+
+#: \views\projects\start.ctp:2
+msgid "You must activate your account"
+msgstr "アカウントを有効化してください"
+
+#: \views\projects\start.ctp:35
+msgid "Start A Project"
+msgstr "プロジェクトを始める"
+
+#: \views\projects\start.ctp:52
+msgid "Register your project on Ohloh"
+msgstr "あなたのプロジェクトをOhlohに登録してください"
+
+#: \views\projects\start.ctp:66
+msgid "Private"
+msgstr "プライベート"
+
+#: \views\repo\fork_it.ctp:5
+msgid "Are you ready to fork %s"
+msgstr "%s をフォークする準備はできましたか"
+
+#: \views\repo\fork_it.ctp:6
+msgid "<p>A fork is a central repository for your copy of the project.</p>"
+msgstr "<p>フォークはプロジェクトの中央のリポジトリのあなたの為のコピーです。</p>"
+
+#: \views\repo\fork_it.ctp:7
+msgid "<p>If you plan to contribute to the main project, then a fork may be just what you need.</p>"
+msgstr "<p>メインプロジェクトに貢献しようとしている場合はフォークするのが良いでしょう。</p>"
+
+#: \views\repo\fork_it.ctp:8
+msgid "<p>Otherwise, you can always <strong>git clone</strong> %s:%s.git</p>"
+msgstr "<p>または <strong>git clone</strong> %s:%s.git はフォークせずに、常に可能です</p>"
+
+#: \views\repo\fork_it.ctp:13
+msgid "Go For It"
+msgstr "貢献を始める"
+
+#: \views\repo\fork_it.ctp:14
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: \views\source\index.ctp:31
+msgid "Name"
+msgstr "名前"
+
+#: \views\source\index.ctp:33
+msgid "Message"
+msgstr "本文"
+
+#: \views\source\index.ctp:35
+msgid "Commit"
+msgstr "コミット"
+
+#: \views\source\view.ctp:7
+msgid "history"
+msgstr "履歴"
+
+#: \views\tickets\add.ctp:22
+msgid "Add Ticket"
+msgstr "チケットの追加"
+
+#: \views\tickets\add.ctp:24
+#: \views\tickets\index.ctp:37
+#: \views\tickets\view.ctp:88
+#: \views\versions\admin_add.ctp:17
+#: \views\versions\admin_edit.ctp:23
+msgid "Title"
+msgstr "タイトル"
+
+#: \views\tickets\add.ctp:26
+msgid ""
+"###What happened:\n"
+"- something\n"
+"\n"
+"\n"
+"###What was expected:\n"
+"- something else\n"
+"\n"
+msgstr ""
+"###何が起きたか:\n"
+"- 何か\n"
+"\n"
+"\n"
+"###期待していた事:\n"
+"- それ以外の何か\n"
+"\n"
+
+#: \views\tickets\add.ctp:36
+#: \views\tickets\view.ctp:94
+msgid "Tags"
+msgstr "タグ"
+
+#: \views\tickets\add.ctp:40
+#: \views\tickets\view.ctp:98
+msgid "comma separated"
+msgstr "カンマ区切り"
+
+#: \views\tickets\add.ctp:60
+#: \views\tickets\view.ctp:178
+#: \views\users\add.ctp:11
+#: \views\users\change.ctp:9
+#: \views\users\edit.ctp:59
+#: \views\users\forgotten.ctp:19
+#: \views\users\login.ctp:18
+#: \views\versions\admin_add.ctp:31
+#: \views\versions\admin_edit.ctp:37
+#: \views\wiki\add.ctp:55
+msgid "Submit"
+msgstr "送信"
+
+#: \views\tickets\index.ctp:31
+msgid "Version"
+msgstr "バージョン"
+
+#: \views\tickets\index.ctp:32
+msgid "Type"
+msgstr "種類"
+
+#: \views\tickets\index.ctp:33
+msgid "Priority"
+msgstr "優先度"
+
+#: \views\tickets\index.ctp:35
+#: \views\tickets\view.ctp:156
+msgid "Status"
+msgstr "状態"
+
+#: \views\tickets\index.ctp:87
+msgid "New Ticket"
+msgstr "新しいチケット"
+
+#: \views\tickets\view.ctp:68
+msgid "reported by"
+msgstr "報告者"
+
+#: \views\tickets\view.ctp:83
+msgid "Modify Ticket"
+msgstr "チケットを修正"
+
+#: \views\tickets\view.ctp:139
+msgid "Preview"
+msgstr "プレビュー"
+
+#: \views\tickets\view.ctp:153
+msgid "Comment"
+msgstr "コメント"
+
+#: \views\timeline\index.ctp:17
+#: \views\versions\admin_edit.ctp:20
+msgid "Project"
+msgstr "プロジェクト"
+
+#: \views\timeline\index.ctp:26
+msgid "Parent"
+msgstr "親"
+
+#: \views\timeline\index.ctp:37
+msgid "Comments"
+msgstr "コメント"
+
+#: \views\users\add.ctp:6
+#: \views\users\admin_index.ctp:27
+#: \views\users\edit.ctp:8
+#: \views\users\forgotten.ctp:8
+#: \views\users\login.ctp:9
+msgid "Username"
+msgstr "ユーザー名"
+
+#: \views\users\add.ctp:7
+#: \views\users\login.ctp:10
+msgid "Password"
+msgstr "パスワード"
+
+#: \views\users\add.ctp:8
+#: \views\users\admin_index.ctp:28
+#: \views\users\edit.ctp:9
+#: \views\users\forgotten.ctp:16
+msgid "Email"
+msgstr "Eメール"
+
+#: \views\users\admin_index.ctp:4
+msgid "All Users"
+msgstr "全てのユーザー"
+
+#: \views\users\admin_index.ctp:23
+msgid "Group"
+msgstr "グループ"
+
+#: \views\users\admin_index.ctp:29
+msgid "Last Login"
+msgstr "最終ログイン"
+
+#: \views\users\change.ctp:4
+#: \views\users\edit.ctp:10
+msgid "Change Password"
+msgstr "パスワードを変更"
+
+#: \views\users\change.ctp:6
+msgid "Password"
+msgstr "パスワード"
+
+#: \views\users\edit.ctp:4
+msgid "Update Info"
+msgstr "情報を更新"
+
+#: \views\users\edit.ctp:16
+msgid "Ssh Keys"
+msgstr "SSH鍵"
+
+#: \views\users\edit.ctp:49
+#: \views\wiki\index.ctp:19;128
+msgid "New"
+msgstr "新規"
+
+#: \views\users\forgotten.ctp:3
+msgid "Forgotten Password"
+msgstr "パスワードを忘れた"
+
+#: \views\users\login.ctp:12
+msgid "Remember Me"
+msgstr "記憶する"
+
+#: \views\users\login.ctp:14
+msgid "Remember me for 2 weeks"
+msgstr "ログイン情報を２週間記憶する"
+
+#: \views\users\view.ctp:4
+msgid "Will soon have a profile to share with you"
+msgstr "プロフィールの共有は近日中に提供されます"
+
+#: \views\versions\admin_add.ctp:19
+#: \views\versions\admin_edit.ctp:25
+msgid "Due Date"
+msgstr "期限"
+
+#: \views\versions\admin_add.ctp:20
+#: \views\versions\admin_edit.ctp:26
+msgid "Completed"
+msgstr "完了"
+
+#: \views\versions\index.ctp:30
+#: \views\versions\view.ctp:15
+msgid "Created"
+msgstr "作成日"
+
+#: \views\versions\index.ctp:33
+#: \views\versions\view.ctp:19
+msgid "Due by"
+msgstr "期限"
+
+#: \views\wiki\add.ctp:34
+msgid "use a path to group pages into categories and subcategories. example: /logs/by/%s/"
+msgstr "ページをグループやカテゴリに整理するにはパスを使用してください。 例: /logs/by/%s/"
+
+#: \views\wiki\index.ctp:10
+msgid "Active"
+msgstr "有効"
+
+#: \views\wiki\index.ctp:12
+msgid "Not Active"
+msgstr "無効"
+
+#: \views\wiki\index.ctp:17;123
+msgid "Edit"
+msgstr "編集"
+
+#: \views\wiki\index.ctp:61
+msgid "Wiki Nav"
+msgstr "ウィキナビ"
+
+#: \views\wiki\index.ctp:79
+msgid "Recent Entries"
+msgstr "最近のエントリ"
+
+#: \views\wiki\index.ctp:117
+msgid "View"
+msgstr "見る"
+
+#: \webroot\test.php:101
+msgid "Debug setting does not allow access to this url."
+msgstr "デバッグ設定はこのURLのアクセスは許可されません"
+
+#~ msgid "Invalid ticket,true"
+#~ msgstr "不正なチケットです"
+#~ msgid "mine"
+#~ msgstr "自分用"
+
+#, fuzzy
+#~ msgid "Error: Your current Cake configuration is set to"
+#~ msgstr "データベース設定ファイルが作成されていません"
+
+#, fuzzy
+#~ msgid ""
+#~ "Your database configuration was not found. Take a moment to create one."
+#~ msgstr "データベース設定ファイルが作成されていません"
+
+#, fuzzy
+#~ msgid "%s deleted"
+#~ msgstr "削除"
+
+#, fuzzy
+#~ msgid "%s is allowed."
+#~ msgstr "%s が書き込み可能ではありません"
+
+#, fuzzy
+#~ msgid "Permission granted."
+#~ msgstr "新しいリビジョンが作成されました"
+
+#, fuzzy
+#~ msgid "Permission denied."
+#~ msgstr "権限管理"
+
+#, fuzzy
+#~ msgid "Permission inherited."
+#~ msgstr "権限管理"
+
+#, fuzzy
+#~ msgid "Commands:"
+#~ msgstr "コメント"
+
+#, fuzzy
+#~ msgid "usage:"
+#~ msgstr "本文"
+
+#, fuzzy
+#~ msgid "End create."
+#~ msgstr "新規作成"
+
+#, fuzzy
+#~ msgid "End update."
+#~ msgstr "更新"
+
+#, fuzzy
+#~ msgid "%s is up to date."
+#~ msgstr "%s が書き込み可能ではありません"
+
+#, fuzzy
+#~ msgid "%s updated."
+#~ msgstr "更新"
+
+#, fuzzy
+#~ msgid "Exit"
+#~ msgstr "編集"
+
+#, fuzzy
+#~ msgid "Welcome page created"
+#~ msgstr "カンマ区切り"
+
+#, fuzzy
+#~ msgid "The Welcome page was NOT created"
+#~ msgstr "プロジェクトは却下されませんでした"
+
+#, fuzzy
+#~ msgid "The directory path you supplied was empty. Please try again."
+#~ msgstr ""
+#~ "バージョンが保存できませんでした。しばらくしてから再試行してください"
+
+#, fuzzy
+#~ msgid "CakePHP: the rapid development php framework:"
+#~ msgstr "CakePHP:高速開発PHPフレームワーク"
+
+#, fuzzy
+#~ msgid "%s is a file"
+#~ msgstr "%s が書き込み可能ではありません"
+
+#, fuzzy
+#~ msgid "%s created"
+#~ msgstr "新規作成"
+
+#, fuzzy
+#~ msgid "%s NOT created"
+#~ msgstr "プロジェクトは作成されませんでした"
+
+#, fuzzy
+#~ msgid "%s removed"
+#~ msgstr "除去"
+
+#, fuzzy
+#~ msgid "%s NOT removed"
+#~ msgstr "除去"
+
+#, fuzzy
+#~ msgid "%s not writable"
+#~ msgstr "%s が書き込み可能ではありません"
+
+#, fuzzy
+#~ msgid "%s not created"
+#~ msgstr "プロジェクトが作成されました"
+
+#, fuzzy
+#~ msgid "%s is not writable"
+#~ msgstr "%s が書き込み可能ではありません"
+
+#, fuzzy
+#~ msgid "updated"
+#~ msgstr "更新"
+
+#, fuzzy
+#~ msgid "The %1$s has been %2$s"
+#~ msgstr "バージョンは保存されました"
+
+#, fuzzy
+#~ msgid "You are not authorized to access that location."
+#~ msgstr "あなたはアクティベートを許可されていません"
+
+#, fuzzy
+#~ msgid "Notice"
+#~ msgstr "チケット"
+
+#, fuzzy
+#~ msgid "September"
+#~ msgstr "記憶する"
+
+#, fuzzy
+#~ msgid "December"
+#~ msgstr "記憶する"
+
+#, fuzzy
+#~ msgid "hour"
+#~ msgid_plural "hours"
+#~ msgstr[0] "作者"
+#~ msgstr[1] "作者"
+
+#, fuzzy
+#~ msgid "Your tmp directory is writable."
+#~ msgstr "tmpディレクトリが書き込み可能ではありません"
+
+#, fuzzy
+#~ msgid "Your database configuration file is present."
+#~ msgstr "データベース設定ファイルが作成されていません"
+
+#, fuzzy
+#~ msgid "Rename config/database.php.default to config/database.php"
+#~ msgstr ""
+#~ "APP/config/database.php.default を APP/config/database.php へリネームして"
+#~ "ください"
+
+#, fuzzy
+#~ msgid "Cake is able to connect to the database."
+#~ msgstr "Chawはデータベースへ接続できません"
+
+#, fuzzy
+#~ msgid "Cake is NOT able to connect to the database."
+#~ msgstr "Chawはデータベースへ接続できません"
+
+#, fuzzy
+#~ msgid "The Rapid Development Framework"
+#~ msgstr "CakePHP:高速開発PHPフレームワーク"
+
+#, fuzzy
+#~ msgid "Delete"
+#~ msgstr "削除"
+
+#, fuzzy
+#~ msgid "Are you sure you want to delete"
+#~ msgstr "あなたは削除を許可されていません"
+
+#, fuzzy
+#~ msgid "New %s"
+#~ msgstr "新規"
+
+#, fuzzy
+#~ msgid "Actions"
+#~ msgstr "オプション"
+
+#, fuzzy
+#~ msgid "View %s"
+#~ msgstr "見る"
+
+#, fuzzy
+#~ msgid "Edit %s"
+#~ msgstr "編集"
+
+#, fuzzy
+#~ msgid "Delete %s"
+#~ msgstr "削除"
+#~ msgid "The project was rejected"
+#~ msgstr "プロジェクトは却下されました"
+#~ msgid "The project was NOT activated"
+#~ msgstr "プロジェクトは有効になりませんでした"
+#~ msgid "The project was deactivated"
+#~ msgstr "プロジェクトは無効になりました"
+#~ msgid "The project was NOT deactivated"
+#~ msgstr "プロジェクトは無効になりませんでした"
+#~ msgid "Approved"
+#~ msgstr "承認"
+#~ msgid "Ticket Priorites"
+#~ msgstr "チケットの優先度"
+#~ msgid "Timeline Feed"
+#~ msgstr "タイムラインフィード"
+#~ msgid "who fork, git clone, svn commit or"
+#~ msgstr "フォーク、git clone,svn commit は可能です"
+#~ msgid "add new user"
+#~ msgstr "新規ユーザの追加"
+#~ msgid "groups are an easy way to setup"
+#~ msgstr "グループを使うと簡単に設定できます"
+#~ msgid "Add User"
+#~ msgstr "新規ユーザー"
+#~ msgid "add"
+#~ msgstr "追加"
+#~ msgid "Revision"
+#~ msgstr "リビジョン"
+

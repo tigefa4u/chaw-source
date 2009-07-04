@@ -1,0 +1,1058 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Chaw Portuguese translation\n"
+"POT-Creation-Date: 2009-01-25 23:07+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Vitor Leite <vhsleite@gmail.com>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: \controllers\comments_controller.php:23
+msgid "Authorization Failed"
+msgstr "Autorização Falhou"
+
+#: \controllers\comments_controller.php:30
+msgid "Invalid Comment"
+msgstr "Comentário Inválido"
+
+#: \controllers\comments_controller.php:43
+msgid "The comment was deleted"
+msgstr "Comentário eliminado"
+
+#: \controllers\comments_controller.php:45
+msgid "The comment was NOT deleted"
+msgstr "Comentário NÃO eliminado"
+
+#: \controllers\comments_controller.php:48
+msgid "The comment was removed from timeline"
+msgstr "Comentário removido do cronograma"
+
+#: \controllers\commits_controller.php:72
+msgid "The commit was deleted"
+msgstr "Commit eliminado"
+
+#: \controllers\commits_controller.php:74
+msgid "The commit was NOT deleted"
+msgstr "Commit NÃO eliminado"
+
+#: \controllers\commits_controller.php:77
+msgid "The commit was removed from timeline"
+msgstr "Commit removido do cronograma"
+
+#: \controllers\permissions_controller.php:29
+msgid "Permissions updated"
+msgstr "Permissões actualizadas"
+
+#: \controllers\permissions_controller.php:31
+msgid "Permissions NOT updated"
+msgstr "Permissões NÃO actualizadas"
+
+#: \controllers\permissions_controller.php:44
+msgid "Invalid request"
+msgstr "Pedido inválido"
+
+#: \controllers\permissions_controller.php:49
+msgid "User removed"
+msgstr "Utilizador removido"
+
+#: \controllers\projects_controller.php:109
+#: \controllers\repo_controller.php:85
+msgid "Project is awaiting approval"
+msgstr "O Projecto aguarda aprovação"
+
+#: \controllers\projects_controller.php:115;213
+#: \controllers\repo_controller.php:87
+msgid "Project was created"
+msgstr "Projecto criado"
+
+#: \controllers\projects_controller.php:122;219
+#: \controllers\repo_controller.php:102
+msgid "Project was NOT created"
+msgstr "Projecto NÃO criado"
+
+#: \controllers\projects_controller.php:155;251
+msgid "Project was updated"
+msgstr "Projecto actualizado"
+
+#: \controllers\projects_controller.php:157;254
+msgid "Project was NOT updated"
+msgstr "Projecto NÃO actualizado"
+
+#: \controllers\projects_controller.php:237;305;308
+msgid "The project was invalid"
+msgstr "Projecto inválido"
+
+#: \controllers\projects_controller.php:241
+msgid "Project Admin"
+msgstr "Administrador do Projecto"
+
+#: \controllers\projects_controller.php:300
+msgid "The project was %s"
+msgstr "Projecto %s"
+
+#: \controllers\projects_controller.php:302
+msgid "The project was NOT %s"
+msgstr "Projecto NÃO %s"
+
+#: \controllers\repo_controller.php:24;40
+msgid "You cannot fork an svn project yet"
+msgstr "Ainda não pode criar um fork de um projecto svn"
+
+#: \controllers\repo_controller.php:29
+msgid "Fast Forward successfull!"
+msgstr ""
+
+#: \controllers\repo_controller.php:31
+msgid "Fast Forward failed. Time to merge manually?"
+msgstr ""
+
+#: \controllers\repo_controller.php:44
+msgid "Invalid Fork"
+msgstr "Fork inválido"
+
+#: \controllers\repo_controller.php:55
+msgid "Merge successfull!"
+msgstr "Merge concluído com sucesso!"
+
+#: \controllers\repo_controller.php:57
+msgid "Merge failed. Time to merge manually?"
+msgstr "Merge falhou. Talvez tentanto um merge manual?"
+
+#: \controllers\repo_controller.php:66
+msgid "You cannot fork an svn project"
+msgstr "Não pode criar um fork de um projecto svn"
+
+#: \controllers\repo_controller.php:95;112
+msgid "You already have a fork"
+msgstr "Já tem um fork"
+
+#: \controllers\source_controller.php:98
+msgid "You should have a nice clean working copy"
+msgstr "Deverá ter uma working copy limpa"
+
+#: \controllers\source_controller.php:100
+msgid "Oops, rebuild failed try again"
+msgstr "Oops, rebuild falhou tente de novo"
+
+#: \controllers\source_controller.php:117
+msgid "%s was deleted"
+msgstr "%s foi eliminado"
+
+#: \controllers\source_controller.php:119
+msgid "Oops, delete failed try again"
+msgstr "Oops, eliminação falhou, tente de novo"
+
+#: \controllers\tickets_controller.php:63;74
+msgid "Invalid ticket"
+msgstr "Ticket inválido"
+
+#: \controllers\tickets_controller.php:102
+msgid "Ticket saved"
+msgstr "Ticket guardado"
+
+#: \controllers\tickets_controller.php:128
+msgid "Comment saved"
+msgstr "Comentário guardado"
+
+#: \controllers\tickets_controller.php:130
+msgid "Ticket updated"
+msgstr "Ticket actualizado"
+
+#: \controllers\tickets_controller.php:135
+msgid "Comment was NOT saved"
+msgstr "Comentário NÃO foi guardado"
+
+#: \controllers\tickets_controller.php:137
+msgid "Ticket was NOT updated"
+msgstr "Ticket NÃO foi actualizado"
+
+#: \controllers\timeline_controller.php:82
+msgid "The timeline event was deleted"
+msgstr "O evento foi eliminado"
+
+#: \controllers\timeline_controller.php:84
+msgid "The timeline event was NOT deleted"
+msgstr "Evento NÃO eliminado"
+
+#: \controllers\users_controller.php:95
+msgid "You may now change your password"
+msgstr "Pode agora alterar a sua senha"
+
+#: \controllers\users_controller.php:102
+msgid "Did you forget your password?"
+msgstr "Esqueceu-se da senha?"
+
+#: \controllers\users_controller.php:119
+msgid "%1$s is now registered"
+msgstr "%1$s está agora registado"
+
+#: \controllers\users_controller.php:122
+msgid "User NOT added"
+msgstr "Utilizador NÃO adicionado"
+
+#: \controllers\users_controller.php:161
+msgid "User updated"
+msgstr "Utilizador actualizado"
+
+#: \controllers\users_controller.php:163
+msgid "User NOT updated"
+msgstr "Utilizador NÃO actualizado"
+
+#: \controllers\users_controller.php:193
+msgid "%s added"
+msgstr "%s adicionado"
+
+#: \controllers\users_controller.php:196
+msgid "%s was not found"
+msgstr "%s não foi encontrado"
+
+#: \controllers\users_controller.php:243
+msgid "Check your email."
+msgstr "Verifique o seu email"
+
+#: \controllers\users_controller.php:245
+msgid "Email was not sent"
+msgstr "O email não foi enviado"
+
+#: \controllers\users_controller.php:248
+msgid "User could not be found"
+msgstr "Utilizador não foi encontrado"
+
+#: \controllers\users_controller.php:254
+msgid "Your Account was activated"
+msgstr "A sua conta foi activada"
+
+#: \controllers\users_controller.php:256
+msgid "Your Account could not be activated"
+msgstr "Não foi possível activar a sua conta"
+
+#: \controllers\users_controller.php:283
+msgid "Check your email to verify your request"
+msgstr "Verifique o seu email para confirmar o seu pedido"
+
+#: \controllers\users_controller.php:307
+msgid "Check your email for your new password."
+msgstr "Verifique o seu email para a sua nova senha"
+
+#: \controllers\users_controller.php:319
+msgid "Your password was changed"
+msgstr "A sua senha foi alterada"
+
+#: \controllers\users_controller.php:322
+msgid "Your password was NOT changed"
+msgstr "A sua senha NÃO foi alterada"
+
+#: \controllers\users_controller.php:332
+msgid "User was removed"
+msgstr "Utilizador removido"
+
+#: \controllers\users_controller.php:334
+msgid "User was NOT changed"
+msgstr "O utilizador NÃO foi alterado"
+
+#: \controllers\versions_controller.php:32
+msgid "Invalid Version."
+msgstr "Versão inválida"
+
+#: \controllers\versions_controller.php:54
+#: \views\versions\index.ctp:47
+msgid "New Version"
+msgstr "Nova Versão"
+
+#: \controllers\versions_controller.php:59;82
+msgid "The Version has been saved"
+msgstr "Não foi possível guardar a Versão"
+
+#: \controllers\versions_controller.php:62;85
+msgid "The Version could not be saved. Please, try again."
+msgstr "Não foi possível guardar a Versão. Por favor, tente de novo"
+
+#: \controllers\versions_controller.php:70
+msgid "Invalid Action."
+msgstr "Acção inválida"
+
+#: \controllers\versions_controller.php:74
+msgid "Modify Version"
+msgstr "Modificar Versão"
+
+#: \controllers\versions_controller.php:77
+msgid "Invalid Version"
+msgstr "Versão inválida"
+
+#: \controllers\wiki_controller.php:46
+msgid "You are not authorized to delete."
+msgstr "Não tem autorização para eliminar"
+
+#: \controllers\wiki_controller.php:56
+msgid "You are not authorized to activate."
+msgstr "Não tem autorização para activar"
+
+#: \controllers\wiki_controller.php:163
+msgid "%s saved"
+msgstr "%s guardado"
+
+#: \controllers\wiki_controller.php:166
+msgid "%s NOT saved"
+msgstr "%s NÃO guardado"
+
+#: \controllers\components\access.php:91;101
+msgid "Chaw needs to be installed"
+msgstr "Chaw necessita de ser instalado"
+
+#: \controllers\components\access.php:116
+msgid "Chaw needs to be installed. Please <a href='%s'>Login</a> or Register"
+msgstr "Chaw necessita de ser instalado. Por favor <a href='%s'>Inicie sessão</a> ou Registe-se"
+
+#: \controllers\components\access.php:177
+msgid "Select a Project"
+msgstr "Seleccione um Projecto"
+
+#: \models\project.php:276
+msgid "##The home page for %s"
+msgstr "##Página inicial para %s"
+
+#: \views\commits\history.ctp:14
+msgid "History"
+msgstr "Histórico"
+
+#: \views\commits\history.ctp:41
+#: \views\commits\view.ctp:16
+#: \views\source\index.ctp:32
+msgid "Author"
+msgstr "Autor"
+
+#: \views\commits\history.ctp:45
+#: \views\commits\view.ctp:20
+#: \views\source\index.ctp:34
+msgid "Date"
+msgstr "Data"
+
+#: \views\commits\history.ctp:56
+#: \views\commits\view.ctp:29
+msgid "Changes"
+msgstr "Mudanças"
+
+#: \views\commits\index.ctp:12
+#: \views\timeline\index.ctp:29
+msgid "Commits"
+msgstr ""
+
+#: \views\commits\view.ctp:6
+msgid "All Commits"
+msgstr "Todos os commits"
+
+#: \views\dashboard\admin_index.ctp:2
+#: \views\dashboard\index.ctp:1
+#: \views\layouts\admin.ctp:149
+msgid "Dashboard"
+msgstr "Painel"
+
+#: \views\dashboard\index.ctp:5
+msgid "View Account"
+msgstr "Ver conta"
+
+#: \views\elements\current_projects.ctp:30
+#: \views\layouts\admin.ctp:114;165
+#: \views\layouts\default.ctp:114
+#: \views\projects\admin_index.ctp:2
+#: \views\projects\index.ctp:14
+msgid "Projects"
+msgstr "Projectos"
+
+#: \views\elements\current_user.ctp:22
+#: \views\wiki\index.ctp:157
+msgid "activate"
+msgstr "activar"
+
+#: \views\elements\current_user.ctp:30
+msgid "account"
+msgstr "conta"
+
+#: \views\elements\current_user.ctp:36
+msgid "dashboard"
+msgstr "painel"
+
+#: \views\elements\current_user.ctp:43
+msgid "logout"
+msgstr "sair"
+
+#: \views\elements\current_user.ctp:51
+#: \views\users\login.ctp:7
+msgid "Login"
+msgstr "Iniciar sessão"
+
+#: \views\elements\current_user.ctp:56
+#: \views\users\add.ctp:4
+msgid "Register"
+msgstr "Registo"
+
+#: \views\elements\markdown_help.ctp:2
+msgid "Markdown Help"
+msgstr "Ajuda Markdown"
+
+#: \views\elements\markdown_help.ctp:6
+msgid "ticket"
+msgstr ""
+
+#: \views\elements\markdown_help.ctp:8
+msgid "commit"
+msgstr ""
+
+#: \views\elements\markdown_help.ctp:11
+msgid "inline code"
+msgstr "código inline"
+
+#: \views\elements\markdown_help.ctp:18
+msgid "header 1"
+msgstr "cabeçalho 1"
+
+#: \views\elements\markdown_help.ctp:20
+msgid "header 2"
+msgstr "cabeçalho 2"
+
+#: \views\elements\markdown_help.ctp:23;25
+msgid "italic"
+msgstr "itálico"
+
+#: \views\elements\markdown_help.ctp:27;29
+msgid "bold"
+msgstr "negrito"
+
+#: \views\elements\markdown_help.ctp:32
+msgid "unordered list 1"
+msgstr "lista não ordenada 1"
+
+#: \views\elements\markdown_help.ctp:34
+msgid "unordered list 2"
+msgstr "lista não ordenada 2"
+
+#: \views\elements\project_details.ctp:5
+msgid "Awaiting Approval"
+msgstr "Aguarda aprovação"
+
+#: \views\elements\project_details.ctp:9
+#: \views\tickets\view.ctp:89
+#: \views\versions\admin_add.ctp:18
+#: \views\versions\admin_edit.ctp:24
+msgid "Description"
+msgstr "Descrição"
+
+#: \views\elements\project_details.ctp:23
+msgid "fork it"
+msgstr ""
+
+#: \views\elements\project_details.ctp:30
+msgid "fast forward"
+msgstr ""
+
+#: \views\elements\project_details.ctp:38
+msgid "view forks"
+msgstr "ver forks"
+
+#: \views\elements\project_details.ctp:43
+msgid "view parent"
+msgstr "ver parent"
+
+#: \views\elements\project_details.ctp:51
+msgid "remove branch"
+msgstr "remover branch"
+
+#: \views\elements\project_details.ctp:68
+msgid "view history"
+msgstr "ver histórico"
+
+#: \views\elements\recent\comments.ctp:27
+msgid "Recent Comments"
+msgstr "Comentários recentes"
+
+#: \views\elements\recent\commits.ctp:22
+msgid "Recent Commits"
+msgstr "Commits recentes"
+
+#: \views\elements\recent\tickets.ctp:26
+msgid "Recent Tickets"
+msgstr "Tickets recentes"
+
+#: \views\elements\recent\wiki.ctp:30
+msgid "Wiki Updates"
+msgstr "Actualizações à Wiki"
+
+#: \views\elements\timeline\comment.ctp:28
+#: \views\elements\timeline\commit.ctp:28;30
+#: \views\elements\timeline\ticket.ctp:30
+#: \views\elements\timeline\wiki.ctp:35
+#: \views\users\admin_index.ctp:63;65
+msgid "remove"
+msgstr "remover"
+
+#: \views\elements\timeline\ticket.ctp:4
+#: \views\tickets\view.ctp:45
+msgid "Ticket"
+msgstr ""
+
+#: \views\elements\timeline\wiki.ctp:26
+msgid "current revision modified"
+msgstr "revision actual modificada"
+
+#: \views\elements\timeline\wiki.ctp:28
+msgid "new revision created"
+msgstr "nova revision criada"
+
+#: \views\layouts\admin.ctp:79
+#: \views\layouts\default.ctp:79
+msgid "Source"
+msgstr "Código fonte"
+
+#: \views\layouts\admin.ctp:86
+#: \views\layouts\default.ctp:86
+#: \views\timeline\index.ctp:12
+msgid "Timeline"
+msgstr "Cronograma"
+
+#: \views\layouts\admin.ctp:93
+#: \views\layouts\default.ctp:93
+#: \views\timeline\index.ctp:41
+msgid "Wiki"
+msgstr ""
+
+#: \views\layouts\admin.ctp:100
+#: \views\layouts\default.ctp:100
+#: \views\tickets\index.ctp:3
+#: \views\timeline\index.ctp:33
+msgid "Tickets"
+msgstr ""
+
+#: \views\layouts\admin.ctp:107
+#: \views\layouts\default.ctp:107
+#: \views\versions\index.ctp:12
+msgid "Versions"
+msgstr "Versões"
+
+#: \views\layouts\admin.ctp:123;145
+#: \views\layouts\default.ctp:123
+msgid "Admin"
+msgstr ""
+
+#: \views\layouts\admin.ctp:153
+msgid "Permissions"
+msgstr "Permissões"
+
+#: \views\layouts\admin.ctp:157
+#: \views\users\admin_index.ctp:2
+msgid "Users"
+msgstr "Utilizadores"
+
+#: \views\layouts\admin.ctp:160
+msgid "Settings"
+msgstr "Definições"
+
+#: \views\layouts\admin.ctp:176
+msgid "New Project"
+msgstr "Novo Projecto"
+
+#: \views\layouts\admin.ctp:201
+#: \views\layouts\default.ctp:153
+msgid "About"
+msgstr "Acerca"
+
+#: \views\layouts\admin.ctp:204
+#: \views\layouts\default.ctp:156
+msgid "CakePHP: the rapid development php framework"
+msgstr ""
+
+#: \views\layouts\email\html\default.ctp:37
+msgid "This email was sent using the <a href=\"http://cakephp.org\">CakePHP Framework</a>"
+msgstr ""
+
+#: \views\layouts\email\text\default.ctp:30
+msgid "This email was sent using the CakePHP Framework, http://cakephp.org."
+msgstr ""
+
+#: \views\pages\start.ctp:6
+msgid "Your database configuration file is NOT present."
+msgstr "Configuração da base de dados não encontrada"
+
+#: \views\pages\start.ctp:8
+msgid "Rename APP/config/database.php.default to APP/config/database.php"
+msgstr ""
+
+#: \views\pages\start.ctp:17
+msgid "Chaw is NOT able to connect to the database."
+msgstr "Chaw não é capaz de ligar à base de dados"
+
+#: \views\pages\start.ctp:19
+msgid "Check that your database exists and the proper settings are in APP/config/database.php"
+msgstr ""
+
+#: \views\pages\start.ctp:25
+msgid "Finished"
+msgstr "Concluído"
+
+#: \views\pages\start.ctp:38
+msgid "Your tmp directory is NOT writable."
+msgstr ""
+
+#: \views\pages\start.ctp:51
+msgid "%s is NOT writable."
+msgstr "%s não tem permissão para escrita"
+
+#: \views\pages\start.ctp:60
+msgid "Register for an account"
+msgstr "Registe-se para uma conta"
+
+#: \views\pages\start.ctp:62
+msgid "Create a Project"
+msgstr "Criar Projecto"
+
+#: \views\permissions\admin_add.ctp:4
+#: \views\permissions\admin_index.ctp:5
+msgid "Manage Permissions"
+msgstr "Gerir Permissões"
+
+#: \views\permissions\admin_index.ctp:12
+msgid "Guide"
+msgstr "Guia"
+
+#: \views\permissions\admin_index.ctp:13
+msgid "access rights"
+msgstr "direitos de acesso"
+
+#: \views\permissions\admin_index.ctp:15
+msgid "read"
+msgstr "leitura"
+
+#: \views\permissions\admin_index.ctp:16
+msgid "write (c, u, d)"
+msgstr "escrita (c, u, d)"
+
+#: \views\permissions\admin_index.ctp:21
+msgid "create"
+msgstr "criar"
+
+#: \views\permissions\admin_index.ctp:22
+msgid "update"
+msgstr "editar"
+
+#: \views\permissions\admin_index.ctp:23
+#: \views\users\edit.ctp:42
+#: \views\wiki\index.ctp:159
+msgid "delete"
+msgstr "eliminar"
+
+#: \views\permissions\admin_index.ctp:28
+msgid "with `*`, only logged in users can `write`"
+msgstr "com `*`, apenas utilizadores com sessão iniciada podem `escrever`"
+
+#: \views\permissions\admin_index.ctp:34
+msgid "use groups from"
+msgstr "usar grupos de"
+
+#: \views\permissions\admin_index.ctp:47
+msgid "create groups"
+msgstr "criar grupos"
+
+#: \views\projects\add.ctp:7
+msgid "Project Setup"
+msgstr "Configuração Projecto"
+
+#: \views\projects\add.ctp:10
+#: \views\projects\edit.ctp:12
+msgid "Repo Type"
+msgstr "Tipo de repositório"
+
+#: \views\projects\add.ctp:12
+msgid "The project name must be unique."
+msgstr "O nome do projecto deve ser único"
+
+#: \views\projects\add.ctp:26
+#: \views\tickets\add.ctp:45
+#: \views\tickets\view.ctp:164
+msgid "Options"
+msgstr "Opções"
+
+#: \views\projects\add.ctp:28
+msgid "Groups"
+msgstr "Grupos"
+
+#: \views\projects\add.ctp:29
+msgid "Ticket Types"
+msgstr "Tipos de Tickets"
+
+#: \views\projects\add.ctp:30
+msgid "Ticket Priorities"
+msgstr "Prioridades Tickets"
+
+#: \views\projects\add.ctp:31
+msgid "Ticket Statuses"
+msgstr "Estados dos Tickets"
+
+#: \views\projects\add.ctp:33
+#: \views\projects\edit.ctp:27
+msgid "Comma seperated"
+msgstr "Separado por vírgulas"
+
+#: \views\projects\admin_index.ctp:27
+#: \views\tickets\index.ctp:24
+#: \views\users\admin_index.ctp:11
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr "Página %page% de %pages%, a mostrar %current% registos de %count%"
+
+#: \views\projects\admin_index.ctp:94
+#: \views\projects\index.ctp:115
+#: \views\tickets\view.ctp:55
+#: \views\users\admin_index.ctp:62
+#: \views\versions\index.ctp:23
+msgid "edit"
+msgstr "editar"
+
+#: \views\projects\admin_index.ctp:102
+#: \views\tickets\index.ctp:82
+#: \views\users\admin_index.ctp:83
+msgid "previous"
+msgstr "anterior"
+
+#: \views\projects\admin_index.ctp:104
+#: \views\tickets\index.ctp:84
+#: \views\users\admin_index.ctp:85
+msgid "next"
+msgstr "seguinte"
+
+#: \views\projects\index.ctp:4
+msgid "There are no forks"
+msgstr "Não existem forks"
+
+#: \views\projects\index.ctp:6
+msgid "Sorry, no projects are available"
+msgstr "Desculpe, não existem projectos disponíveis"
+
+#: \views\projects\index.ctp:20
+#: \views\tickets\index.ctp:8
+msgid "Mine"
+msgstr "Meus"
+
+#: \views\projects\index.ctp:23
+msgid "All"
+msgstr "Todos"
+
+#: \views\projects\index.ctp:27
+#: \views\projects\start.ctp:41
+msgid "Public"
+msgstr "Públicos"
+
+#: \views\projects\index.ctp:31
+msgid "Fork"
+msgstr "Fork"
+
+#: \views\projects\index.ctp:40
+msgid "Projects Feed"
+msgstr ""
+
+#: \views\projects\index.ctp:49
+#: \views\timeline\index.ctp:23
+msgid "Forks"
+msgstr ""
+
+#: \views\projects\index.ctp:93
+msgid "timeline"
+msgstr "cronograma"
+
+#: \views\projects\index.ctp:98
+msgid "wiki"
+msgstr "wiki"
+
+#: \views\projects\index.ctp:103
+msgid "tickets"
+msgstr "tickets"
+
+#: \views\projects\index.ctp:110
+#: \views\wiki\index.ctp:156
+msgid "view"
+msgstr "ver"
+
+#: \views\projects\index.ctp:120
+msgid "admin"
+msgstr ""
+
+#: \views\projects\start.ctp:2
+msgid "You must activate your account"
+msgstr "Tem de activar a sua conta"
+
+#: \views\projects\start.ctp:35
+msgid "Start A Project"
+msgstr "Começar um Projecto"
+
+#: \views\projects\start.ctp:52
+msgid "Register your project on Ohloh"
+msgstr "Registe o seu projecto no Ohloh"
+
+#: \views\projects\start.ctp:66
+msgid "Private"
+msgstr "Privado"
+
+#: \views\repo\fork_it.ctp:5
+msgid "Are you ready to fork %s"
+msgstr "Está pronto para criar um fork de %s"
+
+#: \views\repo\fork_it.ctp:6
+msgid "<p>A fork is a central repository for your copy of the project.</p>"
+msgstr "<p>Um fork é um repositório central para a sua cópia do projecto.</p>"
+
+#: \views\repo\fork_it.ctp:7
+msgid "<p>If you plan to contribute to the main project, then a fork may be just what you need.</p>"
+msgstr "<p>Se planeia contribuir para o projecto principal, então um fork do mesmo é provavelmente o que necessita.</p>"
+
+#: \views\repo\fork_it.ctp:8
+msgid "<p>Otherwise, you can always <strong>git clone</strong> %s:%s.git</p>"
+msgstr "<p>Em qualquer caso, pode sempre <strong>git clone</strong> %s:%s.git</p>"
+
+#: \views\repo\fork_it.ctp:13
+msgid "Go For It"
+msgstr "Continuar"
+
+#: \views\repo\fork_it.ctp:14
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: \views\source\index.ctp:31
+msgid "Name"
+msgstr "Nome"
+
+#: \views\source\index.ctp:33
+msgid "Message"
+msgstr "Mensagem"
+
+#: \views\source\index.ctp:35
+msgid "Commit"
+msgstr ""
+
+#: \views\source\view.ctp:7
+msgid "history"
+msgstr "histórico"
+
+#: \views\tickets\add.ctp:22
+msgid "Add Ticket"
+msgstr "Adicionar Ticket"
+
+#: \views\tickets\add.ctp:24
+#: \views\tickets\index.ctp:37
+#: \views\tickets\view.ctp:88
+#: \views\versions\admin_add.ctp:17
+#: \views\versions\admin_edit.ctp:23
+msgid "Title"
+msgstr "Título"
+
+#: \views\tickets\add.ctp:26
+msgid ""
+"###What happened:\n"
+"- something\n"
+"\n"
+"\n"
+"###What was expected:\n"
+"- something else\n"
+"\n"
+msgstr ""
+"###O que aconteceu:\n"
+"- algo\n"
+"\n"
+"\n"
+"###O que era esperado:\n"
+"- outro resultado\n"
+"\n"
+
+#: \views\tickets\add.ctp:36
+#: \views\tickets\view.ctp:94
+msgid "Tags"
+msgstr ""
+
+#: \views\tickets\add.ctp:40
+#: \views\tickets\view.ctp:98
+msgid "comma separated"
+msgstr "separado por vírgulas"
+
+#: \views\tickets\add.ctp:60
+#: \views\tickets\view.ctp:178
+#: \views\users\add.ctp:11
+#: \views\users\change.ctp:9
+#: \views\users\edit.ctp:59
+#: \views\users\forgotten.ctp:19
+#: \views\users\login.ctp:18
+#: \views\versions\admin_add.ctp:31
+#: \views\versions\admin_edit.ctp:37
+#: \views\wiki\add.ctp:55
+msgid "Submit"
+msgstr "Submeter"
+
+#: \views\tickets\index.ctp:31
+msgid "Version"
+msgstr "Versão"
+
+#: \views\tickets\index.ctp:32
+msgid "Type"
+msgstr "Tipo"
+
+#: \views\tickets\index.ctp:33
+msgid "Priority"
+msgstr "Prioridade"
+
+#: \views\tickets\index.ctp:35
+#: \views\tickets\view.ctp:156
+msgid "Status"
+msgstr "Estado"
+
+#: \views\tickets\index.ctp:87
+msgid "New Ticket"
+msgstr "Novo Ticket"
+
+#: \views\tickets\view.ctp:68
+msgid "reported by"
+msgstr "reportado por"
+
+#: \views\tickets\view.ctp:83
+msgid "Modify Ticket"
+msgstr "Modificar Ticket"
+
+#: \views\tickets\view.ctp:139
+msgid "Preview"
+msgstr "Pré-visualizar"
+
+#: \views\tickets\view.ctp:153
+msgid "Comment"
+msgstr "Comentário"
+
+#: \views\timeline\index.ctp:17
+#: \views\versions\admin_edit.ctp:20
+msgid "Project"
+msgstr "Projecto"
+
+#: \views\timeline\index.ctp:26
+msgid "Parent"
+msgstr ""
+
+#: \views\timeline\index.ctp:37
+msgid "Comments"
+msgstr "Comentários"
+
+#: \views\users\add.ctp:6
+#: \views\users\admin_index.ctp:27
+#: \views\users\edit.ctp:8
+#: \views\users\forgotten.ctp:8
+#: \views\users\login.ctp:9
+msgid "Username"
+msgstr "Utilizador"
+
+#: \views\users\add.ctp:7
+#: \views\users\login.ctp:10
+msgid "Password"
+msgstr "Senha"
+
+#: \views\users\add.ctp:8
+#: \views\users\admin_index.ctp:28
+#: \views\users\edit.ctp:9
+#: \views\users\forgotten.ctp:16
+msgid "Email"
+msgstr "Email"
+
+#: \views\users\admin_index.ctp:4
+msgid "All Users"
+msgstr "Todos os utilizadores"
+
+#: \views\users\admin_index.ctp:23
+msgid "Group"
+msgstr "Grupo"
+
+#: \views\users\admin_index.ctp:29
+msgid "Last Login"
+msgstr "Último acesso"
+
+#: \views\users\change.ctp:4
+#: \views\users\edit.ctp:10
+msgid "Change Password"
+msgstr "Alterar senha"
+
+#: \views\users\change.ctp:6
+msgid "Password"
+msgstr "Senha"
+
+#: \views\users\edit.ctp:4
+msgid "Update Info"
+msgstr "Actualizar informação"
+
+#: \views\users\edit.ctp:16
+msgid "Ssh Keys"
+msgstr "Chave Ssh"
+
+#: \views\users\edit.ctp:49
+#: \views\wiki\index.ctp:19;128
+msgid "New"
+msgstr "Novo"
+
+#: \views\users\forgotten.ctp:3
+msgid "Forgotten Password"
+msgstr "Esqueceu senha"
+
+#: \views\users\login.ctp:12
+msgid "Remember Me"
+msgstr "Lembrar-se de mim"
+
+#: \views\users\login.ctp:14
+msgid "Remember me for 2 weeks"
+msgstr "Lembrar-se de mim por 2 semanas"
+
+#: \views\users\view.ctp:4
+msgid "Will soon have a profile to share with you"
+msgstr "Em breve terá um perfil para partilhar consigo"
+
+#: \views\versions\admin_add.ctp:19
+#: \views\versions\admin_edit.ctp:25
+msgid "Due Date"
+msgstr "Data expiração"
+
+#: \views\versions\admin_add.ctp:20
+#: \views\versions\admin_edit.ctp:26
+msgid "Completed"
+msgstr "Concluído"
+
+#: \views\versions\index.ctp:30
+#: \views\versions\view.ctp:15
+msgid "Created"
+msgstr "Criado"
+
+#: \views\versions\index.ctp:33
+#: \views\versions\view.ctp:19
+msgid "Due by"
+msgstr "Expira em"
+
+#: \views\wiki\add.ctp:34
+msgid "use a path to group pages into categories and subcategories. example: /logs/by/%s/"
+msgstr "use um caminho para agrupar páginas em categorias e subcategorias. exemplo: /logs/por/%s/"
+
+#: \views\wiki\index.ctp:10
+msgid "Active"
+msgstr "Activo"
+
+#: \views\wiki\index.ctp:12
+msgid "Not Active"
+msgstr "Inactivo"
+
+#: \views\wiki\index.ctp:17;123
+msgid "Edit"
+msgstr "Editar"
+
+#: \views\wiki\index.ctp:61
+msgid "Wiki Nav"
+msgstr ""
+
+#: \views\wiki\index.ctp:79
+msgid "Recent Entries"
+msgstr "Entradas recentes"
+
+#: \views\wiki\index.ctp:117
+msgid "View"
+msgstr "Ver"
+
+#: \webroot\test.php:101
+msgid "Debug setting does not allow access to this url."
+msgstr "Configuração do Debug não permite o acesso a este url."

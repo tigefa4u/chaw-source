@@ -1,0 +1,1376 @@
+/*
+colors
+blue: #69C;
+red: #804000;
+silver: #656565;
+*/
+.clear {
+  clear:both;
+  height:0;
+  line-height: 0;
+  padding:0;
+  margin:0;
+}
+.clearfix:after {
+  content : '.';
+  display: block;
+  clear:both;
+  height:0;
+  padding:0;
+  margin:0;
+}
+a {
+	color: #333;
+	font-family: helvetica,arial,sans-serif;
+	font-weight: normal;
+}
+.small {
+	font-size: 70%;
+}
+h2 a {
+	color: #804000;
+	font-family: helvetica,arial,sans-serif;
+}
+h1 {
+	color: #333;
+	font-weight: normal;
+	font-size: 240%;
+}
+h2, fieldset legend {
+	color: #804000;
+	font-weight: normal;
+	font-size: 200%;
+}
+
+h3 {
+	color: #656565;
+	font-weight: normal;
+	font-size: 160%;
+}
+h3 em {
+	font-size: 70%;
+	font-style: normal;
+}
+
+h4 {
+	color: #3b3b3b;
+}
+p {
+	margin-top: 0.5em;
+	line-height: 140%;
+}
+pre {
+	padding: 1em 0 1em 2px;
+}
+
+em a {
+	color: inherit;
+	font-size: 80%;
+}
+form {
+	clear: none;
+}
+fieldset legend {
+	color: #804000;
+}
+fieldset.main {
+	float: left;
+	margin-right: 40px;
+	width: 60%;
+}
+fieldset.options {
+	float: left;
+	width: 20%;
+	font-size: 80%;
+	margin-top: 30px;
+}
+div.inline label, div.inline input {
+	padding: 0;
+	clear: none;
+	display: inline;
+	width: auto;
+	font-size: 16px;
+	vertical-align: middle;
+}
+div.inline small {
+	padding: 4px 0;
+	display: block;
+}
+
+fieldset.ticket-search {
+	margin-top: 0;
+	margin-bottom: 20px;
+	padding: 10px 10px 0px 20px;
+	overflow: hidden;
+}
+
+fieldset.ticket-search legend {
+	font-size: 1em;
+}
+
+fieldset.ticket-search div.input-row {
+	float: left;
+	clear: left;
+	margin: 0px;
+	padding: 0 0 8px 0;
+}
+
+fieldset.ticket-search div.submit {
+	display: inline;
+	float: right;
+	clear: none;
+	margin: 0 8px 0 0;
+	padding: 0px;
+}
+
+fieldset.ticket-search label.title {
+	width: 50px;
+}
+
+fieldset.ticket-search div label.title {
+	float: left;
+	font-weight: bold;
+}
+
+fieldset.ticket-search div.checkbox {
+	display: inline;
+	float: left;
+	clear: none;
+	margin: 0px;
+	padding: 0;
+	overflow: hidden;
+}
+
+fieldset.ticket-search div.checkbox label, fieldset.ticket-search div.checkbox input {
+	display: inline;
+	float: left;
+	clear: none;
+	vertical-align: bottom;
+}
+
+fieldset.ticket-search label {
+	font-size: 0.9em;
+}
+
+table {
+	clear: none;
+	float: left;
+	width: 100%;
+}
+
+table th a {
+	padding: 4px 10px;
+}
+table tr, table td {
+	border: 0;
+}
+table.smooth {
+	clear: both;
+	float: none;
+	border: 0;
+}
+table.smooth th {
+	font-size: 80%;
+	border: 0;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+table.smooth th a {
+	padding: 6px 14px;
+}
+table.smooth td {
+	border: 0;
+	vertical-align: middle;
+	padding: 8px 10px;
+	border-bottom: 1px solid #ccc;
+}
+table.smooth tr.altrow td {
+	background-color: #fff;
+}
+table th.left, table td.left {
+	clear: none;
+	float: none;
+	text-align: left;
+	margin: 0;
+}
+table td.left, table th.left a {
+	padding-left: 16px;
+}
+table td.title {
+	width: 80%;
+}
+table.smooth td.number {
+	padding: 0;
+	margin: 0;
+}
+td.number a {
+	background: #f4f4f4;
+	color: #333;
+	display: block;
+	padding: 14px;
+	font-weight: bold;
+	font-size: 20px;
+}
+td.number a:hover {
+	background: #333;
+	color: #f4f4f4;
+}
+.index td select {
+	font-size: 80%;
+}
+#header {
+	position: fixed;
+	width: 100%;
+	margin: 0;
+	border-bottom: 4px solid #f4f4f4;
+	background-color: #3b3b3b;
+	padding: 6px 20px 0px 20px;
+	overflow: hidden;
+}
+#header h1 {
+	color: #69C;
+	font-size: 180%;
+	padding: 0px 0px;
+	margin: 8px 0 14px 0;
+}
+#header h1 a {
+	color: #fff;
+	background: #3b3b3b;
+	font-weight: normal;
+	text-decoration: none;
+}
+#header h1 a:hover {
+	color: #ffffff;
+	background: #3b3b3b;
+	text-decoration: underline;
+}
+#header h1 a.project-link {
+	color: #69C;
+	text-decoration: none;
+	font-family: Helvetica;
+	font-weight: normal;
+}
+#header h1 a.on, #header h1 a.project-link:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+#navigation {
+	border-top: 2px solid #666;
+	background: #888;
+	padding: 8px 0 6px 0;
+	margin-top: 0px;
+	margin-left: -30px;
+	white-space: nowrap;
+	overflow: auto;
+	height: 15px;
+}
+#navigation ul {
+	float: left;
+}
+#navigation ul, #navigation li {
+	display: inline;
+	padding: 0;
+	margin: 0 12px;
+}
+
+#projects-link {
+	float: right;
+	margin-top: 0px;
+	margin-right: 40px;
+}
+
+#projects-link a, #navigation li a {
+	padding: 6px 10px;
+	color: #f4f4f4;
+	text-decoration: none;
+	font-family: Helvetica;
+	font-weight: bold;
+}
+
+#projects-link a:hover, #projects-link a.on, #navigation li a:hover, #navigation li a.on {
+	background-color: #f4f4f4;
+	color: #333;
+	text-decoration: none;
+}
+
+#current-user {
+	position: fixed;
+	top: 7px;
+	right: 6px;
+	clear: both;
+	float: right;
+	margin: 0px;
+	padding: 4px 0px;
+	width: 36%;
+	height: 26px;
+	overflow: hidden;
+	background: #191919;
+	border: 2px solid #333;
+}
+#current-user span {
+	display: block;
+	vertical-align: middle;
+}
+#current-user .gravatar {
+	padding-top: 1px;
+	padding-left: 6px;
+}
+#current-user .gravatar img {
+	display: block;
+	float: left;
+	vertical-align: middle;
+	padding: 2px;
+	height: 22px;
+	width: 22px;
+	background: #fff;
+}
+#current-user .username {
+	float: left;
+	padding-top: 0px;
+	padding-left: 4px;
+}
+#current-user span a {
+	padding: 2px 6px;
+	text-decoration: none;
+	color: #69C;
+}
+#current-user span a:hover {
+	text-decoration: underline;
+}
+#current-user div.links {
+	float: right;
+}
+#current-user span.link {
+	float: left;
+	vertical-align: middle;
+	margin-left: 4px;
+}
+#current-user span.link a {
+	font-size: 11px;
+	padding: 2px 6px;
+	text-decoration: underline;
+	color: #999;
+}
+#current-user span.link a:hover {
+	text-decoration: none;
+	color: #fff;
+}
+#current-user span.login {
+	font-size: 90%;
+	font-weight: normal;
+	padding-top: 8px;
+	padding-left: 4px;
+	display: block;
+	color: #bbb;
+}
+
+#content {
+	clear: both;
+	padding-top: 79px;
+	padding-left: 0px;
+	padding-right: 0px;
+	overflow: hidden;
+	border-bottom: 1px solid #ddd;
+}
+
+#footer {
+	position: relative;
+	padding: 0 10px;
+}
+
+#footer span {
+	float: left;
+	font-size: 11px;
+	color: #3b3b3b;
+}
+
+#page-content {
+	padding-top: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#page-right {
+	float: right;
+	padding-top: 20px;
+	width: 35%;
+}
+
+#flashMessage, #authMessage {
+	background: #f4f4f4;
+	margin-top: 0px;
+	padding: 12px 8px 4px 20px;
+	font-size: 110%;
+	height: 20px;
+	color: #222;
+}
+#authMessage {
+	margin-top: -10px;
+	margin-left: -20px;
+}
+
+.zebra {
+	background:#FAFAFA;
+}
+.page-navigation {
+	padding-top: 24px;
+	padding-bottom: 10px;
+}
+span.active {
+	color: #363;
+}
+span.inactive {
+	color: #600;
+}
+a.active {
+	color: #69C;
+	font-weight: bold;
+}
+a.big {
+	font-weight: normal;
+	font-size: 1.1em;
+	padding: 2px 0;
+}
+.left {
+	float:left;
+	margin-right: 20px;
+}
+.right {
+	float:right;
+	margin-right: 20px;
+}
+div.actions {
+	margin-top: 1em;
+}
+div.help h4 {
+	font-size: 120%;
+}
+.index {
+	overflow: visible;
+}
+.index form {
+	width: auto;
+}
+.index form .submit {
+	clear: none;
+	float: left;
+	margin-left: 12px;
+}
+.view .textarea textarea {
+	height: 200px;
+}
+.row {
+	clear: both;
+	padding: 12px 2px 6px 2px;
+	border-top: 1px #ccc solid;
+	overflow: hidden;
+}
+.row span {
+	margin-right: 10px;
+	float: left;
+	font-size: 90%;
+	padding-top: 3px;
+}
+.row h3.name {
+	margin: 0 0 4px 0;
+	padding: 0;
+	font-size: 140%;
+	vertical-align: top;
+}
+.row h3.name em {
+	display: inline;
+	float: none;
+	clear: none;
+	margin: 0;
+	font-size: 70%;
+	font-style: normal;
+}
+.row h3.name em a {
+	color: #69C;
+}
+.row img {
+	display: block;
+	float: left;
+	vertical-align: middle;
+	padding: 0 10px 0 0;
+	background: #fff;
+}
+.row span.subtitle {
+	float: right;
+	padding: 0;
+	margin: -24px 60px 4px 0;
+	color: #656565;
+	width: 110px;
+	font-size: 120%;
+}
+.row .description {
+	clear: both;
+	display: block;
+	float: left;
+	width: 50%;
+	line-height: 120%;
+}
+.row .author {
+	width: 20%;
+	text-align: right;
+}
+.row .date {
+	width: 160px;
+	text-align: left;
+}
+.row .footer {
+	margin-top: 4px;
+}
+.row .admin {
+	margin: -20px 10px 4px 0;
+	padding: 0;
+	float: right;
+	font-weight: bold;
+	font-size: 12px;
+	color: #656565;
+}
+.row .nav {
+	float: right;
+	font-size: 120%;
+	margin-top: -26px;
+	padding-top: 2px;
+	padding-left: 4px;
+	display:block;
+	vertical-align: bottom;
+}
+
+fieldset.options select {
+	width: 100%;
+}
+fieldset.options textarea {
+	width: 100%;
+	height: 60px;
+}
+.form h2 {
+	margin: 0;
+}
+.form .breadcrumbs {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.wiki form fieldset {
+	margin-top: 0px;
+	float: left;
+	width: 64%;
+	border: 0;
+	padding-left: 5px;
+}
+.wiki form fieldset.content {
+	width: 100%;
+}
+.wiki form #WikiPath {
+	font-size: 180%;
+	padding: 4px;
+}
+.wiki form #WikiSlug, .wiki form #WikiTitle {
+	font-size: 190%;
+	padding: 4px;
+	color: #300;
+	font-weight: normal;
+}
+div.wiki-text pre {
+	white-space: normal;
+}
+div.wiki-text pre code {
+	white-space: pre;
+}
+div.wiki-text code {
+	white-space: normal;
+}
+.wiki form div.wiki-text {
+	padding: 0 0.5em;
+	width: 64%;
+}
+.wiki .single div.checkbox {
+	float: left;
+	clear: none;
+	white-space:nowrap;
+}
+.wiki .input em {
+	float: right;
+	font-size: 10px;
+	font-style: normal;
+	margin-top: 5px;
+}
+.wiki textarea {
+	font-size: 13px;
+	height: 240px;
+}
+.wiki fieldset.content .textarea textarea {
+	clear: none;
+	float: left;
+	width: 64%;
+	height: 360px;
+}
+
+.wiki .textarea .help {
+	clear: none;
+	float: left;
+	width: 30%;
+	margin: 0;
+	padding: 0;
+	margin-left: 1%;
+}
+
+.wiki form .textarea .help div {
+	clear: none;
+	margin: 0;
+	font-weight: normal;
+	font-size: 110%;
+}
+.wiki form .textarea .help div em {
+	float: none;
+	font-size: 100%;
+	margin: 0;
+}
+.wiki .input {
+	font-size: 80%;
+}
+.wiki .input label {
+	font-size: 120%;
+}
+.breadcrumbs {
+	color: #ccc;
+}
+.breadcrumbs a {
+	color: #ccc;
+	text-decoration: none;
+}
+.breadcrumbs a:hover {
+	text-decoration: underline;
+}
+.wiki-content {
+	margin-right: 4%;
+	width: 56%;
+	margin-bottom: 40px;
+}
+.wiki-content .actions {
+	font-size: 100%;
+}
+.wiki-navigation {
+	float: right;
+	padding-top: 20px;
+	width: 35%;
+}
+.wiki-navigation h2 {
+	color: #3b3b3b;
+	font-size: 130%;
+	margin: 0;
+	padding: 0;
+}
+.wiki-navigation .description {
+	padding: 2px 40px 2px 0;
+	margin-bottom: 10px;
+	float: left;
+	font-size: 12px;
+}
+.wiki-navigation .paths {
+	clear: left;
+	margin-bottom: 20px;
+	overflow: hidden;
+}
+.wiki-navigation .paths h3 {
+	font-size: 120%;
+	color: #333;
+}
+.wiki-navigation .paths ul {
+	margin: 0;
+}
+.wiki-navigation .paths li {
+	list-style-type: none;
+	margin: 8px 0;
+}
+.wiki-navigation .paths li a {
+	color: #656565;
+}
+.wiki-footer {
+	clear: both;
+	width: 56%;
+	border-top: 0px solid #ccc;
+}
+.wiki-footer .author, .wiki-footer .date {
+	font-size: 80%;
+	margin-top: 0px;
+}
+.revisions form {
+	clear: both;
+}
+.revisions form div {
+	clear: none;
+	float: left;
+	padding: 0;
+	margin: 6px 0;
+}
+.revisions form div label {
+	font-weight: normal;
+	font-size: 100%;
+	color: #333;
+	line-height: 120%;
+	height: 120%;
+}
+.revisions form div input,
+.revisions form div select {
+	font-size: 80%;
+}
+
+.revisions form div.submit {
+	padding: 2px;
+	margin-top: 1.5em;
+	margin-left: 6px;
+}
+.revisions form div.submit input {
+	margin-right: 6px;
+}
+
+/* Timeline */
+
+.timeline {
+	margin-right: 0%;
+}
+.timeline ul {
+	list-style-type: none;
+	margin: 0;
+}
+.timeline .zebra {
+	background-color: #F7F7F7;
+}
+.timeline li {
+	margin: 0;
+	margin-bottom: 30px;
+}
+.timeline ul li ul {
+	margin: 0;
+}
+.timeline ul li ul li {
+	margin: 0;
+}
+.timeline p.the-date {
+	clear: both;
+	font-size: 160%;
+	color: #656565;
+	padding: 2px 0px;
+	border-bottom: 1px solid #ccc;
+}
+.timeline span.comment {
+	background-color: #990;
+	color: #fff;
+}
+.timeline span.commit {
+	background-color: #963;
+	color: #fff;
+}
+.timeline span.ticket {
+	background-color: #990;
+	color: #fff;
+}
+.timeline span.wiki {
+	background-color: #996;
+	color: #fff;
+}
+.timeline li.event {
+	clear: both;
+	padding: 6px 6px 6px 0;
+	overflow: hidden;
+}
+.timeline .event p.metadata {
+	float: left;
+	width: 80px;
+	margin-right: 20px;
+	text-align: center;
+}
+.timeline .event span.type {
+	font-variant: small-caps;
+	text-transform: uppercase;
+	font-size: 11px;
+	padding: 2px;
+}
+.timeline .event span.date {
+	display: block;
+	font-size: 11px;
+	color: #333;
+}
+.timeline .event div.body {
+	float: left;
+}
+.timeline .event p.action {
+	padding: 0;
+	margin: 0;
+}
+.timeline .event span.username {
+	font-weight: bold;
+	color: #69C;
+}
+.timeline .event .description {
+	margin: 0;
+	margin-top: 1px;
+	font-family: "Andale Mono", monospace;
+	font-size: 90%;
+	line-height: 140%;
+}
+.timeline .event span.admin {
+	float: right;
+	font-size: 80%;
+}
+.timeline .event span.admin a {
+	color: #999;
+}
+/* Tickets */
+
+.tickets h3 em {
+	font-size: 80%;
+}
+
+.tickets .edit {
+	font-size: 80%;
+}
+
+.tickets form {
+	min-width: 800px;
+	white-space: nowrap;
+}
+
+.tickets fieldset.main {
+	float: left;
+	margin-top: 24px;
+	margin-right: 4%;
+	width: 56%;
+	white-space: normal;
+}
+/*
+.tickets fieldset.options {
+	float: left;
+	width: 26%;
+}
+.tickets .edit fieldset.options {
+	font-size: 100%;
+}
+*/
+.tickets fieldset.main fieldset.options {
+	float: none;
+	border: 0;
+	padding: 0;
+	margin: 0 0 10px 0;
+	width: 100%;
+	font-size: 100%;
+}
+.tickets fieldset.main fieldset.options div.select {
+	float: left;
+	clear: none;
+	margin: 0;
+}
+
+.tickets form .submit {
+	clear: left;
+}
+.tickets .textarea textarea {
+	font-size: 12px;
+	height: 300px;
+}
+.tickets div.help {
+	float: left;
+	clear: none;
+	margin-top: 20px;
+	margin-right: 4%;
+	width: 20%;
+}
+.tickets div.help div {
+	clear: none;
+}
+.tickets .view {
+	width: 60%;
+}
+.tickets .description {
+	margin-bottom: 0.4em;
+	padding: 0 0 1em 0;
+	border: 1px solid #ccc;
+	border-width: 1px 0;
+}
+.tickets .view .date {
+	float: right;
+}
+.tickets textarea#TicketComment {
+	height: 130px;
+	margin-bottom: 10px;
+}
+
+/* Comments */
+
+div.comments {
+	clear: both;
+	padding: 0 4px;
+	margin: 0;
+	margin-top: 40px;
+	width: 60%;
+}
+.comments .comment {
+	font-size: 140%;
+	margin: 0;
+	padding: 0;
+	padding:0.5em 0;
+	font-style: normal;
+	color: #3b3b3b;
+}
+.comments .comment .date {
+	font-weight: bold;
+	color: #633;
+}
+.comments .comment .admin a {
+	font-size: 80%;
+	color: #ccc;
+}
+.comments .comment .body {
+	border: 1px solid #ccc;
+	padding: 4px 8px;
+	font-size: 90%;
+	white-space: normal;
+}
+.comments .comment .body ul {
+	margin-bottom: 4px;
+}
+.comments .comment .body  li {
+	margin: 2px 0;
+	font-size: 80%;
+}
+.comments .comment .body p {
+	margin-top: 10px;
+}
+.tickets fieldset.comments {
+	float: left;
+	padding-right: 40px;
+}
+
+
+/* Source */
+
+.source h2 {
+	margin-top: 24px;
+	margin-bottom: 4px;
+}
+.source .forks {
+	float: right;
+	margin-top: -20px;
+	margin-right: 4px;
+}
+
+.source table th, .source table td {
+  padding: 5px 10px;
+}
+.source table th {
+  color: #888;
+  text-align: left;
+  background: #CBCBCB;
+  padding: 5px 10px 5px 4px;
+  border-width: 0;;
+/*
+  border-left: 0px solid #ddd;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+*/
+}
+.source table td {
+  text-align: left;
+  background: #f7f7f7;
+  padding: 5px 10px 5px 4px;
+  border : 0;
+  vertical-align: middle;
+/*
+  border-bottom: 1px solid #ccc;
+  border-left: 0px solid #ddd;
+*/
+}
+.source .message, .source .date {
+	font-size: 80%;
+	padding-top: 6px;
+	margin: 0.5em 0;
+	vertical-align: middle;
+}
+
+.source a.folder {
+	background: url('images/folder.gif') no-repeat left;
+	color: #333;
+	text-decoration: none;
+	padding-left: 24px;
+	margin-left: 0px;
+}
+.source a.folder:hover {
+	color: #000;
+	text-decoration: underline;
+}
+.source a.file {
+	background: url('images/file.gif') no-repeat left;
+	color: #999;
+	text-decoration: none;
+	padding-left: 24px;
+	margin-left: 0px;
+}
+.source a.file:hover {
+	color: #bbb;
+	text-decoration: underline;
+}
+
+.source span.history {
+	float: right;
+}
+
+.source p.history a {
+	font-size: 100%;
+	text-decoration: underline;
+}
+.source p.history a:hover {
+	text-decoration: none;
+}
+
+/* History */
+.history h3 {
+	color: #333;
+}
+.history h4 {
+	font-size: 120%;
+	padding-top: 10px;
+}
+.history .changes li {
+	font-size: 80%;
+}
+
+/* Version */
+.version {
+	width: 56%;
+	padding-bottom: 1em;
+	margin-bottom: 3em;
+}
+.versions .version h3 {
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid #ccc;
+}
+
+.versions #VersionDescription {
+	font-size: 90%;
+	height: 200px;
+}
+.versions div.help {
+	float: left;
+	clear: none;
+	margin-top: 2em;
+	width: 20%;
+}
+
+/* Permissions */
+
+.permissions form {
+	float: left;
+	width: 66%;
+}
+.permissions .help {
+	float: right;
+	margin-top: 34px;
+	width: 30%;
+}
+.permissions .help .rule {
+	font-family: monospace;
+}
+.permissions form .select {
+	clear: none;
+	float: left;
+	margin-right: 0px;
+}
+.permissions form select {
+	margin-right: 10px;
+}
+.permissions form select option {
+	font-size: 20px;
+}
+.permissions textarea {
+	font-size: 12px;
+	height: 340px;
+}
+
+/* Users */
+.users form {
+	width: 60%;
+}
+.index form {
+	width: auto;
+}
+.index form .submit {
+	clear: none;
+	float: left;
+	margin-left: 12px;
+}
+.login form {
+	width: 420px;
+}
+
+.users form h4 {
+	margin: 1em 0;
+}
+.users form .checkbox span.checkbox {
+	clear: both;
+	display: block;
+	padding-top: 4px;
+}
+.users form .checkbox input {
+	float: left;
+	clear: none;
+	display: inline;
+}
+.users form .checkbox input.text {
+	width: 92%;
+}
+.users form .select select {
+	float: left;
+	margin-right: 2%;
+}
+.users form .select input.text {
+	width: 80%;
+	float: left;
+	clear: none;
+	display: inline;
+}
+
+.users form fieldset fieldset .submit {
+	margin: 0 20px;
+	font-size: 90%;
+}
+
+/* Projects */
+
+.project-details {
+	margin: 0;
+	background: #f4f4f4;
+	padding: 4px 10px;
+	margin-bottom: 10px;
+	margin-right: 1%;
+}
+
+.project-details .path span {
+	padding-left: 20px;
+}
+
+.source .project-details {
+	margin-right: 0;
+}
+
+.panel {
+	float: left;
+	width: 29%;
+	margin-right: 1%;
+	margin-bottom: 1em;
+	background: #f4f4f4;
+	padding: 0px;
+	overflow: hidden;
+	height: 300px;
+	border-bottom: #ccc 2px solid;
+}
+.panel h4 {
+	margin: 0;
+	padding: 4px 10px;
+	color: #888;
+	background: #cbcbcb;
+}
+.panel ul {
+	padding: 0 10px;
+	margin: 0;
+	height: 276px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+.panel ul li {
+	clear: both;
+	margin: 0;
+	padding: 8px 0;
+	list-style-type: none;
+}
+
+.projects .row p.links {
+	line-height: 120%;
+	font-size: 100%;
+}
+.projects .row p.links a {
+	/*color: #656565;*/
+	color: #804000;
+}
+
+.projects .row .description {
+	margin-left: 50px;
+	line-height: 120%;
+}
+
+.projects {
+	border-bottom: 1px #ccc solid;
+	margin-right: 0%;
+}
+.form {
+	border-bottom: 0px;
+}
+.projects td.actions a {
+	font-weight: normal;
+}
+
+.projects fieldset.main {
+	width: 40%;
+}
+.projects fieldset.options {
+	width: 40%;
+}
+.projects fieldset.main textarea {
+	height: 200px;
+}
+div.submit input {
+	margin-right: 6px;
+}
+.confirm {
+	width: 50%;
+}
+.start {
+	padding-top: 20px;
+}
+a.detail {
+	color: #656565;
+}
+
+a.project {
+	color: #888;
+}
+
+.rss {
+	vertical-align: middle;
+}
+#curtain {
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  top: 40%;
+  width: 100%;
+  padding: 40px 0;
+  background: rgb(0, 0, 0);
+  opacity: 0.8;
+  text-align: center;
+  font-size: 300%;
+  color: #fff;
+}
+
+div.paging {
+	float: right;
+	clear: none;
+	color: #909090;
+	font-size: 1em;
+	padding: 0 2px;
+	margin: 0 0 5px 0;
+}
+div.white {
+	color: #fff;
+}
+
+div.paging span.current {
+	background: #ccc;
+	padding: 3px 6px;
+}
+div.paging a {
+	color: #333;
+	font-size: 16px;
+}
+div.paging span a {
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 2px 6px;
+	text-decoration: none;
+	font-size: 14px;
+}
+div.paging span a:hover {
+	background: #ccc;
+	border: 1px solid #000;
+	background: #ccc;
+}
+
+div.queues {
+	float: left;
+	clear: none;
+	margin: 0 0 5px 0;
+}
+
+div.users-search {
+	float: right;
+}
+div.users-search fieldset {
+	padding: 2px 0px 4px 10px;
+}
+div.users-search .input {
+	float:left;
+	margin: 0;
+	padding: 0;
+}
+div.users-search label {
+	font-size: 10px;
+}
+div.users-search input {
+	font-size: 10px;
+}
+div.users-search .submit {
+	clear: none;
+	float: right;
+	margin: 4px;
+}
+
+/* Diff handling */
+.diff .file {
+	margin: 0px 0 20px 0;
+	padding: 4px 0 0 0;
+	overflow: auto;
+}
+.diff .file .name {
+	color: #000;
+	margin: 0;
+}
+.diff .file .line {
+	clear: both;
+	overflow: visible;
+	white-space: nowrap;
+	width: 100%;
+}
+.line:after {
+  content : '';
+  display: block;
+  clear:both;
+  height:0;
+  padding:0;
+  margin:0;
+}
+.diff .file .number {
+	float: left;
+	padding: 1px 2px;
+	min-width: 40px;
+	color: #A9A9A9;
+	background-color: #ECECEC;
+	border-right: 1px solid #DDDDDD;
+	text-align: right;
+	font-size: 11px;
+	line-height: 20px;
+}
+.diff .file .header {
+	background-color: #f7f7f7;
+	color: #bbb;
+}
+.diff .file .code {
+	float: left;
+	font-family: "Andale Mono", monospace;
+	white-space: pre;
+	width: 80%;
+	overflow: visible;
+	font-size: 12px;
+	line-height: 20px;
+}
+.diff .file .removed {
+	background-color: #FEE;
+	color: #B00;
+}
+
+.diff .file .added {
+	background-color: #DFD;
+	color: #080;
+}
