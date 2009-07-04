@@ -272,6 +272,7 @@ td.number a:hover {
 	display: inline;
 	padding: 0;
 	margin: 0 12px;
+	list-style-image: none;
 }
 
 #projects-link {
@@ -400,7 +401,7 @@ td.number a:hover {
 #flashMessage, #authMessage {
 	background: #f4f4f4;
 	margin-top: 0px;
-	padding: 12px 8px 4px 20px;
+	padding: 22px 8px 4px 20px;
 	font-size: 110%;
 	height: 20px;
 	color: #222;
@@ -408,6 +409,7 @@ td.number a:hover {
 #authMessage {
 	margin-top: -10px;
 	margin-left: -20px;
+	margin-right: -20px;
 }
 
 .zebra {
@@ -685,6 +687,7 @@ div.wiki-text code {
 .wiki-navigation .paths li {
 	list-style-type: none;
 	margin: 8px 0;
+	list-style-image: none;
 }
 .wiki-navigation .paths li a {
 	color: #656565;
@@ -743,12 +746,14 @@ div.wiki-text code {
 .timeline li {
 	margin: 0;
 	margin-bottom: 30px;
+	list-style-image: none;
 }
 .timeline ul li ul {
 	margin: 0;
 }
 .timeline ul li ul li {
 	margin: 0;
+	list-style-image: none;
 }
 .timeline p.the-date {
 	clear: both;
@@ -1187,6 +1192,7 @@ div.comments {
 	margin: 0;
 	padding: 8px 0;
 	list-style-type: none;
+	list-style-image: none;
 }
 
 .projects .row p.links {
