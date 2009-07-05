@@ -57,7 +57,7 @@
 
 				if (!empty($data['Commit']['branch'])) {
 					if (!$newbranch) {
-						__('to');
+						echo  " " . __('to', true);
 					}
 					echo " " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
 							'controller' => 'source', 'action' => 'branches',
@@ -66,7 +66,7 @@
 				}
 
 				if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
-					__('in');
+					echo  " " . __('in', true);
 					echo ' '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
 						'admin' => false, 'controller' => 'source'
 					)), array('class' => 'project'));
