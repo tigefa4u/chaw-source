@@ -41,7 +41,7 @@ class UpgradeTwoTask extends ChawUpgradeShell {
 		$conditions = array();
 		$count = $this->Timeline->find('count', compact('conditions'));
 
-		for ($i = 1; $i * 100 < $count; $i++) {
+		for ($i = 1; $i <= ceil($count / 100); $i++) {
 			$this->Timeline->setSource('timeline');
 			$this->Commit->setSource('commits');
 			$events = $this->Timeline->find('all', array(
