@@ -87,9 +87,11 @@ class UpgradeTwoTask extends ChawUpgradeShell {
 
 					$last['Timeline']['user_id'] = $last['Commit']['user_id'];
 					$last['Timeline']['event'] = 'pushed';
-					$last['Timeline']['data'] = count($batch);
 
-					$commit['changes'] = $first['Commit']['revision'] . '..' . $commit['revision'];
+					if ($commit['revision'] !== $first['Commit']['revision']) {
+						$last['Timeline']['data'] = count($batch);
+						$commit['changes'] = $first['Commit']['revision'] . '..' . $commit['revision'];
+					}
 
 					$this->Commit->create($commit);
 					if ($this->Commit->save()) {
