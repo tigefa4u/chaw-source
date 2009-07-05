@@ -49,14 +49,12 @@
 			?>
 		</p>
 
-		<div class="description">
-			<?php
-				if (!empty($data['Comment']['changes'])) {
-					echo $chaw->changes($data['Comment']['changes']);
-				}
-				echo $text->truncate($data['Comment']['body'], 80, '...', false, true);
-			?>
-		</div>
+		<div class="description"><?php
+			if (!empty($data['Comment']['changes'])) {
+				echo $chaw->changes($data['Comment']['changes']);
+			}
+			echo trim($text->truncate($data['Comment']['body'], 80, '...', false, true));
+		?></div>
 	</div>
 
 	<?php if (!empty($this->params['isAdmin'])):?>
