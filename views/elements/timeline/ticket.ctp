@@ -43,9 +43,9 @@
 			?>
 		</p>
 
-		<p class="description">
-			<?php echo $text->truncate($data['Ticket']['description'], 80, '...', false, true); ?>
-		</p>
+		<p class="description"><?php 
+			echo $text->truncate($data['Ticket']['description'], 80, '...', false, true); 
+		?></p>
 	</div>
 
 	<?php if (!empty($this->params['isAdmin'])):?>

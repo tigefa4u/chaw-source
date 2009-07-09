@@ -24,7 +24,8 @@
 			</span>
 			<strong>
 				<?php
-				if ($CurrentProject->repo->type == 'git') {
+				$newbranch = false;
+				if ($CurrentProject->repo->type == 'git' && !empty($data['Timeline']['event'])) {
 					if ($data['Timeline']['event'] == 'pushed') {
 					 	if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
 							__("merged");
@@ -42,8 +43,8 @@
 						}
 					} else if ($data['Timeline']['event'] == 'created') {
 						__("created");
+						$newbranch = true;
 					}
-
 				} else {
 					__('committed');
 				}
@@ -52,10 +53,12 @@
 			<?php
 				if (empty($data['Timeline']['data'])) {
 					echo $chaw->commit($data['Commit']['revision'], $data['Project']) . ' ';
-					__('to');
 				}
 
 				if (!empty($data['Commit']['branch'])) {
+					if (!$newbranch) {
+						echo  " " . __('to', true);
+					}
 					echo " " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
 							'controller' => 'source', 'action' => 'branches',
 							$data['Commit']['branch']
@@ -63,7 +66,7 @@
 				}
 
 				if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {
-					__('in');
+					echo  " " . __('in', true);
 					echo ' '. $html->link($data['Project']['name'], $chaw->url($data['Project'], array(
 						'admin' => false, 'controller' => 'source'
 					)), array('class' => 'project'));

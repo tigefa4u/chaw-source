@@ -1,4 +1,5 @@
 <?php
+$this->set('showdown', true);
 $script = '
 $(document).ready(function(){
 	$("#WikiContent").html(converter.makeHtml(jQuery.trim($("#WikiContent").text())));
