@@ -37,7 +37,7 @@
 							if (!empty($data['Commit']['changes']) && strlen($data['Commit']['changes']) > 40) {
 								$link = ' ' . $html->link($data['Timeline']['data'], $chaw->url($data['Project'], array(
 									'controller' => 'commits', 'logs', $data['Commit']['changes']
-								));
+								)));
 							}
 							echo $link . ' ' . __("commits", true);
 						}
