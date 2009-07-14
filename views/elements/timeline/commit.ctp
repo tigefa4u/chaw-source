@@ -33,13 +33,13 @@
 							__("pushed");
 						}
 						if (!empty($data['Timeline']['data'])) {
-							$link = ' ' . $data['Commit']['changes'];
+							$link = $data['Timeline']['data'] . ' ' . __("commits", true);
 							if (!empty($data['Commit']['changes']) && strlen($data['Commit']['changes']) > 40) {
-								$link = ' ' . $html->link($data['Timeline']['data'], array(
+								$link = $html->link($link, array(
 									'controller' => 'commits', 'logs', $data['Commit']['changes']
 								));
 							}
-							echo $link . ' ' . __("commits", true);
+							echo ' ' . $link;
 						}
 					} else if ($data['Timeline']['event'] == 'created') {
 						__("created");
