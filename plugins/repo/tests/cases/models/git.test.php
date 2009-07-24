@@ -163,7 +163,22 @@ class GitTest extends CakeTestCase {
 		$result = $Git->find('count', array('path' => TMP . 'tests/git/working/test/master/.gitignore'));
 
 		$this->assertEqual($result, 2);
+		
+		$Git->update();
+		$results = $Git->find('all', array(
+			'branch' => 'master', 'order' => 'asc'
+		));
 
+		$oldrev = $results[0]['Repo']['revision'];
+		$newrev = $results[1]['Repo']['revision'];
+		
+		$count = $Git->find('count', array(
+			'conditions' => array($oldrev . '..' . $newrev),
+			'order' => 'asc'
+		));
+		
+		$this->assertEqual(1, $count);
+		
 	//pr($Git->working);
 	//	pr($Git->debug);
 	//	pr($Git->response);

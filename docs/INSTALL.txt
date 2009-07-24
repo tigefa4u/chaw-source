@@ -1,20 +1,22 @@
 GETTING STARTED
 
-If you have CakePHP, and have setup the cake to be in your PATH
+If you have CakePHP 1.3, and have setup the cake to be in your PATH
 git clone git@thechaw.com:chaw.git
 cd chaw
 cake bake db_config
-cake schema run create
+cake schema run create Chaw
 visit, http://localhost/chaw/
 
 othewise,
 cd /your/webroot
-svn co https://svn.cakephp.org/repo/branches/1.2.x.x chaw
-cd chaw
+git clone git@code.cakephp.org:cakephp.git
+cd cakephp
+git checkout -b 1.3 origin/1.3
+
 git clone git@thechaw.com:chaw.git
-cd cake/console
-cake --app=chaw bake db_config
-cake  --app=chaw schema run create
+cd chaw
+../cake/console/cake --app=chaw bake db_config
+../cake/console/cake  --app=chaw schema run create
 visit, http://localhost/chaw/
 
 

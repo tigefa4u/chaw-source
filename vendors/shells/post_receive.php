@@ -77,7 +77,7 @@ class PostReceiveShell extends Shell {
 			'hash' => $newrev
 		));
 
-		$this->log($commit);
+		//$this->log($commit);
 
 		if (empty($commit)) {
 			return;
