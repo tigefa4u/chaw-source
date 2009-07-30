@@ -45,11 +45,10 @@ class Source extends Object {
 
 			if (!empty($args)) {
 				$branch = $args[0];
-				if (!$this->Repo->branch)  {
+				$branches = $this->Repo->find('branches');
+				if (in_array($branch, $branches)) {
 					$branch = array_shift($args);
 					$path = join(DS, $args);
-					$this->Repo->branch('master', true);
-					$branches = $this->Repo->find('branches');
 					if (in_array($branch, $branches)) {
 						$this->Repo->branch($branch, true);
 						$this->Repo->pull('origin', $branch);
