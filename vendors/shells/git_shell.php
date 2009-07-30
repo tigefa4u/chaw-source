@@ -92,7 +92,7 @@ class GitShellShell extends Shell {
 		$fork = @$this->args[1];
 
 		$this->args[] = 'git_shell';
- 		$this->log($this->args, LOG_INFO);
+ 		//$this->log($this->args, LOG_INFO);
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid Project');

@@ -11,6 +11,14 @@ $javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="page-navigation">
 	<?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?>
+	<?php 
+		foreach((array)$branches as $branch) :
+			echo ' | ' .$html->link($branch, $chaw->url((array)$CurrentProject, array(
+				'controller' => 'commits', 'action' => 'branch', $branch
+			)));
+		endforeach;
+	?>
+	
 </div>
 
 <h2>

@@ -64,6 +64,8 @@ class Commit extends AppModel {
 	}
 
 	function afterSave($created) {
+		$this->log($this->data);
+		
 		if ($created && $this->addToTimeline) {
 			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
@@ -74,7 +76,6 @@ class Commit extends AppModel {
 				'event' => $this->data['Commit']['event'],
 				'data' => $this->data['Commit']['data']
 			));
-
 			$Timeline->create($timeline);
 			$Timeline->save();
 		}
@@ -94,7 +95,11 @@ class Commit extends AppModel {
 	function isUnique($data, $options = array()) {
 		if (!empty($data['revision'])) {
 			$this->recursive = -1;
-			if ($id = $this->field('id', array('revision' => $data['revision']))) {
+			$project_id = $this->Project->id;
+			if (!empty($this->data['Commit']['project_id'])) {
+				$project_id = $this->data['Commit']['project_id'];
+			}
+			if ($id = $this->field('id', array('revision' => $data['revision'], 'project_id' => $project_id))) {
 				if ($this->id && $this->id == $id) {
 					return true;
 				}

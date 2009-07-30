@@ -88,7 +88,7 @@ class Git extends Repo {
 			$this->commit("Initial Project Commit");
 			$this->push();
 		}
-		$this->log($this->debug, LOG_DEBUG);
+		//$this->log($this->debug, LOG_DEBUG);
 
 		if (is_dir($path) && is_dir($this->working)) {
 			return true;
@@ -313,6 +313,9 @@ class Git extends Repo {
  **/
 	function find($type = 'all', $options = array()) {
 		if ($type == 'branches') {
+			if (empty($this->branch)) {
+				$this->branch('master', true);
+			}
 			$this->cd();
 			$result = $this->run('branch -a', null, 'capture');
 			$branches = array();

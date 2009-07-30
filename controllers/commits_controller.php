@@ -36,8 +36,9 @@ class CommitsController extends AppController {
 	}
 
 	function view($revision = null) {
+		$branches = $this->Project->Repo->find('branches');
 		$commit = $this->Commit->findByRevision($revision);
-		$this->set('commit', $commit);
+		$this->set(compact('commit', 'branches'));
 	}
 
 	function logs($commits = null) {
@@ -47,16 +48,11 @@ class CommitsController extends AppController {
 		$this->set(compact('commits', 'args', 'current'));
 	}
 
-	function history() {
+	function branch() {
+		$branches = $this->Project->Repo->find('branches');
 		$args = func_get_args();
-		if (empty($args)) {
-			$this->redirect($this->referer());
-		}
-
 		if ($this->Project->Repo->type == 'git') {
-			if ($args[0] == 'branches') {
-				array_shift($args);
-			} else {
+			if (empty($args)) {
 				$this->Project->Repo->branch('master', true);
 			}
 		}
@@ -66,7 +62,7 @@ class CommitsController extends AppController {
 
 		$commits = $this->paginate($this->Project->Repo, array('path' => $path));
 
-		$this->set(compact('commits', 'args', 'current'));
+		$this->set(compact('commits', 'branches', 'args', 'current'));
 	}
 
 	function remove($id = null) {

@@ -41,8 +41,8 @@ class SvnShellShell extends Shell {
 		}
 
 		$this->args[] = 'svn_shell';
-		$this->log($this->args, LOG_DEBUG);
-		$this->log($this->params, LOG_DEBUG);
+		//$this->log($this->args, LOG_DEBUG);
+		//$this->log($this->params, LOG_DEBUG);
 
 		//$this->Project->permit($this->params['user']);
 

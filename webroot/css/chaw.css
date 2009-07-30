@@ -1034,6 +1034,9 @@ div.comments {
 }
 
 /* History */
+.history {
+	margin-bottom: 20px;
+}
 .history h3 {
 	color: #333;
 }

@@ -1,6 +1,9 @@
 <?php if (!empty($CurrentProject)):?>
 <div class="project-details">
 	<?php
+		if(empty($branch)) {
+			$branch = null;
+		}
 		if (empty($CurrentProject->approved)) {
 			echo $html->tag('span', __('Awaiting Approval',true), array('class' => 'inactive'));
 		}
@@ -52,15 +55,27 @@
 					endif;
 					echo $html->tag('span', $link);
 				endif;
-				if (!empty($this->params['isAdmin']) && !empty($branch)):
+				if (!empty($this->params['isAdmin'])):
 					echo $html->tag('span', $html->link(__('remove branch',true), array(
 						'admin' => false,
 						'controller' => 'source', 'action' => 'delete', $branch
 					), array('class' => 'detail')));
 				endif;
+				
+				echo $html->tag('span', $html->link(__('view commits',true), $chaw->url((array)$CurrentProject, array(
+					'admin' => false,
+					'controller' => 'commits', 'action' => 'branch', $branch
+				)), array('class' => 'history')));
+				
 			else:
 				echo '<strong>svn checkout</strong> ';
 				echo "{$CurrentProject->remote->svn}/$remote{$CurrentProject->url}";
+				
+				echo $html->tag('span', $html->link(__('view commits',true), $chaw->url((array)$CurrentProject, array(
+					'admin' => false,
+					'controller' => 'commits', 'action' => 'index'
+				)), array('class' => 'history')));
+				
 			endif;
 
 			/*
@@ -69,11 +84,6 @@
 				'controller' => 'projects', 'action' => 'index', 'ext' => 'tar'
 			), array('class' => 'detail')));
 			*/
-
-			echo $html->tag('span', $html->link(__('view history',true), array(
-				'admin' => false,
-				'controller' => 'commits', 'action' => 'index'
-			), array('class' => 'history')));
 		?>
 	</p>
 </div>

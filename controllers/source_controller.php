@@ -44,11 +44,14 @@ class SourceController extends AppController {
 		$args = func_get_args();
 		if ($this->Project->Repo->type == 'git') {
 			$this->Project->Repo->branch('master', true);
+		} else {
+			$this->Project->Repo->update();
 		}
+		
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
 		$data = $this->Source->read($path);
-
+		
 		$this->pageTitle = $current;
 		if (!empty($args)) {
 			$this->pageTitle = join('/', $args) . '/' . $current;
