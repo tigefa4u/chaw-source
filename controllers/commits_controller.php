@@ -44,7 +44,7 @@ class CommitsController extends AppController {
 	function logs($commits = null) {
 		$Source = ClassRegistry::init('Source');
 		$this->paginate = array('order' => 'asc');
-		$commits = $this->paginate($this->Project->Repo, array($commits));		
+		$commits = $this->paginate($this->Project->Repo, array($commits));
 		$this->set(compact('commits', 'args', 'current'));
 	}
 
@@ -60,9 +60,28 @@ class CommitsController extends AppController {
 		$Source = ClassRegistry::init('Source');
 		list($args, $path, $current) = $Source->initialize($this->Project->Repo, $args);
 
-		$commits = $this->paginate($this->Project->Repo, array('path' => $path));
+		$this->paginate['branch'] =  $current;
+		$commits = $this->paginate($this->Project->Repo);
 
 		$this->set(compact('commits', 'branches', 'args', 'current'));
+	}
+
+	function history() {
+		$args = func_get_args();
+		if ($this->Project->Repo->type == 'git') {
+			if (empty($args)) {
+				$this->Project->Repo->branch('master', true);
+			} else {
+				array_shift($args);
+			}
+		}
+
+		$Source = ClassRegistry::init('Source');
+
+		list($args, $path, $current) = $Source->initialize($this->Project->Repo, $args);
+		$this->paginate = array_merge(array('path' => $path, 'branch' => $args[1]), $this->paginate);
+		$commits = $this->paginate($this->Project->Repo);
+		$this->set(compact('commits', 'args', 'current'));
 	}
 
 	function remove($id = null) {
