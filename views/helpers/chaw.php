@@ -204,7 +204,7 @@ class ChawHelper extends AppHelper {
 		if (!empty($params['fork'])) {
 			$fork = 'forks/' . $params['fork'] . '/';
 		}
-		$base = $this->webroot($fork . $params['project']);
+		$base = str_replace("//", "/", $this->base . '/' . $fork . $params['project']);
 		return $base;
 	}
 /**
