@@ -200,7 +200,7 @@ class ChawHelper extends AppHelper {
 			$params['project'] = null;
 		}
 
-		$fork = '/';
+		$fork = null;
 		if (!empty($params['fork'])) {
 			$fork = 'forks/' . $params['fork'] . '/';
 		}

@@ -48,11 +48,11 @@ class ChawHelperTest extends CakeTestCase {
 		$this->assertEqual($result, $expected);
 
 		$result = $this->Chaw->base(array('id' => 2, 'url' => 'some_project', 'fork' => null));
-		$expected = '/some_project';
+		$expected = '/some_project/';
 		$this->assertEqual($result, $expected);		
 		
 		$result = $this->Chaw->base(array('id' => 2, 'url' => 'some_project', 'fork' => 'gwoo'));
-		$expected = '/forks/gwoo/some_project';
+		$expected = '/forks/gwoo/some_project/';
 		$this->assertEqual($result, $expected);
 		
 
