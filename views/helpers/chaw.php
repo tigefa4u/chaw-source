@@ -195,16 +195,16 @@ class ChawHelper extends AppHelper {
 		if (!empty($params['url']) && is_string($params['url'])) {
 			$params['project'] = $params['url'];
 		}
-		
+
 		if (!empty($params['id']) && $params['id'] == 1) {
 			$params['project'] = null;
 		}
-		
+
 		$fork = '/';
 		if (!empty($params['fork'])) {
 			$fork = 'forks/' . $params['fork'] . '/';
 		}
-		$base = str_replace("//", "/", $this->base . '/' . $fork . $params['project']);
+		$base = str_replace("//", "/", $this->base . '/' . $fork . $params['project'] . '/');
 		return $base;
 	}
 /**
