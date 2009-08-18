@@ -38,7 +38,7 @@ class PostReceiveShell extends Shell {
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid project');
-			return 1;
+			return false;
 		}
 
 		$user = $this->Project->User->field('id', array('username' => $_SERVER['PHP_CHAWUSER']));

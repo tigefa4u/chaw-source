@@ -31,22 +31,22 @@ class PreReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		$this->args[] = 'pre-receive';
- 		//$this->log($this->args, LOG_INFO);
+ 		$this->log($this->args, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid project');
-			return 1;
+			return false;
 		}
 
 		if (empty($_SERVER['PHP_CHAWUSER'])) {
 			$this->err('User could not be found');
-			return 1;
+			return false;
 		}
 
 		if ($_SERVER['PHP_CHAWUSER'] == 'chawbacca') {
-			return 0;
+			return true;
 		}
 
 		/*
@@ -65,9 +65,9 @@ class PreReceiveShell extends Shell {
 			'access' => 'w',
 			'default' => false
 		));
-
+	
 		if ($allowed === true) {
-			return 0;
+			return true;
 		}
 
 		$master = $this->Permission->check('refs/heads/master', array(
@@ -77,11 +77,11 @@ class PreReceiveShell extends Shell {
 			'default' => false
 		));
 		if ($master === true) {
-			return 0;
+			return true;
 		}
 
 		$this->err('Authorization failed');
-		return 1;
+		return false;
 	}
 
 }

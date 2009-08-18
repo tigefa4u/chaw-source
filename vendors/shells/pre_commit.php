@@ -37,7 +37,7 @@ class PreCommitShell extends Shell {
 
 		if ($this->Project->initialize(compact('project')) === false) {
 			$this->err('Invalid project');
-			return 1;
+			return false;
 		}
 
 		$txn = explode('-', $this->args[2]);

@@ -31,7 +31,7 @@ class GitShellShell extends Shell {
 	function main() {
 		if (empty($this->params['user'])) {
 			$this->err('User not found.');
-			return 1;
+			return false;
 		}
 
 		$this->args[] = 'git_shell';
@@ -41,7 +41,7 @@ class GitShellShell extends Shell {
 
 		if (!isset($this->actionMap[$command])) {
 			$this->err('Command not found.');
-			return 1;
+			return false;
 		}
 
 		$project = @$this->args[1];
@@ -57,7 +57,7 @@ class GitShellShell extends Shell {
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid project');
-			return 1;
+			return false;
 		}
 
 		if ($this->actionMap[$command] == 'r') {
@@ -71,7 +71,7 @@ class GitShellShell extends Shell {
 
 			if ($allowed !== true) {
 				$this->err('Authorization failed');
-				return 1;
+				return false;
 			}
 
 			$this->Project->permit($this->params['user']);
