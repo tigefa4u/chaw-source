@@ -6,7 +6,7 @@
 		'url' => array('id' => false)
 ));?>
 	<fieldset class="main">
- 		<legend><?php echo $this->pageTitle; ?></legend>
+ 		<legend><?php echo $title_for_layout; ?></legend>
 	<?php
 		echo $form->input('id');
 		echo $form->hidden('url');

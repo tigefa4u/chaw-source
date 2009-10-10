@@ -12,7 +12,7 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="versions form">
 <?php echo $form->create(array('action' => $this->action));?>
 	<fieldset class="main">
- 		<legend><?php echo $this->pageTitle;?></legend>
+ 		<legend><?php echo $title_for_layout;?></legend>
 	<?php		
 		echo $form->input('title',array('label'=>array('labeltext' => __('Title',true))));
 		echo $form->input('description',array('label'=>array('labeltext' => __('Description',true))));

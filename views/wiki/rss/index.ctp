@@ -10,7 +10,7 @@ $rssFeed['action'] = 'index';
 $rssFeed[] = $slug;
 
 $this->set('channel', array(
-	'title' => $CurrentProject->name . '/' . $this->pageTitle,
+	'title' => $CurrentProject->name . '/' . $title_for_layout,
 	'link' => $rssFeed,
 	'description' => $description
 ));

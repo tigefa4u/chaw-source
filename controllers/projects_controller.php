@@ -94,7 +94,7 @@ class ProjectsController extends AppController {
 	}
 
 	function start($type = null) {
-		$this->pageTitle = 'Projects/Start';
+		$this->set('title_for_layout', 'Projects/Start');
 		if ($type || !empty($this->data)) {
 			$this->add();
 			return;
@@ -136,7 +136,7 @@ class ProjectsController extends AppController {
 		}
 
 		if (!empty($this->passedArgs[0])) {
-			$this->pageTitle = Inflector::humanize($this->passedArgs[0]) . '/Project/Setup';
+			$this->set('title_for_layout', Inflector::humanize($this->passedArgs[0]) . '/Project/Setup');
 			$this->data['Project']['private'] = ($this->passedArgs[0] == 'public') ? 0 : 1;
 		}
 
@@ -152,7 +152,7 @@ class ProjectsController extends AppController {
 			$this->redirect($this->referer());
 		}
 
-		$this->pageTitle = 'Update Project';
+		$this->set('title_for_layout', 'Update Project');
 
 		if (!empty($this->data)) {
 			$this->data['Project']['id'] = $this->Project->id;
@@ -250,7 +250,7 @@ class ProjectsController extends AppController {
 
 	function admin_add() {
 
-		$this->pageTitle = 'Project Setup';
+		$this->set('title_for_layout', 'Project Setup');
 
 		if ($this->Project->id !== '1' && $this->params['isAdmin'] !== true) {
 			$this->redirect($this->referer());

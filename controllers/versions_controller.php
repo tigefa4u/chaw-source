@@ -51,7 +51,7 @@ class VersionsController extends AppController {
 	}
 
 	function admin_add() {
-		$this->pageTitle = __("New Version",true);
+		$this->set('title_for_layout', __("New Version",true));
 
 		if (!empty($this->data)) {
 			$this->Version->create(array('project_id' => $this->Project->id));
@@ -70,7 +70,7 @@ class VersionsController extends AppController {
 			$this->redirect(array('admin' => false, 'action'=>'index'));
 		}
 
-		$this->pageTitle = __("Modify Version",true);
+		$this->set('title_for_layout', __("Modify Version",true));
 
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid Version', true));

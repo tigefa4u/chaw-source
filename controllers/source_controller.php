@@ -52,9 +52,9 @@ class SourceController extends AppController {
 
 		$data = $this->Source->read($path);
 		
-		$this->pageTitle = $current;
+		$this->set('title_for_layout', $current);
 		if (!empty($args)) {
-			$this->pageTitle = join('/', $args) . '/' . $current;
+			$this->set('title_for_layout', join('/', $args) . '/' . $current);
 		}
 
 		$this->set(compact('data', 'path', 'args', 'current'));
@@ -74,9 +74,9 @@ class SourceController extends AppController {
 
 		$data = $this->Source->read($path);
 
-		$this->pageTitle = $current;
+		$this->set('title_for_layout', $current);
 		if (!empty($args)) {
-			$this->pageTitle = join('/', $args) . '/' . $current;
+			$this->set('title_for_layout', join('/', $args) . '/' . $current);
 		}
 
 		$branch = $this->Project->Repo->branch;

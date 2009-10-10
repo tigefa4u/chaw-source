@@ -148,7 +148,7 @@ class WikiController extends AppController {
 
 		$fullpath = str_replace('//', '/', $path . '/' . $slug);
 
-		$this->pageTitle = 'Wiki/add' . $fullpath;
+		$this->set('title_for_layout', 'Wiki/add' . $fullpath);
 
 		if ($slug === 'new-page') {
 			$slug = null;
@@ -191,7 +191,7 @@ class WikiController extends AppController {
 	}
 
 	function edit() {
-		$this->pageTitle = 'Wiki/edit/';
+		$this->set('title_for_layout', 'Wiki/edit/');
 		$this->add();
 		$this->render('add');
 	}

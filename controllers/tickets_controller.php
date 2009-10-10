@@ -35,7 +35,7 @@ class TicketsController extends AppController {
 			'Ticket.project_id' => $this->Project->id,
 		);
 		$conditions = array_merge($conditions, (array)$this->postConditions($this->data, '=', 'AND', true));
-		$this->pageTitle = 'Tickets/Status/';
+		$this->set('title_for_layout', 'Tickets/Status/');
 
 		$current = $status = $type = $user = null;
 
@@ -60,7 +60,7 @@ class TicketsController extends AppController {
 			$user = $this->passedArgs['user'];
 			$current = $this->passedArgs['user'];
 			$conditions['Owner.username'] = $this->passedArgs['user'];
-			$this->pageTitle = 'Tickets/User/';
+			$this->set('title_for_layout', 'Tickets/User/');
 		}
 
 		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] != 'all') {
@@ -102,7 +102,7 @@ class TicketsController extends AppController {
 			$this->redirect(array('controller'=> 'tickets', 'action' => 'index'));
 		}
 
-		$this->pageTitle = "Ticket/{$id}/{$ticket['Ticket']['title']}";
+		$this->set('title_for_layout', "Ticket/{$id}/{$ticket['Ticket']['title']}");
 
 		$this->data['Ticket']['tags'] = $this->Ticket->Tag->toString($this->data['Tag']);
 		$this->Session->write('Ticket.previous', $this->data['Ticket']);
