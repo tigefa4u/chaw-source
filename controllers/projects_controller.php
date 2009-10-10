@@ -292,18 +292,18 @@ class ProjectsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->pageTitle = __('Project Admin',true);
+		$this->set("title_for_layout", __('Project Admin',true));
 
 		if ($this->Project->id !== '1' || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
 		}
 
 		$this->Project->id = $id;
-
+		$this->Project->Repo->logResponse = true;
 		if (!empty($this->data)) {
 			if ($data = $this->Project->save($this->data, false)) {
 				$this->Session->setFlash(__('Project was updated',true));
-				$this->redirect(array('action' => 'index'));
+			//	$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
