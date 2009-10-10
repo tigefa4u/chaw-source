@@ -498,7 +498,11 @@ class PermissionTest extends CakeTestCase {
 		gwoo = r
 
 		[versions]
-		gwoo = crud";
+		gwoo = crud
+		
+		[refs/heads/master]
+		@admin = rw
+		@team = r";
 
 		$Permission->saveFile($data);
 
@@ -506,6 +510,11 @@ class PermissionTest extends CakeTestCase {
 
 		$this->assertFalse($Permission->check("tickets", array('group' => 'team', 'access' => 'rw', 'default' => false)));
 		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'group' => 'team', 'access' => 'rw', 'default' => false)));
+		
+		$this->assertFalse($Permission->check("refs/heads/master", array(
+			'user' => 'bob', 'group' => 'user', 'access' => 'w', 'default' => false
+		)));
+	
 	}
 
 	function testPermissionGroup() {

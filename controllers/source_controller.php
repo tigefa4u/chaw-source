@@ -84,22 +84,6 @@ class SourceController extends AppController {
 
 		$this->render('index');
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
-	function rebase() {
-		if (!empty($this->params['isAdmin'])) {
-			if ($this->Source->rebase()) {
-				$this->Session->setFlash(__('You should have a nice clean working copy',true));
-			} else {
-				$this->Session->setFlash(__('Oops, rebuild failed try again',true));
-			}
-		}
-		$this->redirect($this->referer());
-	}
 
 /**
  * undocumented function

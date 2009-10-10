@@ -325,6 +325,19 @@ class Repo extends Overloadable {
 		return false;
 	}
 /**
+ * Deletes branch are resets
+ *
+ * @return void
+ *
+ **/
+	function _rebase() {
+		$Cleanup = new Folder($this->working);
+		if ($Cleanup->pwd() == $this->working) {
+			$Cleanup->delete();
+		}
+		return $this->pull();	
+	}
+/**
  * Creates a hook
  *
  * @param string $name

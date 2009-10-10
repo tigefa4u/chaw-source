@@ -61,6 +61,17 @@ class RepoController extends AppController {
 		$this->redirect($this->referer());
 	}
 
+	function rebase() {
+		if (!empty($this->params['isAdmin'])) {
+			if ($this->Project->Repo->rebase()) {
+				$this->Session->setFlash(__('You should have a nice clean working copy',true));
+			} else {
+				$this->Session->setFlash(__('Oops, rebuild failed try again',true));
+			}
+		}
+		$this->redirect(array('controller' => 'source', 'action' => 'index'));
+	}
+
 	function fork_it() {
 		if ($this->Project->Repo->type != 'git') {
 			$this->Session->setFlash(__('You cannot fork an svn project',true));
@@ -68,7 +79,7 @@ class RepoController extends AppController {
 		}
 
 		if (!empty($this->params['form']['cancel'])) {
-			$this->redirect(array('controller' => 'source'));
+			$this->redirect(array('controller' => 'source', 'action' => 'index'));
 		}
 
 		if (!empty($this->data)) {

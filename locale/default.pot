@@ -2,15 +2,13 @@
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
 #  Revision: 6296 /chaw/views/layouts/default.ctp
-#  Revision: 6296 /chaw/views/layouts/email/html/default.ctp
-#  Revision: 6296 /chaw/views/layouts/email/text/default.ctp
 #  Revision: 7214 /chaw/webroot/test.php
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-05-01 15:11-0700\n"
+"POT-Creation-Date: 2009-08-25 09:56-0700\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -39,15 +37,15 @@ msgstr ""
 msgid "The comment was removed from timeline"
 msgstr ""
 
-#: /controllers/commits_controller.php:79
+#: /controllers/commits_controller.php:101
 msgid "The commit was deleted"
 msgstr ""
 
-#: /controllers/commits_controller.php:81
+#: /controllers/commits_controller.php:103
 msgid "The commit was NOT deleted"
 msgstr ""
 
-#: /controllers/commits_controller.php:84
+#: /controllers/commits_controller.php:106
 msgid "The commit was removed from timeline"
 msgstr ""
 
@@ -71,56 +69,56 @@ msgstr ""
 msgid "Project is awaiting approval"
 msgstr ""
 
-#: /controllers/projects_controller.php:119;265
+#: /controllers/projects_controller.php:119;266
 msgid "Project was created"
 msgstr ""
 
-#: /controllers/projects_controller.php:126;271
-#: /controllers/repo_controller.php:99
+#: /controllers/projects_controller.php:126;272
+#: /controllers/repo_controller.php:110
 msgid "Project was NOT created"
 msgstr ""
 
-#: /controllers/projects_controller.php:160;303
+#: /controllers/projects_controller.php:161;305
 msgid "Project was updated"
 msgstr ""
 
-#: /controllers/projects_controller.php:162;306
+#: /controllers/projects_controller.php:163;308
 msgid "Project was NOT updated"
 msgstr ""
 
-#: /controllers/projects_controller.php:180;199
+#: /controllers/projects_controller.php:181;200
 msgid "Invalid Project"
 msgstr ""
 
-#: /controllers/projects_controller.php:183
+#: /controllers/projects_controller.php:184
 msgid "%s was removed "
 msgstr ""
 
-#: /controllers/projects_controller.php:206
+#: /controllers/projects_controller.php:207
 msgid "%s was deleted "
 msgstr ""
 
-#: /controllers/projects_controller.php:208
+#: /controllers/projects_controller.php:209
 msgid "%s was NOT deleted "
 msgstr ""
 
-#: /controllers/projects_controller.php:211
+#: /controllers/projects_controller.php:212
 msgid "%s could not be found"
 msgstr ""
 
-#: /controllers/projects_controller.php:289;379;382
+#: /controllers/projects_controller.php:291;382;385
 msgid "The project was invalid"
 msgstr ""
 
-#: /controllers/projects_controller.php:293
+#: /controllers/projects_controller.php:295
 msgid "Project Admin"
 msgstr ""
 
-#: /controllers/projects_controller.php:352
+#: /controllers/projects_controller.php:355
 msgid "The project was %s"
 msgstr ""
 
-#: /controllers/projects_controller.php:376
+#: /controllers/projects_controller.php:379
 msgid "The project was NOT %s"
 msgstr ""
 
@@ -148,31 +146,31 @@ msgstr ""
 msgid "Merge failed. Time to merge manually?"
 msgstr ""
 
-#: /controllers/repo_controller.php:66
-msgid "You cannot fork an svn project"
-msgstr ""
-
-#: /controllers/repo_controller.php:84
-msgid "Fork was created"
-msgstr ""
-
-#: /controllers/repo_controller.php:92;109
-msgid "You already have a fork"
-msgstr ""
-
-#: /controllers/source_controller.php:93
+#: /controllers/repo_controller.php:67
 msgid "You should have a nice clean working copy"
 msgstr ""
 
-#: /controllers/source_controller.php:95
+#: /controllers/repo_controller.php:69
 msgid "Oops, rebuild failed try again"
 msgstr ""
 
-#: /controllers/source_controller.php:112
+#: /controllers/repo_controller.php:77
+msgid "You cannot fork an svn project"
+msgstr ""
+
+#: /controllers/repo_controller.php:95
+msgid "Fork was created"
+msgstr ""
+
+#: /controllers/repo_controller.php:103;120
+msgid "You already have a fork"
+msgstr ""
+
+#: /controllers/source_controller.php:99
 msgid "%s was deleted"
 msgstr ""
 
-#: /controllers/source_controller.php:114
+#: /controllers/source_controller.php:101
 msgid "Oops, delete failed try again"
 msgstr ""
 
@@ -200,11 +198,11 @@ msgstr ""
 msgid "Ticket was NOT updated"
 msgstr ""
 
-#: /controllers/timeline_controller.php:82
+#: /controllers/timeline_controller.php:80
 msgid "The timeline event was deleted"
 msgstr ""
 
-#: /controllers/timeline_controller.php:84
+#: /controllers/timeline_controller.php:82
 msgid "The timeline event was NOT deleted"
 msgstr ""
 
@@ -224,11 +222,11 @@ msgstr ""
 msgid "User NOT added"
 msgstr ""
 
-#: /controllers/users_controller.php:166
+#: /controllers/users_controller.php:167
 msgid "User updated"
 msgstr ""
 
-#: /controllers/users_controller.php:168
+#: /controllers/users_controller.php:169
 msgid "User NOT updated"
 msgstr ""
 
@@ -289,7 +287,7 @@ msgid "Invalid Version."
 msgstr ""
 
 #: /controllers/versions_controller.php:54
-#: /views/versions/index.ctp:13
+#: /views/versions/index.ctp:6
 msgid "New Version"
 msgstr ""
 
@@ -345,22 +343,27 @@ msgstr ""
 msgid "Select a Project"
 msgstr ""
 
-#: /models/project.php:289
+#: /models/project.php:290
 msgid "##The home page for %s"
 msgstr ""
 
-#: /views/commits/history.ctp:14
-msgid "History"
+#: /views/commits/branch.ctp:24
+#: /views/commits/history.ctp:12
+msgid "Commits for"
 msgstr ""
 
+#: /views/commits/branch.ctp:55
 #: /views/commits/history.ctp:43
-#: /views/commits/view.ctp:17
+#: /views/commits/logs.ctp:25
+#: /views/commits/view.ctp:31
 #: /views/source/index.ctp:32
 msgid "Author"
 msgstr ""
 
+#: /views/commits/branch.ctp:59
 #: /views/commits/history.ctp:47
-#: /views/commits/view.ctp:21
+#: /views/commits/logs.ctp:29
+#: /views/commits/view.ctp:35
 #: /views/source/index.ctp:34
 msgid "Date"
 msgstr ""
@@ -372,11 +375,11 @@ msgstr ""
 msgid "Commits"
 msgstr ""
 
-#: /views/commits/view.ctp:7
+#: /views/commits/view.ctp:13
 msgid "All Commits"
 msgstr ""
 
-#: /views/commits/view.ctp:30
+#: /views/commits/view.ctp:44
 msgid "Changes"
 msgstr ""
 
@@ -391,8 +394,8 @@ msgstr ""
 
 #: /views/dashboard/admin_index.ctp:15
 #: /views/dashboard/index.ctp:21
-#: /views/layouts/default.ctp:107
-#: /views/projects/add.ctp:36
+#: /views/layouts/default.ctp:116
+#: /views/projects/add.ctp:37
 #: /views/projects/admin_add.ctp:37
 #: /views/projects/edit.ctp:42
 #: /views/timeline/index.ctp:30
@@ -407,7 +410,7 @@ msgstr ""
 
 #: /views/dashboard/admin_index.ctp:23
 #: /views/dashboard/index.ctp:29
-#: /views/layouts/default.ctp:100
+#: /views/layouts/default.ctp:109
 #: /views/timeline/index.ctp:38
 msgid "Wiki"
 msgstr ""
@@ -422,7 +425,7 @@ msgid "My Account"
 msgstr ""
 
 #: /views/elements/admin_navigation.ctp:2
-#: /views/layouts/default.ctp:123
+#: /views/layouts/default.ctp:132
 msgid "Admin"
 msgstr ""
 
@@ -441,9 +444,8 @@ msgstr ""
 
 #: /views/elements/admin_navigation.ctp:22
 #: /views/elements/current_projects.ctp:37
-#: /views/layouts/default.ctp:134
+#: /views/layouts/default.ctp:73
 #: /views/projects/admin_index.ctp:2
-#: /views/projects/index.ctp:14
 msgid "Projects"
 msgstr ""
 
@@ -518,46 +520,50 @@ msgstr ""
 msgid "unordered list 2"
 msgstr ""
 
-#: /views/elements/project_details.ctp:5
+#: /views/elements/project_details.ctp:8
 msgid "Awaiting Approval"
 msgstr ""
 
-#: /views/elements/project_details.ctp:9
+#: /views/elements/project_details.ctp:12
 #: /views/tickets/view.ctp:108
 #: /views/versions/admin_add.ctp:18
-#: /views/versions/admin_edit.ctp:24
+#: /views/versions/admin_edit.ctp:25
 msgid "Description"
 msgstr ""
 
-#: /views/elements/project_details.ctp:23
-msgid "fork it"
+#: /views/elements/project_details.ctp:27;89
+msgid "view commits"
 msgstr ""
 
-#: /views/elements/project_details.ctp:30
+#: /views/elements/project_details.ctp:35
+msgid "view forks"
+msgstr ""
+
+#: /views/elements/project_details.ctp:40
+msgid "view parent"
+msgstr ""
+
+#: /views/elements/project_details.ctp:50
+msgid "rebase"
+msgstr ""
+
+#: /views/elements/project_details.ctp:56
 #: /views/permissions/admin_index.ctp:32
 #: /views/users/edit.ctp:47
 #: /views/wiki/index.ctp:162
 msgid "delete"
 msgstr ""
 
-#: /views/elements/project_details.ctp:35
+#: /views/elements/project_details.ctp:61
 msgid "fast forward"
 msgstr ""
 
-#: /views/elements/project_details.ctp:43
-msgid "view forks"
+#: /views/elements/project_details.ctp:70
+msgid "fork it"
 msgstr ""
 
-#: /views/elements/project_details.ctp:48
-msgid "view parent"
-msgstr ""
-
-#: /views/elements/project_details.ctp:56
+#: /views/elements/project_details.ctp:79
 msgid "remove branch"
-msgstr ""
-
-#: /views/elements/project_details.ctp:73
-msgid "view history"
 msgstr ""
 
 #: /views/elements/recent/comments.ctp:29
@@ -581,40 +587,53 @@ msgstr ""
 msgid "modified"
 msgstr ""
 
-#: /views/elements/timeline/comment.ctp:64
-#: /views/elements/timeline/commit.ctp:82;84
+#: /views/elements/timeline/comment.ctp:62
+#: /views/elements/timeline/commit.ctp:90;92
 #: /views/elements/timeline/ticket.ctp:53
 #: /views/elements/timeline/wiki.ctp:55
 #: /views/users/admin_index.ctp:80;82
 msgid "remove"
 msgstr ""
 
-#: /views/elements/timeline/commit.ctp:29
+#: /views/elements/timeline/commit.ctp:31
 msgid "merged"
 msgstr ""
 
-#: /views/elements/timeline/commit.ctp:31
+#: /views/elements/timeline/commit.ctp:33
 msgid "pushed"
 msgstr ""
 
-#: /views/elements/timeline/commit.ctp:34
-msgid "committed"
+#: /views/elements/timeline/commit.ctp:36
+msgid "commits"
 msgstr ""
 
+#: /views/elements/timeline/commit.ctp:45
 #: /views/elements/timeline/ticket.ctp:26
 #: /views/elements/timeline/wiki.ctp:30
 msgid "created"
 msgstr ""
 
-#: /views/layouts/default.ctp:86
+#: /views/elements/timeline/commit.ctp:49
+msgid "committed"
+msgstr ""
+
+#: /views/elements/timeline/commit.ctp:60
+msgid "to"
+msgstr ""
+
+#: /views/elements/timeline/commit.ctp:69
+msgid "in"
+msgstr ""
+
+#: /views/layouts/default.ctp:95
 msgid "Source"
 msgstr ""
 
-#: /views/layouts/default.ctp:93
+#: /views/layouts/default.ctp:102
 msgid "Timeline"
 msgstr ""
 
-#: /views/layouts/default.ctp:114
+#: /views/layouts/default.ctp:123
 msgid "Versions"
 msgstr ""
 
@@ -624,14 +643,6 @@ msgstr ""
 
 #: /views/layouts/default.ctp:163
 msgid "CakePHP: the rapid development php framework"
-msgstr ""
-
-#: /views/layouts/email/html/default.ctp:37
-msgid "This email was sent using the <a href=\"http://cakephp.org\">CakePHP Framework</a>"
-msgstr ""
-
-#: /views/layouts/email/text/default.ctp:30
-msgid "This email was sent using the CakePHP Framework, http://cakephp.org."
 msgstr ""
 
 #: /views/pages/start.ctp:6
@@ -684,7 +695,7 @@ msgstr ""
 #: /views/users/forgotten.ctp:23
 #: /views/users/login.ctp:18
 #: /views/versions/admin_add.ctp:31
-#: /views/versions/admin_edit.ctp:37
+#: /views/versions/admin_edit.ctp:38
 #: /views/wiki/add.ctp:59
 msgid "Submit"
 msgstr ""
@@ -751,16 +762,14 @@ msgstr ""
 msgid "The project name must be unique."
 msgstr ""
 
-#: /views/projects/add.ctp:29
+#: /views/projects/add.ctp:30
 #: /views/projects/admin_add.ctp:30
-#: /views/projects/config.ctp:9
 #: /views/projects/edit.ctp:35
 msgid "Groups"
 msgstr ""
 
-#: /views/projects/add.ctp:33;42
+#: /views/projects/add.ctp:34;43
 #: /views/projects/admin_add.ctp:34;43
-#: /views/projects/config.ctp:14
 #: /views/projects/edit.ctp:39;48
 msgid "Comma seperated"
 msgstr ""
@@ -770,7 +779,7 @@ msgid "Page %page% of %pages%, showing %current% records out of %count% total, s
 msgstr ""
 
 #: /views/projects/admin_index.ctp:94
-#: /views/projects/index.ctp:93
+#: /views/projects/index.ctp:89
 #: /views/tickets/view.ctp:55
 #: /views/users/admin_index.ctp:79
 msgid "edit"
@@ -788,22 +797,6 @@ msgstr ""
 #: /views/timeline/index.ctp:77
 #: /views/users/admin_index.ctp:102
 msgid "next"
-msgstr ""
-
-#: /views/projects/config.ctp:7
-msgid "Options"
-msgstr ""
-
-#: /views/projects/config.ctp:10
-msgid "Ticket Types"
-msgstr ""
-
-#: /views/projects/config.ctp:11
-msgid "Ticket Priorities"
-msgstr ""
-
-#: /views/projects/config.ctp:12
-msgid "Ticket Statuses"
 msgstr ""
 
 #: /views/projects/delete.ctp:5
@@ -832,50 +825,50 @@ msgstr ""
 msgid "Sorry, no projects are available"
 msgstr ""
 
-#: /views/projects/index.ctp:20
+#: /views/projects/index.ctp:16
 msgid "Mine"
 msgstr ""
 
-#: /views/projects/index.ctp:23
+#: /views/projects/index.ctp:19
 msgid "All"
 msgstr ""
 
-#: /views/projects/index.ctp:27
+#: /views/projects/index.ctp:23
 #: /views/projects/start.ctp:41
 msgid "Public"
 msgstr ""
 
-#: /views/projects/index.ctp:31;47
+#: /views/projects/index.ctp:27;43
 #: /views/timeline/index.ctp:20
 msgid "Forks"
 msgstr ""
 
-#: /views/projects/index.ctp:40
+#: /views/projects/index.ctp:36
 msgid "Projects Feed"
 msgstr ""
 
-#: /views/projects/index.ctp:88
+#: /views/projects/index.ctp:84
 #: /views/wiki/index.ctp:159
 msgid "view"
 msgstr ""
 
-#: /views/projects/index.ctp:98
+#: /views/projects/index.ctp:94
 msgid "admin"
 msgstr ""
 
-#: /views/projects/index.ctp:119
+#: /views/projects/index.ctp:115
 msgid "timeline"
 msgstr ""
 
-#: /views/projects/index.ctp:124
+#: /views/projects/index.ctp:120
 msgid "wiki"
 msgstr ""
 
-#: /views/projects/index.ctp:129
+#: /views/projects/index.ctp:125
 msgid "tickets"
 msgstr ""
 
-#: /views/projects/index.ctp:134
+#: /views/projects/index.ctp:130
 msgid "versions"
 msgstr ""
 
@@ -919,7 +912,7 @@ msgstr ""
 msgid "Commit"
 msgstr ""
 
-#: /views/source/view.ctp:13
+#: /views/source/view.ctp:12
 msgid "history"
 msgstr ""
 
@@ -931,7 +924,7 @@ msgstr ""
 #: /views/tickets/index.ctp:94
 #: /views/tickets/view.ctp:107
 #: /views/versions/admin_add.ctp:17
-#: /views/versions/admin_edit.ctp:23
+#: /views/versions/admin_edit.ctp:24
 msgid "Title"
 msgstr ""
 
@@ -998,8 +991,8 @@ msgid "Version"
 msgstr ""
 
 #: /views/tickets/index.ctp:96
-#: /views/versions/index.ctp:30
-#: /views/versions/view.ctp:10
+#: /views/versions/index.ctp:23
+#: /views/versions/view.ctp:13
 msgid "Created"
 msgstr ""
 
@@ -1044,7 +1037,7 @@ msgid "Or close as"
 msgstr ""
 
 #: /views/timeline/index.ctp:14
-#: /views/versions/admin_edit.ctp:20
+#: /views/versions/admin_edit.ctp:21
 msgid "Project"
 msgstr ""
 
@@ -1119,22 +1112,18 @@ msgstr ""
 msgid "Remember me for 2 weeks"
 msgstr ""
 
-#: /views/users/view.ctp:4
-msgid "Will soon have a profile to share with you"
-msgstr ""
-
 #: /views/versions/admin_add.ctp:19
-#: /views/versions/admin_edit.ctp:25
+#: /views/versions/admin_edit.ctp:26
 msgid "Due Date"
 msgstr ""
 
 #: /views/versions/admin_add.ctp:20
-#: /views/versions/admin_edit.ctp:26
+#: /views/versions/admin_edit.ctp:27
 msgid "Completed"
 msgstr ""
 
-#: /views/versions/index.ctp:33
-#: /views/versions/view.ctp:13
+#: /views/versions/index.ctp:26
+#: /views/versions/view.ctp:16
 msgid "Due by"
 msgstr ""
 
