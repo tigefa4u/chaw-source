@@ -141,6 +141,7 @@ class Repo extends Overloadable {
 		$this->path = $config['path'] = rtrim($config['path'], '\/');
 		$this->working = $config['working'] = rtrim($config['working'], '\/');
 		$this->chawuser = $config['chawuser'];
+		putenv("PHP_CHAWUSER={$this->chawuser}");
 		return $this->config = $config;
 	}
 /**
@@ -245,7 +246,6 @@ class Repo extends Overloadable {
 		}
 
 		umask(0);
-		putenv("PHP_CHAWUSER={$this->chawuser}");
 		switch ($return) {
 			case 'capture':
 				exec($c, $response);

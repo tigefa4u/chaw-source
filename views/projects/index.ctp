@@ -147,8 +147,8 @@
 <div class="paging">
 	<?php
 		$paginator->options(array('url'=> $this->passedArgs));
-		echo $paginator->prev();
+		echo $paginator->prev('<< previous');
 		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
-		echo $paginator->next();
+		echo $paginator->next('next >>');
 	?>
 </div>

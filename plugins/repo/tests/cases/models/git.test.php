@@ -14,8 +14,7 @@ class GitTest extends CakeTestCase {
 		);
 	}
 
-	function end() {
-		parent::end();
+	function endTest() {
 		$this->__cleanUp();
 	}
 
@@ -28,6 +27,8 @@ class GitTest extends CakeTestCase {
 
 	function testCreate() {
 		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git->logDebug = true;
+		$Git->logResponse = true;
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -45,6 +46,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function igetTests() {
+		$this->endTest();
 		return array('start', 'testRead', 'end');
 	}
 
@@ -53,7 +55,13 @@ class GitTest extends CakeTestCase {
 		$this->assertTrue($Git->create());
 		$result = $Git->read();
 		$this->assertEqual($result['message'], 'Initial Project Commit');
+		
+		
+		//pr($Git->debug);
+		//pr($Git->response);
 
+		//die();	
+			
 		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
 		$this->assertTrue($File->write('this is something new'));
 
@@ -90,8 +98,9 @@ class GitTest extends CakeTestCase {
 		));
 
 		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
-
-		$this->end();
+	
+		
+		//$this->end();
 	}
 
 	function testBranch() {
@@ -163,7 +172,7 @@ class GitTest extends CakeTestCase {
 		$result = $Git->find('count', array('path' => TMP . 'tests/git/working/test/master/.gitignore'));
 
 		$this->assertEqual($result, 2);
-		
+
 		$Git->update();
 		$results = $Git->find('all', array(
 			'branch' => 'master', 'order' => 'asc'
@@ -171,14 +180,14 @@ class GitTest extends CakeTestCase {
 
 		$oldrev = $results[0]['Repo']['revision'];
 		$newrev = $results[1]['Repo']['revision'];
-		
+
 		$count = $Git->find('count', array(
 			'conditions' => array($oldrev . '..' . $newrev),
 			'order' => 'asc'
 		));
-		
+
 		$this->assertEqual(1, $count);
-		
+
 	//pr($Git->working);
 	//	pr($Git->debug);
 	//	pr($Git->response);
