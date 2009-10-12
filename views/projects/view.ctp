@@ -11,21 +11,29 @@
 			echo $html->tag('span', 'Awaiting Approval', array('class' => 'inactive'));
 		}
 	?>
-
+	<?php
+		if (!empty($project['Project']['private'])) {
+			echo $html->tag('span', 'Private', array('class' => 'active'));
+		}
+	?>
+	
 	<p class="description">
 		<?php echo $project['Project']['description'];?>
 	</p>
-
+	
+	<h4>Groups</h4>
+	<?php echo $project['Project']['config']['groups'];?>
+	
 	<h4>Tickets</h4>
 	<ul>
 		<li>
-			types: <?php echo $project['Project']['ticket_types'];?>
+			types: <?php echo $project['Project']['config']['ticket']['types'];?>
 		</li>
 		<li>
-			priorities: <?php echo $project['Project']['ticket_priorities'];?>
+			priorities: <?php echo $project['Project']['config']['ticket']['priorities'];?>
 		</li>
 		<li>
-			statuses: <?php echo $project['Project']['ticket_statuses'];?>
+			statuses: <?php echo $project['Project']['config']['ticket']['resolutions'];?>
 		</li>
 
 	</ul>
