@@ -141,7 +141,6 @@ class Repo extends Overloadable {
 		$this->path = $config['path'] = rtrim($config['path'], '\/');
 		$this->working = $config['working'] = rtrim($config['working'], '\/');
 		$this->chawuser = $config['chawuser'];
-		putenv("PHP_CHAWUSER={$this->chawuser}");
 		return $this->config = $config;
 	}
 /**
@@ -246,6 +245,7 @@ class Repo extends Overloadable {
 		}
 
 		umask(0);
+		putenv("PHP_CHAWUSER={$this->chawuser}");
 		switch ($return) {
 			case 'capture':
 				exec($c, $response);
@@ -280,11 +280,11 @@ class Repo extends Overloadable {
 		extract($query);
 
 		$results = array();
-		
+
 		if (strtolower($order) == 'asc') {
 			$data = array_reverse($data);
 		}
-		
+
 		foreach ($data as $key => $value) {
 			if ($key >= $offset) {
 				if ($result = $this->read($value)) {
@@ -296,7 +296,7 @@ class Repo extends Overloadable {
 				break;
 			}
 		}
-		
+
 		return $results;
 	}
 /**
@@ -335,7 +335,7 @@ class Repo extends Overloadable {
 		if ($Cleanup->pwd() == $this->working) {
 			$Cleanup->delete();
 		}
-		return $this->pull();	
+		return $this->pull();
 	}
 /**
  * Creates a hook
