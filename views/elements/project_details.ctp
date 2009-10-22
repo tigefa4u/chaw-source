@@ -23,7 +23,7 @@
 
 				echo '<strong>git clone</strong> ';
 				echo "{$CurrentProject->remote->git}:$remote{$CurrentProject->url}.git";
-
+				echo '<nav>';
 				echo $html->tag('span', $html->link(__('view commits',true), $chaw->url((array)$CurrentProject, array(
 					'admin' => false,
 					'controller' => 'commits', 'action' => 'branch', $branch
@@ -35,12 +35,12 @@
 						$link = $html->link(__('view forks',true), array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'projects', 'action' => 'forks'
-						), array('class' => 'detail'));
+						), array('class' => 'forks'));
 					else:
 						$link = $html->link(__('view parent',true), array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'source', 'action' => 'index'
-						), array('class' => 'detail'));
+						), array('class' => 'parent'));
 					endif;
 					echo $html->tag('span', $link);
 				endif;
@@ -50,18 +50,18 @@
 					echo $html->tag('span', $html->link(__('rebase',true), array(
 						'admin' => false,
 						'controller' => 'repo', 'action' => 'rebase'
-					), array('class' => 'detail')));
+					), array('class' => 'rebase')));
 
 					if (!empty($CurrentProject->fork)):
 						echo $html->tag('span', $html->link(__('delete',true), array(
 							'admin' => false,
 							'controller' => 'projects', 'action' => 'delete'
-						), array('class' => 'detail')));
+						), array('class' => 'delete')));
 
 						echo $html->tag('span', $html->link(__('fast forward',true), array(
 							'admin' => false,
 							'controller' => 'repo', 'action' => 'fast_forward'
-						), array('class' => 'detail')));
+						), array('class' => 'fast-forward')));
 					endif;
 
 				} else {
@@ -70,7 +70,7 @@
 						echo $html->tag('span', $html->link(__('fork it',true), array(
 							'admin' => false, 'fork' => false,
 							'controller' => 'repo', 'action' => 'fork_it'
-						), array('class' => 'detail')));
+						), array('class' => 'forkit')));
 					endif;
 					
 				}
@@ -79,7 +79,7 @@
 					echo $html->tag('span', $html->link(__('remove branch',true), array(
 						'admin' => false,
 						'controller' => 'source', 'action' => 'delete', $branch
-					), array('class' => 'detail')));
+					), array('class' => 'remove-branch')));
 				endif;
 
 			else:
@@ -99,6 +99,7 @@
 				'controller' => 'projects', 'action' => 'index', 'ext' => 'tar'
 			), array('class' => 'detail')));
 			*/
+			echo '</nav>';
 		?>
 	</p>
 </div>

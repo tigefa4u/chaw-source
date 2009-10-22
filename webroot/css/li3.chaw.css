@@ -1,0 +1,51 @@
+.article, #site-navigation { padding-top:60px!important; }
+
+input[type=text], input[type=password], input[type=submit], textarea { clear:both; display:block; font-size:14px; padding:.25em .5em; }
+
+input[type=submit] { background:#e6e6e6; border:none; padding:.5em 1em; margin:1em auto; font-size:16px; font-weight:bold; color:black; }
+
+fieldset { border:none; background:#f0f0f0; padding:1em; }
+	fieldset label { padding:0 1em 0 0; }
+legend { font-weight:bold; padding:.5em 1em; background:white; border:3px solid #f0f0f0; margin:1em 0 0 0; }
+ 	
+ 	.source h2:before { content: url(http://li3.rad-dev.org/img/icons/silk/package_green.png); margin:0 .5em 0 0; }
+ 	
+ 	.project-details {  }
+ 		.project-details .description { color:#999999; font-style:italic; padding:0 1em; }
+ 		.project-details .path:before { content: url(http://li3.rad-dev.org/img/icons/silk/application_osx_terminal.png); margin:0 .25em 0 0; }
+ 		.project-details nav a { display:block; float:right; padding:.5em 1em; margin:0 0 0 .25em; background:#f0f0f0; text-decoration:none; font-weight:bold; }
+ 		.project-details nav a:hover { background:#e6e6e6; }
+ 		.project-details .history:before { content: url(http://li3.rad-dev.org/img/icons/silk/folder_magnify.png); margin:0 .25em 0 0; }
+ 		.project-details .remove-branch:before { content: url(http://li3.rad-dev.org/img/icons/silk/bin.png); margin:0 .25em 0 0; }
+ 		.project-details .rebase:before { content: url(http://li3.rad-dev.org/img/icons/silk/error.png); margin:0 .25em 0 0; }
+ 		.project-details .forks:before { content: url(http://li3.rad-dev.org/img/icons/silk/arrow_divide.png); margin:0 .25em 0 0; }
+ 		.project-details .forkit:before { content: url(http://li3.rad-dev.org/img/icons/silk/arrow_branch.png); margin:0 .25em 0 0; }
+ 		
+ 	a.folder, a.file { text-decoration:none; line-height:16px; font-weight:bold; }
+ 	a.folder:before { content: url(http://li3.rad-dev.org/img/icons/silk/folder.png); margin:0 1em 0 0; }
+ 	a.file:before { content: url(http://li3.rad-dev.org/img/icons/silk/page_white.png); margin:0 1em 0 0; }
+ 	
+ 	table { width:100%; border:3px solid #f0f0f0; border-width:0px 2px; }
+ 	tr td, tr th { background:#fafafa; font-size:12px; padding:.25em .75em; border:3px solid #f0f0f0; border-width:3px 1px; }
+ 	tr th { font-size:14px; }
+ 	tr.zebra td { background:#f0f0f0; }
+ 	
+ 	.timeline { clear:both; }
+ 	
+ 	input[type=text], input[type=password], textarea { width:97%; margin:.5em 0 1em 0; }
+
+ul.chaw-navigation {}
+	.chaw-navigation li { padding:.5em 0 .45em 36px !important; border-bottom:3px solid white; background:url(http://li3.rad-dev.org/img/icons/silk/cog.png) no-repeat left center; }
+	.chaw-navigation li:hover { border-bottom:3px solid #f0f0f0; }
+	
+	.chaw-navigation .source { background-image:url(http://li3.rad-dev.org/img/icons/silk/package_green.png); }
+	.chaw-navigation .timeline{ background-image:url(http://li3.rad-dev.org/img/icons/silk/time.png); }
+	.chaw-navigation .wiki { background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit.png); }
+	.chaw-navigation .tickets { background-image:url(http://li3.rad-dev.org/img/icons/silk/report.png); }
+	.chaw-navigation .versions { background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks.png); }
+	.chaw-navigation .admin { background-image:url(http://li3.rad-dev.org/img/icons/silk/cog.png); }
+	.chaw-navigation .about { background-image:url(http://li3.rad-dev.org/img/icons/silk/information.png); }
+	
+	.chaw-navigation {}
+
+ 	

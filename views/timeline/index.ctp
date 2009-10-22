@@ -8,40 +8,40 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<div class="page-navigation">
-	<?php
+<nav class="tabs">
+	<ul>
+		<li class="project"><?php
 		$active = ($this->action == 'index') ? array('class' => 'active') : null;
 		echo $html->link(__('Project',true), array(
 			'controller' => 'timeline', 'action' => 'index',
-		), $active) . ' | ';
-
+		), $active); ?></li>
+		<li class="forks"><?php
 		if (empty($CurrentProject->fork)) {
 			$active = ($this->action == 'forks') ? array('class' => 'active') : null;
-			echo $html->link(__('Forks',true), array('controller' => 'timeline', 'action' => 'forks'), $active) .' | ';
+			echo $html->link(__('Forks',true), array('controller' => 'timeline', 'action' => 'forks'), $active);
 		} else {
 			$active = ($this->action == 'parent') ? array('class' => 'active') : null;
-			echo $html->link(__('Parent',true), array('controller' => 'timeline', 'action' => 'parent'), $active) .' | ';
-		}
-
+			echo $html->link(__('Parent',true), array('controller' => 'timeline', 'action' => 'parent'), $active);
+		}?></li>
+		<li class="commits"><?php
 		echo $chaw->type(array('title' => __('Commits',true),'type' =>'commits'), array(
 			'controller' => 'timeline',
-		)) . ' | ';
-
+		)); ?></li>
+		<li class="tickest"><?php
 		echo $chaw->type(array('title' => __('Tickets',true),'type' =>'tickets'), array(
 			'controller' => 'timeline',
-		)) . ' | ';
-
+		)); ?></li>
+		<li class="comments"><?php
 		echo $chaw->type(array('title' => __('Comments',true),'type' =>'comments'), array(
 			'controller' => 'timeline',
-		)) . ' | ';
-
+		)); ?></li>
+		<li class="wiki"><?php
 		echo $chaw->type(array('title' => __('Wiki',true),'type' =>'wiki'), array(
 			'controller' => 'timeline',
-		)) . ' | ';
-
-		echo $chaw->rss('Timeline Feed', $rssFeed);
-	?>
-</div>
+		)); ?></li>
+		<li class="rss"><?php echo $chaw->rss('Timeline Feed', $rssFeed); ?></li>
+	</ul>
+</nav>
 
 <div class="timeline index">
 	<ul>

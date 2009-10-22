@@ -24,8 +24,8 @@
  * @license			commercial
  */
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
 	<?php echo $html->charset();?>
 	<title>
@@ -38,14 +38,22 @@
 		if (isset($rssFeed)) {
 			echo $html->meta('rss', $html->url($rssFeed, true));
 		}
-		echo $html->css(array('generic', 'chaw'));
+		echo $html->css(array(
+			'http://li3.rad-dev.org/css/base.css',
+			'http://li3.rad-dev.org/css/li3.css',
+			'li3.chaw'
+		));
+		//echo $html->css(array('generic', 'chaw'));
 
 		if (!empty($this->params['admin'])) {
 			echo $html->css(array('chaw.admin'));
 		}
 
 		if (!empty($javascript)) {
-			echo $javascript->link('jquery-1.3.1.min');
+			echo $javascript->link('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js');
+			echo $javascript->link('http://li3.rad-dev.org/js/li3.js');
+			echo $javascript->link('http://li3.rad-dev.org/js/cli.js');
+			echo $javascript->link('http://li3.rad-dev.org/libraries/ZeroClipboard/ZeroClipboard.js');
 
 			if (isset($showdown)):
 				echo $javascript->link('gshowdown.min');
@@ -61,64 +69,84 @@
 		}
 		echo $scripts_for_layout;
 	?>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function () {
+			li3.setup({
+				base : null,
+				testimonials: false
+			});
+			li3Cli.setup();
+		});
+	</script>
 </head>
-<body>
-	<div id="container">
+<body class="side-navigation">
+	<div class="header" id="site-header">
+		<div class="aside" id="cli">
+			<div class="nav">
+				<div id="cli-display"></div>
+				<div>
+					<form id="cli-form" onSubmit="return false">
+						<input type="text" id="cli-input" />
+						<input id="cli-submit" type="submit" />
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="aside" id="git-shortcuts">
+			<span id="git-clone-path" class="clone">git clone code@rad-dev.org:lithium.git</span>
+			<div class="nav">
+				<?php /*<a href="#" class="download" title="Download Lithium">download</a> */ ?>
+				<a href="#" id="git-copy" class="copy" title="Copy the git clone shortcut to your clipboard">
+					copy to clipboard
+				</a>
+			</div>
+		</div>
+		<div class="aside" id="account-navigation">
+			<div class="nav" id="account-navigation-toggler">
+				<a href="/users/account" title="manage your account">account</a>
+			</div>
+			<div class="contents" style="display:none;">
+				<div class="login">
+				<?php echo $this->element('current_user');?>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		<div id="header">
-
-			<h1>
-				<?php
-					$options = ($this->name == 'Projects') ? array('class' => 'project-link on') : array('class' => 'project-link');
-					echo $html->link(__('Projects',true), array(
-						'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
-						'controller' => 'projects', 'action' => 'index'
-					), $options);
-
-				 	if ($this->name != 'Projects') {
-						echo ' / ' . $html->link($CurrentProject->name, array(
-							'admin' => false,
-							'controller' => 'source', 'action' => 'index'
-						));
-					}
-				?>
-			</h1>
-
-			<?php echo $this->element('current_user');?>
-
-				<div id="navigation">
-					<?php if ($this->name !== 'Projects'):?>
-					
-					<ul>
-						<li><?php
+	<div class="width-suggestion">
+		<div class="aside" id="site-navigation">
+			<div class="nav">
+				<?php if ($this->name !== 'Projects'):?>
+					<ul class="chaw-navigation">
+						<li class="source"><?php
 							$options = ($this->name == 'Source') ? array('class' => 'on') : null;
 							echo $html->link(__('Source',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'source', 'action' => 'index'), $options);
 						?></li>
 
-						<li><?php
+						<li class="timeline"><?php
 							$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
 							echo $html->link(__('Timeline',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'timeline', 'action' => 'index'), $options);
 						?></li>
 
-						<li><?php
+						<li class="wiki"><?php
 							$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
 							echo $html->link(__('Wiki',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'wiki', 'action' => 'index'), $options);
 						?></li>
 
-						<li><?php
+						<li class="tickets"><?php
 							$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
 							echo $html->link(__('Tickets',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'tickets', 'action' => 'index'), $options);
 						?></li>
 
-						<li><?php
+						<li class="versions"><?php
 							$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
 							echo $html->link(__('Versions',true), array(
 								'admin' => false, 'plugin' => null,
@@ -127,7 +155,7 @@
 
 						<?php if (!empty($this->params['isAdmin'])):?>
 
-							<li><?php
+							<li class="admin"><?php
 								$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
 								echo $html->link(__('Admin',true), array(
 									'admin' => true, 'plugin' => null,
@@ -135,12 +163,31 @@
 							?></li>
 
 						<?php endif;?>
-
+						<li class="about"><?php echo $html->link(__('About',true), '/pages/about');?></li>
 					</ul>
 				<?php endif;?>
-				</div>
+				
+				<?php if (!empty($this->params['admin'])):
+					echo $this->element('admin_navigation');
+				endif; ?>
+				
+			</div>
 		</div>
-		<div id="content">
+		<div class="article">
+			<h1><?php
+				$options = ($this->name == 'Projects') ? array('class' => 'project-link on') : array('class' => 'project-link');
+				echo $html->link(__('Projects',true), array(
+					'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
+					'controller' => 'projects', 'action' => 'index'
+				), $options);
+
+			 	if ($this->name != 'Projects') {
+					echo ' / ' . $html->link($CurrentProject->name, array(
+						'admin' => false,
+						'controller' => 'source', 'action' => 'index'
+					));
+				}
+			?></h1>
 			<?php
 				$session->flash();
 			?>
@@ -153,20 +200,15 @@
 				endif;
 			?>
 		</div>
+	</div>
 
-		<div id="footer">
-			<p>
-				<span>
-					<?php echo $html->link(__('About',true), '/pages/about');?>
-				</span>
-				<?php echo $html->link(
+	<div class="footer" id="site-footer">
+		<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad <?php echo $html->link(
 						$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
 						'http://www.cakephp.org/',
 						array('target'=>'_new'), null, false
 					);
-				?>
-			</p>
-		</div>
+				?></p>
 	</div>
 <?php if (Configure::read() == 0):?>
 	<script type="text/javascript">
