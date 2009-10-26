@@ -10,31 +10,28 @@
 ?>
 <?php if ($this->action != 'forks'):?>
 
-	<div class="page-navigation">
-		<?php
-			if (!empty($CurrentUser->Permission)) {
-				echo $chaw->type(array('title' => __('Mine',true), 'type' => null)) . ' | ';
-			}
-
-			echo $chaw->type(array('title' => __('All',true),'type' =>'all'), array(
+	<div class="nav tabs">
+		<ul>
+		<?php if (!empty($CurrentUser->Permission)) { ?>
+			<li><?php echo $chaw->type(array('title' => __('Mine',true), 'type' => null)); ?></li>
+		<?php } ?>
+		<li><?php echo $chaw->type(array('title' => __('All',true),'type' =>'all'), array(
 				'controller' => 'projects', 'action' => 'index',
-			)) . ' | ';
-
-			echo $chaw->type(array('title' => __('Public',true),'type' =>'public'), array(
+			)); ?></li>
+		<li><?php echo $chaw->type(array('title' => __('Public',true),'type' =>'public'), array(
 				'controller' => 'projects', 'action' => 'index',
-			)) . ' | ';
-
-			echo $chaw->type(array('title' => __('Forks',true),'type' =>'forks'), array(
+			)); ?></li>
+		<li><?php echo $chaw->type(array('title' => __('Forks',true),'type' =>'forks'), array(
 				'controller' => 'projects', 'action' => 'index',
-			)) . ' | ';
-
-			echo $html->link(
+			)); ?></li>
+		<li><?php echo $html->link(
 				$html->image('feed-icon.png', array(
 					'width' => 14, 'height' => 14
 				)),
 				$rssFeed, array(
 				'title' => __('Projects Feed',true), 'class' => 'rss', 'escape'=> false
-			));?>
+			));?></li>
+		</ul>
 	</div>
 <?php endif;?>
 

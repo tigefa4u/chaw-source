@@ -1,5 +1,4 @@
-<div id="admin-navigation">
-	<h4><?php __('Admin') ?></h4>
+<div class="nav tabs">
 	<ul>
 		<li><?php
 			$options = ($this->name == 'Dashboard') ? array('class' => 'on') : null;
@@ -25,16 +24,13 @@
 				));
 			endif;
 		?>
-
-	</ul>
-	<p style="margin-top: 3em; margin-left: 10px;">
 		<?php
 			if ($CurrentProject->id == 1 && $this->params['isAdmin']) :
-				echo $html->link(__('New Project',true), array(
+				echo $html->tag('li', $html->link(__('New Project',true), array(
 					'admin' => true, 'project' => false, 'fork' => false,
 					'controller' => 'projects', 'action' => 'add'
-				));
+				)));
 			endif;
 		?>
-	</p>
+	</ul>
 </div>

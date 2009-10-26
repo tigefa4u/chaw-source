@@ -8,36 +8,30 @@ if (empty($timeline)) {
 }
 ?>
 
-<div class="page-navigation">
-	<?php
-		echo $html->link(__('My Account',true), array('controller' => 'users', 'action' => 'account')) .' | ';
-
-		echo $html->link(__('My Projects', true), array('controller' => 'projects', 'action' => 'index')) .' | ';
-
-		echo $chaw->type(array('title' => __('Commits',true),'type' =>'commits'), array(
+<div class="nav tabs">
+	<ul>
+	<li><?php echo $html->link(__('My Account',true), array('controller' => 'users', 'action' => 'account')); ?></li>
+	<li><?php echo $html->link(__('My Projects', true), array('controller' => 'projects', 'action' => 'index')); ?></li>
+	<li><?php echo $chaw->type(array('title' => __('Commits',true),'type' =>'commits'), array(
 			'controller' => 'dashboard',
-		)) . ' | ';
-
-		echo $chaw->type(array('title' => __('Tickets',true),'type' =>'tickets'), array(
+		)); ?></li>
+	<li><?php echo $chaw->type(array('title' => __('Tickets',true),'type' =>'tickets'), array(
 			'controller' => 'dashboard',
-		)) . ' | ';
-
-		echo $chaw->type(array('title' => __('Comments',true),'type' =>'comments'), array(
+		)); ?></li>
+	<li><?php echo $chaw->type(array('title' => __('Comments',true),'type' =>'comments'), array(
 			'controller' => 'dashboard',
-		)) . ' | ';
-
-		echo $chaw->type(array('title' => __('Wiki',true),'type' =>'wiki'), array(
+		)); ?></li>
+	<li><?php echo $chaw->type(array('title' => __('Wiki',true),'type' =>'wiki'), array(
 			'controller' => 'dashboard',
-		)) . ' | ';
-
-		echo $html->link(
+		)); ?></li>
+	<li><?php echo $html->link(
 			$html->image('feed-icon.png', array(
 				'width' => 14, 'height' => 14
 			)),
 			$rssFeed, array(
 			'title' => "{$CurrentUser->username}'s Feed", 'class' => 'rss', 'escape'=> false
-		));
-	?>
+		)); ?></li>
+	</ul>
 </div>
 
 <?php

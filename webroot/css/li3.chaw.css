@@ -72,7 +72,10 @@ ul.chaw-navigation {}
  	.timeline li { display:block; }
  	.timeline > ul > li > ul { border:3px solid #f0f0f0; }
  	.timeline > ul > li > ul > li { padding:.25em .75em; }
- 	.timeline p { font-size:.75em; margin:.25em 0; }
+ 	.timeline p { font-size:10px !important; margin:.25em 0; }
+ 	.timeline ul, .timeline li { font-size:10px; }
+ 	.timeline .description ul { margin:.25em .25em .5em; }
+ 	.timeline .description ul li { padding:.25em 0 0 4em; }
  	.timeline li.zebra { background:#fafafa; }
  	.timeline .the-date { display:block; background:#f0f0f0; margin:0; padding:.75em 1.25em; font-size:16px; font-weight:bold; }
  	.timeline .metadata { float:left; }
@@ -125,4 +128,14 @@ ul.chaw-navigation {}
 a.big { display:block; clear:both; margin:1em auto; padding:.5em 1em; font-size:18px; background:#f0f0f0; }
 #TicketAddForm .options .input, #TicketModifyForm .options .input { float:left; padding:0 1em 0 0; }
 #Preview { clear:both; }
- 
+
+/**
+ * Projects
+ */
+.projects { clear:both; margin:1em 0; padding:1em 0; } 
+	.row { padding:1em; }
+	.row.zebra { background:#fafafa; }
+		.row img { float:left; margin:0 1em 1em 0; }
+		.row .nav { float:right; }
+		.row .links { margin:0; }
+	

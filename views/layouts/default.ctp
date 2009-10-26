@@ -151,11 +151,10 @@
 
 						<?php if (!empty($this->params['isAdmin'])):?>
 
-							<li class="admin"><?php
-								$options = (!empty($this->params['admin'])) ? array('class' => 'on') : null;
+							<li class="admin <?php echo (!empty($this->params['admin'])) ? 'active' : null; ?>"><?php
 								echo $html->link(__('Admin',true), array(
 									'admin' => true, 'plugin' => null,
-									'controller' => 'dashboard', 'action' => 'index'), $options);
+									'controller' => 'dashboard', 'action' => 'index'));
 							?></li>
 
 						<?php endif;?>
@@ -189,7 +188,7 @@
 			?>
 			<?php
 				if (!empty($this->params['admin'])):
-					echo $this->element('admin_navigation');
+					//echo $this->element('admin_navigation');
 					echo $html->tag('div', $content_for_layout, array('id' => 'admin-content'));
 				else:
 					echo $html->tag('div', $content_for_layout, array('id' => 'page-content'));
