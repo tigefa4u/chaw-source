@@ -27,7 +27,7 @@
  * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 /**
- * Do not change 
+ * Do not change
  */
 	if (!defined('DS')) {
 		define('DS', DIRECTORY_SEPARATOR);
@@ -53,7 +53,7 @@
 	if (!defined('CAKE_CORE_INCLUDE_PATH')) {
 		//define ('CAKE_CORE_INCLUDE_PATH', 'FULL PATH TO DIRECTORY WHERE CAKE CORE IS INSTALLED. DO NOT ADD A TRAILING DIRECTORY SEPARATOR');
 		//You should also use the DS define to separate your directories
-		define('CAKE_CORE_INCLUDE_PATH', '/home/jon/Server/lithium/cakephp');
+		define('CAKE_CORE_INCLUDE_PATH', ROOT);
 	}
 ///////////////////////////////
 //DO NOT EDIT BELOW THIS LINE//
