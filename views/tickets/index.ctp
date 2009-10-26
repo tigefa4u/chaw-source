@@ -1,5 +1,5 @@
-<h2>
-	<?php __(
+<h2 class="tickets">
+	Tickets: <?php __(
 		Inflector::humanize($current) .
 		(!empty($user) ? "'s" : '') . ' ' .
 		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
@@ -25,7 +25,8 @@
 	<?php echo $form->submit('update'); ?>
 </fieldset>
 <?php echo $form->end(); ?>
-<div class="queues">
+<div class="nav tabs queues">
+<ul>
 <?php
 
 $active = null;
@@ -57,9 +58,10 @@ foreach ($statuses as $state) {
 		'status' => $state
 	)), $active);
 }
-echo join(' | ', $links);
+echo '<li>'. join('</li><li>', $links) . '</li>';
 
 ?>
+</ul>
 </div>
 <?php
 $paginator->options(array('url' => $this->passedArgs));

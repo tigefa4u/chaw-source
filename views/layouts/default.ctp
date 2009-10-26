@@ -118,39 +118,35 @@
 			<div class="nav">
 				<?php if ($this->name !== 'Projects'):?>
 					<ul class="chaw-navigation">
-						<li class="source"><?php
-							$options = ($this->name == 'Source') ? array('class' => 'on') : null;
+						<li class="source<?php echo ($this->name == 'Source') ? ' active' : null; ?>"><?php
+							
 							echo $html->link(__('Source',true), array(
 								'admin' => false, 'plugin' => null,
-								'controller' => 'source', 'action' => 'index'), $options);
+								'controller' => 'source', 'action' => 'index'));
 						?></li>
 
-						<li class="timeline"><?php
-							$options = ($this->name == 'Timeline') ? array('class' => 'on') : null;
+						<li class="timeline<?php echo ($this->name == 'Timeline') ? ' active' : null; ?>"><?php
 							echo $html->link(__('Timeline',true), array(
 								'admin' => false, 'plugin' => null,
-								'controller' => 'timeline', 'action' => 'index'), $options);
+								'controller' => 'timeline', 'action' => 'index'));
 						?></li>
 
-						<li class="wiki"><?php
-							$options = ($this->name == 'Wiki') ? array('class' => 'on') : null;
+						<li class="wiki<?php echo ($this->name == 'Wiki') ? ' active' : null; ?>"><?php
 							echo $html->link(__('Wiki',true), array(
 								'admin' => false, 'plugin' => null,
-								'controller' => 'wiki', 'action' => 'index'), $options);
+								'controller' => 'wiki', 'action' => 'index'));
 						?></li>
 
-						<li class="tickets"><?php
-							$options = ($this->name == 'Tickets') ? array('class' => 'on') : null;
+						<li class="tickets<?php echo ($this->name == 'Tickets') ? ' active' : null; ?>"><?php
 							echo $html->link(__('Tickets',true), array(
 								'admin' => false, 'plugin' => null,
-								'controller' => 'tickets', 'action' => 'index'), $options);
+								'controller' => 'tickets', 'action' => 'index'));
 						?></li>
 
-						<li class="versions"><?php
-							$options = ($this->name == 'Versions') ? array('class' => 'on') : null;
+						<li class="versions<?php echo ($this->name == 'Versions') ? ' active' : null; ?>"><?php
 							echo $html->link(__('Versions',true), array(
 								'admin' => false, 'plugin' => null,
-								'controller' => 'versions', 'action' => 'index'), $options);
+								'controller' => 'versions', 'action' => 'index'));
 						?></li>
 
 						<?php if (!empty($this->params['isAdmin'])):?>

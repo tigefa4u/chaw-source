@@ -1,4 +1,6 @@
 .article, #site-navigation { padding-top:60px!important; }
+.article ul { padding:0 0 0 2em; }
+	.article 
 
 input[type=text], input[type=password], input[type=submit], textarea { clear:both; display:block; font-size:14px; padding:.25em .5em; }
 
@@ -36,16 +38,91 @@ legend { font-weight:bold; padding:.5em 1em; background:white; border:3px solid 
 
 ul.chaw-navigation {}
 	.chaw-navigation li { padding:.5em 0 .45em 36px !important; border-bottom:3px solid white; background:url(http://li3.rad-dev.org/img/icons/silk/cog.png) no-repeat left center; }
-	.chaw-navigation li:hover { border-bottom:3px solid #f0f0f0; }
+	.chaw-navigation li:hover { }
+	.chaw-navigation a { color:#ccc !important; }
+	.chaw-navigation li:hover a, .chaw-navigation li.active a { color:black !important; }
 	
-	.chaw-navigation .source { background-image:url(http://li3.rad-dev.org/img/icons/silk/package_green.png); }
-	.chaw-navigation .timeline{ background-image:url(http://li3.rad-dev.org/img/icons/silk/time.png); }
-	.chaw-navigation .wiki { background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit.png); }
-	.chaw-navigation .tickets { background-image:url(http://li3.rad-dev.org/img/icons/silk/report.png); }
-	.chaw-navigation .versions { background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks.png); }
+	.chaw-navigation .source { background-image:url(http://li3.rad-dev.org/img/icons/silk/package_green_gs.png); }
+		.chaw-navigation .source:hover, .chaw-navigation .source.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/package_green.png); }
+	.chaw-navigation .timeline { background-image:url(http://li3.rad-dev.org/img/icons/silk/time_gs.png); }
+		.chaw-navigation .timeline:hover, .chaw-navigation .timeline.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/time.png); }
+	.chaw-navigation .wiki { background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png); }
+		.chaw-navigation .wiki:hover, .chaw-navigation .wiki.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit.png); }
+	.chaw-navigation .tickets { background-image:url(http://li3.rad-dev.org/img/icons/silk/report_gs.png); }
+		.chaw-navigation .tickets:hover, .chaw-navigation .tickets.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/report.png); }
+	.chaw-navigation .versions { background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks_gs.png); }
+		.chaw-navigation .versions:hover, .chaw-navigation .versions.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks.png); }
 	.chaw-navigation .admin { background-image:url(http://li3.rad-dev.org/img/icons/silk/cog.png); }
-	.chaw-navigation .about { background-image:url(http://li3.rad-dev.org/img/icons/silk/information.png); }
+	.chaw-navigation .about { background-image:url(http://li3.rad-dev.org/img/icons/silk/information_gs.png); }
+		.chaw-navigation .about:hover, .chaw-navigation .about.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/information.png); }
 	
 	.chaw-navigation {}
 
+	.paging { display:block; clear:both; }
+	.paging .prev, .paging .next { display:block; width:24px; height:0; padding:24px 0 0 0; overflow:hidden; }
+		.paging .prev { float:left; }
+		.paging .next { float:right; }
+		.paging .prev a { background:url(http://li3.rad-dev.org/img/icons/silk/arrow_left.png) no-repeat center left; }
+		.paging .next a { background:url(http://li3.rad-dev.org/img/icons/silk/arrow_right.png) no-repeat center right; }
+/**
+ * Timeline
+ */
+ .timeline { padding:1em 0; }
+ .timeline ul { list-style:none; padding:0; }
+ 	.timeline li { display:block; }
+ 	.timeline > ul > li > ul { border:3px solid #f0f0f0; }
+ 	.timeline > ul > li > ul > li { padding:.25em .75em; }
+ 	.timeline p { font-size:.75em; margin:.25em 0; }
+ 	.timeline li.zebra { background:#fafafa; }
+ 	.timeline .the-date { display:block; background:#f0f0f0; margin:0; padding:.75em 1.25em; font-size:16px; font-weight:bold; }
+ 	.timeline .metadata { float:left; }
  	
+ 	.metadata .type.wiki { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png) no-repeat center left; }
+ 	.metadata .type.commit { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/disk_gs.png) no-repeat center left; }
+ 	.metadata .type.fork { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/arrow_divide_gs.png) no-repeat center left; }
+ 	.metadata .type.ticket { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/report_gs.png) no-repeat center left; }
+ 	.metadata .type.comment { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/comments_gs.png) no-repeat center left; }
+ 	.metadata .date { display:none; }
+ 	
+ /**
+  * Wiki
+  */
+.rss { display:block; float:right; }
+.rss img { border:none; }
+
+.nav .active, .nav .inactive { display:block; padding:.5em 1em; color:black; }	
+.nav .inactive { color:#ccc; }
+
+.wiki-navigation { clear:right; float:right; width:200px; padding:1em; margin:1em 0 1em 1em; background:#fafafa; border-top:3px solid #e6e6e6; }
+.wiki-navigation .paths h3 { margin:0 0 .5em 0; }
+.wiki-navigation .paths > ul { list-style:none; padding:0; }
+	.wiki-navigation .paths > ul > li { margin:0 !important; }
+ 	.wiki-navigation .paths ul li { margin:0 0 .5em 1em; padding:0 0 0 1.25em; background:url(http://li3.rad-dev.org/img/icons/silk/bullet_white.png) no-repeat center left; }
+.wiki-text { line-height:18px; background:white; padding:1em; }
+	.wiki-text h2 { font-size:26px; }
+	.wiki-text ul li { margin:.25em 0;}
+.wiki-footer { clear:both; border-top:3px solid #e6e6e6; margin:4em 0 8em; }
+.wiki-footer .revision { padding:.5em 0; float:right; }
+	.wiki-footer .revision label { display:block; float:left; width:24px; height:0; padding:2em 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/time_gs.png) no-repeat center left; }
+.wiki-footer input[type=submit] { display:block; clear:none; margin:1em .5em; float:left; }
+ 
+ 	#WikiContent, #TicketDescription, #TicketComment  { float:left; width:700px; height:350px; }
+ 	.help { float:left; width:200px; margin:.5em; padding:.5em; font-size:10px; }
+ 		.help h4 { background:#e6e6e6; padding:.5em 1em; }
+ 
+/**
+ * Tickets
+ */
+.ticket-search { float:right; }
+	.ticket-search .input-row { clear:left; }
+	.ticket-search .input-row label { float:left; font-size:10px; }
+		.ticket-search .input-row label.title { font-weight:bold; }
+		.ticket-search .input-row .checkbox { float:left; }
+	.ticket-search .submit { float:right; }
+		.ticket-search input[type=submit] { font-size:10px; margin:0; }
+
+.tickets { clear:both; }
+a.big { display:block; clear:both; margin:1em auto; padding:.5em 1em; font-size:18px; background:#f0f0f0; }
+#TicketAddForm .options .input, #TicketModifyForm .options .input { float:left; padding:0 1em 0 0; }
+#Preview { clear:both; }
+ 

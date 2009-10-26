@@ -34,15 +34,19 @@ $javascript->codeBlock($script, array('inline' => false));
 			}
 		?>
 		</fieldset>
-
+		
 		<?php
 			echo $form->input('title',array('label'=> __('Title', true)));
 			echo $form->input('description', array(
-				'value' => __("###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n",true)
+				'value' => __("###What happened:\n- something\n\n\n###What was expected:\n- something else\n\n",true),
+				'label' => false
 			));
 		?>
-
-		<div id="Preview" class="preview"></div>
+		<div class="help">
+			<?php echo $this->element('markdown_help', array('short' => true)); ?>
+		</div>
+	<div id="Preview" class="preview wiki-text"></div>
+		
 
 	</fieldset>
 
@@ -55,9 +59,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		<? __('comma separated') ?>
 	</fieldset>
 
-	<div class="help">
-		<?php echo $this->element('markdown_help', array('short' => true)); ?>
-	</div>
+	
 
 	<?php echo $form->submit(__('Submit',true))?>
 

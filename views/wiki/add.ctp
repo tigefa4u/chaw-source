@@ -21,7 +21,7 @@ $javascript->codeBlock($script, array('inline' => false));
 <div class="wiki form">
 
 	<div class="breadcrumbs">
-		<?php echo $chaw->breadcrumbs($path);?>
+		<h2><?php echo $chaw->breadcrumbs($path);?></h2>
 	</div>
 
 	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>

@@ -224,13 +224,14 @@ if ($session->check('Ticket.back')) {
 						echo $form->input('id');
 						echo $form->textarea('comment');
 					?>
+					<div class="comments help">
+						<?php echo $this->element('markdown_help', array('short' => true)); ?>
+					</div>
 
 				</fieldset>
 
 
-				<div class="comments help">
-					<?php echo $this->element('markdown_help', array('short' => true)); ?>
-				</div>
+				
 
 
 				<div class="submit">

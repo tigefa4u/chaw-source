@@ -5,28 +5,26 @@ $javascript->link('highlight.pack', false);
 $script = 'hljs.initHighlightingOnLoad();';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<div class="page-navigation">
-
+<div class="breadcrumbs">
+	<h2><?php echo $chaw->breadcrumbs($path, $slug);?></h2>
+</div>
+<div class="nav tabs right">
+	<ul>
 	<?php if (!empty($canWrite)):?>
 
 		<?php if (!empty($page['Wiki']['active'])):?>
-			<span class="active"><?php __('Active') ?></span>
+			<li class="active"><?php __('Active') ?></li>
 		<?php else: ?>
-			<span class="inactive"><?php __('Not Active') ?></span>
+			<li class="inactive"><?php __('Not Active') ?></li>
 		<?php endif;?>
 
 		<?php if ((empty($content['Wiki']['read_only']) || $CurrentUser->id == $page['Wiki']['last_changed_by'])):?>
-			|
-			<?php echo $html->link(__('Edit',true), array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?>
-			|
-			<?php echo $html->link(__('New',true), array('controller' => 'wiki', 'action' => 'add', $path, 'new-page'));?>
+			<li><?php echo $html->link(__('Edit',true), array('controller' => 'wiki', 'action' => 'edit', $path, $slug));?></li>
+			<li><?php echo $html->link(__('New',true), array('controller' => 'wiki', 'action' => 'add', $path, 'new-page'));?></li>
 		<?php endif;?>
 
 	<?php endif;?>
-</div>
-
-<div class="breadcrumbs">
-	<?php echo $chaw->breadcrumbs($path, $slug);?>
+	</ul>
 </div>
 
 <div class="clear"><!----></div>
@@ -152,9 +150,9 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <?php if (!empty($revisions) && !empty($page)):?>
 <div class="wiki-footer revisions">
+	<?php echo $form->create(array('url' => array('action' => 'index', $path, $slug))); ?>
+	<div class="revision" title="Revision"><?php echo $form->input('revision', array('value' => $page['Wiki']['id'])); ?></div>
 	<?php
-		echo $form->create(array('url' => array('action' => 'index', $path, $slug)));
-		echo $form->input('revision', array('value' => $page['Wiki']['id']));
 		$buttons =
 			$form->submit(__('view',true), array('div' => false, 'name' => 'view'))
 			. $form->submit(__('activate',true), array('div' => false, 'name' => 'activate'));

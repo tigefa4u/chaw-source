@@ -8,7 +8,7 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<nav class="tabs">
+<div class="nav tabs">
 	<ul>
 		<li class="project"><?php
 		$active = ($this->action == 'index') ? array('class' => 'active') : null;
@@ -41,7 +41,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		)); ?></li>
 		<li class="rss"><?php echo $chaw->rss('Timeline Feed', $rssFeed); ?></li>
 	</ul>
-</nav>
+</div>
 
 <div class="timeline index">
 	<ul>

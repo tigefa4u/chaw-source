@@ -15,7 +15,7 @@
 	margin-right: 20px;
 }
 
-#admin-navigation {
+/*#admin-navigation {
 	clear: right;
 	float: right;
 	position: fixed;
@@ -24,7 +24,7 @@
 	margin-top: 60px;
 	margin-left: 20px;
 	overflow: hidden;
-}
+}*/
 
 #admin-navigation ul {
 	margin: 0;
