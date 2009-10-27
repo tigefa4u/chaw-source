@@ -138,7 +138,7 @@
 						?>
 						</li>
 						<?php if ($this->name == 'Wiki'): ?>
-							<li>
+							<li class="wiki-nav">
 								<?php echo $this->element('wiki_navigation', compact('subNav', 'wikiNav', 'recentEntries')); ?>
 							</li>
 						<?php endif ?>

@@ -61,6 +61,7 @@ foreach ($statuses as $state) {
 echo '<li>'. join('</li><li>', $links) . '</li>';
 
 ?>
+	<li class="new-ticket"><?php echo $html->link(__('new ticket', true), array('controller' => 'tickets', 'action' => 'add')); ?></li>
 </ul>
 </div>
 <?php
@@ -161,5 +162,3 @@ foreach ($tickets as $ticket):
 	| <?php echo $paginator->numbers(array('after' => ' |'));?>
 	<?php echo $paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
 </div>
-
-<?php echo $html->link(__('New Ticket', true), array('controller' => 'tickets', 'action' => 'add'), array('class' => 'big')); ?>

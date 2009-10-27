@@ -166,20 +166,6 @@ if ($session->check('Ticket.back')) {
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
-				<div class="comments">
-					<div id="CommentPreviewWrapper" class="comment" style="display:none">
-						<h3 class="clearfix"><?php __('Preview') ?></h3>
-
-						<span class="date">
-							<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
-						</span>
-						<span class="user">
-							by <?php echo $CurrentUser->username;?>
-						</span>
-						<div id="CommentPreview" class="body"></div>
-					</div>
-				</div>
-
 				<fieldset class="comments main">
 			 		<legend>
 						<?php __('Update Ticket');?>
@@ -224,8 +210,22 @@ if ($session->check('Ticket.back')) {
 						echo $form->input('id');
 						echo $form->textarea('comment');
 					?>
-					<div class="comments help">
+					<div class="help">
 						<?php echo $this->element('markdown_help', array('short' => true)); ?>
+					</div>
+					
+					<div class="comments preview">
+						<div id="CommentPreviewWrapper" class="comment" style="display:none">
+							<h3 class="clearfix"><?php __('Preview') ?></h3>
+
+							<span class="date">
+								<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
+							</span>
+							<span class="user">
+								by <?php echo $CurrentUser->username;?>
+							</span>
+							<div id="CommentPreview" class="body"></div>
+						</div>
 					</div>
 
 				</fieldset>

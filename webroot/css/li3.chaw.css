@@ -3,7 +3,7 @@
 
 a.folder, a.file {
 	text-decoration: none;
-	line-height: 16px;
+	line-height:18px;
 	font-weight: bold;
 }
 a.folder:before {
@@ -119,6 +119,15 @@ a.file:before {
 .chaw-navigation .wiki:hover, .chaw-navigation .wiki.active {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/book_edit.png);
 }
+
+.chaw-navigation .wiki-nav {
+	padding:0 0 .45em 36px !important;
+}
+
+.chaw-navigation .wiki-nav > ul { 
+	padding:0 !important;
+}
+
 .chaw-navigation .tickets {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/report_gs.png);
 }
@@ -224,10 +233,10 @@ a.file:before {
 	height: 350px;
 }
 .help {
-	float: left;
+	float: right;
 	width: 200px;
 	margin: .5em;
-	padding: .5em;
+	padding: 0 1em;
 	font-size: 10px;
 }
 .help h4 {
@@ -354,6 +363,9 @@ a.file:before {
 	color: #999;
 }
 /* Tickets */
+.tickets {
+	clear:both;
+}
 
 .tickets h3 em {
 	font-size: 80%;
@@ -368,22 +380,36 @@ a.file:before {
 	white-space: nowrap;
 }
 
-.tickets fieldset.main {
+/*.tickets fieldset.main {
 	float: left;
 	margin-top: 24px;
 	margin-right: 4%;
 	width: 56%;
 	white-space: normal;
+}*/
+
+.ticket-search {
+	float:right;
+	font-size:10px;
+	margin:-6em 0 0 0;
 }
-/*
-.tickets fieldset.options {
-	float: left;
-	width: 26%;
+
+.ticket-search label.title {
+	float:left;
+	font-weight:bold;
 }
-.tickets .edit fieldset.options {
-	font-size: 100%;
+
+.ticket-search .checkbox {
+	float:left;
+	padding:0 1em 0 0;
 }
-*/
+
+.ticket-search .submit input {
+	font-size:12px;
+	font-weight:bold;
+	margin:0 auto;
+}
+
 .tickets fieldset.main fieldset.options {
 	float: none;
 	border: 0;
@@ -396,6 +422,7 @@ a.file:before {
 	float: left;
 	clear: none;
 	margin: 0;
+	padding: 0 1em 0 0;
 }
 
 .tickets form .submit {
@@ -405,13 +432,7 @@ a.file:before {
 	font-size: 12px;
 	height: 300px;
 }
-.tickets div.help {
-	float: left;
-	clear: none;
-	margin-top: 20px;
-	margin-right: 4%;
-	width: 20%;
-}
+
 .tickets div.help div {
 	clear: none;
 }
@@ -420,27 +441,34 @@ a.file:before {
 }
 .tickets .description {
 	margin-bottom: 0.4em;
-	padding: 0 0 1em 0;
+	padding: 1em;
 	border: 1px solid #ccc;
 	border-width: 1px 0;
 }
 .tickets .view .date {
 	float: right;
 }
-.tickets textarea#TicketComment {
-	height: 130px;
-	margin-bottom: 10px;
+
+.tickets .preview {
+	clear:both;
+	background:white;
+	padding:2em;
+	width:900px;
 }
 
 /* Comments */
 
-div.comments {
+/*div.comments {
 	clear: both;
 	padding: 0 4px;
 	margin: 0;
 	margin-top: 40px;
 	width: 60%;
+}*/
+.comments {
+	clear:left;
 }
+
 .comments .comment {
 	font-size: 140%;
 	margin: 0;
@@ -458,7 +486,8 @@ div.comments {
 	color: #ccc;
 }
 .comments .comment .body {
-	border: 1px solid #ccc;
+	clear:left;
+	background:#fafafa;
 	padding: 4px 8px;
 	font-size: 90%;
 	white-space: normal;
@@ -473,10 +502,10 @@ div.comments {
 .comments .comment .body p {
 	margin-top: 10px;
 }
-.tickets fieldset.comments {
+/*.tickets fieldset.comments {
 	float: left;
 	padding-right: 40px;
-}
+}*/
 
 
 /* Source */
@@ -487,7 +516,6 @@ div.comments {
 }
 .source .forks {
 	float: right;
-	margin-top: -20px;
 	margin-right: 4px;
 }
 
@@ -495,9 +523,9 @@ div.comments {
   padding: 5px 10px;
 }
 .source table th {
-  color: #888;
+  color: #ccc;
   text-align: left;
-  background: #CBCBCB;
+  background: #F0F0F0;
   padding: 5px 10px 5px 4px;
   border-width: 0;;
 /*
@@ -509,7 +537,7 @@ div.comments {
 .source table td {
   text-align: left;
   background: #f7f7f7;
-  padding: 5px 10px 5px 4px;
+  padding: .5em .75em;
   border : 0;
   vertical-align: middle;
 /*
@@ -522,29 +550,6 @@ div.comments {
 	padding-top: 6px;
 	margin: 0.5em 0;
 	vertical-align: middle;
-}
-
-.source a.folder {
-	background: url('images/folder.gif') no-repeat left;
-	color: #333;
-	text-decoration: none;
-	padding-left: 24px;
-	margin-left: 0px;
-}
-.source a.folder:hover {
-	color: #000;
-	text-decoration: underline;
-}
-.source a.file {
-	background: url('images/file.gif') no-repeat left;
-	color: #999;
-	text-decoration: none;
-	padding-left: 24px;
-	margin-left: 0px;
-}
-.source a.file:hover {
-	color: #bbb;
-	text-decoration: underline;
 }
 
 .source span.history {
