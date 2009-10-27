@@ -39,8 +39,8 @@
 			echo $html->meta('rss', $html->url($rssFeed, true));
 		}
 		echo $html->css(array(
-			'http://li3.rad-dev.org/css/base.css',
 			'http://li3.rad-dev.org/css/li3.css',
+			// 'li3',
 			'li3.chaw'
 		));
 		//echo $html->css(array('generic', 'chaw'));
@@ -79,7 +79,7 @@
 		});
 	</script>
 </head>
-<body class="side-navigation">
+<body class="chaw side-navigation">
 	<div class="header" id="site-header">
 		<div class="aside" id="cli">
 			<div class="nav">
@@ -119,7 +119,7 @@
 				<?php if ($this->name !== 'Projects'):?>
 					<ul class="chaw-navigation">
 						<li class="source<?php echo ($this->name == 'Source') ? ' active' : null; ?>"><?php
-							
+
 							echo $html->link(__('Source',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'source', 'action' => 'index'));
@@ -135,8 +135,13 @@
 							echo $html->link(__('Wiki',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'wiki', 'action' => 'index'));
-						?></li>
-
+						?>
+						</li>
+						<?php if ($this->name == 'Wiki'): ?>
+							<li>
+								<?php echo $this->element('wiki_navigation', compact('subNav', 'wikiNav', 'recentEntries')); ?>
+							</li>
+						<?php endif ?>
 						<li class="tickets<?php echo ($this->name == 'Tickets') ? ' active' : null; ?>"><?php
 							echo $html->link(__('Tickets',true), array(
 								'admin' => false, 'plugin' => null,
@@ -161,16 +166,16 @@
 						<li class="about"><?php echo $html->link(__('About',true), '/pages/about');?></li>
 					</ul>
 				<?php endif;?>
-				
+
 				<?php if (!empty($this->params['admin'])):
 					echo $this->element('admin_navigation');
 				endif; ?>
-				
+
 			</div>
 		</div>
 		<div class="article">
-			<h1><?php
-				$options = ($this->name == 'Projects') ? array('class' => 'project-link on') : array('class' => 'project-link');
+			<h1 class="project-link"><?php
+				$options = ($this->name == 'Projects') ? array('class' => 'on') : array();
 				echo $html->link(__('Projects',true), array(
 					'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
 					'controller' => 'projects', 'action' => 'index'

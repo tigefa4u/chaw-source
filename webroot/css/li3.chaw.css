@@ -1,141 +1,600 @@
-.article, #site-navigation { padding-top:60px!important; }
-.article ul { padding:0 0 0 2em; }
-	.article 
 
-input[type=text], input[type=password], input[type=submit], textarea { clear:both; display:block; font-size:14px; padding:.25em .5em; }
+/* HYPERlinks */
 
-input[type=submit] { background:#e6e6e6; border:none; padding:.5em 1em; margin:1em auto; font-size:16px; font-weight:bold; color:black; }
+a.folder, a.file {
+	text-decoration: none;
+	line-height: 16px;
+	font-weight: bold;
+}
+a.folder:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/folder.png);
+	margin: 0 1em 0 0;
+}
 
-fieldset { border:none; background:#f0f0f0; padding:1em; }
-	fieldset label { padding:0 1em 0 0; }
-legend { font-weight:bold; padding:.5em 1em; background:white; border:3px solid #f0f0f0; margin:1em 0 0 0; }
- 	
- 	.source h2:before { content: url(http://li3.rad-dev.org/img/icons/silk/package_green.png); margin:0 .5em 0 0; }
- 	
- 	.project-details {  }
- 		.project-details .description { color:#999999; font-style:italic; padding:0 1em; }
- 		.project-details .path:before { content: url(http://li3.rad-dev.org/img/icons/silk/application_osx_terminal.png); margin:0 .25em 0 0; }
- 		.project-details nav a { display:block; float:right; padding:.5em 1em; margin:0 0 0 .25em; background:#f0f0f0; text-decoration:none; font-weight:bold; }
- 		.project-details nav a:hover { background:#e6e6e6; }
- 		.project-details .history:before { content: url(http://li3.rad-dev.org/img/icons/silk/folder_magnify.png); margin:0 .25em 0 0; }
- 		.project-details .remove-branch:before { content: url(http://li3.rad-dev.org/img/icons/silk/bin.png); margin:0 .25em 0 0; }
- 		.project-details .rebase:before { content: url(http://li3.rad-dev.org/img/icons/silk/error.png); margin:0 .25em 0 0; }
- 		.project-details .forks:before { content: url(http://li3.rad-dev.org/img/icons/silk/arrow_divide.png); margin:0 .25em 0 0; }
- 		.project-details .forkit:before { content: url(http://li3.rad-dev.org/img/icons/silk/arrow_branch.png); margin:0 .25em 0 0; }
- 		
- 	a.folder, a.file { text-decoration:none; line-height:16px; font-weight:bold; }
- 	a.folder:before { content: url(http://li3.rad-dev.org/img/icons/silk/folder.png); margin:0 1em 0 0; }
- 	a.file:before { content: url(http://li3.rad-dev.org/img/icons/silk/page_white.png); margin:0 1em 0 0; }
- 	
- 	table { width:100%; border:3px solid #f0f0f0; border-width:0px 2px; }
- 	tr td, tr th { background:#fafafa; font-size:12px; padding:.25em .75em; border:3px solid #f0f0f0; border-width:3px 1px; }
- 	tr th { font-size:14px; }
- 	tr.zebra td { background:#f0f0f0; }
- 	
- 	.timeline { clear:both; }
- 	
- 	input[type=text], input[type=password], textarea { width:97%; margin:.5em 0 1em 0; }
+a.file:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/page_white.png);
+	margin: 0 1em 0 0;
+}
 
-ul.chaw-navigation {}
-	.chaw-navigation li { padding:.5em 0 .45em 36px !important; border-bottom:3px solid white; background:url(http://li3.rad-dev.org/img/icons/silk/cog.png) no-repeat left center; }
-	.chaw-navigation li:hover { }
-	.chaw-navigation a { color:#ccc !important; }
-	.chaw-navigation li:hover a, .chaw-navigation li.active a { color:black !important; }
-	
-	.chaw-navigation .source { background-image:url(http://li3.rad-dev.org/img/icons/silk/package_green_gs.png); }
-		.chaw-navigation .source:hover, .chaw-navigation .source.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/package_green.png); }
-	.chaw-navigation .timeline { background-image:url(http://li3.rad-dev.org/img/icons/silk/time_gs.png); }
-		.chaw-navigation .timeline:hover, .chaw-navigation .timeline.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/time.png); }
-	.chaw-navigation .wiki { background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png); }
-		.chaw-navigation .wiki:hover, .chaw-navigation .wiki.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit.png); }
-	.chaw-navigation .tickets { background-image:url(http://li3.rad-dev.org/img/icons/silk/report_gs.png); }
-		.chaw-navigation .tickets:hover, .chaw-navigation .tickets.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/report.png); }
-	.chaw-navigation .versions { background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks_gs.png); }
-		.chaw-navigation .versions:hover, .chaw-navigation .versions.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks.png); }
-	.chaw-navigation .admin { background-image:url(http://li3.rad-dev.org/img/icons/silk/cog.png); }
-	.chaw-navigation .about { background-image:url(http://li3.rad-dev.org/img/icons/silk/information_gs.png); }
-		.chaw-navigation .about:hover, .chaw-navigation .about.active { background-image:url(http://li3.rad-dev.org/img/icons/silk/information.png); }
-	
-	.chaw-navigation {}
 
-	.paging { display:block; clear:both; }
-	.paging .prev, .paging .next { display:block; width:24px; height:0; padding:24px 0 0 0; overflow:hidden; }
-		.paging .prev { float:left; }
-		.paging .next { float:right; }
-		.paging .prev a { background:url(http://li3.rad-dev.org/img/icons/silk/arrow_left.png) no-repeat center left; }
-		.paging .next a { background:url(http://li3.rad-dev.org/img/icons/silk/arrow_right.png) no-repeat center right; }
-/**
- * Timeline
- */
- .timeline { padding:1em 0; }
- .timeline ul { list-style:none; padding:0; }
- 	.timeline li { display:block; }
- 	.timeline > ul > li > ul { border:3px solid #f0f0f0; }
- 	.timeline > ul > li > ul > li { padding:.25em .75em; }
- 	.timeline p { font-size:10px !important; margin:.25em 0; }
- 	.timeline ul, .timeline li { font-size:10px; }
- 	.timeline .description ul { margin:.25em .25em .5em; }
- 	.timeline .description ul li { padding:.25em 0 0 4em; }
- 	.timeline li.zebra { background:#fafafa; }
- 	.timeline .the-date { display:block; background:#f0f0f0; margin:0; padding:.75em 1.25em; font-size:16px; font-weight:bold; }
- 	.timeline .metadata { float:left; }
- 	
- 	.metadata .type.wiki { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png) no-repeat center left; }
- 	.metadata .type.commit { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/disk_gs.png) no-repeat center left; }
- 	.metadata .type.fork { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/arrow_divide_gs.png) no-repeat center left; }
- 	.metadata .type.ticket { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/report_gs.png) no-repeat center left; }
- 	.metadata .type.comment { display:block; width:24px; height:0; padding:18px 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/comments_gs.png) no-repeat center left; }
- 	.metadata .date { display:none; }
- 	
- /**
-  * Wiki
-  */
-.rss { display:block; float:right; }
-.rss img { border:none; }
+.article, #site-navigation {
+	padding-top: 60px !important;
+}
 
-.nav .active, .nav .inactive { display:block; padding:.5em 1em; color:black; }	
-.nav .inactive { color:#ccc; }
+.project-link {
+	font-size: 40px;
+}
+.breadcrumbs h2 {
+	font-size: 24px;
+	color: #CCCCCC;
+}
 
-.wiki-navigation { clear:right; float:right; width:200px; padding:1em; margin:1em 0 1em 1em; background:#fafafa; border-top:3px solid #e6e6e6; }
-.wiki-navigation .paths h3 { margin:0 0 .5em 0; }
-.wiki-navigation .paths > ul { list-style:none; padding:0; }
-	.wiki-navigation .paths > ul > li { margin:0 !important; }
- 	.wiki-navigation .paths ul li { margin:0 0 .5em 1em; padding:0 0 0 1.25em; background:url(http://li3.rad-dev.org/img/icons/silk/bullet_white.png) no-repeat center left; }
-.wiki-text { line-height:18px; background:white; padding:1em; }
-	.wiki-text h2 { font-size:26px; }
-	.wiki-text ul li { margin:.25em 0;}
-.wiki-footer { clear:both; border-top:3px solid #e6e6e6; margin:4em 0 8em; }
-.wiki-footer .revision { padding:.5em 0; float:right; }
-	.wiki-footer .revision label { display:block; float:left; width:24px; height:0; padding:2em 0 0 0; overflow:hidden; background:url(http://li3.rad-dev.org/img/icons/silk/time_gs.png) no-repeat center left; }
-.wiki-footer input[type=submit] { display:block; clear:none; margin:1em .5em; float:left; }
+.source h2:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/package_green.png);
+	margin: 0 .5em 0 0;
+}
+
+.project-details .description {
+	color: #999999;
+	font-style: italic;
+	padding: 0 1em;
+}
+.project-details .path:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/application_osx_terminal.png);
+	margin: 0 .25em 0 0;
+}
+.project-details nav a {
+	display: block;
+	float: right;
+	padding: .5em 1em;
+	margin: 0 0 0 .25em;
+	background: #f0f0f0;
+	text-decoration: none;
+	font-weight: bold;
+}
+.project-details nav a:hover {
+	background: #e6e6e6;
+}
+.project-details .history:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/folder_magnify.png);
+	margin: 0 .25em 0 0;
+}
+.project-details .remove-branch:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/bin.png);
+	margin: 0 .25em 0 0;
+}
+.project-details .rebase:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/error.png);
+	margin: 0 .25em 0 0;
+}
+.project-details .forks:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/arrow_divide.png);
+	margin: 0 .25em 0 0;
+}
+.project-details .forkit:before {
+	content: url(http://li3.rad-dev.org/img/icons/silk/arrow_branch.png);
+	margin: 0 .25em 0 0;
+}
+
+/* Navigation left */
+
+.chaw-navigation li {
+	padding: .5em 0 .45em 36px !important;
+	border-bottom: 3px solid white;
+	background: no-repeat left center;
+}
+.chaw-navigation a {
+	color: #ccc;
+}
+.chaw-navigation li:hover a {
+	color: #0d0d0d;
+}
+ .chaw-navigation li.active a {
+	color: #0d0d0d !important;
+}
+
+.chaw-navigation li ul {
+	font-size: 14px;
+}
+
+.chaw-navigation li ul li {
+	padding: 0px !important;
+}
+
+.chaw-navigation .source {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/package_green_gs.png);
+}
+.chaw-navigation .source:hover, .chaw-navigation .source.active {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/package_green.png);
+}
+.chaw-navigation .timeline {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/time_gs.png);
+}
+.chaw-navigation .timeline:hover, .chaw-navigation .timeline.active {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/time.png);
+}
+.chaw-navigation .wiki {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png);
+}
+.chaw-navigation .wiki:hover, .chaw-navigation .wiki.active {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/book_edit.png);
+}
+.chaw-navigation .tickets {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/report_gs.png);
+}
+.chaw-navigation .tickets:hover, .chaw-navigation .tickets.active {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/report.png);
+}
+.chaw-navigation .versions {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/bricks_gs.png);
+}
+.chaw-navigation .versions:hover, .chaw-navigation .versions.active {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/bricks.png);
+}
+.chaw-navigation .admin {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/cog.png);
+}
+.chaw-navigation .about {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/information_gs.png);
+}
+.chaw-navigation .about:hover, .chaw-navigation .about.active {
+	background-image: url(http://li3.rad-dev.org/img/icons/silk/information.png);
+}
+
+/* Wiki */
  
- 	#WikiContent, #TicketDescription, #TicketComment  { float:left; width:700px; height:350px; }
- 	.help { float:left; width:200px; margin:.5em; padding:.5em; font-size:10px; }
- 		.help h4 { background:#e6e6e6; padding:.5em 1em; }
- 
-/**
- * Tickets
- */
-.ticket-search { float:right; }
-	.ticket-search .input-row { clear:left; }
-	.ticket-search .input-row label { float:left; font-size:10px; }
-		.ticket-search .input-row label.title { font-weight:bold; }
-		.ticket-search .input-row .checkbox { float:left; }
-	.ticket-search .submit { float:right; }
-		.ticket-search input[type=submit] { font-size:10px; margin:0; }
+.rss {
+	display: block;
+	float: right;
+}
+.rss img {
+	border: none;
+}
 
-.tickets { clear:both; }
-a.big { display:block; clear:both; margin:1em auto; padding:.5em 1em; font-size:18px; background:#f0f0f0; }
-#TicketAddForm .options .input, #TicketModifyForm .options .input { float:left; padding:0 1em 0 0; }
-#Preview { clear:both; }
+.nav .active, .nav .inactive {
+	display: block;
+	padding: .5em 1em;
+	color: black;
+}
+.nav .inactive {
+	color: #ccc;
+}
+
+
+.wiki-navigation {
+	clear: right;
+	float: right;
+	width: 200px;
+	padding: 1em;
+	margin: 1em 0 1em 1em;
+	background: #fafafa;
+	border-top: 3px solid #e6e6e6;
+}
+
+.wiki-navigation .paths h3 {
+	margin: 0 0 .5em 0;
+}
+.wiki-navigation .paths > ul {
+	list-style: none;
+	padding: 0;
+}
+.wiki-navigation .paths > ul > li {
+	margin: 0 !important;
+}
+.wiki-navigation .paths ul li {
+	margin: 0 0 .5em 1em;
+	padding: 0 0 0 1.25em;
+	background: url(http://li3.rad-dev.org/img/icons/silk/bullet_white.png) no-repeat center left;
+}
+.wiki-text {
+	padding-top: 1em;
+	line-height: 18px;
+	width: 700px;
+}
+.wiki-text ul li {
+	margin: .25em 0;
+}
+.wiki-footer {
+	clear: both;
+	border-top: 3px solid #e6e6e6;
+	margin: 4em 0 8em;
+}
+.wiki-footer .revision {
+	padding: .5em 0;
+	float: right;
+}
+.wiki-footer .revision label {
+	display: block;
+	float: left;
+	width: 24px;
+	height: 0;
+	padding: 2em 0 0 0;
+	overflow: hidden;
+}
+.wiki-footer input[type=submit] {
+	display: block;
+	clear: none;
+	margin: 1em .5em;
+	float: left;
+}
+
+#WikiContent, #TicketDescription, #TicketComment {
+	float: left;
+	width: 700px;
+	height: 350px;
+}
+.help {
+	float: left;
+	width: 200px;
+	margin: .5em;
+	padding: .5em;
+	font-size: 10px;
+}
+.help h4 {
+	background: #e6e6e6;
+	padding: .5em 1em;
+}
 
 /**
- * Projects
- */
-.projects { clear:both; margin:1em 0; padding:1em 0; } 
-	.row { padding:1em; }
-	.row.zebra { background:#fafafa; }
-		.row img { float:left; margin:0 1em 1em 0; }
-		.row .nav { float:right; }
-		.row .links { margin:0; }
-	
+* Projects
+*/
+.projects {
+	clear: both;
+	margin: 1em 0;
+	padding: 1em 0;
+}
+.row {
+	padding: 1em;
+}
+.row.zebra {
+	background: #fafafa;
+}
+.row img {
+	float: left;
+	margin: 0 1em 1em 0;
+}
+.row .nav {
+	float: right;
+}
+.row .links {
+	margin: 0;
+}
+
+/* Timeline */
+
+.timeline {
+	margin-right: 0%;
+}
+.timeline ul {
+	list-style-type: none;
+	margin: 0;
+}
+.timeline .zebra {
+	background-color: #F7F7F7;
+}
+.timeline li {
+	margin: 0;
+	margin-bottom: 1em;
+	list-style-image: none;
+}
+.timeline ul li ul {
+	margin: 0;
+}
+.timeline ul li ul li {
+	margin: 0;
+	list-style-image: none;
+}
+.timeline p.the-date {
+	clear: both;
+	font-size: 18px;
+	padding: 1em 0;
+}
+.timeline span.comment {
+	background-color: #990;
+	color: #fff;
+}
+.timeline span.commit {
+	background-color: #00BF2D;
+	color: #fff;
+}
+.timeline span.ticket {
+	background-color: #990;
+	color: #fff;
+}
+.timeline span.wiki {
+	background-color: #00ACBF;
+	color: #fff;
+}
+.timeline li.event {
+	clear: both;
+	overflow: hidden;
+}
+.timeline .event p.metadata {
+	float: left;
+	width: 80px;
+	margin-right: 20px;
+	text-align: center;
+}
+.timeline .event span.type {
+	font-variant: small-caps;
+	text-transform: uppercase;
+	font-size: 11px;
+	padding: 7px 10px;
+}
+.timeline .event span.date {
+	display: block;
+	font-size: 11px;
+	color: #333;
+	margin-top: 5px;
+}
+.timeline .event div.body {
+	float: left;
+	width: 80%;
+}
+.timeline .event p.action {
+	padding: 0;
+	margin: 0;
+}
+.timeline .event span.username {
+	color: #003940;
+}
+.timeline .event .description {
+	margin: 0;
+	margin-top: 1px;
+	font-family: monospace;
+	font-size: 90%;
+	line-height: 140%;
+	white-space: pre;
+}
+.timeline .event span.admin {
+	float: right;
+	font-size: 80%;
+}
+.timeline .event span.admin a {
+	color: #999;
+}
+/* Tickets */
+
+.tickets h3 em {
+	font-size: 80%;
+}
+
+.tickets .edit {
+	font-size: 80%;
+}
+
+.tickets form {
+	min-width: 800px;
+	white-space: nowrap;
+}
+
+.tickets fieldset.main {
+	float: left;
+	margin-top: 24px;
+	margin-right: 4%;
+	width: 56%;
+	white-space: normal;
+}
+/*
+.tickets fieldset.options {
+	float: left;
+	width: 26%;
+}
+.tickets .edit fieldset.options {
+	font-size: 100%;
+}
+*/
+.tickets fieldset.main fieldset.options {
+	float: none;
+	border: 0;
+	padding: 0;
+	margin: 0 0 10px 0;
+	width: 100%;
+	font-size: 100%;
+}
+.tickets fieldset.main fieldset.options div.select {
+	float: left;
+	clear: none;
+	margin: 0;
+}
+
+.tickets form .submit {
+	clear: left;
+}
+.tickets .textarea textarea {
+	font-size: 12px;
+	height: 300px;
+}
+.tickets div.help {
+	float: left;
+	clear: none;
+	margin-top: 20px;
+	margin-right: 4%;
+	width: 20%;
+}
+.tickets div.help div {
+	clear: none;
+}
+.tickets .view {
+	width: 60%;
+}
+.tickets .description {
+	margin-bottom: 0.4em;
+	padding: 0 0 1em 0;
+	border: 1px solid #ccc;
+	border-width: 1px 0;
+}
+.tickets .view .date {
+	float: right;
+}
+.tickets textarea#TicketComment {
+	height: 130px;
+	margin-bottom: 10px;
+}
+
+/* Comments */
+
+div.comments {
+	clear: both;
+	padding: 0 4px;
+	margin: 0;
+	margin-top: 40px;
+	width: 60%;
+}
+.comments .comment {
+	font-size: 140%;
+	margin: 0;
+	padding: 0;
+	padding:0.5em 0;
+	font-style: normal;
+	color: #3b3b3b;
+}
+.comments .comment .date {
+	font-weight: bold;
+	color: #633;
+}
+.comments .comment .admin a {
+	font-size: 80%;
+	color: #ccc;
+}
+.comments .comment .body {
+	border: 1px solid #ccc;
+	padding: 4px 8px;
+	font-size: 90%;
+	white-space: normal;
+}
+.comments .comment .body ul {
+	margin-bottom: 4px;
+}
+.comments .comment .body  li {
+	margin: 2px 0;
+	font-size: 80%;
+}
+.comments .comment .body p {
+	margin-top: 10px;
+}
+.tickets fieldset.comments {
+	float: left;
+	padding-right: 40px;
+}
+
+
+/* Source */
+
+.source h2 {
+	margin-top: 24px;
+	margin-bottom: 4px;
+}
+.source .forks {
+	float: right;
+	margin-top: -20px;
+	margin-right: 4px;
+}
+
+.source table th, .source table td {
+  padding: 5px 10px;
+}
+.source table th {
+  color: #888;
+  text-align: left;
+  background: #CBCBCB;
+  padding: 5px 10px 5px 4px;
+  border-width: 0;;
+/*
+  border-left: 0px solid #ddd;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+*/
+}
+.source table td {
+  text-align: left;
+  background: #f7f7f7;
+  padding: 5px 10px 5px 4px;
+  border : 0;
+  vertical-align: middle;
+/*
+  border-bottom: 1px solid #ccc;
+  border-left: 0px solid #ddd;
+*/
+}
+.source .message, .source .date {
+	font-size: 80%;
+	padding-top: 6px;
+	margin: 0.5em 0;
+	vertical-align: middle;
+}
+
+.source a.folder {
+	background: url('images/folder.gif') no-repeat left;
+	color: #333;
+	text-decoration: none;
+	padding-left: 24px;
+	margin-left: 0px;
+}
+.source a.folder:hover {
+	color: #000;
+	text-decoration: underline;
+}
+.source a.file {
+	background: url('images/file.gif') no-repeat left;
+	color: #999;
+	text-decoration: none;
+	padding-left: 24px;
+	margin-left: 0px;
+}
+.source a.file:hover {
+	color: #bbb;
+	text-decoration: underline;
+}
+
+.source span.history {
+	float: right;
+}
+
+.source p.history a {
+	font-size: 100%;
+	text-decoration: underline;
+}
+.source p.history a:hover {
+	text-decoration: none;
+}
+
+/* History */
+.history {
+	margin-bottom: 20px;
+}
+.history h3 {
+	color: #333;
+}
+.history h4 {
+	font-size: 120%;
+	padding-top: 10px;
+}
+.history .changes li {
+	font-size: 80%;
+}
+
+/* Version */
+.version {
+	width: 56%;
+	padding-bottom: 1em;
+	margin-bottom: 3em;
+}
+.versions .version h3 {
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid #ccc;
+}
+
+.versions #VersionDescription {
+	font-size: 90%;
+	height: 200px;
+}
+.versions div.help {
+	float: left;
+	clear: none;
+	margin-top: 2em;
+	width: 20%;
+}
+
+
+

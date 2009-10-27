@@ -29,63 +29,6 @@ $javascript->codeBlock($script, array('inline' => false));
 
 <div class="clear"><!----></div>
 
-<div class="wiki-navigation">
-
-	<?php if (!empty($subNav)):?>
-		<?php
-			$nav = null;
-			foreach ($subNav as $subpage):
-					$title = ltrim($subpage['Wiki']['path'] . '/' . $subpage['Wiki']['slug'], '/');
-					$nav .= $html->tag('li',
-						$html->link($title, array($subpage['Wiki']['path'], $subpage['Wiki']['slug']))
-					);
-			endforeach;
-			if (!empty($nav)) {
-				echo $html->tag('div',
-					'<h3>Sub Nav</h3>' .
-					$html->tag('ul', $nav), array('class' => 'paths')
-				);
-			}
-		?>
-	<?php endif;?>
-
-	<?php if (!empty($wikiNav)):?>
-		<?php
-			$nav = null;
-			foreach ($wikiNav as $category):
-				$nav .= $html->tag('li',
-					$html->link(ltrim($category, '/'), array($category))
-				);
-			endforeach;
-			if (!empty($nav)) {
-				echo $html->tag('div',
-					'<h3>'.__('Wiki Nav',true).'</h3>' .
-					$html->tag('ul', $nav), array('class' => 'paths')
-				);
-			}
-		?>
-	<?php endif;?>
-
-	<?php if (!empty($recentEntries)):?>
-		<?php
-			$nav = null;
-			foreach ($recentEntries as $recent):
-					$title = ltrim($recent['Wiki']['path'] . '/' . $recent['Wiki']['slug'], '/');
-					$nav .= $html->tag('li',
-						$html->link($title, array($recent['Wiki']['path'], $recent['Wiki']['slug']))
-					);
-			endforeach;
-			if (!empty($nav)) {
-				echo $html->tag('div',
-					'<h3>'.__('Recent Entries',true).'</h3>' .
-					$html->tag('ul', $nav), array('class' => 'paths')
-				);
-			}
-		?>
-	<?php endif;?>
-
-</div>
-
 <?php if (!empty($page)): ?>
 	<div class="wiki-content">
 		<div class="wiki-text">
