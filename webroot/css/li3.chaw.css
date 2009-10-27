@@ -465,7 +465,7 @@ a.file:before {
 	margin-top: 40px;
 	width: 60%;
 }*/
-.comments {
+div.comments {
 	clear:left;
 }
 
