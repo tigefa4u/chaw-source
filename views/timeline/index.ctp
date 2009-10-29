@@ -10,17 +10,14 @@ $javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="nav tabs">
 	<ul>
-		<li class="project"><?php
-		$active = ($this->action == 'index') ? array('class' => 'active') : null;
+		<li class="project <?php echo ($this->action == 'index') ? 'active' : null; ?>"><?php
 		echo $html->link(__('Project',true), array(
 			'controller' => 'timeline', 'action' => 'index',
-		), $active); ?></li>
-		<li class="forks"><?php
+		)); ?></li>
+		<li class="forks <?php echo (in_array($this->action, array('forks', 'parent'))) ? 'active' : null; ?>"><?php
 		if (empty($CurrentProject->fork)) {
-			$active = ($this->action == 'forks') ? array('class' => 'active') : null;
-			echo $html->link(__('Forks',true), array('controller' => 'timeline', 'action' => 'forks'), $active);
+			echo $html->link(__('Forks',true), array('controller' => 'timeline', 'action' => 'forks'));
 		} else {
-			$active = ($this->action == 'parent') ? array('class' => 'active') : null;
 			echo $html->link(__('Parent',true), array('controller' => 'timeline', 'action' => 'parent'), $active);
 		}?></li>
 		<li class="commits"><?php

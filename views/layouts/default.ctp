@@ -147,13 +147,17 @@
 								'admin' => false, 'plugin' => null,
 								'controller' => 'tickets', 'action' => 'index'));
 						?></li>
-
 						<li class="versions<?php echo ($this->name == 'Versions') ? ' active' : null; ?>"><?php
 							echo $html->link(__('Versions',true), array(
 								'admin' => false, 'plugin' => null,
 								'controller' => 'versions', 'action' => 'index'));
 						?></li>
-
+						<?php
+						/*
+						
+						<li class="about"><?php echo $html->link(__('About',true), '/pages/about');?></li>
+						
+						*/ ?>
 						<?php if (!empty($this->params['isAdmin'])):?>
 
 							<li class="admin <?php echo (!empty($this->params['admin'])) ? 'active' : null; ?>"><?php
@@ -163,7 +167,6 @@
 							?></li>
 
 						<?php endif;?>
-						<li class="about"><?php echo $html->link(__('About',true), '/pages/about');?></li>
 					</ul>
 				<?php endif;?>
 

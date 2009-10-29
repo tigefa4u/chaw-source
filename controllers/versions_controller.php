@@ -19,6 +19,10 @@ class VersionsController extends AppController {
 	var $name = 'Versions';
 	var $helpers = array('Html', 'Form');
 
+	function beforeFilter() {
+		$this->set('showdown', true);
+	}
+
 	function index() {
 		$this->Version->recursive = 0;
 		$this->paginate = array(

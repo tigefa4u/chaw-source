@@ -48,7 +48,7 @@ $javascript->codeBlock($script, array('inline' => false));
 		</fieldset>
 		<fieldset class="content">
 			<?php
-				echo '<div id="Preview" class="wiki-text"></div>';
+				echo '<div id="Preview" class="preview wiki-text"></div>';
 
 				echo $form->input('content', array(
 					'label' => false, 'after' => $html->tag('div', $this->element('markdown_help'), array('class' => 'help'))

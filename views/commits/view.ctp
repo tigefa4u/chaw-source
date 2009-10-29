@@ -9,35 +9,38 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<div class="page-navigation">
-	<?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?>
-	<?php 
+<h2>
+	Commit: <?php echo $commit['Commit']['revision'];?>
+</h2>
+<div class="nav tabs right">
+	<ul>
+		<li><?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?></li>
+		<li>
+		<?php 
+		$branchLinks = array();
 		foreach((array)$branches as $branch) :
-			echo ' | ' .$html->link($branch, $chaw->url((array)$CurrentProject, array(
+			$branchLinks[] = $html->link($branch, $chaw->url((array)$CurrentProject, array(
 				'controller' => 'commits', 'action' => 'branch', $branch
 			)));
 		endforeach;
-	?>
-	
+			echo implode("</li>\n<li>", $branchLinks);
+		?>
+		</li>	
 </div>
 
 <h2>
-	<?php echo $commit['Commit']['revision'];?>
+	
 </h2>
 
 
 <div class="commit view">
-	<p>
-		<strong><?php  __('Author') ?>:</strong> <?php echo $commit['Commit']['author'];?>
-	</p>
+	<div>
+		<strong><?php  __('Author') ?>:</strong> <?php echo $commit['Commit']['author'];?> | <strong><?php __('Date') ?>:</strong> <?php echo $commit['Commit']['commit_date'];?>
+	</div>
 
-	<p>
-		<strong><?php __('Date') ?>:</strong> <?php echo $commit['Commit']['commit_date'];?>
-	</p>
-
-	<p class="message wiki-text">
+	<div class="message wiki-text">
 		<?php echo h($commit['Commit']['message']);?>
-	</p>
+	</div>
 
 	<?php if(!empty($commit['Commit']['changes']) && is_array($commit['Commit']['changes'])):?>
 	<p>

@@ -22,6 +22,10 @@ class CommitsController extends AppController {
 
 	var $paginate = array('order' => 'Commit.commit_date DESC');
 
+	function beforeFilter() {
+		$this->set('showdown', true);
+	}
+
 	function index() {
 		$this->Commit->recursive = 0;
 		$this->Commit->bindModel(array('hasOne' => array(

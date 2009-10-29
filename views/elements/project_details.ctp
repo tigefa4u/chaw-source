@@ -23,7 +23,7 @@
 
 				echo '<strong>git clone</strong> ';
 				echo "{$CurrentProject->remote->git}:$remote{$CurrentProject->url}.git";
-				echo '<nav>';
+				echo '<div class="nav"><nav>';
 				echo $html->tag('span', $html->link(__('view commits',true), $chaw->url((array)$CurrentProject, array(
 					'admin' => false,
 					'controller' => 'commits', 'action' => 'branch', $branch
@@ -99,7 +99,7 @@
 				'controller' => 'projects', 'action' => 'index', 'ext' => 'tar'
 			), array('class' => 'detail')));
 			*/
-			echo '</nav>';
+			echo '</nav></div>';
 		?>
 	</p>
 </div>

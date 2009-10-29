@@ -8,18 +8,6 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<div class="page-navigation">
-	Branches
-	<?php
-		foreach((array)$branches as $branch) :
-			echo ' | ' . $html->link($branch, $chaw->url((array)$CurrentProject, array(
-				'controller' => 'commits', 'action' => 'branch', $branch
-			)));
-		endforeach;
-	?>
-
-</div>
-
 <h2>
 	<?php __('Commits for') ?>
 
@@ -40,37 +28,49 @@ $javascript->codeBlock($script, array('inline' => false));
 		echo '/ ' . $html->link($current, array('controller' => 'source', 'action' => 'index', $path, $current));
 	?>
 </h2>
+<?php /*
+<h3>Branches: <?php
+		$branchesLinks = array();
+		foreach((array)$branches as $branch) :
+			$branchesLinks[] = $html->link($branch, $chaw->url((array)$CurrentProject, array(
+				'controller' => 'commits', 'action' => 'branch', $branch
+			)));
+		endforeach;
+		echo implode(' | ', $branchesLinks);
+	?></h3>
+*/ ?>
 
 <div class="commits history">
+<table>
+	<tbody>
+		<th>Commit</th>
+		<th>Message</th>
+		<th>Author</th>
+		<th>Date</th>
+	</tbody>
+	<tbody>
+		<?php $i = 0; foreach ((array)$commits as $commit): $zebra = ($i++ % 2) ? ' zebra' : null?>
 
-	<?php $i = 0; foreach ((array)$commits as $commit): $zebra = ($i++ % 2) ? ' zebra' : null?>
+			<tr class="commit <?php echo $zebra?>">
+				<td>
+					<?php echo $chaw->commit($commit['Repo']['revision'], (array)$CurrentProject);?>
+				</td>
+				<td class="message">
+					<?php echo $commit['Repo']['message'];?>
+				</td>
+				<td>
+					<?php echo $commit['Repo']['author'];?>
+				</td>
+				<td>
+					<?php echo $commit['Repo']['commit_date'];?>
+				</td>
+			</tr>
 
-		<div class="commit <?php echo $zebra?>">
-			<strong>
-				<?php echo $chaw->commit($commit['Repo']['revision'], (array)$CurrentProject);?>
-			</strong>
-			
-			<div class="right">
-				<p>
-					<strong><?php __('Author') ?>:</strong> <?php echo $commit['Repo']['author'];?>
-				</p>
-
-				<p>
-					<strong><?php __('Date') ?>:</strong> <?php echo $commit['Repo']['commit_date'];?>
-				</p>
-			</div>
-
-			<p class="message">
-				<?php echo $commit['Repo']['message'];?>
-			</p>
-
-			<div class="clear"><!----></div>
-
-		</div>
-
-	<?php endforeach;?>
-
+		<?php endforeach;?>
+	</tbody>
+</table>
 </div>
+
 <div class="paging">
 <?php
 	$paginator->options(array('url' => $this->passedArgs));

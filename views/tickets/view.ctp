@@ -35,28 +35,29 @@ $(document).ready(function(){
 $javascript->codeBlock($script, array('inline' => false));
 
 $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
-
-if ($session->check('Ticket.back')) {
-	echo $html->tag('div', $html->link('back', $session->read('Ticket.back')), array('class' => 'page-navigation'));
-}
-
 ?>
 <h2>
-	<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> <?php __('Ticket') ?>
-	(<em><?php echo $ticket['Ticket']['status'];?></em>)
+<?php if ($session->check('Ticket.back')) {
+	echo $html->link('Tickets', $session->read('Ticket.back'));
+	echo ': ';
+}
+?>
+	<?php echo $ticket['Ticket']['title'];?>
+	
 </h2>
 <div class="tickets">
 
 	<div class="view">
 
-		<h3 class="title">
-			<?php echo $ticket['Ticket']['title'];?>
+		<h3>
+			<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> <?php __('Ticket') ?>
+			(<em><?php echo $ticket['Ticket']['status'];?></em>)
 			<?php if (!empty($canEdit)): ?>
 				<em>(<a href="#modify" class="modify"><?php __('edit') ?></a>)</em>
 			<?php endif; ?>
 		</h3>
 
-		<div id="Preview" class="description">
+		<div id="Preview" class="description wiki-text">
 			<?php echo h($ticket['Ticket']['description']); ?>
 		</div>
 

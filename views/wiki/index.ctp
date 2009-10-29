@@ -13,9 +13,9 @@ $javascript->codeBlock($script, array('inline' => false));
 	<?php if (!empty($canWrite)):?>
 
 		<?php if (!empty($page['Wiki']['active'])):?>
-			<li class="active"><?php __('Active') ?></li>
+			<li class="active-wiki"><?php __('Active') ?></li>
 		<?php else: ?>
-			<li class="inactive"><?php __('Not Active') ?></li>
+			<li class="inactive-wiki"><?php __('Not Active') ?></li>
 		<?php endif;?>
 
 		<?php if ((empty($content['Wiki']['read_only']) || $CurrentUser->id == $page['Wiki']['last_changed_by'])):?>
