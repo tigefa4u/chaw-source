@@ -79,6 +79,7 @@
 	</script>
 </head>
 <body class="chaw side-navigation">
+<div id="container">
 	<div class="header" id="site-header">
 		<div class="aside" id="cli">
 			<div class="nav">
@@ -210,25 +211,26 @@
 			?>
 		</div>
 	</div>
-
-	<div class="footer" id="site-footer">
-		<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad <?php echo $html->link(
-						$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
-						'http://www.cakephp.org/',
-						array('target'=>'_new'), null, false
-					);
-				?></p>
-	</div>
+	<div id="footer-spacer"></div>
+</div>
+<div class="footer" id="site-footer">
+	<p class="copyright">Pretty much everything is &copy; 2009 and beyond, the Union of Rad <?php echo $html->link(
+					$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
+					'http://www.cakephp.org/',
+					array('target'=>'_new'), null, false
+				);
+			?></p>
+</div>
 <?php if (Configure::read() == 0):?>
-	<script type="text/javascript">
-		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-		try {
-			var pageTracker = _gat._getTracker("UA-11048547-1");
-			pageTracker._trackPageview();	} catch(err) {}
-	</script>
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+	try {
+		var pageTracker = _gat._getTracker("UA-11048547-1");
+		pageTracker._trackPageview();	} catch(err) {}
+</script>
 <?php endif;?>
 </body>
 </html>
