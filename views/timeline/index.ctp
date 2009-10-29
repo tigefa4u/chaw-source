@@ -8,7 +8,7 @@ $(document).ready(function(){
 ';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<div class="nav tabs">
+<div class="nav tabs right">
 	<ul>
 		<li class="project <?php echo ($this->action == 'index') ? 'active' : null; ?>"><?php
 		echo $html->link(__('Project',true), array(

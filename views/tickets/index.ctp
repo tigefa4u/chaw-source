@@ -1,5 +1,5 @@
-<h2 class="tickets">
-	Tickets: <?php __(
+<h2 class="tickets crumbs">
+	<?php __(
 		Inflector::humanize($current) .
 		(!empty($user) ? "'s" : '') . ' ' .
 		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
@@ -25,7 +25,7 @@
 	<?php echo $form->submit('update'); ?>
 </fieldset>
 <?php echo $form->end(); ?>
-<div class="nav tabs queues">
+<div class="nav tabs right queues">
 <ul>
 <?php
 

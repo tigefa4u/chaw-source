@@ -40,7 +40,6 @@
 		}
 		echo $html->css(array(
 			'http://li3.rad-dev.org/css/li3.css',
-			// 'li3',
 			'li3.chaw'
 		));
 		//echo $html->css(array('generic', 'chaw'));
@@ -154,9 +153,9 @@
 						?></li>
 						<?php
 						/*
-						
+
 						<li class="about"><?php echo $html->link(__('About',true), '/pages/about');?></li>
-						
+
 						*/ ?>
 						<?php if (!empty($this->params['isAdmin'])):?>
 
@@ -177,7 +176,7 @@
 			</div>
 		</div>
 		<div class="article">
-			<h1 class="project-link"><?php
+			<h1 class="project-link site-title"><?php
 				$options = ($this->name == 'Projects') ? array('class' => 'on') : array();
 				echo $html->link(__('Projects',true), array(
 					'admin' => false, 'plugin' => null, 'project'=> false, 'fork' => false,
@@ -191,6 +190,13 @@
 					));
 				}
 			?></h1>
+			<div class="project-details">
+			<?php
+				if ($this->name !== 'Projects') {
+					echo $this->element('project_details');
+				}
+			?>
+			</div>
 			<?php
 				$session->flash();
 			?>

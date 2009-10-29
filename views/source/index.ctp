@@ -1,6 +1,6 @@
 <div class="source index">
 
-<h2>
+<h2 class="crumbs">
 	<?php
 		$title = null;
 		if (!empty($CurrentProject->fork)) {
@@ -19,12 +19,13 @@
 	?>
 </h2>
 
+<?php echo $this->element('source_navigation') ?>
+
 <?php
 	if (isset($data['Content'])) :
 		echo $this->render('view', false);
 	else:
 ?>
-	<?php echo $this->element('project_details'); ?>
 
 	<table cellpadding="0" cellspacing="0">
 		<tr>

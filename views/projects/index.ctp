@@ -74,6 +74,11 @@
 
 					?>
 			</h3>
+			<p class="description">
+				<?php echo $project['Project']['description'];?>
+			</p>
+
+
 			<span class="nav">
 				<?php
 					if (!empty($this->params['isAdmin'])):
@@ -131,11 +136,7 @@
 				?>
 			</p>
 
-			<p class="description">
-				<?php echo $project['Project']['description'];?>
-			</p>
-
-		</div>
+			</div>
 
 	<?php endforeach;?>
 

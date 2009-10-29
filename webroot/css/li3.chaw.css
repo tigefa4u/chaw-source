@@ -1,4 +1,26 @@
 
+#page-content {
+	margin-top: 1em;
+}
+
+.wiki-content {
+	width: 660px;
+}
+
+.source table, .tickets table {
+	margin-top: 2em;
+}
+.article, #site-navigation {
+	padding-top: 60px !important;
+}
+
+.project-details .path {
+	margin: 0;
+	margin-top: -3em;
+	font-family: monospace;
+}
+
+
 /* HYPERlinks */
 
 a.folder, a.file {
@@ -8,62 +30,39 @@ a.folder, a.file {
 	display:block;
 	padding:0 0 0 2em;
 }
+
 a.folder {
 	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
 }
+
 a.file {
 	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
 }
-.article, #site-navigation {
-	padding-top: 60px !important;
+
+/* Navigation */
+
+.nav.tabs ul li a {
+	padding: .5em 1em .5em 1em;
 }
 
-.project-link {
-	font-size: 40px;
-}
-.breadcrumbs h2 {
-	font-size: 24px;
-	color: #CCCCCC;
-}
-
-.source h2:before {
-	content: url(http://li3.rad-dev.org/img/icons/silk/package_green.png);
-	margin: 0 .5em 0 0;
-}
-
-.project-details .description {
-	color: #999999;
-	font-style: italic;
-	padding: 0 1em 0 2em;
-}
-.project-details .path {
-	float:left;
-	padding: 0 1em 0 2em;
-	margin:0;
-	background: url(http://li3.rad-dev.org/img/icons/silk/application_osx_terminal.png) no-repeat center left;
-}
-.project-details nav a {
-	display: block;
-	float: right;
-	padding: .5em 1em .5em 2.5em;
-	margin: 0 0 0 .25em;
-	background-color: #f0f0f0;
-	text-decoration: none;
-	font-weight: bold;
-}
-.project-details .history {
+.nav .history {
+	padding-left: 2.5em !important;
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/folder_magnify.png) no-repeat 10px 9px;
 }
-.project-details .remove-branch {
+.nav .remove-branch {
+	padding-left: 2.5em !important;
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/bin.png) no-repeat 10px 9px;
 }
-.project-details .rebase {
+.nav .rebase {
+	padding-left: 2.5em !important;
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/error.png) no-repeat 10px 9px;
 }
-.project-details .forks {
+.nav .forks {
+	padding-left: 2.5em !important;
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/arrow_divide.png) no-repeat 10px 9px;
 }
-.project-details .forkit {
+.nav .forkit {
+	padding-left: 2.5em !important;
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/arrow_branch.png) no-repeat 10px 9px;
 }
 
@@ -90,7 +89,10 @@ a.file {
 
 .chaw-navigation li ul li {
 	padding: 0px !important;
+	padding-left: 1em !important;
 }
+
+/* Source Navigation */
 
 .chaw-navigation .source {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/package_green_gs.png);
@@ -141,6 +143,49 @@ a.file {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/information.png);
 }
 
+/* Source */
+
+.source h2 {
+	margin-top: 24px;
+	margin-bottom: 4px;
+}
+
+.source .forks {
+	float: right;
+}
+
+
+.source table td {
+  text-align: left;
+  background: #f7f7f7;
+  border:1px solid #f0f0f0;
+  padding: .5em .75em;
+  vertical-align: middle;
+/*
+  border-bottom: 1px solid #ccc;
+  border-left: 0px solid #ddd;
+*/
+}
+.source .message, .source .date {
+	font-size: 80%;
+	padding-top: 6px;
+	margin: 0.5em 0;
+	vertical-align: middle;
+}
+
+.source span.history {
+	float: right;
+}
+
+.source p.history a {
+	font-size: 100%;
+	text-decoration: underline;
+}
+.source p.history a:hover {
+	text-decoration: none;
+}
+
+
 /* Wiki */
  
 .rss {
@@ -184,31 +229,26 @@ a.file {
 }
 .wiki-text {
 	padding-top: 1em;
-	line-height: 18px;
 }
-.wiki-text ul {
-	margin:0 0 0 2em;
-}
-.wiki-text ul li {
-	margin: .5em 0;
-}
+
 .wiki-footer {
 	clear: both;
 	border-top: 3px solid #e6e6e6;
 	margin: 8em 0;
+}
+.wiki-footer form {
+	background: none;
+	margin: 0;
+	padding: 0;
 }
 .wiki-footer .revision {
 	padding: .5em 0;
 	float: right;
 }
 .wiki-footer .revision label {
-	display: block;
-	float: left;
-	width: 24px;
-	height: 0;
-	padding: 2em 0 0 0;
-	overflow: hidden;
-	background: url(http://li3.rad-dev.org/img/icons/silk/layers.png) no-repeat center left;
+	display: none;
+}
+.wiki-footer .revision select {
 }
 .wiki-footer input[type=submit] {
 	display: block;
@@ -242,11 +282,12 @@ a.file {
 	margin: 1em 0;
 	padding: 1em 0;
 }
+
+.projects h3 {
+	margin: 0;
+}
 .row {
 	padding: 1em;
-}
-.row.zebra {
-	background: #fafafa;
 }
 .row img {
 	float: left;
@@ -257,6 +298,10 @@ a.file {
 }
 .row .links {
 	margin: 0;
+}
+.projects .description {
+	color: #666;
+	margin-top: 0.3em;
 }
 
 /* Timeline */
@@ -270,10 +315,6 @@ a.file {
 .timeline ul {
 	list-style-type: none;
 	margin: 0;
-	font-size:12px;
-}
-.timeline .zebra {
-	background-color: #F7F7F7;
 }
 .timeline li {
 	margin: 0;
@@ -362,10 +403,8 @@ a.file {
 	color: #999;
 	margin:1em;
 }
+
 /* Tickets */
-.tickets {
-	clear:both;
-}
 
 .tickets h3 em {
 	font-size: 80%;
@@ -380,36 +419,22 @@ a.file {
 	white-space: nowrap;
 }
 
-/*.tickets fieldset.main {
+.tickets fieldset.main {
 	float: left;
 	margin-top: 24px;
 	margin-right: 4%;
 	width: 56%;
 	white-space: normal;
-}*/
-
-.ticket-search {
-	float:right;
-	font-size:10px;
-	margin:-6em 0 0 0;
 }
-
-.ticket-search label.title {
-	float:left;
-	font-weight:bold;
+/*
+.tickets fieldset.options {
+	float: left;
+	width: 26%;
 }
-
-.ticket-search .checkbox {
-	float:left;
-	padding:0 1em 0 0;
+.tickets .edit fieldset.options {
+	font-size: 100%;
 }
-
-.ticket-search .submit input {
-	font-size:12px;
-	font-weight:bold;
-	margin:0 auto;
-}
-
+*/
 .tickets fieldset.main fieldset.options {
 	float: none;
 	border: 0;
@@ -422,7 +447,6 @@ a.file {
 	float: left;
 	clear: none;
 	margin: 0;
-	padding: 0 1em 0 0;
 }
 
 .tickets form .submit {
@@ -432,26 +456,86 @@ a.file {
 	font-size: 12px;
 	height: 300px;
 }
-
+.tickets div.help {
+	float: left;
+	clear: none;
+	margin-top: 20px;
+	margin-right: 4%;
+	width: 20%;
+}
 .tickets div.help div {
 	clear: none;
 }
+.tickets .view {
+	width: 60%;
+}
 .tickets .description {
 	margin-bottom: 0.4em;
-	padding: 1em;
+	padding: 0 0 1em 0;
 	border: 1px solid #ccc;
 	border-width: 1px 0;
 }
 .tickets .view .date {
 	float: right;
 }
-
-.preview {
-	clear:both;
-	background:white;
-	padding:2em;
-	width:900px;
+.tickets textarea#TicketComment {
+	height: 130px;
+	margin-bottom: 10px;
 }
+
+#TicketIndexForm {
+	background: none;
+	padding: 0;
+}
+
+
+fieldset.ticket-search {
+	padding: 1em;
+	margin: 2em 0 ;
+}
+
+fieldset.ticket-search div.input-row {
+	clear:left;
+	float:left;
+	margin:0;
+	padding:0 0 8px;
+}
+fieldset.ticket-search div.submit {
+	clear:none;
+	display:inline;
+	float:right;
+}
+
+.ticket-search input[type=submit] {
+	margin: 0;
+}
+
+fieldset.ticket-search label.title {
+	width:50px;
+}
+fieldset.ticket-search div label.title {
+	float:left;
+	font-weight:bold;
+}
+fieldset.ticket-search div.checkbox {
+	clear:none;
+	display:inline;
+	float:left;
+	margin:0;
+	overflow:hidden;
+	padding:0;
+}
+fieldset.ticket-search div.checkbox label, fieldset.ticket-search div.checkbox input {
+	clear:none;
+	display:inline;
+	float:left;
+	vertical-align:bottom;
+}
+fieldset.ticket-search label {
+	font-size:0.9em;
+}
+
+
 
 /* Comments */
 
@@ -509,46 +593,7 @@ div.comments {
 }*/
 
 
-/* Source */
 
-.source h2 {
-	margin-top: 24px;
-	margin-bottom: 4px;
-}
-.source .forks {
-	float: right;
-}
-
-
-.source table td {
-  text-align: left;
-  background: #f7f7f7;
-  border:1px solid #f0f0f0;
-  padding: .5em .75em;
-  vertical-align: middle;
-/*
-  border-bottom: 1px solid #ccc;
-  border-left: 0px solid #ddd;
-*/
-}
-.source .message, .source .date {
-	font-size: 80%;
-	padding-top: 6px;
-	margin: 0.5em 0;
-	vertical-align: middle;
-}
-
-.source span.history {
-	float: right;
-}
-
-.source p.history a {
-	font-size: 100%;
-	text-decoration: underline;
-}
-.source p.history a:hover {
-	text-decoration: none;
-}
 
 /* History */
 .history {
@@ -690,13 +735,11 @@ div.comments {
 }
 #flashMessage {
 	padding:1em;
-	margin:0 0 1em 0;
+	margin:1em 0;
 	background:#FFFFD9;
 	border:1px solid #ffffbf;
 }
-#page-content {
-	clear:both;
-}
+
 .error-message {
 	display:inline;
 	padding:1em;

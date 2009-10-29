@@ -5,9 +5,6 @@ $javascript->link('highlight.pack', false);
 $script = 'hljs.initHighlightingOnLoad();';
 $javascript->codeBlock($script, array('inline' => false));
 ?>
-<div class="breadcrumbs">
-	<h2><?php echo $chaw->breadcrumbs($path, $slug);?></h2>
-</div>
 <div class="nav tabs right">
 	<ul>
 	<?php if (!empty($canWrite)):?>
