@@ -1,4 +1,6 @@
 
+/* This is the stylesheet for the project's app. */
+
 #page-content {
 	margin-top: 1em;
 }
@@ -10,6 +12,7 @@
 .source table, .tickets table {
 	margin-top: 2em;
 }
+
 .article, #site-navigation {
 	padding-top: 60px !important;
 }
@@ -19,7 +22,6 @@
 	margin-top: -3em;
 	font-family: monospace;
 }
-
 
 /* HYPERlinks */
 
@@ -44,7 +46,6 @@ a.file {
 .nav.tabs ul li a {
 	padding: .5em 1em .5em 1em;
 }
-
 .nav .history {
 	padding-left: 2.5em !important;
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/folder_magnify.png) no-repeat 10px 9px;
@@ -73,6 +74,14 @@ a.file {
 	border-bottom: 3px solid white;
 	background: no-repeat left center;
 }
+.chaw-navigation li ul {
+	font-size: 14px;
+}
+.chaw-navigation li ul li {
+	padding: 0px !important;
+	padding-left: 1em !important;
+}
+
 .chaw-navigation a {
 	color: #ccc;
 }
@@ -81,15 +90,6 @@ a.file {
 }
  .chaw-navigation li.active a {
 	color: #0d0d0d !important;
-}
-
-.chaw-navigation li ul {
-	font-size: 14px;
-}
-
-.chaw-navigation li ul li {
-	padding: 0px !important;
-	padding-left: 1em !important;
 }
 
 /* Source Navigation */
@@ -154,17 +154,12 @@ a.file {
 	float: right;
 }
 
-
 .source table td {
   text-align: left;
   background: #f7f7f7;
   border:1px solid #f0f0f0;
   padding: .5em .75em;
   vertical-align: middle;
-/*
-  border-bottom: 1px solid #ccc;
-  border-left: 0px solid #ddd;
-*/
 }
 .source .message, .source .date {
 	font-size: 80%;
@@ -184,7 +179,6 @@ a.file {
 .source p.history a:hover {
 	text-decoration: none;
 }
-
 
 /* Wiki */
  
@@ -274,9 +268,8 @@ a.file {
 	padding: .5em 1em;
 }
 
-/**
-* Projects
-*/
+/* Projects */
+
 .projects {
 	clear: both;
 	margin: 1em 0;
