@@ -7,7 +7,6 @@ $script = '
 hljs.initHighlightingOnLoad();
 
 $(document).ready(function(){
-	$("#Preview").html(converter.makeHtml(jQuery.trim($("#Preview").text())));
 	$("#TicketDescription").bind("keyup", function() {
 		$("#Preview").html(converter.makeHtml($(this).val()));
 		hljs.initHighlighting.called = false;
