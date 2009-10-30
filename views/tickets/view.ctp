@@ -80,7 +80,7 @@ if ($session->check('Ticket.back')) {
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
-			<?php echo $form->create(array('action' => 'modify', 'url'=> array($form->value('Ticket.number'), 'id'=> false)));?>
+			<?php echo $form->create(array('action' => 'modify'));?>
 
 				<?php if (!empty($canEdit)):?>
 					<div id="modify" style="display:none">
@@ -222,6 +222,7 @@ if ($session->check('Ticket.back')) {
 
 					<?php
 						echo $form->input('id');
+						echo $form->hidden('number');
 						echo $form->textarea('comment');
 					?>
 

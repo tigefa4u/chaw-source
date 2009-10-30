@@ -159,7 +159,7 @@ class TicketsController extends AppController {
 			}
 		}
 
-		$this->redirect(array('action' => 'view', $id));
+		$this->redirect(array('action' => 'view', $this->data['Ticket']['number']));
 	}
 
 	function _ticketInfo($all = true) {
