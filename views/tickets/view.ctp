@@ -42,7 +42,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 	echo ': ';
 }
 ?>
-	<?php echo $ticket['Ticket']['title'];?>
+	<?php echo h($ticket['Ticket']['title']);?>
 	
 </h2>
 <div class="tickets">
