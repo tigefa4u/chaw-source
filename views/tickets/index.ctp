@@ -12,9 +12,9 @@ if (!$type && !$user) {
 	$active = array('class' => 'active');
 }
 $links = array(
-	$html->link(__('all', true), array_merge($this->passedArgs, array(
+	$html->link(__('all', true), array_unique(array_merge($this->passedArgs, array(
 		'user' => null, 'status' => null, 'type' => null, 0 => 'all',
-	)), $active)
+	))), $active)
 );
 
 if (!empty($CurrentUser->username)) {
