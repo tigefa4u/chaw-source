@@ -67,8 +67,8 @@ class UsersController extends AppController {
 			));
 
 			if ($redirect = $this->Session->read('Access.redirect')) {
-				$this->Session->del('Access');
-				$this->Session->del('Auth.redirect');
+				$this->Session->delete('Access');
+				$this->Session->delete('Auth.redirect');
 				$message = "access:$redirect";
 			} else {
 				$redirect = $this->Auth->redirect();
@@ -83,7 +83,7 @@ class UsersController extends AppController {
 		}
 
 		if (!empty($this->data['User'])) {
-			$this->Session->del('Message.auth');
+			$this->Session->delete('Message.auth');
 
 			$this->Auth->fields['password'] = 'tmp_pass';
 			$this->data['User']['tmp_pass'] = $this->Auth->data['User']['password'];
@@ -103,7 +103,7 @@ class UsersController extends AppController {
 		}
 
 		if (!empty($this->data['User']['username'])) {
-			$this->Session->del('Message.auth');
+			$this->Session->delete('Message.auth');
 			$this->Session->setFlash(__('Did you forget your password?',true));
 			$this->redirect(array('action' => 'forgotten'), 401);
 		}
@@ -112,8 +112,8 @@ class UsersController extends AppController {
 	function logout() {
 		$this->Cookie->destroy('User');
 		$this->Auth->logout();
-		$this->Session->del('Access');
-		$this->Session->del('Auth.redirect');
+		$this->Session->delete('Access');
+		$this->Session->delete('Auth.redirect');
 		$this->redirect('/');
 	}
 

@@ -114,7 +114,7 @@ class SourceControllerTest extends CakeTestCase {
 		$data = $this->Source->viewVars['data'];
 		$this->assertEqual($data['Folder'][0]['name'], 'folder');
 		$this->assertEqual($data['Folder'][0]['info']['message'], 'Merge from forks/gwoo/test.git');
-		unset($this->Source->viewVars['data']);
+		unset($this->Source->viewVars['data'], $this->Source->viewVars['title_for_layout']);
 
 		$this->assertEqual($this->Source->viewVars, array(
 			'path' => null,
@@ -130,7 +130,7 @@ class SourceControllerTest extends CakeTestCase {
 		$data = $this->Source->viewVars['data'];
 
 		$this->assertEqual($data['Folder'][0]['name'], null);
-		unset($this->Source->viewVars['data']);
+		unset($this->Source->viewVars['data'], $this->Source->viewVars['title_for_layout']);
 
 		$this->assertEqual($this->Source->viewVars, array(
 			'path' => 'branches',
@@ -147,7 +147,7 @@ class SourceControllerTest extends CakeTestCase {
 		$data = $this->Source->viewVars['data'];
 		$this->assertEqual($data['Folder'][0]['name'], 'master');
 		$this->assertEqual($data['Folder'][0]['info']['message'], 'Merge from forks/gwoo/test.git');
-		unset($this->Source->viewVars['data']);
+		unset($this->Source->viewVars['data'], $this->Source->viewVars['title_for_layout']);
 
 		$this->assertEqual($this->Source->viewVars, array(
 			'path' => null,
@@ -171,7 +171,7 @@ class SourceControllerTest extends CakeTestCase {
 		$this->assertEqual($data['Folder'][0]['name'], 'folder');
 		$this->assertEqual($data['Folder'][0]['path'], 'branches/new/folder');
 		$this->assertEqual($data['Folder'][0]['info']['message'], 'Merge from forks/gwoo/test.git');
-		unset($this->Source->viewVars['data']);
+		unset($this->Source->viewVars['data'], $this->Source->viewVars['title_for_layout']);
 
 		$this->assertEqual($this->Source->viewVars, array(
 			'path' => '',
@@ -185,7 +185,7 @@ class SourceControllerTest extends CakeTestCase {
 
 		$data = $this->Source->viewVars['data'];
 		$this->assertEqual($data['Folder'], array());
-		unset($this->Source->viewVars['data']);
+		unset($this->Source->viewVars['data'], $this->Source->viewVars['title_for_layout']);
 
 		$this->assertEqual($this->Source->viewVars, array(
 			'path' => 'test.txt',
