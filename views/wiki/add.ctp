@@ -20,13 +20,10 @@ $javascript->codeBlock($script, array('inline' => false));
 ?>
 <div class="wiki form">
 
-	<div class="breadcrumbs">
-		<h2><?php echo $chaw->breadcrumbs($path);?></h2>
-	</div>
-
 	<?php echo $form->create(array('url' => '/' . $this->params['url']['url']));?>
 
 		<fieldset>
+			<legend>Wiki Document</legend>
 		<?php
 
 			echo $html->tag('div',$form->input('active') . $form->input('read_only'), array('class' => 'single'));
@@ -45,15 +42,15 @@ $javascript->codeBlock($script, array('inline' => false));
 				echo $form->input('title', array('label' => false, 'value' => 'new-page'));
 			}
 		?>
-		</fieldset>
-		<fieldset class="content">
 			<?php
-				echo '<div id="Preview" class="preview wiki-text"></div>';
-
 				echo $form->input('content', array(
 					'label' => false, 'after' => $html->tag('div', $this->element('markdown_help'), array('class' => 'help'))
 				));
 			?>
+		</fieldset>
+		<fieldset>
+			<legend>Preview</legend>
+			<div id="Preview" class="preview wiki-text"></div>
 		</fieldset>
 
 	<?php echo $form->end(__('Submit',true));?>
