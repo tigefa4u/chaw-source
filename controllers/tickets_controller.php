@@ -24,7 +24,7 @@ class TicketsController extends AppController {
 
 	var $components = array(
 		'Gpr' => array(
-			'keys' => array('type', 'priority'),
+			'keys' => array('status', 'type', 'priority'),
 			'connect' => array('status', 'page', 'user', 'type', 'priority'),
 			'actions' => array('index')
 		)
@@ -34,9 +34,10 @@ class TicketsController extends AppController {
 		$conditions = array(
 			'Ticket.project_id' => $this->Project->id,
 		);
-		$conditions = array_merge($conditions, (array)$this->postConditions($this->data, '=', 'AND', true));
+		$conditions = array_merge(
+			$conditions, (array)$this->postConditions($this->data, '=', 'AND', true)
+		);
 		$this->set('title_for_layout', 'Tickets/Status/');
-
 		$current = $status = $type = $user = null;
 
 		$isDefault = empty($this->passedArgs);
@@ -49,9 +50,8 @@ class TicketsController extends AppController {
 		if (!empty($this->passedArgs['status'])) {
 			$status = $this->passedArgs['status'];
 			$current = $this->passedArgs['status'];
-			$conditions['Ticket.status'] = $current;
 
-			if ($status == 'approved') {
+			if (strpos('approved', $status) !== false) {
 				$this->paginate['order'] = 'Ticket.priority ASC';
 			}
 		}
@@ -65,6 +65,7 @@ class TicketsController extends AppController {
 
 		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] != 'all') {
 			$type = $this->passedArgs['type'];
+			$current .= '/' . $type;
 		}
 		/*
 		if (!empty($this->Project->current['fork'])) {
@@ -74,7 +75,7 @@ class TicketsController extends AppController {
 			));
 		}
 		*/
-		$this->pageTitle .= Inflector::humanize($current);
+		$this->viewVars['title_for_layout'] .= Inflector::humanize($current);
 
 		$this->Ticket->recursive = 0;
 
@@ -149,7 +150,7 @@ class TicketsController extends AppController {
 				} else {
 					$this->Session->setFlash(__('Ticket updated',true));
 				}
-				$this->Session->del('Ticket.previous');
+				$this->Session->delete('Ticket.previous');
 			} else {
 				if (!empty($data['Ticket']['comment'])) {
 					$this->Session->setFlash(__('Comment was NOT saved',true));

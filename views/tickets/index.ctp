@@ -1,30 +1,8 @@
 <h2 class="tickets crumbs">
 	Tickets: <?php __(
-		Inflector::humanize($current) .
-		(!empty($user) ? "'s" : '') . ' ' .
-		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
+		Inflector::humanize($current) . (!empty($user) ? "'s" : '')
 	) ?>
 </h2>
-
-<?php echo $form->create(array('type' => 'get', 'action' => 'index', 'url' => $this->passedArgs)); ?>
-<fieldset class="ticket-search">
-	<div class="input-row">
-	<?php
-		echo $form->label('Ticket.type.rfc', __('type', true), 'title');
-		echo $form->select('Ticket.type', $types, null, array('multiple' => 'checkbox'));
-	?>
-	</div>
-
-	<div class="input-row">
-	<?php
-		echo $form->label('Ticket.priority.low', __('priority', true), 'title');
-		echo $form->select('Ticket.priority', $priorities, null, array('multiple' => 'checkbox'));
-	?>
-	</div>
-
-	<?php echo $form->submit('update'); ?>
-</fieldset>
-<?php echo $form->end(); ?>
 <div class="nav tabs right queues">
 <ul>
 <?php
@@ -48,22 +26,38 @@ if (!empty($CurrentUser->username)) {
 		'user' => $CurrentUser->username
 	)), $active);
 }
-
-foreach ($statuses as $state) {
-	$active = null;
-	if ($status == $state) {
-		$active = array('class' => 'active');
-	}
-	$links[] = $html->link(__($state, true), array_merge($this->passedArgs, array(
-		'status' => $state
-	)), $active);
-}
 echo '<li>'. join('</li><li>', $links) . '</li>';
 
 ?>
 	<li class="new-ticket"><?php echo $html->link(__('new ticket', true), array('controller' => 'tickets', 'action' => 'add')); ?></li>
 </ul>
 </div>
+<?php echo $form->create(array('type' => 'get', 'action' => 'index', 'url' => $this->passedArgs)); ?>
+<fieldset class="ticket-search">
+	<div class="input-row">
+	<?php
+		echo $form->label('Ticket.type.rfc', __('type', true), 'title');
+		echo $form->select('Ticket.type', $types, null, array('multiple' => 'checkbox'));
+	?>
+	</div>
+
+	<div class="input-row">
+	<?php
+		echo $form->label('Ticket.priority.low', __('priority', true), 'title');
+		echo $form->select('Ticket.priority', $priorities, null, array('multiple' => 'checkbox'));
+	?>
+	</div>
+
+	<div class="input-row">
+	<?php
+		echo $form->label('Ticket.statuses.closed', __('status', true), 'title');
+		echo $form->select('Ticket.status', $statuses, null, array('multiple' => 'checkbox'));
+	?>
+	</div>
+
+	<?php echo $form->submit('update'); ?>
+</fieldset>
+<?php echo $form->end(); ?>
 <?php
 $paginator->options(array('url' => $this->passedArgs));
 
@@ -113,14 +107,14 @@ foreach ($tickets as $ticket):
 				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
 			); ?>
 		</td>
-		
+
 		<td class="title left">
 			<?php echo $html->link(
 				$ticket['Ticket']['title'],
 				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
 			); ?>
 		</td>
-		
+
 		<td><?php echo $ticket['Ticket']['type']; ?></td>
 
 		<td><?php echo $ticket['Ticket']['priority']; ?></td>
