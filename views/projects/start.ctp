@@ -13,6 +13,7 @@
 	}
 
 	.start .public, .start .private {
+		clear: both;
 		margin: 40px 0;
 	}
 
@@ -29,6 +30,9 @@
 	.start div h3 {
 		margin: 2px 0 6px 0;
 		padding: 0;
+	}
+	.start a {
+		text-decoration: underline;
 	}
 </style>
 <div class="start">

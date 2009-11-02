@@ -24,6 +24,8 @@
 				'div' => 'inline'
 			));
 		}
+		
+		echo $form->submit('Submit');
 	?>
 	</fieldset>
 	<fieldset class="options">
@@ -42,5 +44,5 @@
 		?>
 		<p><?php __('Comma seperated') ?></p>
 	</fieldset>
-<?php echo $form->end('Submit');?>
+<?php echo $form->end();?>
 </div>

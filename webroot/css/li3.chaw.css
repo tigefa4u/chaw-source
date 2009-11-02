@@ -803,3 +803,27 @@ div.comments {
 	padding:1em;
 	background:#FFD9D9;
 }
+
+
+.projects fieldset.main {
+	float: left;
+	width: 40%;
+	margin-right: 2%;
+}
+.projects fieldset.options {
+	float: left;
+	width: 40%;
+}
+.projects fieldset.main textarea {
+	height: 100px;
+}
+.projects fieldset.options textarea {
+	height: 30px;
+}
+.projects .inline label, .projects .inline input {
+	clear: none;
+	display: inline;
+}
+.projects .inline input {
+	width: 140px;
+}

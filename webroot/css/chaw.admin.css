@@ -106,10 +106,10 @@ form#UserAddForm .submit {
 
 .permissions form {
 	float: left;
-	width: 66%;
+	width: 50%;
 }
 .permissions .help {
-	float: right;
+	float: left;
 	margin-top: 34px;
 	width: 30%;
 }
