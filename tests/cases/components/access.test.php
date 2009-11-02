@@ -3,7 +3,7 @@
 /* Access Test cases generated on: 2008-11-01 10:11:29 : 1225561949*/
 App::import('Component', array('Auth', 'Session', 'Access'));
 App::import('Controller');
-App::import('Model', array('Project', 'Permission'));
+App::import('Model', array('Project', 'Permission'), true);
 
 class TestAccess extends AccessComponent {
 }
@@ -422,7 +422,7 @@ class AccessComponentTest extends CakeTestCase {
 		$this->assertNull($this->Controller->testRedirect);
 		$this->assertTrue($this->Controller->params['isOwner']);
 
-		$this->Controller->Session->del('Auth.User');
+		$this->Controller->Session->delete('Auth.User');
 	}
 
 
@@ -613,7 +613,7 @@ class AccessComponentTest extends CakeTestCase {
 		$this->assertTrue(strpos($this->Controller->testRedirect, '/wiki') !== false);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
-		$this->Controller->Session->del('Auth.User');
+		$this->Controller->Session->delete('Auth.User');
 	}
 
 	function testUserAndPublic() {
@@ -689,7 +689,7 @@ class AccessComponentTest extends CakeTestCase {
 		$this->assertNull($this->Controller->testRedirect);
 		$this->assertFalse($this->Controller->params['isAdmin']);
 
-		$this->Controller->Session->del('Auth.User');
+		$this->Controller->Session->delete('Auth.User');
 	}
 
 
