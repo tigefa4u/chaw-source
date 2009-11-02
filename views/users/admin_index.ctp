@@ -110,8 +110,9 @@
 			echo '<fieldset><legend>Add User</legend>';
 			echo $form->input('group');
 			echo $form->input('username');
+			echo $form->submit('add');
 			echo '</fieldset>';
-			echo $form->end('add');
+			echo $form->end();
 		endif;
 	?>
 	</div>
