@@ -43,11 +43,14 @@ $javascript->codeBlock($script, array('inline' => false));
 			));
 		?>
 		<div class="help">
-			<?php echo $this->element('markdown_help', array('short' => true)); ?>
+			<?php echo $this->element('markdown_help', array('short' => false)); ?>
 		</div>
 		
+	</fieldset>
+	
+	<fieldset>
+		<legend>Preview</legend>
 		<div id="Preview" class="preview wiki-text"></div>
-		
 	</fieldset>
 
 

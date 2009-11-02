@@ -20,12 +20,12 @@ $(document).ready(function(){
 	});
 	$(".modify").click(function() {
 		$("#modify").show();
-		$(".comments").hide();
+		$(".comments, .comments-title").hide();
 		$("#TicketTitle").parent().before($("fieldset.prop"));
 	});
 	$(".close").click(function() {
 		$("#modify").hide();
-		$(".comments").show();
+		$(".comments, .comments-title").show();
 		$("fieldset.comments > legend").after($("fieldset.prop"));
 
 	});
@@ -35,27 +35,17 @@ $javascript->codeBlock($script, array('inline' => false));
 
 $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
-<h2>
-<?php if ($session->check('Ticket.back')) {
-	echo $html->link('Tickets', $session->read('Ticket.back'));
-	echo ': ';
-}
-?>
-	<?php echo h($ticket['Ticket']['title']);?>
-	
-</h2>
+<h2>Ticket Details</h2>
 <div class="tickets">
-
 	<div class="view">
-
-		<h3>
+		<h3><?php echo h($ticket['Ticket']['title']);?></h3>
+		<h4>
 			<?php echo strtoupper(Inflector::humanize($ticket['Ticket']['type']));?> <?php __('Ticket') ?>
 			(<em><?php echo $ticket['Ticket']['status'];?></em>)
 			<?php if (!empty($canEdit)): ?>
 				<em>(<a href="#modify" class="modify"><?php __('edit') ?></a>)</em>
 			<?php endif; ?>
-		</h3>
-
+		</h4>
 		<div id="Preview" class="description wiki-text">
 			<?php echo h($ticket['Ticket']['description']); ?>
 		</div>
@@ -74,6 +64,45 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 			</span>
 		<?php endif;?>
 
+	</div>
+	
+	<h2 class="comments-title">Updates</h2>
+	<div class="comments">
+		<?php foreach ((array)$ticket['Comment'] as $comment): ?>
+
+			<div class="comment" id="c<?php echo $comment['id']?>">
+				<?php
+					if (!empty($comment['reason'])) {
+						echo "<strong>({$comment['reason']})</strong>";
+					}
+				?>
+				<span class="date">
+					<?php echo $time->timeAgoInWords($comment['created'], 'm.d.y');?>
+				</span>
+				<span class="user">
+					by <?php echo $comment['User']['username'];?>
+				</span>
+
+			<?php if(!empty($this->params['isAdmin'])):?>
+				<span class="admin">
+					<?php echo $html->link('delete', array(
+						'controller' => 'comments', 'action' => 'delete', $comment['id']
+					))?>
+				</span>
+			<?php endif; ?>
+
+				<div class="body">
+					<?php
+						if (!empty($comment['changes'])) {
+							echo $chaw->changes($comment['changes']);
+						}
+						echo $html->tag('div', h($comment['body']), array('class' => 'wiki-text'));
+
+					?>
+				</div>
+			</div>
+
+		<?php endforeach; ?>
 	</div>
 
 	<div class="edit">
@@ -105,8 +134,12 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 							<?php endif; ?>
 							<?php
 								echo $form->input('title',array('label'=>  __('Title',true)));
-								echo $form->input('description',array('label'=> __('Description',true)));
+								echo $form->input('description',array('label'=> false));
 							?>
+							<div class="help">
+								<?php echo $this->element('markdown_help'); ?>
+							</div>
+							<small>Note: edits can be previewed above</small>
 						</fieldset>
 
 						<fieldset class="tags options">
@@ -117,52 +150,12 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 							<?php __('comma separated') ?>
 						</fieldset>
 
-						<div class="help">
-							<?php echo $this->element('markdown_help'); ?>
-						</div>
+						
 
 					</div>
 				<?php endif; ?>
 
 		<?php endif; ?>
-
-			<div class="comments">
-				<?php foreach ((array)$ticket['Comment'] as $comment): ?>
-
-					<div class="comment" id="c<?php echo $comment['id']?>">
-						<?php
-							if (!empty($comment['reason'])) {
-								echo "<strong>({$comment['reason']})</strong>";
-							}
-						?>
-						<span class="date">
-							<?php echo $time->timeAgoInWords($comment['created'], 'm.d.y');?>
-						</span>
-						<span class="user">
-							by <?php echo $comment['User']['username'];?>
-						</span>
-
-					<?php if(!empty($this->params['isAdmin'])):?>
-						<span class="admin">
-							<?php echo $html->link('delete', array(
-								'controller' => 'comments', 'action' => 'delete', $comment['id']
-							))?>
-						</span>
-					<?php endif; ?>
-
-						<div class="body">
-							<?php
-								if (!empty($comment['changes'])) {
-									echo $chaw->changes($comment['changes']);
-								}
-								echo $html->tag('div', h($comment['body']), array('class' => 'wiki-text'));
-
-							?>
-						</div>
-					</div>
-
-				<?php endforeach; ?>
-			</div>
 
 		<?php if (!empty($CurrentUser->id)): ?>
 
@@ -212,13 +205,14 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 						echo $form->textarea('comment');
 					?>
 					<div class="help">
-						<?php echo $this->element('markdown_help', array('short' => true)); ?>
+						<?php echo $this->element('markdown_help', array('short' => false)); ?>
 					</div>
-					
+
+				</fieldset>
+				<fieldset>
+					<legend>Preview</legend>
 					<div class="comments preview">
 						<div id="CommentPreviewWrapper" class="comment" style="display:none">
-							<h3 class="clearfix"><?php __('Preview') ?></h3>
-
 							<span class="date">
 								<?php echo $time->timeAgoInWords(date('Y-m-d H:i:s', strtotime('1 sec')));?>
 							</span>
@@ -228,9 +222,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 							<div id="CommentPreview" class="body"></div>
 						</div>
 					</div>
-
 				</fieldset>
-
 
 				
 

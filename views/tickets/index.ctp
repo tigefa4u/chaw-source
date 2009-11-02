@@ -1,5 +1,5 @@
 <h2 class="tickets crumbs">
-	<?php __(
+	Tickets: <?php __(
 		Inflector::humanize($current) .
 		(!empty($user) ? "'s" : '') . ' ' .
 		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
@@ -80,6 +80,7 @@ if ($this->params['paging']['Ticket']['page'] > 0) {
 <table class="smooth" cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('#', 'number'); ?></th>
+	<th class="left"><?php echo $paginator->sort(__('Title',true), 'title');?></th>
 	<th><?php echo $paginator->sort(__('Type', true), 'type'); ?></th>
 	<th><?php echo $paginator->sort(__('Priority', true), 'priority'); ?></th>
 	<?php if($status != 'closed'): ?>
@@ -94,7 +95,6 @@ if ($this->params['paging']['Ticket']['page'] > 0) {
 	<?php if($status == 'closed'): ?>
 		<th><?php echo $paginator->sort(__('Resolution', true), 'resolution');?></th>
 	<?php endif; ?>
-	<th class="left"><?php echo $paginator->sort(__('Title',true), 'title');?></th>
 	<th><?php echo $paginator->sort(__('Version', true), 'version_id'); ?></th>
 	<th><?php echo $paginator->sort(__('Created', true), 'created');?></th>
 </tr>
@@ -113,7 +113,14 @@ foreach ($tickets as $ticket):
 				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
 			); ?>
 		</td>
-
+		
+		<td class="title left">
+			<?php echo $html->link(
+				$ticket['Ticket']['title'],
+				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
+			); ?>
+		</td>
+		
 		<td><?php echo $ticket['Ticket']['type']; ?></td>
 
 		<td><?php echo $ticket['Ticket']['priority']; ?></td>
@@ -133,13 +140,6 @@ foreach ($tickets as $ticket):
 		<?php if($status == 'closed'): ?>
 			<td><?php echo $ticket['Ticket']['resolution'];?></td>
 		<?php endif; ?>
-
-		<td class="title left">
-			<?php echo $html->link(
-				$ticket['Ticket']['title'],
-				array('controller'=> 'tickets', 'action'=>'view', $ticket['Ticket']['number'])
-			); ?>
-		</td>
 
 		<td><?php
 			if (!empty($ticket['Version']['title'])):

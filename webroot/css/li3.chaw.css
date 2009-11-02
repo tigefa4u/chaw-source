@@ -2,11 +2,10 @@
 /* This is the stylesheet for the project's app. */
 
 #page-content {
-	margin-top: 1em;
+	padding-top: 1em;
 }
 
 .wiki-content {
-	width: 660px;
 }
 
 .source table, .tickets table {
@@ -225,6 +224,11 @@ a.file {
 	padding-top: 1em;
 }
 
+.preview.wiki-text {
+	margin:0;
+	padding:0;
+}
+
 .wiki-footer {
 	clear: both;
 	border-top: 3px solid #e6e6e6;
@@ -253,19 +257,29 @@ a.file {
 
 #WikiContent, #TicketDescription, #TicketComment, #VersionDescription {
 	float: left;
-	width: 700px;
-	height: 350px;
+	width: 630px;
+	height: 400px;
+	margin: 0;
 }
 .help {
 	float: right;
 	width: 200px;
-	margin: .5em;
 	padding: 0 1em;
 	font-size: 10px;
 }
 .help h4 {
-	background: #e6e6e6;
-	padding: .5em 1em;
+	float: none !important;
+	background: #e6e6e6 !important;
+	padding: .5em 1em !important;
+	margin: 0 0 1em 0 !important;
+}
+
+.help p {
+	margin:.25em 0 .75em 0;
+}
+
+.help .variable {
+	color:black !important;
 }
 
 /* Projects */
@@ -280,7 +294,11 @@ a.file {
 	margin: 0;
 }
 .row {
-	padding: 1em;
+	padding: 2em;
+	border-bottom:3px solid #f0f0f0;
+}
+.row.zebra {
+	background-color:#fafafa;
 }
 .row img {
 	float: left;
@@ -295,6 +313,47 @@ a.file {
 .projects .description {
 	color: #666;
 	margin-top: 0.3em;
+}
+
+.chaw .projects .links a {
+	font-size:.85em;
+	padding:.5em 1em .5em 2.75em;
+	background:transparent url(http://li3.rad-dev.org/img/icons/silk/package_green_gs.png) no-repeat .75em .5em;
+	margin:0 .5em 0 0;
+	color:#999;
+	opacity:.75;
+}
+.chaw .projects .links a:hover {
+	color:black;
+	background-color:#f0f0f0;
+	opacity:1;
+}
+.chaw .projects .links a.timeline {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/time_gs.png);
+}
+.chaw .projects .links a.timeline:hover {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/time.png);
+}
+
+.chaw .projects .links a.wiki {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png);
+}
+.chaw .projects .links a.wiki:hover {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/book_edit.png);
+}
+
+.chaw .projects .links a.tickets {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/report_gs.png);
+}
+.chaw .projects .links a.tickets:hover {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/report.png);
+}
+
+.chaw .projects .links a.versions {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks_gs.png);
+}
+.chaw .projects .links a.versions:hover {
+	background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks.png);
 }
 
 /* Timeline */
@@ -399,25 +458,38 @@ a.file {
 
 /* Tickets */
 
-.tickets h3 em {
-	font-size: 80%;
+.tickets h3 {
+}
+
+.tickets h4 {
+	float:right;
+	font-weight:normal;
+	margin:1px 0 1em 1em;
+	padding:1em;
+	background:#fafafa;
+	color:#999;
+}
+
+.new-ticket a {
+	background:url(http://li3.rad-dev.org/img/icons/silk/add.png) no-repeat .75em .65em;
+	padding:.5em 1em .5em 2.5em !important;
 }
 
 .tickets .edit {
 	font-size: 80%;
 }
 
-.tickets form {
-	min-width: 800px;
+.tickets fieldset {
+	min-width: 870px;
 	white-space: nowrap;
 }
 
 .tickets fieldset.main {
-	float: left;
-	margin-top: 24px;
-	margin-right: 4%;
-	width: 56%;
 	white-space: normal;
+}
+
+.tickets label {
+	font-weight:bold;
 }
 /*
 .tickets fieldset.options {
@@ -449,31 +521,20 @@ a.file {
 	font-size: 12px;
 	height: 300px;
 }
-.tickets div.help {
-	float: left;
-	clear: none;
-	margin-top: 20px;
-	margin-right: 4%;
-	width: 20%;
-}
+
 .tickets div.help div {
 	clear: none;
 }
 .tickets .view {
-	width: 60%;
+	padding:0 2em 1em 2em;
 }
 .tickets .description {
-	margin-bottom: 0.4em;
-	padding: 0 0 1em 0;
-	border: 1px solid #ccc;
-	border-width: 1px 0;
+	padding:0;
+	border-top: 3px solid #fafafa;
+	border-bottom: 3px solid #f0f0f0;
 }
 .tickets .view .date {
 	float: right;
-}
-.tickets textarea#TicketComment {
-	height: 130px;
-	margin-bottom: 10px;
 }
 
 #TicketIndexForm {
@@ -541,20 +602,25 @@ fieldset.ticket-search label {
 }*/
 div.comments {
 	clear:left;
-	padding:1em 0 0 0;
+	padding:0 2em 1em 2em;
 }
 
 .comments .comment {
-	font-size: 140%;
 	margin: 0;
 	padding: 0;
 	padding:0.5em 0;
 	font-style: normal;
-	color: #3b3b3b;
+	color:black;
+}
+.comments .comment .date, .comments .comment .user {
+	font-size:.75em;
 }
 .comments .comment .date {
 	font-weight: bold;
-	color: #633;
+	color:#ababab;
+}
+.comments .comment .user {
+	color:#999;
 }
 .comments .comment .admin a {
 	font-size: 80%;
@@ -563,9 +629,8 @@ div.comments {
 .comments .comment .body {
 	clear:left;
 	background:#fafafa;
-	padding: 4px 8px;
-	font-size: 90%;
 	white-space: normal;
+	padding:1em 2em;
 }
 .comments .comment .body ul {
 	margin:.5em 1em .5em 2em;
@@ -578,7 +643,7 @@ div.comments {
 	margin-top: 10px;
 }
 .comments .body .wiki-text {
-	padding:.5em 1em;
+	padding:0em;
 }
 /*.tickets fieldset.comments {
 	float: left;

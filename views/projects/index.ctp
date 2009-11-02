@@ -10,27 +10,30 @@
 ?>
 <?php if ($this->action != 'forks'):?>
 
-	<div class="nav tabs">
+	<div class="nav tabs right">
 		<ul>
-		<?php if (!empty($CurrentUser->Permission)) { ?>
-			<li><?php echo $chaw->type(array('title' => __('Mine',true), 'type' => null)); ?></li>
-		<?php } ?>
-		<li><?php echo $chaw->type(array('title' => __('All',true),'type' =>'all'), array(
-				'controller' => 'projects', 'action' => 'index',
-			)); ?></li>
-		<li><?php echo $chaw->type(array('title' => __('Public',true),'type' =>'public'), array(
-				'controller' => 'projects', 'action' => 'index',
-			)); ?></li>
-		<li><?php echo $chaw->type(array('title' => __('Forks',true),'type' =>'forks'), array(
-				'controller' => 'projects', 'action' => 'index',
-			)); ?></li>
-		<li><?php echo $html->link(
+			<li><?php echo $html->link(
 				$html->image('feed-icon.png', array(
 					'width' => 14, 'height' => 14
 				)),
 				$rssFeed, array(
 				'title' => __('Projects Feed',true), 'class' => 'rss', 'escape'=> false
 			));?></li>
+		
+			<li><?php echo $chaw->type(array('title' => __('Forks',true),'type' =>'forks'), array(
+				'controller' => 'projects', 'action' => 'index',
+			)); ?></li>
+			
+			<li><?php echo $chaw->type(array('title' => __('Public',true),'type' =>'public'), array(
+				'controller' => 'projects', 'action' => 'index',
+			)); ?></li>
+		
+			<li><?php echo $chaw->type(array('title' => __('All',true),'type' =>'all'), array(
+				'controller' => 'projects', 'action' => 'index',
+			)); ?></li>
+			<?php if (!empty($CurrentUser->Permission)) { ?>
+			<li><?php echo $chaw->type(array('title' => __('Mine',true), 'type' => null)); ?></li>
+		<?php } ?>
 		</ul>
 	</div>
 <?php endif;?>
@@ -117,22 +120,19 @@
 					echo $html->link(__('timeline',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'timeline', 'action' => 'index'
-					));
-					echo ' | ';
+					), array('class' => 'timeline'));
 					echo $html->link(__('wiki',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'wiki', 'action' => 'index'
-					));
-					echo ' | ';
+					), array('class' => 'wiki'));
 					echo $html->link(__('tickets',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'tickets', 'action' => 'index'
-					));
-					echo ' | ';
+					), array('class' => 'tickets'));
 					echo $html->link(__('versions',true), array(
 						'admin' => false, 'project' => $url, 'fork'=> $fork,
 						'controller' => 'versions', 'action' => 'index'
-					));
+					), array('class' => 'versions'));
 				?>
 			</p>
 
