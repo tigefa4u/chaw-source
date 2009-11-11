@@ -1,13 +1,13 @@
 <?php
 $this->set('showdown', true);
-$html->css('highlight/idea', null, null, false);
-$javascript->link('jquery.highlight_diff.min', false);
+$html->css('highlight/idea', null, array('inline' => false));
+$html->script('jquery.highlight_diff.min', array('inline' => false));
 $script = '
 $(document).ready(function(){
 	$(".diff").highlight_diff();
 });
 ';
-$javascript->codeBlock($script, array('inline' => false));
+$html->scriptBlock($script, array('inline' => false));
 ?>
 <h2>
 	Commit: <?php echo $commit['Commit']['revision'];?>

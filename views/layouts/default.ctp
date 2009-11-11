@@ -49,14 +49,14 @@
 		}
 
 		if (!empty($javascript)) {
-			echo $javascript->link('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js');
-			echo $javascript->link('http://li3.rad-dev.org/js/li3.js');
-			echo $javascript->link('http://li3.rad-dev.org/js/cli.js');
-			echo $javascript->link('http://li3.rad-dev.org/libraries/ZeroClipboard/ZeroClipboard.js');
+			echo $html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js');
+			echo $html->script('http://li3.rad-dev.org/js/li3.js');
+			echo $html->script('http://li3.rad-dev.org/js/cli.js');
+			echo $html->script('http://li3.rad-dev.org/libraries/ZeroClipboard/ZeroClipboard.js');
 
 			if (isset($showdown)):
-				echo $javascript->link('gshowdown.min');
-				echo $javascript->codeBlock('
+				echo $html->script('gshowdown.min');
+				echo $html->scriptBlock('
 					var converter = new Showdown.converter("' . $chaw->base() . '");
 					$(document).ready(function(){
 						$(".wiki-text").each(function () {

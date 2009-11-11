@@ -1,9 +1,9 @@
 <?php
 $this->set('showdown', true);
-$html->css('highlight/idea', null, null, false);
-$javascript->link('highlight.pack', false);
+$html->css('highlight/idea', null, array('inline' => false));
+$html->script('highlight.pack', array('inline' => false));
 $script = 'hljs.initHighlightingOnLoad();';
-$javascript->codeBlock($script, array('inline' => false));
+$html->scriptBlock($script, array('inline' => false));
 ?>
 <div class="nav tabs right">
 	<ul>

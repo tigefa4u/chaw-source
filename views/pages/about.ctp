@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$("#WikiContent").html(converter.makeHtml(jQuery.trim($("#WikiContent").text())));
 });
 ';
-$javascript->codeBlock($script, array('inline' => false));
+$html->scriptBlock($script, array('inline' => false));
 ?>
 <div id="WikiContent" style="width: 50%">
 ##About Chaw

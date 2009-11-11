@@ -42,7 +42,7 @@ $(document).ready(function(){
 	});
 });
 ';
-$javascript->codeBlock($script, array('inline' => false));
+$html->scriptBlock($script, array('inline' => false));
 ?>
 
 <div class="timeline index">

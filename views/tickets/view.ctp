@@ -1,7 +1,7 @@
 <?php
 $this->set('showdown', true);
-$html->css('highlight/idea', null, null, false);
-$javascript->link('highlight.pack', false);
+$html->css('highlight/idea', null, array('inline' => false));
+$html->script('highlight.pack', array('inline' => false));
 
 $script = '
 hljs.initHighlightingOnLoad();
@@ -31,7 +31,7 @@ $(document).ready(function(){
 	});
 });
 ';
-$javascript->codeBlock($script, array('inline' => false));
+$html->scriptBlock($script, array('inline' => false));
 
 $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 ?>
