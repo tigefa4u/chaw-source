@@ -6,7 +6,7 @@ $(document).ready(function(){
 	});
 });
 ';
-$javascript->codeBlock($script, array('inline' => false));
+$html->scriptBlock($script, array('inline' => false));
 ?>
 <h2>
 	<?php __('Commits for') ?>

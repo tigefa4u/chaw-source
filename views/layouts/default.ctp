@@ -45,11 +45,11 @@
 		}
 
 		if (!empty($javascript)) {
-			echo $javascript->link('jquery-1.3.1.min');
+			echo $html->script('jquery-1.3.1.min');
 
 			if (isset($showdown)):
-				echo $javascript->link('gshowdown.min');
-				echo $javascript->codeBlock('
+				echo $html->script('gshowdown.min');
+				echo $html->scriptBlock('
 					var converter = new Showdown.converter("' . $chaw->base() . '");
 					$(document).ready(function(){
 						$(".wiki-text").each(function () {
