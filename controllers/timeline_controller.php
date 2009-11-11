@@ -76,7 +76,7 @@ class TimelineController extends AppController {
 			$this->redirect($this->referer());
 		}
 
-		if ($this->Timeline->del($id)) {
+		if ($this->Timeline->delete($id)) {
 			$this->Session->setFlash(__('The timeline event was deleted',true));
 		} else {
 			$this->Session->setFlash(__('The timeline event was NOT deleted',true));
