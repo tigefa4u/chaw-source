@@ -30,8 +30,8 @@ class RepoController extends AppController {
 		} else {
 			$this->Session->setFlash(__('Fast Forward failed. Time to merge manually?',true));
 		}
-		//$this->log($this->Project->Repo->debug, LOG_DEBUG);
-		//$this->log($this->Project->Repo->response, LOG_DEBUG);
+		//CakeLog::write($this->Project->Repo->debug, LOG_DEBUG);
+		//CakeLog::write($this->Project->Repo->response, LOG_DEBUG);
 		$this->redirect($this->referer());
 	}
 
@@ -56,8 +56,8 @@ class RepoController extends AppController {
 		} else {
 			$this->Session->setFlash(__('Merge failed. Time to merge manually?',true));
 		}
-		//$this->log($this->Project->Repo->debug, LOG_DEBUG);
-		//$this->log($this->Project->Repo->response, LOG_DEBUG);
+		//CakeLog::write($this->Project->Repo->debug, LOG_DEBUG);
+		//CakeLog::write($this->Project->Repo->response, LOG_DEBUG);
 		$this->redirect($this->referer());
 	}
 
