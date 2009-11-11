@@ -39,12 +39,12 @@ class CommentsController extends AppController {
 				'dependent' => true
 		))), false);
 
-		if ($this->Comment->del($id)) {
+		if ($this->Comment->delete($id)) {
 			$this->Session->setFlash(__('The comment was deleted',true));
 		} else {
 			$this->Session->setFlash(__('The comment was NOT deleted',true));
 			if ($timeline = $this->Comment->Timeline->find('id', array('Timeline.foreign_key' => $id, 'Timeline.model' => 'Comment'))) {
-				if ($this->Comment->Timeline->del($timeline)) {
+				if ($this->Comment->Timeline->delete($timeline)) {
 					$this->Session->setFlash(__('The comment was removed from timeline',true));
 				}
 			}

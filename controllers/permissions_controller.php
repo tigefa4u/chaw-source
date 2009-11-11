@@ -48,7 +48,7 @@ class PermissionsController extends AppController {
 			$this->redirect(array('controller' => 'users', 'action' => 'index'));
 		}
 
-		if ($this->Permission->del($id)) {
+		if ($this->Permission->delete($id)) {
 			$this->Session->setFlash(__('User removed',true));
 			$this->redirect(array('controller' => 'users', 'action' => 'index'));
 		}
