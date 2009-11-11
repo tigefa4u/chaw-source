@@ -275,11 +275,57 @@ a.file {
 }
 
 .help p {
-	margin:.25em 0 .75em 0;
+	margin: .25em 0 .75em 0;
 }
 
 .help .variable {
-	color:black !important;
+	color: black !important;
+}
+
+.wiki-actions {
+	background: #f0f0f0;
+}
+
+.wiki-actions ul {
+	list-style: none;
+}
+
+.wiki-actions li {
+	display: inline;
+}
+
+.wiki-actions a {
+	padding: .5em 2em;
+	background: #f0f0f0;
+}
+
+.wiki-actions a:hover {
+	background: #e6e6e6;
+}
+
+.wiki-section-contents {
+	padding: 1em;
+	background: #f7f7f7;
+	border: 3px solid #f0f0f0;
+}
+
+.wiki-section-contents h2 {
+	font-size: 1.5em;
+	margin: 0 0 .25em 0;
+}
+
+.wiki-section-contents ul {
+	padding: 0 0 0 2em;
+}
+
+.wiki-section-contents li {
+	padding: .25em 0 0 0;
+}
+
+.wiki-section-contents small {
+	opacity: .5;
+	padding: 0 0 0 .25em;
+	text-transform: lowercase;
 }
 
 /* Projects */

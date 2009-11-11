@@ -68,7 +68,7 @@ class WikiController extends AppController {
 				'Wiki.active' => 1
 			));
 		}
-		if (empty($page) || $this->RequestHandler->isRss() == true) {
+		//if (empty($page) || $this->RequestHandler->isRss() == true) {
 			$wiki = $this->Wiki->find('all', array(
 				'conditions' => array(
 					'Wiki.path' => $fullpath,
@@ -77,7 +77,7 @@ class WikiController extends AppController {
 				),
 				'order' => 'Wiki.created DESC'
 			));
-		}
+		//}
 
 		if (empty($wiki) && empty($page)) {
 			$this->passedArgs[] = $slug;
@@ -87,7 +87,7 @@ class WikiController extends AppController {
 		if ($this->RequestHandler->isRss() !== true) {
 
 			if (!empty($page)) {
-				$subNav = $this->Wiki->find('all', array(
+				/*$subNav = $this->Wiki->find('all', array(
 					'fields' => array('Wiki.path', 'Wiki.slug'),
 					'conditions' => array(
 						'Wiki.path' => $fullpath,
@@ -95,7 +95,7 @@ class WikiController extends AppController {
 						'Wiki.active' => 1
 					),
 					'order' => 'Wiki.created DESC'
-				));
+				));*/
 			}
 
 			$wikiNav = array_flip($this->Wiki->find('list', array(

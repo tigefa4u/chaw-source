@@ -32,49 +32,34 @@ $javascript->codeBlock($script, array('inline' => false));
 			<?php echo h($page['Wiki']['content']);?>
 		</div>
 	</div>
-
 <?php endif; ?>
 
-<?php if (empty($page) && !empty($wiki)): ?>
-	<div class="wiki-content">
-
-		<?php foreach($wiki as $content):
-			$data = h($text->truncate($content['Wiki']['content'], 420, '...', false, true));
-		?>
-			<?php if (strpos($data, '##') === false):?>
-				<h3><?php
-					echo $html->link(Inflector::humanize($content['Wiki']['slug']), array(
-						'controller' => 'wiki', 'action' => 'index',
-						$content['Wiki']['path'], $content['Wiki']['slug']
-					));?>
-				</h3>
+<?php if (!empty($wiki)): ?>
+	<div class="wiki-section-contents">
+		<h2>Contents</h2>
+		<ul>
+		<?php foreach($wiki as $content): ?>
+			<li><?php echo $html->link(Inflector::humanize($content['Wiki']['slug']), array(
+				'controller' => 'wiki', 'action' => 'index',
+				$content['Wiki']['path'], $content['Wiki']['slug']
+			));?>
+			<?php if (!empty($canWrite) && (empty($content['Wiki']['read_only']) || $CurrentUser->id == $content['Wiki']['last_changed_by'])):?>
+			 <small>{<?php echo $html->link(__('Edit',true), array(
+					'controller' => 'wiki', 'action' => 'edit',
+					$content['Wiki']['path'], $content['Wiki']['slug']));
+				?>}</small>
 			<?php endif; ?>
-
-			<div class="wiki-text">
-				<?php echo $data; ?>
-			</div>
-
-			<div class="actions">
-				<?php echo $html->link(__('View',true), array(
-						'controller' => 'wiki', 'action' => 'index',
-						$content['Wiki']['path'], $content['Wiki']['slug']));
-				?>
-				<?php if (!empty($canWrite) && (empty($content['Wiki']['read_only']) || $CurrentUser->id == $content['Wiki']['last_changed_by'])):?>
-					|
-					<?php echo $html->link(__('Edit',true), array(
-							'controller' => 'wiki', 'action' => 'edit',
-							$content['Wiki']['path'], $content['Wiki']['slug']));
-					?>
-					|
-					<?php echo $html->link(__('New',true), array(
-							'controller' => 'wiki', 'action' => 'add',
-							$content['Wiki']['path'], 'new-page'));
-					?>
-				<?php endif; ?>
-			</div>
-
+			</li>
 		<?php endforeach; ?>
-
+		<?php if (!empty($canWrite)) { ?>
+			<li class="new">{
+				<?php echo $html->link(__('New',true), array(
+					'controller' => 'wiki', 'action' => 'add',
+					$content['Wiki']['path'], 'new-page'));
+				?> }
+			</li>
+		<?php } ?>
+		</ul>
 	</div>
 <?php endif; ?>
 
