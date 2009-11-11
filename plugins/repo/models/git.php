@@ -88,7 +88,7 @@ class Git extends Repo {
 			$this->commit("Initial Project Commit");
 			$this->push();
 		}
-		//$this->log($this->debug, LOG_DEBUG);
+		//CakeLog::write($this->debug, LOG_DEBUG);
 
 		if (is_dir($path) && is_dir($this->working)) {
 			return true;

@@ -32,7 +32,7 @@ class PostReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		//$this->args[] = 'post-receive';
- 		//$this->log($this->args, LOG_INFO);
+ 		//CakeLog::write($this->args, LOG_INFO);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
@@ -77,7 +77,7 @@ class PostReceiveShell extends Shell {
 			'hash' => $newrev
 		));
 
-		//$this->log($commit);
+		//CakeLog::write($commit);
 
 		if (empty($commit)) {
 			return;
