@@ -44,7 +44,7 @@ class TicketsController extends AppController {
 
 		if ($isDefault) {
 			$statuses = $this->Ticket->states();
-			$this->passedArgs['status'] = $statuses[0];
+			$this->data['Ticket']['status'] = $this->passedArgs['status'] = $statuses['pending'];
 		}
 
 		if (!empty($this->passedArgs['status'])) {
