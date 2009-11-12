@@ -77,7 +77,9 @@
 
 		<?php if (empty($data['Timeline']['data'])) :?>
 			<p class="description"><?php
-				echo $text->truncate($data['Commit']['message'], 80, '...', false, true);
+				echo $text->truncate($data['Commit']['message'], 80, array(
+					'exact' => true, 'html' => false
+				));
 			?></p>
 		<?php endif;?>
 

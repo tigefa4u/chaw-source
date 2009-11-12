@@ -44,7 +44,9 @@
 		</p>
 
 		<p class="description"><?php 
-			echo $text->truncate($data['Ticket']['description'], 80, '...', false, true); 
+			echo $text->truncate($data['Ticket']['description'], 80, array(
+				'exact' => true, 'html' => false
+			)); 
 		?></p>
 	</div>
 

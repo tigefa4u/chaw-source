@@ -53,7 +53,9 @@
 			if (!empty($data['Comment']['changes'])) {
 				echo $chaw->changes($data['Comment']['changes']);
 			}
-			echo trim($text->truncate($data['Comment']['body'], 80, '...', false, true));
+			echo trim($text->truncate($data['Comment']['body'], 80, array(
+				'exact' => true, 'html' => false
+			)));
 		?></div>
 	</div>
 

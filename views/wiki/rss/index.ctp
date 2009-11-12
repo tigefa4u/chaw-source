@@ -22,7 +22,9 @@ if(!empty($wiki)):
 		$link = array('controller' => 'wiki', 'action' => 'index', $page['Wiki']['path'], $page['Wiki']['slug']);
 		$pubDate = $rss->time($page['Wiki']['modified']);
 		$author = $page['User']['username'];
-		$description = $text->truncate(nl2br($page['Wiki']['content']), 400, '...', false, true);
+		$description = $text->truncate(nl2br($page['Wiki']['content']), 400, array(
+			'exact' => true, 'html' => false
+		));
 		echo $rss->item(array(), compact('title', 'link', 'pubDate', 'description', 'author'));
 	endforeach;
 
@@ -32,7 +34,9 @@ elseif(!empty($page)):
 	$link = array('controller' => 'wiki', 'action' => 'index', $page['Wiki']['path'], $page['Wiki']['slug']);
 	$pubDate = $rss->time($page['Wiki']['modified']);
 	$author = $page['User']['username'];
-	$description = $text->truncate(nl2br($page['Wiki']['content']), 420, '...', false, true);
+	$description = $text->truncate(nl2br($page['Wiki']['content']), 420, array(
+		'exact' => true, 'html' => false
+	));
 
 	echo $rss->item(array(), compact('title', 'link', 'pubDate', 'description', 'author'));
 
