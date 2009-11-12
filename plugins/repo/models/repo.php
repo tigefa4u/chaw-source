@@ -203,7 +203,7 @@ class Repo extends Overloadable {
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
 		$response = $this->execute("{$type} {$command}", $args, $return);
-		if (CakeLog::writeResponse === true) {
+		if ($this->logResponse === true) {
 			$this->response[] = $response;
 		}
 		return $response;
@@ -240,7 +240,7 @@ class Repo extends Overloadable {
 			return $c;
 		}
 
-		if (CakeLog::writeDebug == true) {
+		if ($this->logDebug == true) {
 			$this->debug[] = $c;
 		}
 
