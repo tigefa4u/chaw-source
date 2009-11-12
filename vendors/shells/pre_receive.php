@@ -31,7 +31,7 @@ class PreReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		$this->args[] = 'pre-receive';
- 		CakeLog::write($this->args, LOG_INFO);
+ 		CakeLog::write(LOG_INFO, $this->args);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
@@ -51,7 +51,7 @@ class PreReceiveShell extends Shell {
 
 		/*
 		$conditions = $this->Project->Repo->find(array('commit' => $newrev), array('email', 'author', 'hash'));
-		CakeLog::write($conditions, LOG_INFO);
+		CakeLog::write(LOG_INFO, $conditions);
 
 		$user = $this->Project->User->field('username', array('OR' => array(
 			'email' => $conditions['email'],

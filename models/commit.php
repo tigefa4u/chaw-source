@@ -63,9 +63,7 @@ class Commit extends AppModel {
 		return true;
 	}
 
-	function afterSave($created) {
-		CakeLog::write($this->data);
-		
+	function afterSave($created) {		
 		if ($created && $this->addToTimeline) {
 			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
