@@ -34,8 +34,9 @@ $html->scriptBlock($script, array('inline' => false));
 </div>
 <div class="paging">
 <?php
-	echo $paginator->prev();
+	$paginator->options(array('url' => $this->passedArgs));
+	echo $paginator->prev('<< ' . __('previous', true));
 	echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
-	echo $paginator->next();
+	echo $paginator->next(__('next', true) . ' >>');
 ?>
 </div>
