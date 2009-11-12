@@ -761,6 +761,9 @@ div.comments {
 .users .checkbox input[type=text] {
 	width:60em;
 }
+.highlighted ol {
+	background-color: #fff;
+}
 
 /* Diff handling */
 .diff .file {
