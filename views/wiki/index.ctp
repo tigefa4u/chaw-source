@@ -76,7 +76,7 @@ $html->scriptBlock($script, array('inline' => false));
 <?php if (!empty($revisions) && !empty($page)):?>
 <div class="wiki-footer revisions">
 	<?php echo $form->create(array('url' => array('action' => 'index', $path, $slug))); ?>
-	<div class="revision" title="Revision"><?php echo $form->input('revision', array('value' => $page['Wiki']['id'])); ?></div>
+	<div class="revision" title="Revision"><?php echo $form->input('Wiki.revision', array('value' => $page['Wiki']['id'])); ?></div>
 	<?php
 		$buttons =
 			$form->submit(__('view',true), array('div' => false, 'name' => 'view'))
