@@ -310,7 +310,6 @@ a.file {
 }
 
 .wiki-section-contents h2 {
-	font-size: 1.5em;
 	margin: 0 0 .25em 0;
 }
 
@@ -320,6 +319,9 @@ a.file {
 
 .wiki-section-contents li {
 	padding: .25em 0 0 0;
+	font-size: 18px;
+	line-height: 28px;
+	list-style-type: circle;
 }
 
 .wiki-section-contents small {
