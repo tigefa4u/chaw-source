@@ -35,7 +35,7 @@ class GitShellShell extends Shell {
 		}
 
 		$this->args[] = 'git_shell';
- 		//CakeLog::write($this->args, LOG_INFO);
+ 		//CakeLog::write(LOG_INFO, $this->args);
 
 		$command = @$this->args[0];
 
@@ -92,7 +92,7 @@ class GitShellShell extends Shell {
 		$fork = @$this->args[1];
 
 		$this->args[] = 'git_shell';
- 		//CakeLog::write($this->args, LOG_INFO);
+ 		//CakeLog::write(LOG_INFO, $this->args);
 
 		if ($this->Project->initialize(compact('project', 'fork')) === false || $this->Project->current['url'] !== $project) {
 			$this->err('Invalid Project');

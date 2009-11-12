@@ -8,7 +8,7 @@ class ProjectFixture extends CakeTestFixture {
 	function __construct() {
 		parent::__construct();
 		$Schema = new CakeSchema(array(
-			'name' => 'Chaw',
+			'name' => 'RadDev',
 		));
 		$Schema = $Schema->load();
 		$this->fields = $Schema->tables['projects'];

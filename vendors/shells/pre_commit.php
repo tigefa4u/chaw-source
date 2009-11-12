@@ -26,7 +26,7 @@ class PreCommitShell extends Shell {
 
 	function authorize() {
 		$this->args[] = 'pre_commit';
-		CakeLog::write($this->args, LOG_DEBUG);
+		CakeLog::write(LOG_DEBUG, $this->args);
 		return 0;
 		
 		
@@ -44,8 +44,8 @@ class PreCommitShell extends Shell {
 		$transaction = $this->args[2];
 		$revision = $txn[0];
 
-		CakeLog::write($this->Project->Repo->look('author', array("-t {$transaction}")));
-		CakeLog::write($this->Project->Repo->look('changed', array("-t {$transaction}")));
+		CakeLog::write(LOG_DEBUG, $this->Project->Repo->look('author', array("-t {$transaction}")));
+		CakeLog::write(LOG_DEBUG, $this->Project->Repo->look('changed', array("-t {$transaction}")));
 
 		//pr($this->Project->Repo->debug);
 

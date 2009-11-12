@@ -203,9 +203,7 @@ class Repo extends Overloadable {
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
 		$response = $this->execute("{$type} {$command}", $args, $return);
-		if (CakeLog::writeResponse === true) {
-			$this->response[] = $response;
-		}
+		CakeLog::write(LOG_DEBUG, $response);
 		return $response;
 	}
 /**
@@ -240,9 +238,7 @@ class Repo extends Overloadable {
 			return $c;
 		}
 
-		if (CakeLog::writeDebug == true) {
-			$this->debug[] = $c;
-		}
+		CakeLog::write(LOG_DEBUG, $c);
 
 		umask(0);
 		putenv("PHP_CHAWUSER={$this->chawuser}");

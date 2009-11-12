@@ -41,8 +41,8 @@ class SvnShellShell extends Shell {
 		}
 
 		$this->args[] = 'svn_shell';
-		//CakeLog::write($this->args, LOG_DEBUG);
-		//CakeLog::write($this->params, LOG_DEBUG);
+		//CakeLog::write(LOG_DEBUG, $this->args);
+		//CakeLog::write(LOG_DEBUG, $this->params);
 
 		//$this->Project->permit($this->params['user']);
 

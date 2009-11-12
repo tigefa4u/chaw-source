@@ -36,8 +36,8 @@ class PostCommitShell extends Shell {
 		$revision = $this->args[2];
 
 		// $this->args[] = 'post_commit';
-		// CakeLog::write($this->args, LOG_DEBUG);
-		// CakeLog::write($this->params, LOG_DEBUG);
+		// CakeLog::write(LOG_DEBUG, $this->args);
+		// CakeLog::write(LOG_DEBUG, $this->params);
 
 		$data = $this->Project->Repo->read($revision, false);
 
