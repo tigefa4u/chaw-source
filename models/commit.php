@@ -63,6 +63,7 @@ class Commit extends AppModel {
 		return true;
 	}
 
+
 	function afterSave($created) {		
 		if ($created && $this->addToTimeline) {
 			$Timeline = ClassRegistry::init('Timeline');
