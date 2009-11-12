@@ -393,7 +393,7 @@ var hljs = new function() {
 
 	function insertLines(highlightedText, startAt, alternatingRows) {
 		var counter = startAt + 1 - 1; //make sure it is a number; otherwise Math.log doesn't work right
-		var result = "<ol>";
+		var result = "";
 		//IE does wierd stuff when splitting blank lines, so insert a space
 		highlightedText = highlightedText.replace(/(\r\n|\r|\n)(\r\n|\r|\n)/g, "$1 $2");
 		var lines = highlightedText.split(/\r\n|\r|\n/);
@@ -441,7 +441,7 @@ var hljs = new function() {
 			counter++;
 			result = result + newline;
 		}
-		return result + "</ol>";
+		return result + "";
 	}
 
 	function langRe(language, value, global) {

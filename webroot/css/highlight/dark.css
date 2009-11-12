@@ -4,15 +4,6 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 
 */
 
-pre code[class]:after {
-  content: 'highlight: ' attr(class);
-  display: block; text-align: right;
-  font-size: smaller;
-  color: #CCC; background: white;
-  border-top: solid 1px black;
-  padding-top: 0.5em;
-}
-
 pre code {
   display: block;
   background: #444;
@@ -93,4 +84,46 @@ pre code,
 .html .javascript,
 .html .vbscript {
   opacity: 0.5;
+}
+
+span.highlight {
+	padding: 0px;
+}
+span.numbers {
+	padding: 0px;
+}
+
+span.plain a, span.highlight a, span.numbers a {
+	font-size: 80%;
+}
+.coderow, .alternaterow {
+	clear: both;
+	line-height: 17px;
+}
+
+.alternaterow {
+	width: 100%;
+	display: block;
+	background-color: #161616;
+}
+
+.rownumber {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	color: #fff;
+	vertical-align: baseline;
+	text-decoration: none;
+	font-family: monospace;
+	border-right: 2px solid #666;
+	padding: 4px 4px 4px 0;
+	margin-right: 4px;
+	font-weight: bold;
+	display: inline;
+}
+
+.alternaterow .rownumber {
+	background-color: #141414;
 }

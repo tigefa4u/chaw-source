@@ -1,6 +1,6 @@
 <?php
 $this->set('showdown', true);
-$html->css('highlight/idea', null, array('inline' => false));
+$html->css('highlight/dark', null, array('inline' => false));
 $html->script('jquery.highlight_diff.min', array('inline' => false));
 $script = '
 $(document).ready(function(){

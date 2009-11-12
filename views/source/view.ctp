@@ -1,6 +1,6 @@
 <?php
-$html->css('highlight/idea', null, array('inline' => false));
-$html->script('ghighlight.min', array('inline' => false));
+$html->css('highlight/dark', null, array('inline' => false));
+$html->script('ghighlight', array('inline' => false));
 ?>
 <div class="source view">
 	<span class="history"><?php
