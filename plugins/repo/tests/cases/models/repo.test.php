@@ -1,5 +1,5 @@
 <?php
-App::import('Model', array('Repo.Git', 'Repo.Svn'));
+App::import('Model', array('Repo.Git', 'Repo.Svn'), false);
 
 class TestRepo extends Repo {
 
@@ -25,8 +25,7 @@ class RepoTest extends CakeTestCase {
 	}
 
 	function testInit() {
-		$Repo = ClassRegistry::init($this->__repos[1]);
-
+		$Repo = new TestRepo($this->__repos[1]);
 
 		$result = $Repo->config();
 
@@ -44,7 +43,7 @@ class RepoTest extends CakeTestCase {
 	}
 
 	function testExecute() {
-		$Repo = ClassRegistry::init($this->__repos[1]);
+		$Repo = new TestRepo($this->__repos[1]);
 
 		$result = $Repo->execute('ls', array(TMP), true);
 		$expected = "ls " . TMP;

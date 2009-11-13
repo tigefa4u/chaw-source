@@ -1,6 +1,9 @@
 <?php
 /* SVN FILE: $Id$ */
 /* Svn Test cases generated on: 2008-08-28 13:08:20 : 1219956320*/
+
+App::import('Model', 'Repo.Svn', false);
+
 class SvnTest extends CakeTestCase {
 
 	function setUp() {
@@ -33,7 +36,7 @@ class SvnTest extends CakeTestCase {
 */
 
 	function testCreate() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 		$this->assertTrue($Svn->create());
 		$this->assertTrue(file_exists($Svn->config['path']));
 		$this->assertTrue(file_exists($Svn->config['working']));
@@ -48,13 +51,13 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function testHook() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 		$Svn->hook('post-commit');
 		$this->assertTrue(file_exists($Svn->path . DS . 'hooks' . DS . 'post-commit'));
 	}
 
 	function testRead() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 		$result = $Svn->read(1);
 		$this->assertEqual($result['revision'], 1);
 		$this->assertEqual($result['message'], 'Initial Project Import');
@@ -66,7 +69,7 @@ class SvnTest extends CakeTestCase {
 
 
 	function testCommit() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 
 		$File = new File($Svn->working . '/branches/demo_1.0.x.x/index.php', true);
 		$File->write("this is a new php file with plain text");
@@ -82,7 +85,7 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function testFind() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 		$result = $Svn->find();
 
 		$this->assertEqual($result[0]['Repo']['revision'], 2);
@@ -97,7 +100,7 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function testHistory() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 
 		$File = new File($Svn->working . '/branches/demo_1.0.x.x/index.php', true);
 		$File->write("this is a new php file with plain text tha is being changed");
@@ -133,7 +136,7 @@ class SvnTest extends CakeTestCase {
 	}
 
 	function testBlame() {
-		$Svn = ClassRegistry::init($this->__repos[1]);
+		$Svn = new Svn($this->__repos[1]);
 		pr($Svn->run('blame', $Svn->working . '/cake/libs/file.php'));
 	}
 	*/
