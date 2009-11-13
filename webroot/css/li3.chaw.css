@@ -143,6 +143,9 @@ a.file {
 }
 
 /* Source */
+.source.view {
+	clear: both;
+}
 
 .source h2 {
 	margin-top: 24px;
@@ -168,7 +171,11 @@ a.file {
 }
 
 .source span.history {
-	float: right;
+	float: left;
+	display: block;
+	color: #ccc;
+	padding: .5em 1em .5em 1em;
+	background: #f0f0f0;
 }
 
 .source p.history a {
