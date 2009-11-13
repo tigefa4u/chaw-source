@@ -15,7 +15,8 @@ class SourceTestCase extends CakeTestCase {
 		$this->Source =& ClassRegistry::init('Source');
 
 		Configure::write('Content.git', TMP . 'tests/git/');
-		$this->Git =& ClassRegistry::init(array(
+		App::import('Model', 'Repo.Git', false);
+		$this->Git =& new Git(array(
 			'class' => 'Repo.Git',
 			'type' => 'git',
 			'path' => TMP . 'tests/git/repo/test.git',
@@ -49,8 +50,9 @@ class SourceTestCase extends CakeTestCase {
 			'path' => TMP . 'tests/git/repo/test.git',
 			'working' => TMP . 'tests/git/working/test',
 		));
-
-		$this->Svn = ClassRegistry::init(array(
+	
+		App::import('Model', 'Repo.Svn', false);
+		$this->Svn = new Svn(array(
 			'class' => 'Repo.Svn',
 			'type' => 'svn',
 			'path' => TMP . 'tests/svn/repo/test',

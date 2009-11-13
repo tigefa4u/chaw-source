@@ -179,8 +179,9 @@ class Project extends AppModel {
 
 		$this->id = $this->current['id'];
 		Configure::write('Project', $this->current);
-
-		$this->Repo = ClassRegistry::init($this->current['repo']);
+		
+		App::import('Model', $this->current['repo']['class'], false);
+		$this->Repo = new $this->current['repo_type']($this->current['repo']);
 		return true;
 	}
 /**
