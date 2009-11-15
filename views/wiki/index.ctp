@@ -29,7 +29,7 @@ $html->scriptBlock($script, array('inline' => false));
 <?php if (!empty($page)): ?>
 	<div class="wiki-content">
 		<div class="wiki-text">
-			<?php echo h($page['Wiki']['content']);?>
+			<pre><?php echo h($page['Wiki']['content']);?></pre>
 		</div>
 	</div>
 <?php endif; ?>

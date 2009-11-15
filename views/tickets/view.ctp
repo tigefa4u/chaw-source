@@ -47,7 +47,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 			<?php endif; ?>
 		</h4>
 		<div id="Preview" class="description wiki-text">
-			<?php echo h($ticket['Ticket']['description']); ?>
+			<pre><?php echo h($ticket['Ticket']['description']); ?></pre>
 		</div>
 
 		<span class="date">
@@ -96,7 +96,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 						if (!empty($comment['changes'])) {
 							echo $chaw->changes($comment['changes']);
 						}
-						echo $html->tag('div', h($comment['body']), array('class' => 'wiki-text'));
+						echo $html->tag('div', $html->tag('pre', h($comment['body'])), array('class' => 'wiki-text'));
 
 					?>
 				</div>
