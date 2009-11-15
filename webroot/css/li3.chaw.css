@@ -143,6 +143,9 @@ a.file {
 }
 
 /* Source */
+.source.view {
+	clear: both;
+}
 
 .source h2 {
 	margin-top: 24px;
@@ -168,7 +171,11 @@ a.file {
 }
 
 .source span.history {
-	float: right;
+	float: left;
+	display: block;
+	color: #ccc;
+	padding: .5em 1em .5em 1em;
+	background: #f0f0f0;
 }
 
 .source p.history a {
@@ -310,7 +317,6 @@ a.file {
 }
 
 .wiki-section-contents h2 {
-	font-size: 1.5em;
 	margin: 0 0 .25em 0;
 }
 
@@ -320,6 +326,9 @@ a.file {
 
 .wiki-section-contents li {
 	padding: .25em 0 0 0;
+	font-size: 18px;
+	line-height: 28px;
+	list-style-type: circle;
 }
 
 .wiki-section-contents small {
@@ -875,4 +884,46 @@ div.comments {
 }
 .projects .inline input {
 	width: 140px;
+}
+
+.paging {
+	display: block;
+	clear: both;
+	margin-top: 2em;
+	border-bottom: 3px solid #e6e6e6;
+	color: #e6e6e6;
+}
+
+.paging a {
+	padding: .3em 1em;
+	margin: 0 .25em 0 0;
+	background-color: #f0f0f0;
+}
+.paging .current {
+	font-weight: bold;
+	padding: .5em 1em;
+	color: #00E5FF;
+}
+.paging .prev, .paging .next {
+	display: block;
+	width: 24px;
+	height: 0;
+	padding: 24px 0 0 0;
+	overflow: hidden;
+}
+
+.paging .prev {
+	float: left;
+}
+
+.paging .next {
+	float: right;
+}
+
+.paging a.prev {
+	background: url(http://li3.rad-dev.org/img/icons/silk/arrow_left.png) no-repeat center left;
+}
+
+.paging a.next {
+	background: url(http://li3.rad-dev.org/img/icons/silk/arrow_right.png) no-repeat center right;
 }

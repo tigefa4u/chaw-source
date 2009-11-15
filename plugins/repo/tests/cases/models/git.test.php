@@ -1,6 +1,8 @@
 <?php
 /* SVN FILE: $Id$ */
 /* Git Test cases generated on: 2008-09-09 18:09:14 : 1220999054*/
+App::import('Model', 'Repo.Git', false);
+
 class GitTest extends CakeTestCase {
 
 	function startTest() {
@@ -26,7 +28,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testCreate() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$Git->logDebug = true;
 		$Git->logResponse = true;
 		$this->assertTrue($Git->create());
@@ -39,7 +41,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testHook() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->hook('post-receive'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git/hooks/post-receive'));
 		unlink(TMP . 'tests/git/repo/test.git/hooks/post-receive');
@@ -51,17 +53,17 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testRead() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$result = $Git->read();
 		$this->assertEqual($result['message'], 'Initial Project Commit');
-		
-		
+
+
 		//pr($Git->debug);
 		//pr($Git->response);
 
-		//die();	
-			
+		//die();
+
 		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
 		$this->assertTrue($File->write('this is something new'));
 
@@ -98,13 +100,13 @@ class GitTest extends CakeTestCase {
 		));
 
 		$this->assertEqual($result[0]['Repo']['message'], 'Updating git ignore again');
-	
-		
+
+
 		//$this->end();
 	}
 
 	function testBranch() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$Git->logResponse = true;
 		$result = $Git->branch("new");
@@ -117,7 +119,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testFork() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 
 		$File = new File(TMP . 'tests/git/working/test/master/.gitignore');
@@ -157,7 +159,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testFindCount() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -195,7 +197,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testFindAll() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -230,7 +232,7 @@ class GitTest extends CakeTestCase {
 
 	function testFindWithFields() {
 		$this->__cleanUp();
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -270,7 +272,7 @@ class GitTest extends CakeTestCase {
 		));
 
 		/*
-		$Git = ClassRegistry::init(array(
+		$Git = new Git(array(
 			'class' => 'Repo.Git',
 			'type' => 'git',
 			'path' => '/Volumes/Home/htdocs/chaw_content/git/repo/renan.git',
@@ -283,7 +285,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testCommitIntoBranch() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -320,7 +322,7 @@ class GitTest extends CakeTestCase {
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
 		}
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -335,7 +337,7 @@ class GitTest extends CakeTestCase {
 		$File = new File(TMP . 'tests/git/working/test/master/new.text', true);
 		$File->write('this is something new');
 
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$Git->logResponse = true;
 		$Git->commit('Pushing to parent');
 		$Git->push('origin', 'master');
@@ -356,7 +358,7 @@ class GitTest extends CakeTestCase {
 
 	function testMerge() {
 		Configure::write('Content.git', TMP . 'tests/git/');
-		$Git =& ClassRegistry::init(array(
+		$Git =& new Git(array(
 			'class' => 'Repo.Git',
 			'type' => 'git',
 			'path' => TMP . 'tests/git/repo/test.git',
@@ -392,7 +394,7 @@ class GitTest extends CakeTestCase {
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
 		}
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -406,7 +408,7 @@ class GitTest extends CakeTestCase {
 		$Git->commit(array("-m", "'Pushing to fork'"));
 		$Git->push('origin', 'master');
 
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 
 		$File = new File(TMP . 'tests/git/working/test/master/other.text', true);
 		$File->write('this is something elese is new');
@@ -437,7 +439,7 @@ class GitTest extends CakeTestCase {
 		if ($Cleanup->pwd() == TMP . 'tests/git') {
 			$Cleanup->delete();
 		}
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -475,7 +477,7 @@ class GitTest extends CakeTestCase {
 	}
 
 	function testFindBranches() {
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));
@@ -492,7 +494,7 @@ class GitTest extends CakeTestCase {
 
 	function testDelete() {
 		$Git->logReponse = true;
-		$Git = ClassRegistry::init($this->__repos[1]);
+		$Git = new Git($this->__repos[1]);
 		$this->assertTrue($Git->create());
 		$this->assertTrue(file_exists(TMP . 'tests/git/repo/test.git'));
 		$this->assertTrue(file_exists(TMP . 'tests/git/working/test/master/.git'));

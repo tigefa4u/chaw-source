@@ -31,21 +31,21 @@ class TicketsController extends AppController {
 	);
 
 	function index() {
-		$conditions = array(
-			'Ticket.project_id' => $this->Project->id,
-		);
-		$conditions = array_merge(
-			$conditions, (array)$this->postConditions($this->data, '=', 'AND', true)
-		);
 		$this->set('title_for_layout', 'Tickets/Status/');
 		$current = $status = $type = $user = null;
-
 		$isDefault = empty($this->passedArgs);
 
 		if ($isDefault) {
 			$statuses = $this->Ticket->states();
 			$this->data['Ticket']['status'] = $this->passedArgs['status'] = $statuses['pending'];
 		}
+
+		$conditions = array(
+			'Ticket.project_id' => $this->Project->id,
+		);
+		$conditions = array_merge(
+			$conditions, (array)$this->postConditions($this->data, '=', 'AND', true)
+		);
 
 		if (!empty($this->passedArgs['status'])) {
 			$status = $this->passedArgs['status'];

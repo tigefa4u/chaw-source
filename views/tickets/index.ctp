@@ -152,7 +152,9 @@ foreach ($tickets as $ticket):
 </div>
 
 <div class="paging white">
-	<?php echo $paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled'));?>
-	| <?php echo $paginator->numbers(array('after' => ' |'));?>
-	<?php echo $paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
+	<?php
+		echo $paginator->prev('<< ' . __('previous', true));
+		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
+		echo $paginator->next(__('next', true) . ' >>');
+	?>
 </div>

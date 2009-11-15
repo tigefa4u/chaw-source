@@ -131,3 +131,15 @@ form#UserAddForm .submit {
 	font-size: 12px;
 	height: 340px;
 }
+#site-navigation .nav.tabs li {
+	margin: 0;
+	padding: 0;
+	display: block;
+	width: 154px;
+}
+.nav.tabs ul li a {
+	margin: 0;
+	padding: .5em 1em .5em 1em;
+	display: block;
+	width: 100%;
+}
