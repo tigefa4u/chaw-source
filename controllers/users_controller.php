@@ -191,6 +191,7 @@ class UsersController extends AppController {
 				$this->User->Permission->id = $permission['id'];
 				$this->User->Permission->save($permission);
 			}
+			unset($this->data);
 		}
 		if (!empty($this->data['User']['username']) && !empty($this->data['User']['group'])) {
 			if ($id = $this->User->field('id', array('username' => $this->data['User']['username']))) {

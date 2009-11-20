@@ -22,7 +22,9 @@ class VersionsController extends AppController {
 	function index() {
 		$this->Version->recursive = 0;
 		$this->paginate = array(
-			'conditions' => array('Project.id' => $this->Project->id)
+			'conditions' => array('Project.id' => $this->Project->id),
+			'order' => array('Version.created' => 'DESC', 'Version.due_date' => 'DESC'),
+			'limit' => 4
 		);
 		$this->set('versions', $this->paginate());
 	}
