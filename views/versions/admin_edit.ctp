@@ -21,13 +21,13 @@ $html->scriptBlock($script, array('inline' => false));
 			echo $form->input('project_id', array('label'=> __('Project',true)));
 		endif;
 	?>
+	<?php echo $form->input('due_date', array('label'=> __('Due Date',true))); ?>
+	<?php echo $form->input('completed', array('label'=> __('Completed',true)) ); ?>
 	<?php echo $form->input('title', array('label'=> __('Title', true))); ?>
 	<?php echo $form->input('description', array('label'=> false)); ?>
 	<div class="help">
 		<?php echo $this->element('markdown_help', array('short' => true)); ?>
 	</div>
-	<?php echo $form->input('due_date', array('label'=> __('Due Date',true))); ?>
-	<?php echo $form->input('completed', array('label'=> __('Completed',true)) ); ?>
 
 	<div id="Preview" class="preview wiki-text"></div>
 
