@@ -1,25 +1,24 @@
-<div class="projects index">
-<h2><?php __('Projects');?></h2>
-<div class="page-navigation">
-	<?php
-		echo $chaw->type('pending', array(
+<div class="nav tabs">
+	<ul>
+		<li><?php echo $chaw->type('pending', array(
 			'controller' => 'projects', 'action' => 'index',
-		)) . ' | ';
+		)); ?></li>
 		
-		echo $chaw->type('all', array(
+		<li><?php echo $chaw->type('all', array(
 			'controller' => 'projects', 'action' => 'index',
-		)) . ' | ';
+		)); ?></li>
 
-		echo $chaw->type('public', array(
+		<li><?php echo $chaw->type('public', array(
 			'controller' => 'projects', 'action' => 'index',
-		)) . ' | ';
+		)); ?></li>
 
-		echo $chaw->type('forks', array(
+		<li><?php echo $chaw->type('forks', array(
 			'controller' => 'projects', 'action' => 'index',
-		)) . ' | ';
-	
-	?>
+		)); ?></li>
+	</ul>
 </div>
+
+<div class="projects index">
 <p>
 <?php
 $paginator->options(array('url'=> $this->passedArgs));
@@ -99,7 +98,9 @@ foreach ($projects as $project):
 </table>
 </div>
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?> |
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php
+		echo $paginator->prev('<< ' . __('previous', true));
+		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
+		echo $paginator->next(__('next', true) . ' >>');
+	?>
 </div>

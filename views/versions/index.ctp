@@ -37,9 +37,9 @@ $this->set('showdown', true);
 	<?php endforeach;?>
 
 	<?php
-		echo $paginator->prev();
+		echo $paginator->prev('<< ' . __('previous', true));
 		echo $paginator->numbers(array('before' => ' | ', 'after' => ' | '));
-		echo $paginator->next();
+		echo $paginator->next(__('next', true) . ' >>');
 	?>
 
 </div>
