@@ -60,7 +60,7 @@
 				<td class="left">
 					<?php
 						echo $form->hidden("Permission.{$i}.id", array('value' => $user['Permission']['id']));
-						echo $form->select("Permission.{$i}.group", $groups, $user['Permission']['group'], array(), false);
+						echo $form->select("Permission.{$i}.group", $groups, $user['Permission']['group'], array('empty' => false));
 					?>
 				</td>
 			<?php endif; ?>
