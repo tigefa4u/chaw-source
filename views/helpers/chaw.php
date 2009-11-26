@@ -236,7 +236,9 @@ class ChawHelper extends AppHelper {
 
 		if ($slug) {
 			$out[] = $slug;
-			$parts[] = $slug;
+			if ($path == '/') {
+				$parts[] = $slug;
+			}
 			$parts['action'] = 'index';
 			$parts['ext'] = 'rss';
 			$rss = $options['ending'] . $this->rss($path, $parts);
