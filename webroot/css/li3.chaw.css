@@ -927,3 +927,12 @@ div.comments {
 .paging a.next {
 	background: url(http://li3.rad-dev.org/img/icons/silk/arrow_right.png) no-repeat center right;
 }
+
+#site-footer {
+	clear: both;
+	background: url(http://li3.rad-dev.org/img/accent.png) no-repeat bottom right;
+	height: 142px;
+	margin:0;
+	padding: 0;
+	width: 100%;
+}
