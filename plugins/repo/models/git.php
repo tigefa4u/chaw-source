@@ -358,22 +358,23 @@ class Git extends Repo {
 		if (empty($options['path'])) {
 			return false;
 		}
-
+		
+		$branch = null;
 		if (!empty($options['branch'])) {
-			$this->branch($options['branch'], true);
-			unset($options['branch']);
-			$this->cd();
+			$branch = $options['branch'] . ' ';
 		}
 
 		$data = $this->__data;
 
 		if (empty($data)) {
 			$data = explode("\n", trim($this->run('log', array_merge(
-				$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
+				$options['conditions'], array(
+					"{$branch}--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path'])
+				)
 			))));
 			$this->__data = $data;
 		}
-
+		
 		if ($type == 'count') {
 			return count($data);
 		}
