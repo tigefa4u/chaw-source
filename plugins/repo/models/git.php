@@ -325,7 +325,7 @@ class Git extends Repo {
 				}
 				$branches[] = trim(str_replace(array("remotes/", "origin/"), "", $branch));
 			}
-			CakeLog::write(LOG_DEBUG, $branches);
+			//CakeLog::write(LOG_INFO, $branches);
 			return $branches;
 		}
 
