@@ -55,7 +55,7 @@ class Source extends Object {
 					}
 				}
 			}
-
+	
 			if ($this->Repo->branch) {
 				array_unshift($args, $this->Repo->branch);
 			}
@@ -85,8 +85,7 @@ class Source extends Object {
 		$this->Repo->logReponse = true;
 		$config = $this->Repo->config;
 		$this->Repo->branch('master', true);
-		$this->Repo->cd();
-		$this->Repo->run('pull');
+		$this->Repo->update('origin', 'master');
 		$branches = $this->Repo->find('branches');
 		foreach ($branches as $branch) {
 			if ($branch == 'master') {
