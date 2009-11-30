@@ -198,7 +198,7 @@ class Git extends Repo {
 			}
 		} else {
 			$this->cd($path);
-			$this->checkout(array($name));
+			//$this->checkout(array($name));
 		}
 		if ($switch === true) {
 			$this->config(array('working' => $path));
