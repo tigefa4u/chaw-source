@@ -45,24 +45,24 @@ class Source extends Object {
 
 			if (!empty($args)) {
 				$branch = $args[0];
-				$branches = $this->branches();
+				$branches = $this->Repo->find('branches');
 				if (in_array($branch, $branches)) {
 					$branch = array_shift($args);
 					$path = join(DS, $args);
 					if (in_array($branch, $branches)) {
 						$this->Repo->branch($branch, true);
-						//$this->Repo->pull('origin', $branch);
+						$this->Repo->pull('origin', $branch);
 					}
 				}
 			}
-
+	
 			if ($this->Repo->branch) {
 				array_unshift($args, $this->Repo->branch);
 			}
 			array_unshift($args, 'branches');
 
 			if (empty($path) && $this->Repo->branch) {
-				//$this->Repo->update('origin', $this->Repo->branch);
+				$this->Repo->update('origin', $this->Repo->branch);
 			}
 		}
 
@@ -70,7 +70,6 @@ class Source extends Object {
 		if (count($args) > 0) {
 			$current = array_pop($args);
  		}
-
 		return array($args, $path, $current);
 	}
 /**
@@ -83,10 +82,10 @@ class Source extends Object {
 		if ($this->Repo->type != 'git') {
 			return array();
 		}
-
+		$this->Repo->logReponse = true;
 		$config = $this->Repo->config;
 		$this->Repo->branch('master', true);
-		$this->Repo->update('origin');
+		$this->Repo->update('origin', 'master');
 		$branches = $this->Repo->find('branches');
 		foreach ($branches as $branch) {
 			if ($branch == 'master') {
@@ -95,7 +94,6 @@ class Source extends Object {
 			$this->Repo->branch($branch, true);
 			$this->Repo->update('origin', $branch);
 		}
-
 		$this->Repo->config($config);
 		return $branches;
 	}
