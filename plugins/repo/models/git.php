@@ -198,7 +198,7 @@ class Git extends Repo {
 			}
 		} else {
 			$this->cd($path);
-			//$this->checkout(array($name));
+			$this->checkout(array($name));
 		}
 		if ($switch === true) {
 			$this->config(array('working' => $path));
@@ -325,7 +325,6 @@ class Git extends Repo {
 				}
 				$branches[] = trim(str_replace(array("remotes/", "origin/"), "", $branch));
 			}
-			//CakeLog::write(LOG_INFO, $branches);
 			return $branches;
 		}
 
@@ -358,10 +357,13 @@ class Git extends Repo {
 		if (empty($options['path'])) {
 			return false;
 		}
-		
+
 		$branch = null;
 		if (!empty($options['branch'])) {
-			$branch = $options['branch'] . ' ';
+			$branch = $options['branch'];
+		//	$this->branch($options['branch'], true);
+		//	unset($options['branch']);
+		//	$this->cd();
 		}
 
 		$data = $this->__data;
@@ -369,12 +371,13 @@ class Git extends Repo {
 		if (empty($data)) {
 			$data = explode("\n", trim($this->run('log', array_merge(
 				$options['conditions'], array(
-					"{$branch}--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path'])
+					"{$branch}--pretty=format:%H", '--',
+					str_replace($this->working . '/', '', $options['path'])
 				)
 			))));
 			$this->__data = $data;
 		}
-		
+
 		if ($type == 'count') {
 			return count($data);
 		}
