@@ -12,8 +12,8 @@
 		```<code><?php __('inline code') ?></code>```
 		<br />
 <pre><code>{{{
-  three brackets
-  with code inside
+ 'three brackets';
+ 'with code inside';
 }}}</code></pre>
 	</p>
 	<p>

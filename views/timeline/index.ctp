@@ -24,7 +24,7 @@ $html->scriptBlock($script, array('inline' => false));
 		echo $chaw->type(array('title' => __('Commits',true),'type' =>'commits'), array(
 			'controller' => 'timeline',
 		)); ?></li>
-		<li class="tickest"><?php
+		<li class="tickets"><?php
 		echo $chaw->type(array('title' => __('Tickets',true),'type' =>'tickets'), array(
 			'controller' => 'timeline',
 		)); ?></li>
@@ -47,6 +47,7 @@ $html->scriptBlock($script, array('inline' => false));
 			$zebra = ($i++ % 2 == 0) ? 'zebra' : null;
 			$type = $event['Timeline']['model'];
 			$date = $event['Timeline']['created'];
+
 			$currentDate = date('l F d', strtotime($date));
 			if (!empty($event[$type])) {
 				if ($currentDate !== $prevDate)  {

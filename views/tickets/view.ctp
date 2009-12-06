@@ -46,7 +46,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 				<em>(<a href="#modify" class="modify"><?php __('edit') ?></a>)</em>
 			<?php endif; ?>
 		</h4>
-		<div id="Preview" class="description wiki-text">
+		<div id="Preview" class="description wiki-text markdown">
 			<pre><?php echo h($ticket['Ticket']['description']); ?></pre>
 		</div>
 
@@ -65,7 +65,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 		<?php endif;?>
 
 	</div>
-	
+
 	<h2 class="comments-title">Updates</h2>
 	<div class="comments">
 		<?php foreach ((array)$ticket['Comment'] as $comment): ?>
@@ -96,7 +96,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 						if (!empty($comment['changes'])) {
 							echo $chaw->changes($comment['changes']);
 						}
-						echo $html->tag('div', $html->tag('pre', h($comment['body'])), array('class' => 'wiki-text'));
+						echo $html->tag('div', $html->tag('pre', h($comment['body'])), array('class' => 'markdown wiki-text'));
 
 					?>
 				</div>
@@ -150,7 +150,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 							<?php __('comma separated') ?>
 						</fieldset>
 
-						
+
 
 					</div>
 				<?php endif; ?>
@@ -163,7 +163,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 			 		<legend>
 						<?php __('Update Ticket');?>
 					</legend>
-					
+
 					<?php if ($ticket['Ticket']['status'] != 'closed'):?>
 						<fieldset class="options prop">
 							<?php
@@ -178,7 +178,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 							?>
 						</fieldset>
 					<?php endif; ?>
-					
+
 					<fieldset class="options">
 					<?php
 						if ($ticket['Ticket']['status'] == 'closed') {
@@ -224,7 +224,7 @@ $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id =
 					</div>
 				</fieldset>
 
-				
+
 
 
 				<div class="submit">

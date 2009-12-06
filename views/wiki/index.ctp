@@ -5,8 +5,8 @@ $html->script('highlight.pack', array('inline' => false));
 $script = 'hljs.initHighlightingOnLoad();';
 $html->scriptBlock($script, array('inline' => false));
 ?>
-<div class="breadcrumbs">
-	<?php echo $chaw->breadcrumbs($path, $slug, array('ending' => false));?>
+<div class="crumbs">
+	<?php echo $chaw->breadcrumbs($path, $slug, array('ending' => false, 'separator' => ' / '));?>
 </div>
 
 <div class="nav tabs right">
@@ -32,7 +32,7 @@ $html->scriptBlock($script, array('inline' => false));
 
 <?php if (!empty($page)): ?>
 	<div class="wiki-content">
-		<div class="wiki-text">
+		<div class="wiki-text markdown">
 			<pre><?php echo h($page['Wiki']['content']);?></pre>
 		</div>
 	</div>

@@ -1,7 +1,5 @@
 <?php if (!empty($CurrentProject)):?>
-	<div class="description site-subtitle">
-		<?php echo $CurrentProject->description;?>
-	</div>
+	<h2><?php echo $CurrentProject->description;?></h2>
 	<?php
 		if (empty($branch)) {
 			$branch = null;
@@ -10,7 +8,7 @@
 			echo $html->tag('span', __('Awaiting Approval', true), array('class' => 'inactive status'));
 		}
 	?>
-	<div class="path">
+	<div class="clone fixed">
 		<?php
 			$remote = null;
 			if ($CurrentProject->repo->type == 'git'):

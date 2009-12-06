@@ -1,29 +1,43 @@
 
-/* This is the stylesheet for the project's app. */
+/*--- This is the stylesheet for the project's app. ---*/
 
-#page-content {
-	padding-top: 1em;
+#container {
+	min-width: 950px;
+	width: auto;
 }
-
-.wiki-content {
+#header {
+	margin-left: 260px;
 }
-
+#left-bar {
+	clear: both;
+	float: left;
+	width: 200px;
+}
+#content {
+	float: none;
+	min-width:670px;
+	padding:20px 20px 0 260px;
+	width:auto;
+}
+#content * {
+	clear: right;
+}
+#content .nav.tabs * {
+	clear: none;
+}
+#header .clone {
+	margin: 0;
+	margin-top: -3em;
+}
+#footer p {
+	margin-bottom: 0;
+	top: 73px;
+}
 .source table, .tickets table {
 	margin-top: 2em;
 }
 
-.article, #site-navigation {
-	padding-top: 60px !important;
-}
-
-.project-details .path {
-	margin: 0;
-	margin-top: -3em;
-	font-family: monospace;
-}
-
-/* HYPERlinks */
-
+/*--- HYPERlinks ---*/
 a.folder, a.file {
 	text-decoration: none;
 	line-height:18px;
@@ -35,13 +49,11 @@ a.folder, a.file {
 a.folder {
 	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
 }
-
 a.file {
 	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
 }
 
-/* Navigation */
-
+/*--- Navigation ---*/
 .nav.tabs ul li a {
 	padding: .5em 1em .5em 1em;
 }
@@ -66,32 +78,44 @@ a.file {
 	background: #e6e6e6 url(http://li3.rad-dev.org/img/icons/silk/arrow_branch.png) no-repeat 10px 9px;
 }
 
-/* Navigation left */
-
+/*--- Navigation: Left ---*/
+.chaw-navigation {
+	padding: 20px 0 20px 40px;
+	color: #CCC;
+	font-size: 22px;
+	list-style: none;
+}
+.chaw-navigation ul {
+	list-style: none;
+}
+.chaw-navigation ul {
+	padding: .25em 0 .25em .75em;
+}
 .chaw-navigation li {
 	padding: .5em 0 .45em 36px !important;
 	border-bottom: 3px solid white;
 	background: no-repeat left center;
 }
-.chaw-navigation li ul {
+.chaw-navigation ul li {
+	padding: .25em 0;
 	font-size: 14px;
-}
-.chaw-navigation li ul li {
 	padding: 0px !important;
 	padding-left: 1em !important;
 }
 
-.chaw-navigation a {
-	color: #ccc;
+.chaw-navigation a,
+.chaw-navigation a:link,
+.chaw-navigation a:active,
+.chaw-navigation a:visited {
+	color: #666;
+	text-decoration: none;
 }
-.chaw-navigation li:hover a {
-	color: #0d0d0d;
+.chaw-navigation a:hover {
+	color: black;
 }
- .chaw-navigation li.active a {
+.chaw-navigation ul li.active a {
 	color: #0d0d0d !important;
 }
-
-/* Source Navigation */
 
 .chaw-navigation .source {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/package_green_gs.png);
@@ -105,18 +129,17 @@ a.file {
 .chaw-navigation .timeline:hover, .chaw-navigation .timeline.active {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/time.png);
 }
+
 .chaw-navigation .wiki {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/book_edit_gs.png);
 }
 .chaw-navigation .wiki:hover, .chaw-navigation .wiki.active {
 	background-image: url(http://li3.rad-dev.org/img/icons/silk/book_edit.png);
 }
-
 .chaw-navigation .wiki-nav {
 	padding:0 0 .45em 36px !important;
 }
-
-.chaw-navigation .wiki-nav > ul { 
+.chaw-navigation .wiki-nav > ul {
 	padding:0 !important;
 }
 
@@ -146,16 +169,13 @@ a.file {
 .source.view {
 	clear: both;
 }
-
 .source h2 {
 	margin-top: 24px;
 	margin-bottom: 4px;
 }
-
 .source .forks {
 	float: right;
 }
-
 .source table td {
   text-align: left;
   background: #f7f7f7;
@@ -169,7 +189,6 @@ a.file {
 	margin: 0.5em 0;
 	vertical-align: middle;
 }
-
 .source span.history {
 	float: left;
 	display: block;
@@ -187,7 +206,6 @@ a.file {
 }
 
 /* Wiki */
- 
 .rss {
 	display: block;
 	float: right;
@@ -270,7 +288,7 @@ a.file {
 }
 .help {
 	float: right;
-	width: 200px;
+	width: 185px;
 	padding: 0 1em;
 	font-size: 10px;
 }
@@ -311,6 +329,7 @@ a.file {
 }
 
 .wiki-section-contents {
+	margin-top: 1em;
 	padding: 1em;
 	background: #f7f7f7;
 	border: 3px solid #f0f0f0;
@@ -338,7 +357,6 @@ a.file {
 }
 
 /* Projects */
-
 .projects {
 	clear: both;
 	margin: 1em 0;
@@ -411,93 +429,89 @@ a.file {
 	background-image:url(http://li3.rad-dev.org/img/icons/silk/bricks.png);
 }
 
-/* Timeline */
-
+/*--- Timeline ---*/
 .timeline {
-	clear:both;
 	margin-right: 0%;
-	padding:1em 0 0 0;
-	color:#737373;
 }
 .timeline ul {
 	list-style-type: none;
 	margin: 0;
 }
+.timeline .zebra {
+	background: #fafafa;
+}
 .timeline li {
 	margin: 0;
+	margin-bottom: 30px;
 	list-style-image: none;
 }
-.timeline > ul > li > ul {
+.timeline ul li ul {
+	border: 3px solid #f0f0f0;
 	margin: 0;
-	border:3px solid #f0f0f0;
-	overflow:visible;
 }
-.timeline > ul > li > ul > li {
+.timeline ul li ul li {
 	margin: 0;
 	list-style-image: none;
 }
 .timeline p.the-date {
-	clear: both;
+	clear: right;
 	font-size: 18px;
-	margin:0;
-	padding: 1.5em 0 .5em 1em;
-	color:black;
 }
 .timeline span.comment {
-
+	background-color: #990;
+	color: #fff;
 }
 .timeline span.commit {
-
+	background-color: #00BF2D;
+	color: #fff;
 }
 .timeline span.ticket {
-
+	background-color: #990;
+	color: #fff;
 }
 .timeline span.wiki {
-
+	background-color: #00ACBF;
+	color: #fff;
 }
 .timeline li.event {
-	clear: both;
+	clear: right;
+	padding: 12px 6px 12px 0;
 	overflow: hidden;
 }
 .timeline .event p.metadata {
 	float: left;
-	margin: 1.2em 1em 1.2em 0;
-	text-align: center;
+	width: 80px;
+	margin: 0;
+	margin-right: 20px;
 }
 .timeline .event span.type {
-	font-family:monospace;
-	font-weight:bold;
+	font-family: Monaco, Courier, monospace;
 	text-transform: lowercase;
-	font-size: 10px;
-	padding: 0 1em 0 2em;
-	width:5em;
-	display:block;
-	float:left;
-	text-align:left;
+	font-size: 11px;
+	padding: 1px 5px 1px 30px;
 }
 .timeline .event span.date {
-	display: block;
+	display: none;
+	font-family: Monaco, Courier, monospace;
 	font-size: 11px;
 	color: #333;
-	margin-top: 5px;
-	display:none;
+	margin-left: 0px;
 }
 .timeline .event div.body {
 	float: left;
 	width: 80%;
-	margin:0 0 1em 0;
 }
 .timeline .event p.action {
 	padding: 0;
 	margin: 0;
 }
 .timeline .event span.username {
-	color:black;
+	font-weight: bold;
 }
 .timeline .event .description {
 	margin: 0;
 	margin-top: 1px;
-	font-family: monospace;
+	font-family: Monaco, Courier, monospace;
 	font-size: 90%;
 	line-height: 140%;
 	white-space: pre;
@@ -508,14 +522,9 @@ a.file {
 }
 .timeline .event span.admin a {
 	color: #999;
-	margin:1em;
 }
 
 /* Tickets */
-
-.tickets h3 {
-}
-
 .tickets h4 {
 	float:right;
 	font-weight:normal;
@@ -524,25 +533,20 @@ a.file {
 	background:#fafafa;
 	color:#999;
 }
-
 .new-ticket a {
 	background:url(http://li3.rad-dev.org/img/icons/silk/add.png) no-repeat .75em .65em;
 	padding:.5em 1em .5em 2.5em !important;
 }
-
 .tickets .edit {
 	font-size: 80%;
 }
-
 .tickets fieldset {
 	min-width: 870px;
 	white-space: nowrap;
 }
-
 .tickets fieldset.main {
 	white-space: normal;
 }
-
 .tickets label {
 	font-weight:bold;
 }
@@ -581,12 +585,15 @@ a.file {
 	clear: none;
 }
 .tickets .view {
-	padding:0 2em 1em 2em;
+	padding: 0.5em;
+	border: 3px solid #f0f0f0;
+}
+.tickets .view > h3 {
+	margin-left: 1em;
 }
 .tickets .description {
-	padding:0;
-	border-top: 3px solid #fafafa;
-	border-bottom: 3px solid #f0f0f0;
+	margin-left: 1em;
+	margin-bottom: 1em;
 }
 .tickets .view .date {
 	float: right;
@@ -600,7 +607,7 @@ a.file {
 
 fieldset.ticket-search {
 	padding: 1em;
-	margin: 2em 0 ;
+	margin: 5em 0 2em 0;
 }
 
 fieldset.ticket-search div.input-row {
@@ -685,7 +692,8 @@ div.comments {
 	clear:left;
 	background:#fafafa;
 	white-space: normal;
-	padding:1em 2em;
+	padding:1em 0em;
+	color: black;
 }
 .comments .comment .body ul {
 	margin:.5em 1em .5em 2em;
@@ -700,12 +708,6 @@ div.comments {
 .comments .body .wiki-text {
 	padding:0em;
 }
-/*.tickets fieldset.comments {
-	float: left;
-	padding-right: 40px;
-}*/
-
-
 
 
 /* History */
@@ -807,7 +809,7 @@ div.comments {
 	float: left;
 	padding: 1px 2px;
 	min-width: 40px;
-	color: #A9A9A9;
+	color: #aaa;
 	background-color: #ECECEC;
 	border-right: 1px solid #DDDDDD;
 	text-align: right;
@@ -886,53 +888,7 @@ div.comments {
 	width: 140px;
 }
 
-.paging {
-	display: block;
-	clear: both;
-	margin-top: 2em;
-	border-bottom: 3px solid #e6e6e6;
-	color: #e6e6e6;
+.projects .inline input {
+	width: 140px;
 }
 
-.paging a {
-	padding: .3em 1em;
-	margin: 0 .25em 0 0;
-	background-color: #f0f0f0;
-}
-.paging .current {
-	font-weight: bold;
-	padding: .5em 1em;
-	color: #00E5FF;
-}
-.paging .prev, .paging .next {
-	display: block;
-	width: 24px;
-	height: 0;
-	padding: 24px 0 0 0;
-	overflow: hidden;
-}
-
-.paging .prev {
-	float: left;
-}
-
-.paging .next {
-	float: right;
-}
-
-.paging a.prev {
-	background: url(http://li3.rad-dev.org/img/icons/silk/arrow_left.png) no-repeat center left;
-}
-
-.paging a.next {
-	background: url(http://li3.rad-dev.org/img/icons/silk/arrow_right.png) no-repeat center right;
-}
-
-#site-footer {
-	clear: both;
-	background: url(http://li3.rad-dev.org/img/accent.png) no-repeat bottom right;
-	height: 142px;
-	margin:0;
-	padding: 0;
-	width: 100%;
-}

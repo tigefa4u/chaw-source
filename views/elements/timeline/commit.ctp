@@ -11,7 +11,7 @@
 				echo date("H:i", strtotime($data['Timeline']['created']));
 			?>
 		</span>
-	<p>
+	</p>
 
 	<div class="body">
 		<!--
