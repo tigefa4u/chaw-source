@@ -28,8 +28,6 @@ $html->scriptBlock($script, array('inline' => false));
 	</ul>
 </div>
 
-<div class="clear"><!----></div>
-
 <?php if (!empty($page)): ?>
 	<div class="wiki-content">
 		<div class="wiki-text markdown">

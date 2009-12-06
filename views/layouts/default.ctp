@@ -89,9 +89,9 @@
 		<div id="account-navigation-toggler">
 			<a href="/users/account" title="manage your account">account</a>
 		</div>
-	<!--	<div class="login" style="display:none;">
+		<div class="contents" style="display:none;">
 			<?php echo $this->element('current_user');?>
-		</div> -->
+		</div>
 	</div>
 	<div id="container">
 		<div id="header">

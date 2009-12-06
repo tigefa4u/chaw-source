@@ -8,6 +8,10 @@
 #header {
 	margin-left: 260px;
 }
+#header .clone {
+	margin: 0;
+	margin-top: -3.6em;
+}
 #left-bar {
 	clear: both;
 	float: left;
@@ -19,16 +23,19 @@
 	padding:20px 20px 0 260px;
 	width:auto;
 }
-#content * {
+#content > *, .source table {
 	clear: right;
 }
 #content .nav.tabs * {
 	clear: none;
 }
-#header .clone {
-	margin: 0;
-	margin-top: -3em;
+#content > h2, .crumbs {
+	margin-top: 0;
 }
+#content div.crumbs {
+	padding-bottom: 0.5em;
+}
+
 #footer p {
 	margin-bottom: 0;
 	top: 73px;
@@ -170,10 +177,6 @@ a.file {
 .source.view {
 	clear: both;
 }
-.source h2 {
-	margin-top: 24px;
-	margin-bottom: 4px;
-}
 .source .forks {
 	float: right;
 }
@@ -246,9 +249,6 @@ a.file {
 	padding: 0 0 0 1.25em;
 	background: url(http://li3.rad-dev.org/img/icons/silk/bullet_white.png) no-repeat center left;
 }
-.wiki-text {
-	padding-top: 1em;
-}
 
 .preview.wiki-text {
 	margin:0;
@@ -258,7 +258,7 @@ a.file {
 .wiki-footer {
 	clear: both;
 	border-top: 3px solid #e6e6e6;
-	margin: 8em 0;
+	margin: 2em 0;
 }
 .wiki-footer form {
 	background: none;
@@ -431,6 +431,9 @@ a.file {
 }
 
 /*--- Timeline ---*/
+.timline .index {
+	clear: both;
+}
 .timeline {
 	margin-right: 0%;
 }
@@ -457,6 +460,7 @@ a.file {
 .timeline p.the-date {
 	clear: right;
 	font-size: 18px;
+	padding-top: 3em;
 }
 .timeline span.comment {
 	background-color: #990;
@@ -538,9 +542,6 @@ a.file {
 	background:url(http://li3.rad-dev.org/img/icons/silk/add.png) no-repeat .75em .65em;
 	padding:.5em 1em .5em 2.5em !important;
 }
-.tickets .edit {
-	font-size: 80%;
-}
 .tickets fieldset {
 	min-width: 870px;
 	white-space: nowrap;
@@ -605,15 +606,14 @@ a.file {
 	padding: 0;
 }
 
-
 fieldset.ticket-search {
 	padding: 1em;
 	margin: 5em 0 2em 0;
 }
 
 fieldset.ticket-search div.input-row {
-	clear:left;
-	float:left;
+	display:block;
+	clear:both;
 	margin:0;
 	padding:0 0 8px;
 }
@@ -649,7 +649,7 @@ fieldset.ticket-search div.checkbox label, fieldset.ticket-search div.checkbox i
 	vertical-align:bottom;
 }
 fieldset.ticket-search label {
-	font-size:0.9em;
+	padding-left: 0.5em;
 }
 
 
