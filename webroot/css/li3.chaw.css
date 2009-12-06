@@ -110,7 +110,8 @@ a.file {
 	color: #666;
 	text-decoration: none;
 }
-.chaw-navigation a:hover {
+.chaw-navigation a:hover,
+.chaw-navigation .active a {
 	color: black;
 }
 .chaw-navigation ul li.active a {
@@ -709,8 +710,7 @@ div.comments {
 	padding:0em;
 }
 
-
-/* History */
+/*--- History ---*/
 .history {
 	margin-bottom: 20px;
 }
@@ -725,8 +725,7 @@ div.comments {
 	font-size: 80%;
 }
 
-/* Version */
-
+/*--- Version ---*/
 .versions > ul {
 	list-style:none;
 }
