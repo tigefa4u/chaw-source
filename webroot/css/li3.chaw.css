@@ -35,7 +35,6 @@
 #content div.crumbs {
 	padding-bottom: 0.5em;
 }
-
 #footer p {
 	margin-bottom: 0;
 	top: 73px;
@@ -93,6 +92,7 @@ a.file {
 	list-style: none;
 }
 .chaw-navigation ul {
+	margin: 0;
 	list-style: none;
 }
 .chaw-navigation ul {
