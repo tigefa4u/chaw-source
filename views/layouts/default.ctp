@@ -72,6 +72,7 @@
 	?>
 </head>
 <body class="chaw">
+<div id="wrapper">
 	<div id="cli">
 		<div id="cli-display"></div>
 		<div>
