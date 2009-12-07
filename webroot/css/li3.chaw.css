@@ -7,6 +7,7 @@
 }
 #header {
 	margin-left: 260px;
+	height: 110px;
 }
 #header .clone {
 	margin: 0;
@@ -20,7 +21,7 @@
 #content {
 	float: none;
 	min-width:670px;
-	padding:20px 20px 0 260px;
+	padding: 20px 20px 0 260px;
 	width:auto;
 }
 #content > *, .source table {
@@ -29,10 +30,13 @@
 #content .nav.tabs * {
 	clear: none;
 }
+.wiki form {
+	clear: right;
+}
 #content > h2, .crumbs {
 	margin-top: 0;
 }
-#content div.crumbs {
+#content div.crumbs, #content h2.crumbs {
 	padding-bottom: 0.5em;
 }
 #footer p {
@@ -86,7 +90,8 @@ a.file {
 
 /*--- Navigation: Left ---*/
 .chaw-navigation {
-	padding: 20px 0 20px 40px;
+	margin: 0;
+	padding: 12px 0 20px 40px;
 	color: #CCC;
 	font-size: 22px;
 	list-style: none;
@@ -233,7 +238,6 @@ a.file {
 	background: #fafafa;
 	border-top: 3px solid #e6e6e6;
 }
-
 .wiki-navigation .paths h3 {
 	margin: 0 0 .5em 0;
 }
@@ -249,12 +253,16 @@ a.file {
 	padding: 0 0 0 1.25em;
 	background: url(http://li3.rad-dev.org/img/icons/silk/bullet_white.png) no-repeat center left;
 }
-
+.wiki-content {
+	width: 760px;
+}
+.wiki-content li li {
+	margin-left: 1em;
+}
 .preview.wiki-text {
 	margin:0;
 	padding:0;
 }
-
 .wiki-footer {
 	clear: both;
 	border-top: 3px solid #e6e6e6;
@@ -280,7 +288,6 @@ a.file {
 	margin: 1em .5em;
 	float: left;
 }
-
 #WikiContent, #TicketDescription, #TicketComment, #VersionDescription {
 	float: left;
 	width: 630px;
