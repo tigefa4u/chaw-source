@@ -24,7 +24,7 @@
 	padding: 20px 20px 0 260px;
 	width:auto;
 }
-#content > *, .source table, #content div form {
+#content > *, #content table, #content div form {
 	clear: right;
 }
 #content .nav.tabs * {
@@ -47,20 +47,10 @@
 	margin-top: 2em;
 }
 
-/*--- HYPERlinks ---*/
-a.folder, a.file {
-	text-decoration: none;
-	line-height:18px;
-	font-weight: bold;
-	display:block;
-	padding:0 0 0 2em;
-}
-
-a.folder {
-	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
-}
-a.file {
-	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
+/*--- General ---*/
+a.commit {
+	font-family: Monaco, Courier, monospace;
+	font-size: 12px;
 }
 
 /*--- Navigation ---*/
@@ -182,9 +172,6 @@ a.file {
 .source.view {
 	margin-top: 4em;
 }
-.source.view .highlighted {
-	padding-top: 2em;
-}
 .source .forks {
 	float: right;
 }
@@ -196,6 +183,7 @@ a.file {
   vertical-align: middle;
 }
 .source .message, .source .date {
+	font-family: Monaco, Courier, monospace;
 	font-size: 80%;
 	padding-top: 6px;
 	margin: 0.5em 0;
@@ -207,15 +195,26 @@ a.file {
 	color: #ccc;
 	padding: .5em 1em .5em 1em;
 	background: #f0f0f0;
-	margin-bottom: 3em;
 }
-
 .source p.history a {
 	font-size: 100%;
 	text-decoration: underline;
 }
 .source p.history a:hover {
 	text-decoration: none;
+}
+a.folder, a.file {
+	text-decoration: none;
+	line-height:18px;
+	font-weight: bold;
+	display:block;
+	padding:0 0 0 2em;
+}
+a.folder {
+	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
+}
+a.file {
+	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
 }
 
 /* Wiki */
@@ -788,23 +787,28 @@ div.comments {
 	background-color: #fff;
 }
 
-/* Diff handling */
+/*--- Diff ---*/
 .diff .file {
-	margin: 0px 0 20px 0;
+	margin: 0px 0 2em 0;
 	padding: 4px 0 0 0;
 	overflow: auto;
 }
 .diff .file .name {
-	color: #000;
-	margin: 0;
+	margin: 0.5em 0;
+	font-size: 18px;
+	font-weight: normal;
 }
 .diff .file .line {
+	font-size: 12px;
+	font-family: Monaco, Courier, monospace;
+	color: white;
+	background: #141414;
 	clear: both;
 	overflow: visible;
 	white-space: nowrap;
 	width: 100%;
 }
-.line:after {
+.diff .file .line:after {
   content : '';
   display: block;
   clear:both;
@@ -812,44 +816,31 @@ div.comments {
   padding:0;
   margin:0;
 }
-.diff {
-	padding:1em;
-	border:3px solid #f0f0f0;
-	background:white;
-}
 .diff .file .number {
 	float: left;
+	color: #fff !important;
 	padding: 1px 2px;
 	min-width: 40px;
-	color: #000 !important;
-	background-color: #ECECEC;
-	border-right: 1px solid #DDDDDD;
 	text-align: right;
-	font-size: 11px;
-	line-height: 20px;
 }
 .diff .file .header {
-	background-color: #f7f7f7;
-	color: #bbb;
+	background-color: #454545;
 }
 .diff .file .code {
 	float: left;
-	font-family: "Andale Mono", monospace;
 	white-space: pre;
 	width: 80%;
 	overflow: visible;
-	font-size: 12px;
-	line-height: 20px;
 }
 .diff .file .removed {
-	background-color: #FEE;
-	color: #B00;
+	color: #ee00ff;
+	background-color: #512b51;
+}
+.diff .file .added {
+	color: #00ff3b;
+	background-color: #263d2b;
 }
 
-.diff .file .added {
-	background-color: #DFD;
-	color: #080;
-}
 #curtain {
   position: absolute;
   z-index: 99;
@@ -863,6 +854,8 @@ div.comments {
   font-size: 300%;
   color: #fff;
 }
+
+
 #flashMessage {
 	padding:1em;
 	margin:1em 0;
