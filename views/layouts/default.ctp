@@ -54,7 +54,7 @@
 			echo $html->script('http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js');
 			echo $html->script('http://li3.rad-dev.org/js/li3.js');
 			echo $html->script('http://li3.rad-dev.org/js/cli.js');
-			echo $html->script('http://li3.rad-dev.org/libraries/ZeroClipboard/ZeroClipboard.js');
+			echo $html->script('http://li3.rad-dev.org/js/libraries/ZeroClipboard/ZeroClipboard.js');
 
 			if (isset($showdown)):
 				echo $html->script('gshowdown.min');
