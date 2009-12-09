@@ -1,9 +1,8 @@
 <?php
-$html->css('highlight/dark', null, array('inline' => false));
+// $html->css('highlight/dark', null, array('inline' => false));
 $html->script('ghighlight.min', array('inline' => false));
 ?>
 <span class="history"><?php
-
 	if (!empty($branch)) {
 		$path = "branches/{$branch}/{$path}";
 	}
@@ -11,9 +10,8 @@ $html->script('ghighlight.min', array('inline' => false));
 			'controller' => 'commits', 'action' => 'history', $path
 	)));
 ?></span>
+
 <div class="source view">
-
-
 <?php
 	echo $html->tag('pre', $html->tag('code', h($data['Content'])));
 ?>
