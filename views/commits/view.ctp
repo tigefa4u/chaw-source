@@ -16,7 +16,7 @@ $html->scriptBlock($script, array('inline' => false));
 	<ul>
 		<li><?php echo $html->link(__('All Commits',true), array('controller' => 'commits', 'action' => 'index'));?></li>
 		<li>
-		<?php 
+		<?php
 		$branchLinks = array();
 		foreach((array)$branches as $branch) :
 			$branchLinks[] = $html->link($branch, $chaw->url((array)$CurrentProject, array(
@@ -25,11 +25,11 @@ $html->scriptBlock($script, array('inline' => false));
 		endforeach;
 			echo implode("</li>\n<li>", $branchLinks);
 		?>
-		</li>	
+		</li>
 </div>
 
 <h2>
-	
+
 </h2>
 
 
@@ -38,7 +38,7 @@ $html->scriptBlock($script, array('inline' => false));
 		<strong><?php  __('Author') ?>:</strong> <?php echo $commit['Commit']['author'];?> | <strong><?php __('Date') ?>:</strong> <?php echo $commit['Commit']['commit_date'];?>
 	</div>
 
-	<div class="message wiki-text">
+	<div class="message wiki-text markdown">
 		<?php echo h($commit['Commit']['message']);?>
 	</div>
 
