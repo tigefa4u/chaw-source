@@ -53,6 +53,22 @@ a.commit {
 	font-size: 12px;
 }
 
+
+/*--- Icon Hyperlinks ---*/
+a.folder, a.file {
+	text-decoration: none;
+	line-height:18px;
+	font-weight: bold;
+	display:block;
+	padding:0 0 0 2em;
+}
+a.folder {
+	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
+}
+a.file {
+	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
+}
+
 /*--- Navigation ---*/
 .nav.tabs ul li a {
 	padding: .5em 1em .5em 1em;
@@ -202,19 +218,6 @@ a.commit {
 }
 .source p.history a:hover {
 	text-decoration: none;
-}
-a.folder, a.file {
-	text-decoration: none;
-	line-height:18px;
-	font-weight: bold;
-	display:block;
-	padding:0 0 0 2em;
-}
-a.folder {
-	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
-}
-a.file {
-	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
 }
 
 /* Wiki */
@@ -464,7 +467,7 @@ a.file {
 	margin: 0;
 }
 .timeline ul li ul li ul {
-	border: 0px;	
+	border: 0px;
 }
 .timeline ul li ul li {
 	margin: 0;
@@ -497,7 +500,7 @@ a.file {
 }
 .timeline .event p.metadata {
 	float: left;
-	width: 80px;
+	width: 100px;
 	margin: 0;
 	margin-right: 20px;
 }
@@ -605,7 +608,9 @@ a.file {
 .tickets .view .date {
 	float: right;
 }
-
+.tickets .view .description {
+	padding: 1em 0;
+}
 #TicketIndexForm {
 	background: none;
 	padding: 0;
@@ -657,10 +662,7 @@ fieldset.ticket-search label {
 	padding-left: 0.5em;
 }
 
-
-
-/* Comments */
-
+/*--- Tickets: Comments ---*/
 .tickets div.comments {
 	clear:left;
 	padding: 0.5em 1em;
@@ -713,7 +715,6 @@ fieldset.ticket-search label {
 }
 
 .version {
-	clear:both;
 	padding:0;
 	margin:.5em 0;
 }
@@ -724,7 +725,8 @@ fieldset.ticket-search label {
 }
 
 .version .summary {
-	padding:0 2em;
+	color: #666;
+	padding: 1em 1em;
 }
 
 .versions .version h3 {
@@ -803,11 +805,11 @@ fieldset.ticket-search label {
 	overflow: visible;
 }
 .diff .file .removed {
-	color: #ee00ff;
+	color: #f9c7fd;
 	background-color: #512b51;
 }
 .diff .file .added {
-	color: #00ff3b;
+	color: #d6fedf;
 	background-color: #263d2b;
 }
 
