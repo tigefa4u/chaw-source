@@ -464,7 +464,7 @@ a.file {
 	margin: 0;
 }
 .timeline ul li ul li ul {
-	border: 0px;	
+	border: 0px;
 }
 .timeline ul li ul li {
 	margin: 0;
@@ -605,7 +605,9 @@ a.file {
 .tickets .view .date {
 	float: right;
 }
-
+.tickets .view .description {
+	padding: 1em 0;
+}
 #TicketIndexForm {
 	background: none;
 	padding: 0;
@@ -657,10 +659,7 @@ fieldset.ticket-search label {
 	padding-left: 0.5em;
 }
 
-
-
-/* Comments */
-
+/*--- Tickets: Comments ---*/
 .tickets div.comments {
 	clear:left;
 	padding: 0.5em 1em;
@@ -803,11 +802,11 @@ fieldset.ticket-search label {
 	overflow: visible;
 }
 .diff .file .removed {
-	color: #ee00ff;
+	color: #f9c7fd;
 	background-color: #512b51;
 }
 .diff .file .added {
-	color: #00ff3b;
+	color: #d6fedf;
 	background-color: #263d2b;
 }
 
