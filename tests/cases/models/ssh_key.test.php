@@ -35,7 +35,7 @@ class SshKeyTestCase extends CakeTestCase {
 			'type' => 'Git', 'username' => 'gwoo',
 		));
 
-		$expected = array('this is a key');
+		$expected = array('thisisakey');
 		$this->assertEqual($result, $expected);
 
 		$path = Configure::read("Content.git") . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
@@ -73,8 +73,8 @@ class SshKeyTestCase extends CakeTestCase {
 		));
 
 		$expected = array(
-			'this is a key',
-			'this is another key'
+			'thisisakey',
+			'thisisanotherkey'
 		);
 
 		$this->assertEqual($result, $expected);
@@ -85,7 +85,7 @@ class SshKeyTestCase extends CakeTestCase {
 
 		$result = $SshKey->delete(array(
 			'type' => 'Git', 'username' => 'gwoo',
-			'content' => 'this is a key'
+			'content' => 'thisisakey'
 		));
 
 		$this->assertTrue($result);
@@ -97,14 +97,37 @@ class SshKeyTestCase extends CakeTestCase {
 		));
 
 		$expected = array(
-			'this is another key'
+			'thisisanotherkey'
 		);
 		$this->assertEqual($result, $expected);
 
 		$path = Configure::read("Content.git") . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
 		$Cleanup = new File($path);
 		$Cleanup->delete();
+	}
+	
+	public function testStripStuffAfter() {
+		$SshKey = new SshKey();
 
+		$SshKey->set(array(
+			'type' => 'Git',
+			'username' => 'gwoo',
+			'content' => 'this is a key== something',
+		));
+
+		$this->assertTrue($SshKey->save());
+
+		$result = $SshKey->read(array(
+			'type' => 'Git', 'username' => 'gwoo',
+		));
+		$expected = array(
+			'thisisakey=='
+		);
+		$this->assertEqual($result, $expected);
+
+		$path = Configure::read("Content.git") . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
+		$Cleanup = new File($path);
+		$Cleanup->delete();
 	}
 }
 ?>
