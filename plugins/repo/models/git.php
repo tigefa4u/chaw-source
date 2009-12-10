@@ -360,7 +360,7 @@ class Git extends Repo {
 
 		$branch = null;
 		if (!empty($options['branch'])) {
-			$branch = $options['branch'];
+			$branch = $options['branch'] . ' ';
 		//	$this->branch($options['branch'], true);
 		//	unset($options['branch']);
 		//	$this->cd();
