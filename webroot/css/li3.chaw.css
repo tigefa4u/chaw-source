@@ -7,7 +7,7 @@
 }
 #header {
 	margin-left: 260px;
-	height: 110px;
+	min-height: 110px;
 }
 #header .clone {
 	margin: 0;
@@ -538,15 +538,7 @@ a.file {
 	color: #999;
 }
 
-/* Tickets */
-.tickets h4 {
-	float:right;
-	font-weight:normal;
-	margin:1px 0 1em 1em;
-	padding:1em;
-	background:#fafafa;
-	color:#999;
-}
+/*--- Tickets ---*/
 .new-ticket a {
 	background:url(http://li3.rad-dev.org/img/icons/silk/add.png) no-repeat .75em .65em;
 	padding:.5em 1em .5em 2.5em !important;
@@ -596,15 +588,16 @@ a.file {
 	clear: none;
 }
 .tickets .view {
-	padding: 0.5em;
-	border: 3px solid #f0f0f0;
+	padding: 0.5em 1em;
+	background-color: #e6e6e6;
+	width: 760px;
+	border-top: 10px solid #00a8e6;
 }
 .tickets .view > h3 {
-	margin-left: 1em;
+	margin: 0;
 }
-.tickets .description {
-	margin-left: 1em;
-	margin-bottom: 1em;
+.tickets .view h4 {
+	margin: 0.25em 0 0 0;
 }
 .tickets .view .date {
 	float: right;
@@ -665,34 +658,25 @@ fieldset.ticket-search label {
 
 /* Comments */
 
-/*div.comments {
-	clear: both;
-	padding: 0 4px;
-	margin: 0;
-	margin-top: 40px;
-	width: 60%;
-}*/
 div.comments {
 	clear:left;
-	padding:0 2em 1em 2em;
+	padding: 0.5em 1em;
+	background-color: #e6e6e6;
+	width: 760px;
+	border-top: 10px solid #00ff3b;
 }
-
 .comments .comment {
-	margin: 0;
-	padding: 0;
-	padding:0.5em 0;
-	font-style: normal;
-	color:black;
+	padding: 1.5em 0;
+}
+.comment + .comment {
+	border-top: 3px solid white;
 }
 .comments .comment .date, .comments .comment .user {
-	font-size:.75em;
+	color: #808080;
 }
 .comments .comment .date {
-	font-weight: bold;
-	color:#ababab;
 }
 .comments .comment .user {
-	color:#999;
 }
 .comments .comment .admin a {
 	font-size: 80%;
@@ -700,20 +684,13 @@ div.comments {
 }
 .comments .comment .body {
 	clear:left;
-	background:#fafafa;
 	white-space: normal;
-	padding:1em 0em;
-	color: black;
 }
 .comments .comment .body ul {
-	margin:.5em 1em .5em 2em;
 }
 .comments .comment .body  li {
-	margin: 2px 0;
-	font-size: 80%;
 }
 .comments .comment .body p {
-	margin-top: 10px;
 }
 .comments .body .wiki-text {
 	padding:0em;
