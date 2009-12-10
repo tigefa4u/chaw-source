@@ -51,33 +51,16 @@ class CommitsController extends AppController {
 	function branch() {
 		$branches = $this->Project->Repo->find('branches');
 		$args = func_get_args();
-		if ($this->Project->Repo->type == 'git') {
-			if (empty($args)) {
-				$this->Project->Repo->branch('master', true);
-			}
-		}
-
 		$Source = ClassRegistry::init('Source');
 		list($args, $path, $current) = $Source->initialize($this->Project->Repo, $args);
-
 		$this->paginate['branch'] =  $current;
 		$commits = $this->paginate($this->Project->Repo);
-
 		$this->set(compact('commits', 'branches', 'args', 'current'));
 	}
 
 	function history() {
 		$args = func_get_args();
-		if ($this->Project->Repo->type == 'git') {
-			if (empty($args)) {
-				$this->Project->Repo->branch('master', true);
-			} else {
-				array_shift($args);
-			}
-		}
-
 		$Source = ClassRegistry::init('Source');
-
 		list($args, $path, $current) = $Source->initialize($this->Project->Repo, $args);
 		$this->paginate = array_merge(array('path' => $path, 'branch' => $args[1]), $this->paginate);
 		$commits = $this->paginate($this->Project->Repo);
