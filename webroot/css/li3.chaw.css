@@ -661,41 +661,34 @@ fieldset.ticket-search label {
 
 /* Comments */
 
-div.comments {
+.tickets div.comments {
 	clear:left;
 	padding: 0.5em 1em;
 	background-color: #e6e6e6;
 	width: 760px;
 	border-top: 10px solid #00ff3b;
 }
-.comments .comment {
+.tickets .comments .comment {
 	padding: 1.5em 0;
 }
-.comment + .comment {
+.tickets .comment + .comment {
 	border-top: 3px solid white;
 }
-.comments .comment .date, .comments .comment .user {
+.help .comment + .comment {
+	border: none;
+}
+.comments .comment .date, .tickets .comments .comment .user {
 	color: #808080;
 }
-.comments .comment .date {
-}
-.comments .comment .user {
-}
-.comments .comment .admin a {
+.tickets .comments .comment .admin a {
 	font-size: 80%;
 	color: #ccc;
 }
-.comments .comment .body {
+.tickets .comments .comment .body {
 	clear:left;
 	white-space: normal;
 }
-.comments .comment .body ul {
-}
-.comments .comment .body  li {
-}
-.comments .comment .body p {
-}
-.comments .body .wiki-text {
+.tickets .comments .body .wiki-text {
 	padding:0em;
 }
 
