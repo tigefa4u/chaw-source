@@ -53,6 +53,22 @@ a.commit {
 	font-size: 12px;
 }
 
+
+/*--- Icon Hyperlinks ---*/
+a.folder, a.file {
+	text-decoration: none;
+	line-height:18px;
+	font-weight: bold;
+	display:block;
+	padding:0 0 0 2em;
+}
+a.folder {
+	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
+}
+a.file {
+	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
+}
+
 /*--- Navigation ---*/
 .nav.tabs ul li a {
 	padding: .5em 1em .5em 1em;
@@ -202,19 +218,6 @@ a.commit {
 }
 .source p.history a:hover {
 	text-decoration: none;
-}
-a.folder, a.file {
-	text-decoration: none;
-	line-height:18px;
-	font-weight: bold;
-	display:block;
-	padding:0 0 0 2em;
-}
-a.folder {
-	background: url(http://li3.rad-dev.org/img/icons/silk/folder.png) no-repeat center left;
-}
-a.file {
-	background: url(http://li3.rad-dev.org/img/icons/silk/page_white.png) no-repeat center left;
 }
 
 /* Wiki */
@@ -722,7 +725,8 @@ fieldset.ticket-search label {
 }
 
 .version .summary {
-	padding:0 2em;
+	color: #666;
+	padding: 1em 1em;
 }
 
 .versions .version h3 {
