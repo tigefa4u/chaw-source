@@ -1,6 +1,5 @@
 <?php
 $this->set('showdown', true);
-$html->css('highlight/dark', null, array('inline' => false));
 $html->script('highlight.pack', array('inline' => false));
 
 $script = '
@@ -34,7 +33,7 @@ $html->scriptBlock($script, array('inline' => false));
 			}
 		?>
 		</fieldset>
-		
+
 		<?php
 			echo $form->input('title',array('label'=> __('Title', true)));
 			echo $form->input('description', array(
@@ -45,9 +44,9 @@ $html->scriptBlock($script, array('inline' => false));
 		<div class="help">
 			<?php echo $this->element('markdown_help', array('short' => false)); ?>
 		</div>
-		
+
 	</fieldset>
-	
+
 	<fieldset>
 		<legend>Preview</legend>
 		<div id="Preview" class="preview wiki-text"></div>
@@ -62,7 +61,7 @@ $html->scriptBlock($script, array('inline' => false));
 		<? __('comma separated') ?>
 	</fieldset>
 
-	
+
 
 	<?php echo $form->submit(__('Submit',true))?>
 

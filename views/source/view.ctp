@@ -1,5 +1,4 @@
 <?php
-// $html->css('highlight/dark', null, array('inline' => false));
 $html->script('ghighlight.min', array('inline' => false));
 ?>
 <span class="history"><?php

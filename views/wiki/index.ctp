@@ -1,6 +1,5 @@
 <?php
 $this->set('showdown', true);
-$html->css('highlight/dark', null, array('inline' => false));
 $html->script('highlight.pack', array('inline' => false));
 $script = 'hljs.initHighlightingOnLoad();';
 $html->scriptBlock($script, array('inline' => false));
