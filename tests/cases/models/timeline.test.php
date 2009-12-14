@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Timeline Test cases generated on: 2009-04-15 13:04:08 : 1239825668*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 class TimelineTest extends CakeTestCase {
 
 	var $fixtures = array(

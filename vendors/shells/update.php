@@ -15,20 +15,35 @@
  *
  */
 class UpdateShell extends Shell {
-
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $uses = array('Project', 'Permission', 'Git');
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function _welcome() {}
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function main() {
 		return $this->authorize();
 	}
-/**
- * undocumented function
- *
- * @return exit value 0 for true, 1-255 for status
- *
- **/
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function authorize() {
 		$this->Project->id = $this->args[0];
 		$project = $this->Project->field('url');

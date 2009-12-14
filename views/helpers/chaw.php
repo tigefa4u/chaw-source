@@ -1,18 +1,15 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class ChawHelper extends AppHelper {
 
@@ -46,7 +43,7 @@ class ChawHelper extends AppHelper {
  * @param string $escapeTitle
  * @return void
  *
- **/
+ */
 	function type($type, $url = array(), $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		$view = ClassRegistry::getObject('view');
 		$passedArgs = $view->passedArgs;

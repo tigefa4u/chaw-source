@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Svn Test cases generated on: 2008-08-28 13:08:20 : 1219956320*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 class SvnTest extends CakeTestCase {
 
 	function setUp() {

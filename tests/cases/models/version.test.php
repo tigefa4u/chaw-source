@@ -1,6 +1,11 @@
-<?php 
-/* SVN FILE: $Id$ */
-/* Version Test cases generated on: 2008-10-10 16:10:08 : 1223680508*/
+<?php
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
 
 class VersionTestCase extends CakeTestCase {
 	var $Version = null;
@@ -19,7 +24,7 @@ class VersionTestCase extends CakeTestCase {
 	}
 
 	function testVersionFind() {
-		
+
 	}
 }
 ?>

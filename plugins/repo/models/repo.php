@@ -1,137 +1,141 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw.plugins.Repo
- * @subpackage		chaw.plugins.models
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
 /**
  * Base class for various repo types
  *
- * @package			chaw.plugins.Repo
- * @subpackage		chaw.plugins.models
- *
- **/
+ */
 class Repo extends Overloadable {
-/**
- * configuration
- *
- * @var string
- **/
+	
+	/**
+	 * configuration
+	 *
+	 * @var array
+	 */
 	var $config = array(
 		'class' => 'Git', 'type' => 'git', 'path' => null, 'working' => null,
 		'username' => '', 'password' => '', 'chmod' => 0755, 'chawuser' => 'chawbacca'
 	);
-/**
- * Type of Repo
- *
- * @var string
- **/
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $_commands = array();
-/**
- * Type of Repo
- *
- * @var string
- **/
-	var $type = 'git';
-/**
- * Type of Repo
- *
- * @var string
- **/
-	var $path = null;
-/**
- * Type of Repo
- *
- * @var string
- **/
-	var $working = null;
-/**
- *  branch name used mostly by Git
- *
- * @var string
- **/
-	var $branch = null;
-/**
- * undocumented class variable
- *
- * @var string
- **/
-	var $debug = array();
-/**
- * undocumented class variable
- *
- * @var string
- **/
-	var $response = array();
-/**
- * undocumented class variable
- *
- * @var string
- **/
-	var $useTable = false;
-/**
- * undocumented class variable
- *
- * @var string
- **/
-	var $_before = array();
-/**
- * so we can paginate
- *
- * @var string
- **/
-	var $recursive = 0;
-/**
- * so we can paginate
- *
- * @var string
- **/
-	var $alias = null;
-/**
- * should the command be logged
- *
- * @var boolean
- **/
-	var $logDebug = true;
-/**
- * should the response be logged
- *
- * @var boolean
- **/
-	var $logResponse = false;
-/**
- * should the response be logged
- *
- * @var boolean
- **/
-	var $chawuser = 'chawbacca';
 
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	/**
+	 * Type of Repo
+	 *
+	 * @var string
+	 */
+	var $type = 'git';
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
+	var $path = null;
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
+	var $working = null;
+
+	/**
+	 *  branch name used mostly by Git
+	 *
+	 * @var string
+	 */
+	var $branch = null;
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
+	var $debug = array();
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
+	var $response = array();
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
+	var $useTable = false;
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
+	var $_before = array();
+
+	/**
+	 * so we can paginate
+	 *
+	 * @var string
+	 */
+	var $recursive = 0;
+
+	/**
+	 * so we can paginate
+	 *
+	 * @var string
+	 */
+	var $alias = null;
+
+	/**
+	 * should the command be logged
+	 *
+	 * @var boolean
+	 */
+	var $logDebug = true;
+
+	/**
+	 * should the response be logged
+	 *
+	 * @var boolean
+	 */
+	var $logResponse = false;
+
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
+	var $chawuser = 'chawbacca';
+	
+	/**
+	 * undocumented function
+	 *
+	 * @param string $config 
+	 */
 	function __construct($config = array()) {
 		$this->config($config);
 		$this->alias = ucwords($this->type);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	
+	/**
+	 * undocumented function
+	 *
+	 * @param string $config 
+	 * @return void
+	 */
 	function config($config = array()) {
 		if (!empty($config['alias']) && empty($config['type'])) {
 			$config['type'] = $config['alias'];
@@ -143,12 +147,12 @@ class Repo extends Overloadable {
 		$this->chawuser = $config['chawuser'];
 		return $this->config = $config;
 	}
-/**
- * Magic methods
- *
- * @return void
- *
- **/
+
+	/**
+	 * Magic methods
+	 *
+	 * @return void
+	 */
 	function call__($method, $params = array()) {
 		if (method_exists($this, "_{$method}")) {
 			$finder = "_{$method}";
@@ -164,13 +168,13 @@ class Repo extends Overloadable {
 		}
 		return false;
 	}
-/**
- * Set multiple commands to be run before will be joined with &&
- *
- * @param mixed command single command string or array of commands
- * @return void
- *
- **/
+
+	/**
+	 * Set multiple commands to be run before will be joined with &&
+	 *
+	 * @param mixed command single command string or array of commands
+	 * @return void
+	 */
 	function cd($dir = null) {
 		if (is_null($dir)) {
 			$dir = $this->working;
@@ -180,26 +184,26 @@ class Repo extends Overloadable {
 		}
 		$this->_before[0] = "cd {$dir}";
 	}
-/**
- * Set multiple commands to be run before will be joined with &&
- *
- * @param mixed command single command string or array of commands
- * @return void
- *
- **/
+
+	/**
+	 * Set multiple commands to be run before will be joined with &&
+	 *
+	 * @param mixed command single command string or array of commands
+	 * @return void
+	 */
 	function before($command = array()) {
 		if (is_string($command)) {
 			$command = array($command);
 		}
 		$this->_before = array_merge($this->_before, $command);
 	}
-/**
- * Run a command specific to this type of repo
- *
- * @see execute for params
- * @return misxed
- *
- **/
+
+	/**
+	 * Run a command specific to this type of repo
+	 *
+	 * @see execute for params
+	 * @return misxed
+	 */
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
 		$response = $this->execute("{$type} {$command}", $args, $return);
@@ -208,21 +212,21 @@ class Repo extends Overloadable {
 		}
 		return $response;
 	}
-/**
- * Executes given command with results based on return type
- *
- *
- * @param string $command - the command to run
- * @param mixed $args as array - the arguments for the command, as string - the return type
- * @param string $return
- * false - will use shell_exec() and return a string
- * true - will return the command
- * capture - will use exec() and return an array
- * pass - will use passthru() and return binary type
- *
- * @return mixed
- *
- **/
+
+	/**
+	 * Executes given command with results based on return type
+	 *
+	 *
+	 * @param string $command - the command to run
+	 * @param mixed $args as array - the arguments for the command, as string - the return type
+	 * @param string $return
+	 * false - will use shell_exec() and return a string
+	 * true - will return the command
+	 * capture - will use exec() and return an array
+	 * pass - will use passthru() and return binary type
+	 *
+	 * @return mixed
+	 */
 	function execute($command, $args = array(), $return = false) {
 		$before = null;
 		if ($return !== true) {
@@ -260,13 +264,14 @@ class Repo extends Overloadable {
 		}
 		return $response;
 	}
-
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data 
+	 * @param string $query 
+	 * @return void
+	 */
 	function _findAll($data, $query = array()) {
 		$query = array_merge(array(
 			'fields' => null,
@@ -299,12 +304,12 @@ class Repo extends Overloadable {
 		
 		return $results;
 	}
-/**
- * Create the parent folders for a repository
- *
- * @return void
- *
- **/
+
+	/**
+	 * Create the parent folders for a repository
+	 *
+	 * @return boolean
+	 */
 	function _create($options = array(), $return = false) {
 		extract(array_merge($this->config, $options));
 
@@ -324,22 +329,22 @@ class Repo extends Overloadable {
 
 		return false;
 	}
-/**
- * Creates a hook
- *
- * @param string $name
- * GIT
- * applypatch-msg, commit-message, post-commit, post-receive, post-update,
- * pre-applypatch, pre-commit, pre-rebase, update)
- *
- * SVN
- * post-commit, post-lock, post-revprop-change, post-unlock, pre-commit, pre-lock,
- * pre-revprop-change, pre-unlock, start-commit
- *
- * @param string $data location of the repository
- * @return void
- *
- **/
+
+	/**
+	 * Creates a hook
+	 *
+	 * @param string $name
+	 * GIT
+	 * applypatch-msg, commit-message, post-commit, post-receive, post-update,
+	 * pre-applypatch, pre-commit, pre-rebase, update)
+	 *
+	 * SVN
+	 * post-commit, post-lock, post-revprop-change, post-unlock, pre-commit, pre-lock,
+	 * pre-revprop-change, pre-unlock, start-commit
+	 *
+	 * @param string $data location of the repository
+	 * @return boolean
+	 */
 	function _hook($name, $data = null, $options = array()) {
 		extract($this->config);
 		$Hook = new File($path . DS . 'hooks' . DS . $name, true, $chmod);
@@ -364,12 +369,12 @@ class Repo extends Overloadable {
 
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function _credentials() {
 		return null;
 	}

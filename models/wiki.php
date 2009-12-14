@@ -1,29 +1,51 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class Wiki extends AppModel {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Wiki';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $displayField = 'slug';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $useTable = 'wiki';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $actsAs = array('Directory');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $validate = array(
 		'slug' => array(
 			'required' => true,
@@ -32,6 +54,11 @@ class Wiki extends AppModel {
 		'content' => array('notEmpty')
 	);
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $belongsTo = array(
 		'User' => array(
 			'foreignKey' => 'last_changed_by'
@@ -39,7 +66,13 @@ class Wiki extends AppModel {
 		'Project'
 	);
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $_findMethods = array('superList' => true);
+
 /*
 	var $hasOne = array(
 		'Timeline' => array(
@@ -48,11 +81,25 @@ class Wiki extends AppModel {
 		)
 	);
 */
+	/**
+	 * undocumented function
+	 *
+	 * @param string $string
+	 * @return void
+	 */
 	function slug($string) {
 		$replace = (strpos($string, '-') !== false) ? '-' : '_';
 		return Inflector::slug($string, $replace);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $state
+	 * @param string $query
+	 * @param string $results
+	 * @return void
+	 */
 	function _findSuperList($state, $query, $results = array()) {
 		if ($state == 'before') {
 			return $query;
@@ -77,6 +124,11 @@ class Wiki extends AppModel {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeValidate(){
 		if (!empty($this->data['Wiki']['title'])) {
 			$this->data['Wiki']['slug'] = $this->data['Wiki']['title'];
@@ -84,6 +136,11 @@ class Wiki extends AppModel {
 		return true;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeSave(){
 		$this->data['Wiki']['slug'] = $this->slug($this->data['Wiki']['slug']);
 
@@ -103,6 +160,12 @@ class Wiki extends AppModel {
 		return true;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $created
+	 * @return void
+	 */
 	function afterSave($created) {
 		if ($created && $this->addToTimeline && !empty($this->data['Wiki']['active'])) {
 			$Timeline = ClassRegistry::init('Timeline');
@@ -117,6 +180,12 @@ class Wiki extends AppModel {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @return void
+	 */
 	function activate($data = array()) {
 		$this->set($data);
 		$this->data['Wiki']['active'] = 1;

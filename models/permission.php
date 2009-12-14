@@ -1,46 +1,66 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class Permission extends AppModel {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Permission';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $belongsTo = array('User', 'Project');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $__rules = array();
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $__config = array();
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $user
+	 * @return void
+	 */
 	function user($user = null) {
 		if (!is_numeric($user)) {
 			$user = $this->User->field('id', array('username' => $user));
 		}
 		return $user;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @param string $user
+	 * @return void
+	 */
 	function group($project, $user = null) {
 		if (is_array($project)) {
 			extract($project);
@@ -54,12 +74,13 @@ class Permission extends AppModel {
 
 		return $this->field('group', array('project_id' => $project, 'user_id' => $user));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $config
+	 * @return void
+	 */
 	function saveFile($config = array()) {
 		if (empty($config['repo'])) {
 			$this->set($config);
@@ -115,12 +136,13 @@ class Permission extends AppModel {
 		$this->__rules = array();
 		return $result;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $config
+	 * @return void
+	 */
 	function config($config = array()) {
 		if (!empty($config)) {
 			return $this->__config = array_merge($this->__config, $config);
@@ -131,12 +153,13 @@ class Permission extends AppModel {
 		return $this->__config;
 	}
 
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	/**
+	 * undocumented function
+	 *
+	 * @param string $path
+	 * @param string $options
+	 * @return void
+	 */
 	function check($path, $options = array()) {
 		$defaults = array(
 			'user' => null, 'group' => null, 'access' => null,
@@ -221,12 +244,13 @@ class Permission extends AppModel {
 		}
 		return $default;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $rules
+	 * @return void
+	 */
 	function groups($rules = null) {
 		if ($rules === null) {
 			$rules = $this->rules();
@@ -246,12 +270,14 @@ class Permission extends AppModel {
 
 		return $result;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @param string $atomic
+	 * @return void
+	 */
 	function rules($project = null, $atomic = array()) {
 		$config = $this->config();
 
@@ -300,12 +326,13 @@ class Permission extends AppModel {
 
 		return $this->__rules[$project];
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $string
+	 * @return void
+	 */
 	function toArray($string = null) {
 		if (!$string) {
 			return array();
@@ -350,22 +377,22 @@ class Permission extends AppModel {
 		}
 		return $result;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function fileExists() {
 		$File = $this->__getFile();
 		return $File->exists();
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function file() {
 		$File = $this->__getFile();
 		if (!$File->readable()) {
@@ -375,12 +402,12 @@ class Permission extends AppModel {
 		}
 		return $File->read();
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function root() {
 		$path = Configure::read("Content.base");
 		$File = new File($path . 'permissions.ini');
@@ -389,12 +416,12 @@ class Permission extends AppModel {
 		}
 		return $File->read();
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function parent() {
 		$config = $this->config();
 		if($config['id'] == 1 || empty($config['fork'])) {
@@ -412,12 +439,11 @@ class Permission extends AppModel {
 		}
 		return $File->read();
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented
+	 *
+	 */
 	function &__getFile() {
 		$config = $this->config();
 		$path = $config['repo']['path'] . DS;

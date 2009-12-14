@@ -1,27 +1,44 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class TicketsController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Tickets';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $helpers = array('Time');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $paginate = array('order' => array('Ticket.number' => 'desc'));
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $components = array(
 		'Gpr' => array(
 			'keys' => array('type', 'priority'),
@@ -30,6 +47,11 @@ class TicketsController extends AppController {
 		)
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		$conditions = array(
 			'Ticket.project_id' => $this->Project->id,
@@ -85,6 +107,12 @@ class TicketsController extends AppController {
 		$this->_ticketInfo(false);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid ticket',true));
@@ -134,6 +162,12 @@ class TicketsController extends AppController {
 		$this->_ticketInfo();
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function modify($id = null) {
 		if (empty($this->params['form']['cancel']) && !empty($this->data)) {
 
@@ -162,6 +196,12 @@ class TicketsController extends AppController {
 		$this->redirect(array('action' => 'view', $id));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $all
+	 * @return void
+	 */
 	function _ticketInfo($all = true) {
 		if ($all) {
 			$versions = $this->Ticket->Version->find('list', array(

@@ -1,21 +1,25 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class DirectoryBehavior extends ModelBehavior {
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $Model
+	 * @param string $settings
+	 * @return void
+	 */
     function setup(&$Model, $settings = array()) {
 		if (!isset($this->settings[$Model->alias])) {
 			$this->settings[$Model->alias] = array('field' => 'path');
@@ -23,6 +27,13 @@ class DirectoryBehavior extends ModelBehavior {
 		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array)$settings);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $Model
+	 * @param string $query
+	 * @return void
+	 */
 	function beforeFind(&$Model, $query) {
 		extract($this->settings[$Model->alias]);
 
@@ -48,6 +59,12 @@ class DirectoryBehavior extends ModelBehavior {
 		return $query;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $Model
+	 * @return void
+	 */
 	function beforeSave(&$Model) {
 
 		if (!empty($Model->data[$Model->alias]['path'])) {

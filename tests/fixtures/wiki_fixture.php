@@ -1,11 +1,16 @@
-<?php 
-/* SVN FILE: $Id$ */
-/* Wiki Fixture generated on: 2008-10-10 16:10:08 : 1223680508*/
+<?php
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
 
 class WikiFixture extends CakeTestFixture {
 	var $name = 'Wiki';
 	var $table = 'wiki';
-	
+
 	var $fields = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => false, 'default' => '0'),

@@ -1,29 +1,46 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class Version extends AppModel {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Version';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $belongsTo = array('Project');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $validate = array(
 		'title' => array('notEmpty')
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeSave() {
 		$this->data['Version']['slug'] = Inflector::slug($this->data['Version']['title'], '-');
 		return true;

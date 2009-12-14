@@ -1,37 +1,64 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class DashboardController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Dashboard';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $uses = array('Timeline');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $helpers = array('Text');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $paginate = array(
 		'limit' => 20,
 		'order' => 'Timeline.created DESC, Timeline.id DESC'
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Access->allow('index', 'feed');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		Router::connectNamed(array('page', 'type'));
 
@@ -54,6 +81,11 @@ class DashboardController extends AppController {
 		$this->set('timeline', $this->paginate('Timeline'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function feed() {
 		$this->set('rssFeed', array('controller' => 'dashboard', 'action' => 'feed'));
 
@@ -72,6 +104,11 @@ class DashboardController extends AppController {
 		$this->set('feed', $this->paginate('Timeline'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function admin_index() {
 		Router::connectNamed(array('page', 'type'));
 

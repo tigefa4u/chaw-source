@@ -13,7 +13,7 @@ class DATABASE_CONFIG {
 		'prefix' => '',
 		'encoding' => ''
 	);
-	
+
 	var $test = array(
 		'driver' => 'mysql',
 		'persistent' => false,

@@ -1,29 +1,41 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.vendors.shells
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
 class PreCommitShell extends Shell {
-
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $uses = array('Project', 'Permission');
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function _welcome() {}
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function main() {
 		return $this->authorize();
 	}
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function authorize() {
 		$this->args[] = 'pre_commit';
 		$this->log($this->args, LOG_DEBUG);

@@ -1,12 +1,17 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Timeline Fixture generated on: 2008-10-13 09:10:08 : 1223915168*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
 
 class TimelineFixture extends CakeTestFixture {
 	var $name = 'Timeline';
-	
+
 	var $table = 'timeline';
-	
+
 	var $fields = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 			'project_id' => array('type' => 'integer', 'null' => true, 'default' => NULL),

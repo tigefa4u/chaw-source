@@ -1,31 +1,4 @@
 <?php
-/* SVN FILE: $Id: core.php 6314 2008-01-02 21:33:51Z phpnut $ */
-/**
- * This is core configuration file.
- *
- * Use it to configure core behavior of Cake.
- *
- * PHP versions 4 and 5
- *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
- * Copyright 2005-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @filesource
- * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link			http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package			cake
- * @subpackage		cake.app.config
- * @since			CakePHP(tm) v 0.2.9
- * @version			$Revision: 6314 $
- * @modifiedby		$LastChangedBy: phpnut $
- * @lastmodified	$Date: 2008-01-02 13:33:51 -0800 (Wed, 02 Jan 2008) $
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
- */
 /**
  * CakePHP Debug Level:
  *
@@ -233,7 +206,7 @@
 	}
 
 	Cache::config('project', array(
-		'engine' => 'File', 'duration' => $duration, 
+		'engine' => 'File', 'duration' => $duration,
 		'prefix' => 'p_', 'path' => CACHE . 'projects'
 	));
 

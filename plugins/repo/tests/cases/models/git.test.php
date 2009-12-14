@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Git Test cases generated on: 2008-09-09 18:09:14 : 1220999054*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 class GitTest extends CakeTestCase {
 
 	function startTest() {
@@ -163,7 +169,7 @@ class GitTest extends CakeTestCase {
 		$result = $Git->find('count', array('path' => TMP . 'tests/git/working/test/master/.gitignore'));
 
 		$this->assertEqual($result, 2);
-		
+
 		$Git->update();
 		$results = $Git->find('all', array(
 			'branch' => 'master', 'order' => 'asc'
@@ -171,14 +177,14 @@ class GitTest extends CakeTestCase {
 
 		$oldrev = $results[0]['Repo']['revision'];
 		$newrev = $results[1]['Repo']['revision'];
-		
+
 		$count = $Git->find('count', array(
 			'conditions' => array($oldrev . '..' . $newrev),
 			'order' => 'asc'
 		));
-		
+
 		$this->assertEqual(1, $count);
-		
+
 	//pr($Git->working);
 	//	pr($Git->debug);
 	//	pr($Git->response);

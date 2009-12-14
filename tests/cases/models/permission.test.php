@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Permission Test cases generated on: 2008-10-17 12:10:29 : 1224273329*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 App::import('Model', 'Permission');
 class TestPermission extends Permission {
 
@@ -399,15 +405,15 @@ class PermissionTest extends CakeTestCase {
 
 		$data['Permission']['fine_grained'] = "";
 		$Permission->saveFile($data);
-		
+
 		$this->assertTrue(file_exists(TMP . 'tests' . DS . 'git' . DS . 'repo' . DS . 'project_two.git' . DS . 'permissions.ini'));
 
 		$this->assertTrue($Permission->check("source", array('user' => 'gwoo', 'access' => array('r', 'r'), 'default' => true)));
 
 		$this->assertTrue($Permission->check("source", array('user' => false, 'access' => array('r', 'r'), 'default' => true)));
-		
+
 		$data['Permission']['fine_grained'] = "[tickets]\n* = r";
-		$this->assertTrue($Permission->saveFile($data));		
+		$this->assertTrue($Permission->saveFile($data));
 		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'access' => 'c', 'default' => true)));
 		$this->assertFalse($Permission->check("tickets", array('user' => 'gwoo', 'access' => array('c', 'w'), 'default' => true)));
 		$this->assertFalse($Permission->check("tickets", array('user' => 'bob', 'access' => 'c', 'default' => true)));

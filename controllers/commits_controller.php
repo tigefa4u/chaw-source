@@ -1,27 +1,44 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class CommitsController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Commits';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $helpers = array('Time', 'Text');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $paginate = array('order' => 'Commit.commit_date DESC');
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		$this->Commit->recursive = 0;
 		$this->Commit->bindModel(array('hasOne' => array(
@@ -35,12 +52,24 @@ class CommitsController extends AppController {
 		$this->set('commits', $this->paginate('Commit', $conditions));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $revision
+	 * @return void
+	 */
 	function view($revision = null) {
 		$branches = $this->Project->Repo->find('branches');
 		$commit = $this->Commit->findByRevision($revision);
 		$this->set(compact('commit', 'branches'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $commits
+	 * @return void
+	 */
 	function logs($commits = null) {
 		$Source = ClassRegistry::init('Source');
 		$this->paginate = array('order' => 'asc');
@@ -48,6 +77,11 @@ class CommitsController extends AppController {
 		$this->set(compact('commits', 'args', 'current'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function branch() {
 		$branches = $this->Project->Repo->find('branches');
 		$args = func_get_args();
@@ -66,6 +100,11 @@ class CommitsController extends AppController {
 		$this->set(compact('commits', 'branches', 'args', 'current'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function history() {
 		$args = func_get_args();
 		if ($this->Project->Repo->type == 'git') {
@@ -84,6 +123,12 @@ class CommitsController extends AppController {
 		$this->set(compact('commits', 'args', 'current'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function remove($id = null) {
 		if (!$id || empty($this->params['isAdmin'])) {
 			$this->redirect($this->referer());

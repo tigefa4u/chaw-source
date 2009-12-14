@@ -1,63 +1,58 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw.plugins.Repo
- * @subpackage		chaw.plugins.models
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+
 App::import('Model', 'repo.Repo');
 /**
  * undocumented class
  *
  * @package default
  *
- **/
+ */
 class Git extends Repo {
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $gitDir = null;
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $branch = null;
-/**
- * available commands for magic methods
- *
- * @var array
- **/
+
+	/**
+	 * available commands for magic methods
+	 *
+	 * @var array
+	 */
 	var $_commands = array(
 		'clone', 'config', 'diff', 'status', 'log', 'show', 'blame', 'whatchanged',
 		'add', 'rm', 'commit', 'pull', 'push', 'branch', 'checkout', 'merge', 'remote'
 	);
 
-/**
- * undocumented class variable
- *
- * @var array
- **/
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $__data = array();
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $options
+	 * @return void
+	 */
 	function create($options = array()) {
 		parent::_create();
 		extract($this->config);
@@ -96,12 +91,14 @@ class Git extends Repo {
 
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $user
+	 * @param string $options
+	 * @return void
+	 */
 	function fork($user = null, $options = array()) {
 		if (!$user) {
 			return false;
@@ -157,12 +154,14 @@ class Git extends Repo {
 
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $name
+	 * @param string $switch
+	 * @return void
+	 */
 	function branch($name, $switch = false) {
 		if (!$name) {
 			return false;
@@ -205,12 +204,13 @@ class Git extends Repo {
 			return $this->branch = $name;
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $options
+	 * @return void
+	 */
 	function commit($options = array()) {
 		$path = '.';
 		if (is_string($options)) {
@@ -231,32 +231,40 @@ class Git extends Repo {
 		$this->cd();
 		return $this->run('commit', $options);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $remote
+	 * @param string $branch
+	 * @return void
+	 */
 	function push($remote = 'origin', $branch = 'master') {
 		$this->cd();
 		return $this->run('push', array($remote, $branch), 'capture');
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $remote
+	 * @param string $branch
+	 * @param string $params
+	 * @return void
+	 */
 	function update($remote = null, $branch = null, $params = array()) {
 		$this->cd();
  		return $this->run('pull', array_merge($params, array($remote, $branch)), 'capture');
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $remote
+	 * @param string $branch
+	 * @param string $params
+	 * @return void
+	 */
 	function pull($remote ='origin', $branch = 'master', $params = array()) {
 		if (!is_dir($this->path)) {
 			return false;
@@ -270,12 +278,14 @@ class Git extends Repo {
 
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @param string $fork
+	 * @return void
+	 */
 	function merge($project, $fork = false) {
 		$this->branch('master', true);
 		$this->update('origin', 'master');
@@ -304,13 +314,15 @@ class Git extends Repo {
 		$this->push('origin', 'master');
 		return true;
 	}
-/**
- * find all revisions and return contents of read.
- * type: all, count, array()
- *
- * @return array
- *
- **/
+
+	/**
+	 * find all revisions and return contents of read.
+	 * type: all, count, array()
+	 *
+	 * @param string $type
+	 * @param array $options
+	 * @return array
+	 */
 	function find($type = 'all', $options = array()) {
 		if ($type == 'branches') {
 			if (empty($this->branch)) {
@@ -382,12 +394,12 @@ class Git extends Repo {
 			return parent::_findAll($data, $options);
 		}
 	}
-/**
- * undocumented function
- *
- * @return string
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return array
+	 */
 	function __fields($fields = null) {
 		$fieldMap = array(
 			'hash' => '%H',
@@ -412,12 +424,14 @@ class Git extends Repo {
 		}
 		return array($fields, $format);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $newrev
+	 * @param string $options
+	 * @return void
+	 */
 	function read($newrev = null, $options = false) {
 		if (!is_array($options)) {
 			$options = array('diff' => $options);
@@ -448,12 +462,14 @@ class Git extends Repo {
 
 		return $data;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $branch
+	 * @param string $params
+	 * @return void
+	 */
 	function info($branch, $params = null) {
 		if ($params === null) {
 			$params = array('--header', '--max-count=1', $branch);
@@ -467,12 +483,14 @@ class Git extends Repo {
 
 		return $out;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $branch
+	 * @param string $params
+	 * @return void
+	 */
 	function tree($branch, $params = array()) {
 		if (empty($params)) {
 			$params = array($branch, "| sed -e 's/\t/ /g'");
@@ -502,12 +520,13 @@ class Git extends Repo {
         }
         return $result;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	function pathInfo($path = null) {
 		$this->cd();
 		if ($path) {
@@ -521,12 +540,12 @@ class Git extends Repo {
 		$message = str_replace(dirname($this->path), "", $message);
 		return compact('revision', 'author', 'date', 'message');
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function delete() {
 		$branch = $this->branch;
 		$working = $this->working;
@@ -542,13 +561,13 @@ class Git extends Repo {
 		}
 		return false;
 	}
-/**
- * Run a command specific to this type of repo
- *
- * @see execute for params
- * @return misxed
- *
- **/
+
+	/**
+	 * Run a command specific to this type of repo
+	 *
+	 * @see execute for params
+	 * @return mixed
+	 */
 	function run($command, $args = array(), $return = false) {
 		extract($this->config);
 

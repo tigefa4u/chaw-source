@@ -1,23 +1,30 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class Commit extends AppModel {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Commit';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $validate = array(
 		'project_id' => array('notEmpty'),
 		'revision' => array('isUnique'),
@@ -27,6 +34,11 @@ class Commit extends AppModel {
 
 	);
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $belongsTo = array(
 		'User', 'Project'
 	);
@@ -39,6 +51,13 @@ class Commit extends AppModel {
 		)
 	);
 */
+	/**
+	 * undocumented function
+	 *
+	 * @param string $one
+	 * @param string $two
+	 * @return void
+	 */
 	function set($one = array(), $two = null) {
 		parent::set($one, $two);
 		if (!empty($this->data)) {
@@ -47,6 +66,12 @@ class Commit extends AppModel {
 			), $this->data['Commit']);
 		}
 	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeSave() {
 		if (empty($this->data['Commit']['user_id']) && !empty($this->data['Commit']['author'])) {
 			$this->data['Commit']['user_id'] = $this->User->field('id', array('username' => $this->data['Commit']['author']));
@@ -58,14 +83,20 @@ class Commit extends AppModel {
 		if (!empty($this->data['Commit']['branch'])) {
 			$ref = explode('/', $this->data['Commit']['branch']);
 			$this->data['Commit']['branch'] = array_pop($ref);
-		}	
-		
+		}
+
 		return true;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $created
+	 * @return void
+	 */
 	function afterSave($created) {
 		$this->log($this->data);
-		
+
 		if ($created && $this->addToTimeline) {
 			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
@@ -81,6 +112,12 @@ class Commit extends AppModel {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $revision
+	 * @return void
+	 */
 	function findByRevision($revision) {
 		$commit = parent::findByRevision($revision);
 		$data = $this->Project->Repo->read($revision, true);
@@ -92,6 +129,13 @@ class Commit extends AppModel {
 		return $commit;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @param string $options
+	 * @return void
+	 */
 	function isUnique($data, $options = array()) {
 		if (!empty($data['revision'])) {
 			$this->recursive = -1;

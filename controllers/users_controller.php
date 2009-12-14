@@ -1,23 +1,30 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class UsersController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Users';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $components = array(
 		'Email', 'Cookie' => array('name' => 'Chaw', 'time' => '+2 weeks'),
 		'Gpr' => array(
@@ -25,6 +32,11 @@ class UsersController extends AppController {
 		)
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->autoRedirect = false;
@@ -39,13 +51,29 @@ class UsersController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		$this->redirect(array('action' => 'account'));
 	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function view() {
 		$this->redirect(array('action' => 'account'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function login() {
 		if ($cookie = $this->Cookie->read('User')) {
 			$this->Session->write('Auth.User', $cookie);
@@ -109,6 +137,11 @@ class UsersController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function logout() {
 		$this->Cookie->destroy('User');
 		$this->Auth->logout();
@@ -117,6 +150,11 @@ class UsersController extends AppController {
 		$this->redirect('/');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function add() {
 		if (!empty($this->data)) {
 			$this->User->create();
@@ -131,6 +169,11 @@ class UsersController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function account() {
 		$id = $this->Auth->user('id');
 		if (!$id) {
@@ -140,6 +183,12 @@ class UsersController extends AppController {
 		$this->render('edit');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function edit($id = null) {
 		if (!$id && !empty($this->passedArgs[0])) {
 			$id = $this->passedArgs[0];
@@ -185,6 +234,11 @@ class UsersController extends AppController {
 		$this->set(compact('sshKeys', 'types'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function admin_index() {
 		if (!empty($this->data['Permission'])) {
 			foreach ($this->data['Permission'] as $permission) {
@@ -206,39 +260,56 @@ class UsersController extends AppController {
 		$this->User->bindModel(array('hasOne' => array('Permission' => array(
 			'conditions' => array('Permission.project_id' => $this->Project->id
 		)))), false);
-		
+
 		$this->paginate['order'] = 'Permission.group ASC';
 		$this->paginate['fields'] = array(
-			'User.id', 'User.username', 'User.email', 'User.last_login', 
+			'User.id', 'User.username', 'User.email', 'User.last_login',
 			'Permission.id', 'Permission.group'
 		);
-		
+
 		$this->paginate['conditions'] = array('Permission.project_id' => $this->Project->id);
-		
+
 		if (!empty($this->passedArgs['all']) && ($this->params['isAdmin'] && $this->Project->id == 1)) {
 			$this->paginate['conditions'] = array();
 		} else {
 			$groups = $this->Project->groups();
 		}
-		
+
 		if (!empty($this->passedArgs['username'])) {
 			$this->paginate['conditions'] = array('User.username' => $this->passedArgs['username']);
 		}
-		
+
 		$users = $this->paginate();
 
 		$this->set(compact('users', 'groups'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function admin_add() {
 		$this->add();
 		$this->render('add');
 	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function admin_edit() {
 		$this->edit();
 		$this->render('edit');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $token
+	 * @return void
+	 */
 	function activate($token = null) {
 		if (empty($token)) {
 			if ($data = $this->User->setToken($this->Auth->user())) {
@@ -274,6 +345,11 @@ class UsersController extends AppController {
 		$this->redirect('/dashboard');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function forgotten() {
 		if ($this->Auth->user()) {
 			$this->redirect(array('action' => 'account'));
@@ -300,6 +376,12 @@ class UsersController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $token
+	 * @return void
+	 */
 	function verify($token = null) {
 		if (!empty($token)) {
 			if ($data = $this->User->setTempPassword(compact('token'))) {
@@ -325,6 +407,11 @@ class UsersController extends AppController {
 		$this->redirect(array('action' => 'login'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function change() {
 		if (!empty($this->data)) {
 			$this->User->id = $this->Auth->user('id');
@@ -338,6 +425,12 @@ class UsersController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function admin_remove($id = null) {
 		if ($id && $this->Project->id == 1 && !empty($this->params['isAdmin'])) {
 			$this->User->id = $id;

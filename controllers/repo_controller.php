@@ -1,24 +1,37 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class RepoController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Repo';
+
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $uses = array('Commit');
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function fast_forward() {
 		if ($this->Project->Repo->type != 'git') {
 			$this->Session->setFlash(__('You cannot fork an svn project yet',true));
@@ -35,6 +48,12 @@ class RepoController extends AppController {
 		$this->redirect($this->referer());
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $fork
+	 * @return void
+	 */
 	function merge($fork = null) {
 		if ($this->Project->Repo->type != 'git') {
 			$this->Session->setFlash(__('You cannot fork an svn project yet',true));
@@ -61,6 +80,11 @@ class RepoController extends AppController {
 		$this->redirect($this->referer());
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function fork_it() {
 		if ($this->Project->Repo->type != 'git') {
 			$this->Session->setFlash(__('You cannot fork an svn project',true));
@@ -115,6 +139,11 @@ class RepoController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function download() {
 		if ($this->RequestHandler->ext == 'tar') {
 			$this->set(array(

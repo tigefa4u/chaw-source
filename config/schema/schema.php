@@ -1,6 +1,12 @@
-<?php 
-/* SVN FILE: $Id$ */
-/* Chaw schema generated on: 2009-12-14 08:12:10 : 1260809950*/
+<?php
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 class ChawSchema extends CakeSchema {
 	var $name = 'Chaw';
 
