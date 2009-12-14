@@ -8,7 +8,7 @@ class DATABASE_CONFIG {
 		'port' => '',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'chaw_workflow',
+		'database' => 'chaw',
 		'schema' => '',
 		'prefix' => '',
 		'encoding' => ''
