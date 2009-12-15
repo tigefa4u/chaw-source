@@ -50,7 +50,7 @@ class SshKeyTestCase extends CakeTestCase {
 		$SshKey->set(array(
 			'type' => 'Git',
 			'username' => 'gwoo',
-			'content' => 'this is a key',
+			'content' => 'ssh-rsa this is a key',
 		));
 
 		$this->assertTrue($SshKey->save());
@@ -58,7 +58,7 @@ class SshKeyTestCase extends CakeTestCase {
 		$SshKey->set(array(
 			'type' => 'Git',
 			'username' => 'gwoo',
-			'content' => 'this is another key',
+			'content' => 'ssh-rsa this is another key',
 		));
 
 		$this->assertTrue($SshKey->save());
@@ -73,8 +73,8 @@ class SshKeyTestCase extends CakeTestCase {
 		));
 
 		$expected = array(
-			'thisisakey',
-			'thisisanotherkey'
+			'ssh-rsa thisisakey',
+			'ssh-rsa thisisanotherkey'
 		);
 
 		$this->assertEqual($result, $expected);
@@ -85,7 +85,7 @@ class SshKeyTestCase extends CakeTestCase {
 
 		$result = $SshKey->delete(array(
 			'type' => 'Git', 'username' => 'gwoo',
-			'content' => 'thisisakey'
+			'content' => 'ssh-rsa thisisakey'
 		));
 
 		$this->assertTrue($result);
@@ -97,7 +97,7 @@ class SshKeyTestCase extends CakeTestCase {
 		));
 
 		$expected = array(
-			'thisisanotherkey'
+			'ssh-rsa thisisanotherkey'
 		);
 		$this->assertEqual($result, $expected);
 
@@ -112,7 +112,7 @@ class SshKeyTestCase extends CakeTestCase {
 		$SshKey->set(array(
 			'type' => 'Git',
 			'username' => 'gwoo',
-			'content' => 'this is a key== something',
+			'content' => 'ssh-rsa this is a key== something',
 		));
 
 		$this->assertTrue($SshKey->save());
@@ -121,7 +121,7 @@ class SshKeyTestCase extends CakeTestCase {
 			'type' => 'Git', 'username' => 'gwoo',
 		));
 		$expected = array(
-			'thisisakey=='
+			'ssh-rsa thisisakey=='
 		);
 		$this->assertEqual($result, $expected);
 

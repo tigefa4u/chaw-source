@@ -232,7 +232,11 @@ class SshKey extends AppModel {
  */
 	function __strip($key) {
 		return preg_replace('/==(.+)$/', '==',
-			str_replace(array("\n", "\r", "\t", " "), array("", "", ""), trim($key))
+			str_replace(
+				array("\n", "\r", "\t", " ", 'ssh-rsa', 'ssh-dss'), 
+				array("", "", "", "", 'ssh-rsa ', 'ssh-dss '), 
+				trim($key)
+			)
 		);
 	}
 }
