@@ -21,7 +21,12 @@
 		echo $form->select('Ticket.priority', $priorities, null, array('multiple' => 'checkbox'));
 	?>
 	</div>
-
+	<div class="input-row">
+	<?php
+		echo $form->label('Ticket.statuses.closed', __('status', true), 'title');
+		echo $form->select('Ticket.status', $statuses, null, array('multiple' => 'checkbox'));
+	?>
+	</div>
 	<?php echo $form->submit('update'); ?>
 </fieldset>
 <?php echo $form->end(); ?>
@@ -48,15 +53,6 @@ if (!empty($CurrentUser->username)) {
 	)), $active);
 }
 
-foreach ($statuses as $state) {
-	$active = null;
-	if ($status == $state) {
-		$active = array('class' => 'active');
-	}
-	$links[] = $html->link(__($state, true), array_merge($this->passedArgs, array(
-		'status' => $state
-	)), $active);
-}
 echo join(' | ', $links);
 
 ?>

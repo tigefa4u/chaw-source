@@ -9,7 +9,7 @@
 				echo date("H:i", strtotime($data['Ticket']['created']));
 			?>
 		</span>
-	<p>
+	</p>
 
 	<div class="body">
 		<!--
@@ -43,10 +43,10 @@
 			?>
 		</p>
 
-		<p class="description"><?php 
+		<p class="description"><?php
 			echo $text->truncate($data['Ticket']['description'], 80, array(
 				'exact' => true, 'html' => false
-			)); 
+			));
 		?></p>
 	</div>
 

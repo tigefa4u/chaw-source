@@ -14,7 +14,7 @@
 				echo "<span class=\"small\"><strong>{$data['Comment']['reason']}</strong></span>";
 			endif;
 		?>
-	<p>
+	</p>
 
 	<div class="body">
 		<!--

@@ -10,12 +10,11 @@ $this->set('showdown', true);
 	</h3>
 
 	<p class="date">
-		<strong><?php __('Created') ?>:</strong> <?php echo date('Y-m-d', strtotime($version['Version']['created']));?>
-
 		<?php if (empty($version['Version']['completed'])): ?>
 			<strong><?php __('Due by') ?>:</strong> <?php echo $version['Version']['due_date'];?>
+		<?php else:?>
+			<strong><?php __('Completed') ?>:</strong> <?php echo date('Y-m-d', strtotime($version['Version']['due_date']));?>
 		<?php endif; ?>
-
 	</p>
 
 	<p class="summary wiki-text">
