@@ -49,26 +49,30 @@ Router::connect('/:controller/*', array(), array(
 
 
 /* Genral Fork Routes */
-Router::connect('/forks/:fork/:project/', array('controller' => 'source', 'action' => 'index'));
-Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('action' => 'index'));
+Router::connect('/forks/:fork/:project/', array('controller' => 'source', 'action' => 'index'), array('fork' => '[\-_\.a-zA-Z0-9]{3,}'));
+Router::connect('/forks/:fork/:project/:controller', array('action' => 'index'), array('fork' => '[\-_\.a-zA-Z0-9]{3,}', 'action' => 'index'));
 Router::connect('/forks/:fork/:project/:controller/:action/*', array(), array(
+	'fork' => '[\-_\.a-zA-Z0-9]{3,}',
 	'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects|repo',
 	'action' => 'branches|history|branch|logs|fast_forward|view|add|edit|modify|delete|remove|parent')
 );
 Router::connect('/forks/:fork/:project/:controller/*', array(), array(
+	'fork' => '[\-_\.a-zA-Z0-9]{3,}',
 	'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects',
 	'action' => 'index')
 );
 
 
 /* Genral Project Routes */
-Router::connect('/:project', array('controller' => 'source', 'action' => 'index'));
-Router::connect('/:project/:controller', array('action' => 'index'), array('action' => 'index'));
+Router::connect('/:project', array('controller' => 'source', 'action' => 'index'), array('project' => '[_a-zA-Z0-9]{3,}'));
+Router::connect('/:project/:controller', array('action' => 'index'), array('project' => '[_a-zA-Z0-9]{3,}', 'action' => 'index'));
 Router::connect('/:project/:controller/:action/*', array(), array(
+	'project' => '[_a-zA-Z0-9]{3,}',
 	'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects|repo',
 	'action' => 'branches|history|branch|logs|merge|view|add|edit|modify|delete|remove|forks')
 );
 Router::connect('/:project/:controller/*', array(), array(
+	'project' => '[_a-zA-Z0-9]{3,}',
 	'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects',
 	'action' => 'index')
 );

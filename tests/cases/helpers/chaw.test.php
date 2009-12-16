@@ -84,7 +84,12 @@ class ChawHelperTest extends CakeTestCase {
 		$expected = '<a href="/commits/view/1111111111111111111111" class="commit" title="1111111111111111111111">1111...1111</a>';
 
 		$this->assertEqual($result, $expected);
+		
+		$result = $this->Chaw->commit('1111111111111111111111', array('id' => 2, 'url' => 'some_project', 'fork' => 'Gwoo1'));
+		$expected = '<a href="/forks/Gwoo1/some_project/commits/view/1111111111111111111111" class="commit" title="1111111111111111111111">1111...1111</a>';
 
+		$this->assertEqual($result, $expected);
+		
 	}
 
 	function testChanges() {

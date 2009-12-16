@@ -12,38 +12,45 @@
  * @package default
  */
 class ChawHelper extends AppHelper {
-
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $helpers = array('Html');
-/**
- * Only returns the link if current user an admin or owner
- *
- * @see HtmlHelper::link()
- * @param string $title
- * @param string $url
- * @param string $htmlAttributes
- * @param string $confirmMessage
- * @param string $escapeTitle
- * @return string
- */
+
+	/**
+	 * Only returns the link if current user an admin or owner
+	 *
+	 * @see HtmlHelper::link()
+	 * @param string $title
+	 * @param string $url
+	 * @param string $htmlAttributes
+	 * @param string $confirmMessage
+	 * @param string $escapeTitle
+	 * @return string
+	 */
 	function admin($title, $url = null, $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		if (!empty($this->params['isAdmin']) || !empty($this->params['isOwner'])) {
 			return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
 		}
 		return null;
 	}
-/**
- * Displays humanized type as title and adds type to url
- * makes the css class active if passedArgs['type'] matches $type
- *
- * @see HtmlHelper::link()
- * @param string $type
- * @param string $url
- * @param string $htmlAttributes
- * @param string $confirmMessage
- * @param string $escapeTitle
- * @return void
- *
- */
+
+	/**
+	 * Displays humanized type as title and adds type to url
+	 * makes the css class active if passedArgs['type'] matches $type
+	 *
+	 * @see HtmlHelper::link()
+	 * @param string $type
+	 * @param string $url
+	 * @param string $htmlAttributes
+	 * @param string $confirmMessage
+	 * @param string $escapeTitle
+	 * @return void
+	 *
+	 */
 	function type($type, $url = array(), $htmlAttributes = array(), $confirmMessage = false, $escapeTitle = true) {
 		$view = ClassRegistry::getObject('view');
 		$passedArgs = $view->passedArgs;
@@ -64,12 +71,13 @@ class ChawHelper extends AppHelper {
 		}
 		return $this->Html->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle);
 	}
-/**
- * display unordered list of messages
- *
- * @param array $messages data(type => array(messages))
- * @return string
- */
+
+	/**
+	 * display unordered list of messages
+	 *
+	 * @param array $messages data(type => array(messages))
+	 * @return string
+	 */
 	function messages($messages = array()) {
 		$result = array();
 		foreach((array)$messages as $type => $types) {
@@ -84,14 +92,15 @@ class ChawHelper extends AppHelper {
 		}
 		return join("\n", $result);
 	}
-/**
- * returns commit id, git format: xxxx...xxxx
- * if array $project, returns a link
- *
- * @param string $revision
- * @param string $project [optional]
- * @return string
- */
+
+	/**
+	 * returns commit id, git format: xxxx...xxxx
+	 * if array $project, returns a link
+	 *
+	 * @param string $revision
+	 * @param string $project [optional]
+	 * @return string
+	 */
 	function commit($revision = null, $project = array()) {
 		if (!$revision) {
 			return null;
@@ -120,13 +129,14 @@ class ChawHelper extends AppHelper {
 			'class' => 'commit', 'title' => $revision
 		));
 	}
-/**
- * toggles activate/deactivate, on/off wrapped in links
- *
- * @param string $value
- * @param string $options
- * @return string
- */
+
+	/**
+	 * toggles activate/deactivate, on/off wrapped in links
+	 *
+	 * @param string $value
+	 * @param string $options
+	 * @return string
+	 */
 	function toggle($value, $options) {
 		if (!empty($options['url'])) {
 			$url = $options['url'];
@@ -143,12 +153,12 @@ class ChawHelper extends AppHelper {
 		return $this->Html->link($option, $url, array('class' => 'toggle', 'title' => $option));
 	}
 
-/**
- * Grab url params from $data
- *
- * @param array $data
- * @return array keys: project, fork
- */
+	/**
+	 * Grab url params from $data
+	 *
+	 * @param array $data
+	 * @return array keys: project, fork
+	 */
 	function params($data = array()) {
 		if (!empty($data['Project'])) {
 			$data = $data['Project'];
@@ -166,25 +176,27 @@ class ChawHelper extends AppHelper {
 
 		return compact('project', 'fork');
 	}
-/**
- * merges self::params() with $url
- *
- * @param array $data
- * @param array $url
- * @return array merged $url
- */
+
+	/**
+	 * merges self::params() with $url
+	 *
+	 * @param array $data
+	 * @param array $url
+	 * @return array merged $url
+	 */
 	function url($data = array(), $url = array()) {
 		if (!empty($data)) {
 			$url = array_merge($url, $this->params($data));
 		}
 		return $url;
 	}
-/**
- * returns base for the current project
- *
- * @param array $params
- * @return array merged $url
- */
+
+	/**
+	 * returns base for the current project
+	 *
+	 * @param array $params
+	 * @return array merged $url
+	 */
 	function base($params = array()) {
 		$params = array_merge(
 			array('project' => null, 'fork' => null), $this->params, $params
@@ -204,13 +216,14 @@ class ChawHelper extends AppHelper {
 		$base = str_replace("//", "/", $this->base . '/' . $fork . $params['project'] . '/');
 		return $base;
 	}
-/**
- * Display breadcrumbs for using data from Wiki
- *
- * @param string $path the wiki path
- * @param string $slug the wiki page name
- * @return string
- */
+
+	/**
+	 * Display breadcrumbs for using data from Wiki
+	 *
+	 * @param string $path the wiki path
+	 * @param string $slug the wiki page name
+	 * @return string
+	 */
 	function breadcrumbs($path, $slug = null) {
 		$out = array();
 		$parts = array_filter(explode('/', $path));
@@ -238,13 +251,14 @@ class ChawHelper extends AppHelper {
 		}
 		return join(' > ', $out) . $rss;
 	}
-/**
- * Displays feed-icon.png and links to $url
- *
- * @param string $title
- * @param array $url
- * @return string
- */
+
+	/**
+	 * Displays feed-icon.png and links to $url
+	 *
+	 * @param string $title
+	 * @param array $url
+	 * @return string
+	 */
 	function rss($title, $url) {
 		return $this->Html->link(
 			$this->Html->image('feed-icon.png', array(
@@ -254,13 +268,13 @@ class ChawHelper extends AppHelper {
 		);
 	}
 
-/**
- * Displays list of changes
- *
- * @param string $changes key:value pair separated by newline
- * @param string $format [optional] html, txt [default] html
- * @return string
- */
+	/**
+	 * Displays list of changes
+	 *
+	 * @param string $changes key:value pair separated by newline
+	 * @param string $format [optional] html, txt [default] html
+	 * @return string
+	 */
 	function changes($changes, $format = 'html') {
 		$results = array();
 		$lines = explode("\n", $changes);
