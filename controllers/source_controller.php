@@ -79,7 +79,7 @@ class SourceController extends AppController {
 		$title = $current;
 		
 		if (!empty($args)) {
-			$title = join('/', $args) . '/' . $current);
+			$title = join('/', $args) . '/' . $current;
 		}
 		$this->set('title_for_layout', $title);
 		
