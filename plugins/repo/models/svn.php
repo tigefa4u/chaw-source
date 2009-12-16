@@ -7,7 +7,7 @@
  *
  */
 
-App::import('Model', 'repo.Repo');
+App::import('Model', 'repo.Repo', false);
 /**
  * undocumented class
  *
