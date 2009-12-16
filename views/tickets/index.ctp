@@ -1,8 +1,6 @@
 <h2>
 	<?php __(
-		Inflector::humanize($current) .
-		(!empty($user) ? "'s" : '') . ' ' .
-		(!empty($type) ? join(',', array_map('ucwords', explode(',', $type))) : '')
+		Inflector::humanize($current) . (!empty($user) ? "'s" : '')
 	) ?>
 </h2>
 

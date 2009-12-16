@@ -87,7 +87,7 @@ class TicketsController extends AppController {
 
 		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] != 'all') {
 			$type = $this->passedArgs['type'];
-			$current .= '/' . $type;
+			$current .= '/' . Inflector::humanize($type);
 		}
 		/*
 		if (!empty($this->Project->current['fork'])) {
