@@ -41,7 +41,7 @@ class TicketsController extends AppController {
 	 */
 	var $components = array(
 		'Gpr' => array(
-			'keys' => array('type', 'priority'),
+			'keys' => array('status', 'type', 'priority'),
 			'connect' => array('status', 'page', 'user', 'type', 'priority'),
 			'actions' => array('index')
 		)
@@ -53,27 +53,27 @@ class TicketsController extends AppController {
 	 * @return void
 	 */
 	function index() {
-		$conditions = array(
-			'Ticket.project_id' => $this->Project->id,
-		);
-		$conditions = array_merge($conditions, (array)$this->postConditions($this->data, '=', 'AND', true));
-		$this->set('title_for_layout', 'Tickets/Status/');
-
+		$title = 'Tickets/Status/';
 		$current = $status = $type = $user = null;
-
 		$isDefault = empty($this->passedArgs);
 
 		if ($isDefault) {
 			$statuses = $this->Ticket->states();
-			$this->passedArgs['status'] = $statuses[0];
+			$this->data['Ticket']['status'] = $this->passedArgs['status'] = $statuses['pending'];
 		}
+
+		$conditions = array(
+			'Ticket.project_id' => $this->Project->id,
+		);
+		$conditions = array_merge(
+			$conditions, (array)$this->postConditions($this->data, '=', 'AND', true)
+		);
 
 		if (!empty($this->passedArgs['status'])) {
 			$status = $this->passedArgs['status'];
 			$current = $this->passedArgs['status'];
-			$conditions['Ticket.status'] = $current;
 
-			if ($status == 'approved') {
+			if (strpos('approved', $status) !== false) {
 				$this->paginate['order'] = 'Ticket.priority ASC';
 			}
 		}
@@ -82,11 +82,12 @@ class TicketsController extends AppController {
 			$user = $this->passedArgs['user'];
 			$current = $this->passedArgs['user'];
 			$conditions['Owner.username'] = $this->passedArgs['user'];
-			$this->set('title_for_layout', 'Tickets/User/');
+			$title = 'Tickets/User/';
 		}
 
 		if (!empty($this->passedArgs['type']) && $this->passedArgs['type'] != 'all') {
 			$type = $this->passedArgs['type'];
+			$current .= '/' . $type;
 		}
 		/*
 		if (!empty($this->Project->current['fork'])) {
@@ -96,13 +97,15 @@ class TicketsController extends AppController {
 			));
 		}
 		*/
-		$this->pageTitle .= Inflector::humanize($current);
+		$title .= Inflector::humanize($current);
 
 		$this->Ticket->recursive = 0;
 
 		$tickets = $this->paginate('Ticket', $conditions);
 
 		$this->Session->write('Ticket.back', '/' . $this->params['url']['url']);
+		
+		$this->set('title_for_layout', $title);
 		$this->set(compact('current', 'status', 'type', 'user', 'tickets'));
 		$this->_ticketInfo(false);
 	}
@@ -183,7 +186,7 @@ class TicketsController extends AppController {
 				} else {
 					$this->Session->setFlash(__('Ticket updated',true));
 				}
-				$this->Session->del('Ticket.previous');
+				$this->Session->delete('Ticket.previous');
 			} else {
 				if (!empty($data['Ticket']['comment'])) {
 					$this->Session->setFlash(__('Comment was NOT saved',true));

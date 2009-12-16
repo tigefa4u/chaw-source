@@ -76,15 +76,15 @@ class SourceController extends AppController {
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
 		$data = $this->Source->read($path);
-
-		$this->set('title_for_layout', $current);
+		$title = $current;
+		
 		if (!empty($args)) {
-			$this->set('title_for_layout', join('/', $args) . '/' . $current);
+			$title = join('/', $args) . '/' . $current);
 		}
-
+		$this->set('title_for_layout', $title);
+		
 		$branch = $this->Project->Repo->branch;
 		$this->set(compact('data', 'path', 'args', 'current', 'branch'));
-
 		$this->render('index');
 	}
 

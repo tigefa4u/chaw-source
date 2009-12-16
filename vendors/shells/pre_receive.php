@@ -48,7 +48,7 @@ class PreReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		$this->args[] = 'pre-receive';
- 		CakeLog::write(LOG_INFO, $this->args);
+ 		//CakeLog::write(LOG_INFO, $this->args);
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 

@@ -698,4 +698,5 @@ class ProjectTestCase extends CakeTestCase {
 		@unlink($path . 'permissions.ini');
 	}
 }
+
 ?>

@@ -83,7 +83,7 @@ class Git extends Repo {
 			$this->commit("Initial Project Commit");
 			$this->push();
 		}
-		//CakeLog::write($this->debug, LOG_DEBUG);
+		//CakeLog::write(LOG_DEBUG, $this->debug);
 
 		if (is_dir($path) && is_dir($this->working)) {
 			return true;
@@ -370,17 +370,22 @@ class Git extends Repo {
 			return false;
 		}
 
+		$branch = null;
 		if (!empty($options['branch'])) {
-			$this->branch($options['branch'], true);
-			unset($options['branch']);
-			$this->cd();
+			$branch = $options['branch'] . ' ';
+		//	$this->branch($options['branch'], true);
+		//	unset($options['branch']);
+		//	$this->cd();
 		}
 
 		$data = $this->__data;
 
 		if (empty($data)) {
 			$data = explode("\n", trim($this->run('log', array_merge(
-				$options['conditions'], array("--pretty=format:%H", '--', str_replace($this->working . '/', '', $options['path']))
+				$options['conditions'], array(
+					"{$branch}--pretty=format:%H", '--',
+					str_replace($this->working . '/', '', $options['path'])
+				)
 			))));
 			$this->__data = $data;
 		}

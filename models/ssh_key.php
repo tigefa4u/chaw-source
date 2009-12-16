@@ -103,7 +103,7 @@ class SshKey extends AppModel {
 		$key = $this->data['SshKey']['content'];
 		$username = $this->data['SshKey']['username'];
 
-		$new = str_replace(array("\n", "\r", "\t"), array("", "", ""), trim($key));
+		$new = $this->__strip($key);
 
 		$exists = false;
 		$userKeys = $this->read();
@@ -223,7 +223,7 @@ class SshKey extends AppModel {
 
 		$deleted = false;
 		foreach ($keys as $key) {
-			$key = $this->command($username) . str_replace(array("\n", "\r", "\t"), array("", "", ""), trim($key));
+			$key = $this->command($username) . $key;
 			if (isset($oldKeys[$key])) {
 				unset($oldKeys[$key]);
 				$deleted = true;
@@ -252,6 +252,21 @@ class SshKey extends AppModel {
 			$type = strtolower($type);
 		}
 		return 'command="../../chaw ' . $type . '_shell $SSH_ORIGINAL_COMMAND -user ' . $username. '",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ';
+	}
+
+/**
+ * strip stuff
+ *
+ * @return void
+ */
+	function __strip($key) {
+		return preg_replace('/==(.+)$/', '==',
+			str_replace(
+				array("\n", "\r", "\t", " ", 'ssh-rsa', 'ssh-dss'), 
+				array("", "", "", "", 'ssh-rsa ', 'ssh-dss '), 
+				trim($key)
+			)
+		);
 	}
 }
 ?>

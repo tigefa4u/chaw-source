@@ -222,16 +222,19 @@ class ChawHelper extends AppHelper {
 	 *
 	 * @param string $path the wiki path
 	 * @param string $slug the wiki page name
+	 * @param array $options
 	 * @return string
 	 */
-	function breadcrumbs($path, $slug = null) {
+	function breadcrumbs($path, $slug = null, $options = array()) {
+		$defaults = array('separator' => ' > ', 'ending' => ' . ');
+		$options += $defaults;
 		$out = array();
 		$parts = array_filter(explode('/', $path));
 
 		$rss = null;
 		if ($path && $slug !== 'home') {
 			$out[] = $this->Html->link('home', array('controller' => 'wiki', 'action' => 'index', '/'));
-			$rss = ' . ' . $this->rss('home', array('controller' => 'wiki', 'action' => 'index', '/', $path, 'ext' => 'rss'));
+			$rss = $options['ending'] . $this->rss('home', array('controller' => 'wiki', 'action' => 'index', '/', $path, 'ext' => 'rss'));
 		}
 
 		if ($path != '/home') {
@@ -244,12 +247,14 @@ class ChawHelper extends AppHelper {
 
 		if ($slug) {
 			$out[] = $slug;
-			$parts[] = $slug;
+			if ($path == '/') {
+				$parts[] = $slug;
+			}
 			$parts['action'] = 'index';
 			$parts['ext'] = 'rss';
-			$rss = ' . ' . $this->rss($path, $parts);
+			$rss = $options['ending'] . $this->rss($path, $parts);
 		}
-		return join(' > ', $out) . $rss;
+		return join($options['separator'], $out) . $rss;
 	}
 
 	/**

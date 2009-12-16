@@ -113,9 +113,11 @@ class StateMachineBehavior extends ModelBehavior {
 		if (empty($settings['transitions'])) {
 			return array();
 		}
-		foreach ($settings['transitions'] as $event => $transitions) {
-			if (isset($transitions[$state]) && $event != 'close') {
-				$results[$event] = $event;
+		foreach ((array)$state as $key) {
+			foreach ($settings['transitions'] as $event => $transitions) {
+				if (isset($transitions[$key]) && $event != 'close') {
+					$results[$event] = $event;
+				}
 			}
 		}
 		return $results;
@@ -129,7 +131,7 @@ class StateMachineBehavior extends ModelBehavior {
 	 */
 	function states(&$model) {
 		$settings = $this->settings[$model->name];
-		return $settings['states'];
+		return array_combine($settings['states'], $settings['states']);
 	}
 
 	/**
