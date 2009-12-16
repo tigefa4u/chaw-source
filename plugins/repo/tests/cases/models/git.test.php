@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Git Test cases generated on: 2008-09-09 18:09:14 : 1220999054*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 App::import('Model', 'Repo.Git', false);
 
 class GitTest extends CakeTestCase {

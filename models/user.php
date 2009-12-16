@@ -1,37 +1,37 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class User extends AppModel {
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $name = 'User';
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $displayField = 'username';
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $validate = array(
 		'username' => array(
 			'allowedChars' => array(
@@ -62,34 +62,38 @@ class User extends AppModel {
 			'message' => 'Required: Alpha-numeric passwords only'
 		)
 	);
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $hasOne = array('Permission');
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $SshKey = null;
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @param string $table
+	 * @param string $ds
+	 */
 	function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 		$this->SshKey = ClassRegistry::init('SshKey');
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeSave() {
 		if (!empty($this->data['SshKey']['content'])) {
 			$this->SshKey->set(array(
@@ -119,12 +123,14 @@ class User extends AppModel {
 
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $user
+	 * @param string $conditions
+	 * @return void
+	 */
 	function projects($user, $conditions = array()) {
 		if ($user = $this->Permission->user($user)) {
 			$projects = $this->Permission->find('all', array(
@@ -134,12 +140,13 @@ class User extends AppModel {
 			return compact('ids', 'projects');
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $user
+	 * @return void
+	 */
 	function groups($user) {
 		if ($user = $this->Permission->user($user)) {
 			$results = $this->Permission->find('all', array(
@@ -148,12 +155,12 @@ class User extends AppModel {
 			return array_filter(Set::combine($results, '/Project/id', '/Permission/group'));
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function permit() {
 		if (!empty($this->data['User']['group'])) {
 			$data = array('Permission' => array(
@@ -164,12 +171,13 @@ class User extends AppModel {
 			$this->Permission->save($data);
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $user
+	 * @return void
+	 */
 	function setToken($user = array()) {
 		$this->set($user);
 		$this->recursive = -1;
@@ -200,12 +208,13 @@ class User extends AppModel {
 		$this->invalidate('email', 'Email could not be sent');
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $token
+	 * @return void
+	 */
 	function setTempPassword($token = array()) {
 		if (is_array($token)) {
 			$this->set($token);
@@ -241,12 +250,13 @@ class User extends AppModel {
 		$this->invalidate('password', 'Password could not be reset');
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $token
+	 * @return void
+	 */
 	function activate($token = array()) {
 		if (is_array($token)) {
 			$this->set($token);
@@ -281,12 +291,13 @@ class User extends AppModel {
 		$this->invalidate('username', 'Account could not be activated');
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $length
+	 * @return void
+	 */
 	function __generatePassword($length = 10) {
 		srand((double)microtime() * 1000000);
 		$password = '';
@@ -299,22 +310,27 @@ class User extends AppModel {
 		App::import('Core', 'Security');
 		return array($password, Security::hash($password, null, true));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $conditions
+	 * @param string $recursive
+	 * @param string $extra
+	 * @return void
+	 */
 	function paginateCount($conditions, $recursive, $extra) {
 		$fields = array('fields' => 'DISTINCT User.username');
 		return count($this->find('all', compact('conditions', 'fields', 'recursive', 'extra')));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @param string $options
+	 * @return void
+	 */
 	function isUnique($data, $options = array()) {
 		if (!empty($data['username'])) {
 			$this->recursive = -1;

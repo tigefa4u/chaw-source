@@ -1,28 +1,41 @@
 <?php
-App::import('Model', 'CakeSchema');
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.vendors.shells
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+App::import('Model', 'CakeSchema');
+
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class ChawUpgradeShell extends Shell {
-
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $uses = array('Project');
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function _welcome() {
 		$this->out("Chaw Upgrade");
 	}
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function main() {
 		$choice = '';
 		$Tasks = new Folder(dirname(__FILE__) . DS . 'tasks');
@@ -60,7 +73,11 @@ class ChawUpgradeShell extends Shell {
 		return $this->{$upgrade}->execute();
 	}
 	
-	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function execute() {
 		$parentMethods = get_class_methods('ChawUpgradeShell');
 		$methods = array_diff(
@@ -75,7 +92,13 @@ class ChawUpgradeShell extends Shell {
 		}
 	}
 
-
+	/**
+	 * undocumented function
+	 *
+	 * @param string $table 
+	 * @param string $options 
+	 * @return void
+	 */
 	function _updateSchema($table, $options = array()) {
 		$defaults = array(
 			'connection' => 'default', 

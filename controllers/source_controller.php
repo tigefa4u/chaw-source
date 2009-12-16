@@ -1,32 +1,31 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class SourceController extends AppController {
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Source';
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->mapActions(array(
@@ -34,12 +33,13 @@ class SourceController extends AppController {
 			'rebase' => 'update'
 		));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function index() {
 		$args = func_get_args();
 		if ($this->Project->Repo->type == 'git') {
@@ -47,24 +47,27 @@ class SourceController extends AppController {
 		} else {
 			$this->Project->Repo->update();
 		}
-		
+
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
-		$data = $this->Source->read($path);
-		
-		$this->set('title_for_layout', $current);
+		$title = $current;
+
 		if (!empty($args)) {
-			$this->set('title_for_layout', join('/', $args) . '/' . $current);
+			$title = join('/', $args) . '/' . $current;
 		}
+		$this->set('title_for_layout', $title);
+		
+		$data = $this->Source->read($path);
 
 		$this->set(compact('data', 'path', 'args', 'current'));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function branches() {
 		$args = func_get_args();
 		if ($this->Project->Repo->type == 'svn') {
@@ -85,12 +88,12 @@ class SourceController extends AppController {
 		$this->render('index');
 	}
 
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function delete($branch = null) {
 		$this->autoRender = false;
 		if (!empty($branch) && !empty($this->params['isAdmin'])) {

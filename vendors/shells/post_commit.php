@@ -1,29 +1,46 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.vendors.shells
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class PostCommitShell extends Shell {
-
+	
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $uses = array('Project', 'Commit');
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function _welcome() {}
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function main() {
 		return $this->commit();
 	}
-
+	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function commit() {
 
 		$project = $this->args[0];

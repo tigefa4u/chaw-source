@@ -1,38 +1,66 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class SshKey extends AppModel {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'SshKey';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $type = 'git';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $lines = array();
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $user = array();
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $_File = null;
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $useTable = false;
-/**
- * set properties
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @return void
+	 */
 	function set($data = array()) {
 		parent::set($data);
 
@@ -52,12 +80,13 @@ class SshKey extends AppModel {
 		$this->lines = $this->user = array();
 		return true;
 	}
-/**
- * save key to file if it does not exist
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @return void
+	 */
 	function save($data = array()) {
 		if ($this->set($data) === false) {
 			return false;
@@ -93,14 +122,14 @@ class SshKey extends AppModel {
 
 		return $this->write();
 	}
-/**
- * read lines from file
- * is username is present in $data, return only user keys
- * sets $lines to an array of contents in the file
- *
- * @return array
- *
- **/
+
+	/**
+	 * read lines from file
+	 * is username is present in $data, return only user keys
+	 * sets $lines to an array of contents in the file
+	 *
+	 * @return array
+	 */
 	function read($data = array()) {
 		if ($this->set($data) === false) {
 			return false;
@@ -148,23 +177,23 @@ class SshKey extends AppModel {
 
 		return array();
 	}
-/**
- * write lines to file
- *
- * @return void
- *
- **/
+
+	/**
+	 * write lines to file
+	 *
+	 * @return void
+	 */
 	function write() {
 		$this->_File->lock = true;
 		$result = $this->_File->write(join("\n", $this->lines), 'w', true);
 		return $result;
 	}
-/**
- * delete a key
- *
- * @return void
- *
- **/
+
+	/**
+	 * delete a key
+	 *
+	 * @return void
+	 */
 	function delete($data = array()) {
 		if ($this->set($data) === false) {
 			return false;
@@ -208,13 +237,13 @@ class SshKey extends AppModel {
 		}
 		return true;
 	}
-/**
- * get command for a given user
- *
- * @param string $username
- * @return void
- *
- **/
+
+	/**
+	 * get command for a given user
+	 *
+	 * @param string $username
+	 * @return void
+	 */
 	function command($type, $username = null) {
 		if ($username === null) {
 			$username = $type;

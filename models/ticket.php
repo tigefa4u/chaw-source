@@ -1,23 +1,30 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class Ticket extends AppModel {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Ticket';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $actsAs = array(
 		'Containable',
 		'List' => array('position_column' => 'number', 'scope' => 'project_id'),
@@ -41,6 +48,11 @@ class Ticket extends AppModel {
 		)
 	);
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $belongsTo = array(
 		'Project', 'Version',
 		'Owner' => array('className' => 'User', 'foreignKey' => 'Owner'),
@@ -54,6 +66,11 @@ class Ticket extends AppModel {
 	// 	)
 	// );
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $hasMany = array(
 		'Comment' => array(
 			'foreignKey' => 'foreign_key',
@@ -62,8 +79,18 @@ class Ticket extends AppModel {
 		)
 	);
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $hasAndBelongsToMany = array('Tag');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $validate = array(
 		'project_id' => array('numeric'),
 		'title' => array('notEmpty'),
@@ -74,10 +101,21 @@ class Ticket extends AppModel {
 		// 'resolution' => array('notEmpty'),
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $event
+	 * @return void
+	 */
 	function transitions($event) {
 		return true;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeValidate() {
 		if (!empty($this->data['Ticket']['project'])) {
 			$this->data['Ticket']['project_id'] = $this->Project->field('id', array(
@@ -87,6 +125,11 @@ class Ticket extends AppModel {
 		return true;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeSave() {
 		if (
 			empty($this->data['Ticket']['title'])
@@ -190,6 +233,12 @@ class Ticket extends AppModel {
 		return true;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $created
+	 * @return void
+	 */
 	function afterSave($created) {
 		if ($created && $this->addToTimeline) {
 			$Timeline = ClassRegistry::init('Timeline');

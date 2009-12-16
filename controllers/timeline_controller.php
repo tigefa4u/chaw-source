@@ -1,30 +1,47 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class TimelineController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Timeline';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $helpers = array('Time', 'Text');
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $paginate = array(
 		'limit' => 20,
 		'order' => 'Timeline.created DESC, Timeline.id DESC'
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		Router::connectNamed(array('type', 'page'));
 
@@ -46,6 +63,11 @@ class TimelineController extends AppController {
 		$this->set('rssFeed', array('controller' => 'timeline'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function parent() {
 		if (!empty($this->Project->current['fork'])) {
 			$this->paginate['conditions'] = array(
@@ -58,6 +80,11 @@ class TimelineController extends AppController {
 		$this->render('index');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function forks() {
 		if (empty($this->Project->current['fork'])) {
 			$forks = $this->Project->forks();
@@ -71,6 +98,12 @@ class TimelineController extends AppController {
 		$this->render('index');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function remove($id = null) {
 		if (!$id || empty($this->params['isAdmin'])) {
 			$this->redirect($this->referer());

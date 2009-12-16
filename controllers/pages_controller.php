@@ -1,38 +1,15 @@
 <?php
-/* SVN FILE: $Id: pages_controller.php 6296 2008-01-01 22:18:17Z phpnut $ */
 /**
- * Static content controller.
+ * Chaw : source code and project management
  *
- * This file will render views from views/pages/
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * PHP versions 4 and 5
- *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
- * Copyright 2005-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @filesource
- * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link				http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package			cake
- * @subpackage		cake.cake.libs.controller
- * @since			CakePHP(tm) v 0.2.9
- * @version			$Revision: 6296 $
- * @modifiedby		$LastChangedBy: phpnut $
- * @lastmodified	$Date: 2008-01-01 14:18:17 -0800 (Tue, 01 Jan 2008) $
- * @license			http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 /**
- * Static content controller
+ * undocumented class
  *
- * Override this controller by placing a copy in controllers directory of an application
- *
- * @package		cake
- * @subpackage	cake.cake.libs.controller
+ * @package default
  */
 class PagesController extends AppController{
 /**
@@ -61,7 +38,7 @@ class PagesController extends AppController{
  *
  * @return void
  *
- **/
+ */
 	function beforeFilter() {
 		parent::beforeFilter();
 	}
@@ -70,7 +47,7 @@ class PagesController extends AppController{
  *
  * @return void
  *
- **/
+ */
 	function start() {
 
 	}

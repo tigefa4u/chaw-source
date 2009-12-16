@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* User Test cases generated on: 2008-10-16 10:10:23 : 1224177023*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 App::import('Model', 'User');
 
 class UserTestCase extends CakeTestCase {

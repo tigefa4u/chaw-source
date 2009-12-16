@@ -1,6 +1,11 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Ticket Fixture generated on: 2008-09-23 07:09:29 : 1222170869*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
 
 class TicketFixture extends CakeTestFixture {
 	var $name = 'Ticket';

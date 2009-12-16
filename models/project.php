@@ -15,50 +15,56 @@
  *
  */
 class Project extends AppModel {
-/**
- * undocumented class variable
- *
- * @var string
- **/
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Project';
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $current = array();
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $Repo;
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $hooks = array(
 		'git' => array('pre-receive', 'post-receive'),
 		'svn' => array('pre-commit', 'post-commit')
 	);
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $repoTypes = array('Git', 'Svn');
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $messages = array('response' => null, 'debug' => null);
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $validate = array(
 		'name' => array(
 			'minimum' => array(
@@ -74,30 +80,34 @@ class Project extends AppModel {
 		),
 		'user_id' => array('notEmpty')
 	);
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $belongsTo = array('User');
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $hasMany = array('Permission');
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $__created = false;
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $params
+	 * @return void
+	 */
 	function initialize($params = array()) {
 		$this->recursive = -1;
 		$this->current = Configure::read('Project');
@@ -184,12 +194,12 @@ class Project extends AppModel {
 		$this->Repo = new $this->current['repo_type']($this->current['repo']);
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeValidate() {
 		if (!empty($this->data['Project']['name']) && empty($this->data['Project']['url'])) {
 			$this->data['Project']['url'] = Inflector::slug(strtolower($this->data['Project']['name']));
@@ -201,12 +211,12 @@ class Project extends AppModel {
 		}
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeSave() {
 		$this->createShell();
 		if (empty($this->data['Project']['fork'])) {
@@ -251,12 +261,13 @@ class Project extends AppModel {
 
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $created
+	 * @return void
+	 */
 	function afterSave($created) {
 		if (!empty($this->data['Project']['approved'])) {
 
@@ -319,12 +330,12 @@ class Project extends AppModel {
 
 		$this->__created = false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function afterDelete() {
 		$CleanUp = new Folder($this->Repo->path);
 		if ($CleanUp->pwd() == $this->Repo->path && strpos($this->Repo->path, 'forks') !== false) {
@@ -340,12 +351,14 @@ class Project extends AppModel {
 			}
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $hooks
+	 * @param string $options
+	 * @return void
+	 */
 	function createHooks($hooks, $options = array()) {
 		extract(array_merge(array('project' => null, 'fork' => null, 'root' => null), $options));
 		$result = array();
@@ -359,17 +372,25 @@ class Project extends AppModel {
 		return $result;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $fields 
+	 * @param string $id 
+	 * @return void
+	 */
 	function read($fields = null, $id = null) {
 		$data = parent::read($fields, $id);
 		$data['Project']['config'] = unserialize($data['Project']['config']);
 		return $data;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @return void
+	 */
 	function createShell($data = array()) {
 
 		$template = CONFIGS . 'templates' . DS;
@@ -388,12 +409,13 @@ class Project extends AppModel {
 
 		return true;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @return void
+	 */
 	function fork($data = array()) {
 		$this->set($data);
 
@@ -431,29 +453,12 @@ class Project extends AppModel {
 		}
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
-	function branches($id = null) {
-		if (!$id) {
-			$id = $this->id;
-		}
 
-		$Branch = ClassRegistry::init('Branch');
-		$Branch->recursive = -1;
-		return $Branch->find('all', array('conditions' =>
-			array('project_id' => $this->id)
-		));
-	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function forks() {
 		$forks = $this->find('all', array(
 			'conditions' => array('Project.project_id' => $this->id),
@@ -461,12 +466,14 @@ class Project extends AppModel {
 		));
 		return Set::extract('/Project/id', $forks);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @param string $include
+	 * @return void
+	 */
 	function all($id = null, $include = true) {
 		if (!$id) {
 			$id = $this->id;
@@ -486,12 +493,13 @@ class Project extends AppModel {
 
 		return $this->find('all', compact('conditions'));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $conditions
+	 * @return void
+	 */
 	function users($conditions = array()) {
 		$scope = array('Permission.project_id' => $this->id, 'User.username !=' => null);
 		if (!empty($conditions)) {
@@ -508,12 +516,14 @@ class Project extends AppModel {
 
 		return array_filter(Set::combine($users, '/User/id', '/User/username'));
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $user
+	 * @param string $group
+	 * @return void
+	 */
 	function permit($user, $group = null) {
 		$id = $this->id;
 		$count = 'Project.users_count + 1';
@@ -543,12 +553,14 @@ class Project extends AppModel {
 			);
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $data
+	 * @param string $options
+	 * @return void
+	 */
 	function isUnique($data, $options = array()) {
 		if (!empty($data['name'])) {
 			$test = $this->findByUrl(Inflector::slug(strtolower($data['name'])));
@@ -571,12 +583,13 @@ class Project extends AppModel {
 			return true;
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $key
+	 * @return void
+	 */
 	function ticket($key = null) {
 		if ($key == null) {
 			foreach ($this->current['config']['ticket'] as $key => $ticket) {
@@ -590,12 +603,13 @@ class Project extends AppModel {
 			return array_combine($data, $data);
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $key
+	 * @return void
+	 */
 	function groups($key = null) {
 		$result = array();
 		if (!empty($this->current['config']['groups'])) {
@@ -613,21 +627,21 @@ class Project extends AppModel {
 		arsort($result);
 		return $result;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function repoTypes() {
 		return array_combine($this->repoTypes, $this->repoTypes);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function from() {
 		$baseDomain = env('HTTP_BASE');
 		if ($baseDomain[0] === '.') {
@@ -636,12 +650,13 @@ class Project extends AppModel {
 		$from = sprintf('<noreply@%s>', $baseDomain);
 		return $from;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $params
+	 * @return void
+	 */
 	function key($params = array()) {
 		if (empty($params)) {
 			$params = $this->current;

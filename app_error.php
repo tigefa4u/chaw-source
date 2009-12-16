@@ -1,33 +1,32 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class AppError extends ErrorHandler {
-/**
- * Controller instance.
- *
- * @var object
- * @access public
- */
+
+	/**
+	 * Controller instance.
+	 *
+	 * @var object
+	 * @access public
+	 */
 	var $controller = null;
-/**
- * Class constructor.
- *
- * @param string $method Method producing the error
- * @param array $messages Error messages
- */
+
+	/**
+	 * Class constructor.
+	 *
+	 * @param string $method Method producing the error
+	 * @param array $messages Error messages
+	 */
 	function __construct($method, $messages) {
 		App::import('Core', 'Sanitize');
 		static $__previousError = null;
@@ -73,6 +72,12 @@ class AppError extends ErrorHandler {
 		$this->_stop();
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $messages
+	 * @return void
+	 */
 	function missingAction($messages = array()) {
 		return parent::missingAction($messages);
 		/*
@@ -83,6 +88,12 @@ class AppError extends ErrorHandler {
 		*/
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $messages
+	 * @return void
+	 */
 	function missingController($messages = array()) {
 		return parent::missingController($messages);
 		/*

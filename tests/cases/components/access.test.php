@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Access Test cases generated on: 2008-11-01 10:11:29 : 1225561949*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 App::import('Component', array('Auth', 'Session', 'Access'));
 App::import('Controller');
 App::import('Model', array('Project', 'Permission'), true);

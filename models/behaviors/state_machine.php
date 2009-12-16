@@ -1,7 +1,25 @@
 <?php
-
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class StateMachineBehavior extends ModelBehavior {
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $model
+	 * @param string $config
+	 * @return void
+	 */
 	function setup(&$model, $config) {
 		$defaults = array(
 			'field' => 'state', 'default' => null, 'states' => array(),
@@ -22,6 +40,14 @@ class StateMachineBehavior extends ModelBehavior {
 		$this->mapMethods['/^(' . join('|', $config['events']) . ')$/'] = 'event';
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $model
+	 * @param string $from
+	 * @param string $to
+	 * @return void
+	 */
 	function transition(&$model, $from, $to = null) {
 		$model->recursive = -1;
 		if (!empty($model->data[$model->alias][$this->settings[$model->name]['field']])) {
@@ -94,6 +120,7 @@ class StateMachineBehavior extends ModelBehavior {
 		}
 		return $results;
 	}
+
 	/**
 	 * If 'transitions' is defined in settings, returns the possible transition events for the
 	 * current state.
@@ -121,6 +148,12 @@ class StateMachineBehavior extends ModelBehavior {
 		return false;
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $model
+	 * @return void
+	 */
 	function beforeValidate(&$model) {
 		if ($model->exists()) {
 			return true;

@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* SshKey Test cases generated on: 2008-10-16 22:10:35 : 1224221135*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 App::import('Model', 'SshKey');
 
 class SshKeyTestCase extends CakeTestCase {

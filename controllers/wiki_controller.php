@@ -1,25 +1,37 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class WikiController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Wiki';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $helpers = array('Text');
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		extract($this->__params());
 
@@ -142,6 +154,11 @@ class WikiController extends AppController {
 		$this->render('index');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function add() {
 
 		extract($this->__params());
@@ -190,12 +207,22 @@ class WikiController extends AppController {
 		$this->set(compact('path', 'slug'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function edit() {
 		$this->set('title_for_layout', 'Wiki/edit/');
 		$this->add();
 		$this->render('add');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function __params() {
 		$path = '/'; $slug = null;
 		$slug = $this->Wiki->slug(array_pop($this->passedArgs));

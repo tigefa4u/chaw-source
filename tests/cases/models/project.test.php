@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Project Test cases generated on: 2008-10-06 15:10:20 : 1223321240*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 class ProjectTestCase extends CakeTestCase {
 	var $Project = null;
 	var $fixtures = array(
@@ -669,12 +675,12 @@ class ProjectTestCase extends CakeTestCase {
 		$path = Configure::read('Content.base');
 		$this->assertTrue(file_exists($path . 'permissions.ini'));
 		$this->assertTrue(file_exists($this->Project->Repo->path . DS . 'permissions.ini'));
-		
-		
+
+
 		$this->assertEqual(2, $this->Project->id);
-		
+
 		$this->assertTrue($this->Project->initialize(array('project' => 'new_project')));
-		
+
 		$this->assertEqual(1, $this->Project->current['id']);
 	}
 

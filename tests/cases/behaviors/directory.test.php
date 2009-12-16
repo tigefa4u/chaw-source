@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Directory Test cases generated on: 2008-11-25 18:11:31 : 1227667771*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 App::import('AppModel');
 App::import('Behavior', 'Directory');
 class TestDirectoryBehavior extends DirectoryBehavior {
@@ -87,8 +93,8 @@ class DirectoryBehaviorTest extends CakeTestCase {
 		$this->assertEqual($results[0]['TestDirectory']['path'], '/guides');
 		$this->assertEqual($results[1]['TestDirectory']['path'], '/guides/ssh');
 		$this->assertEqual($results[2]['TestDirectory']['path'], '/guides/ssh/keys');
-		
-		
+
+
 		$results = $this->Directory->find('all', array('conditions' => array('TestDirectory.path' => '/guides/ssh')));
 		$this->assertEqual(count($results), 2);
 		$this->assertEqual($results[0]['TestDirectory']['path'], '/guides/ssh');

@@ -1,6 +1,11 @@
-<?php 
-/* SVN FILE: $Id$ */
-/* Project Fixture generated on: 2008-10-06 23:10:38 : 1223348498*/
+<?php
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
 
 class PermissionFixture extends CakeTestFixture {
 	var $name = 'Permission';

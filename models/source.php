@@ -1,38 +1,39 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.models
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class Source extends Object {
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $useTable = false;
-/**
- * the current uri
- *
- * @var string
- **/
+
+	/**
+	 * the current uri
+	 *
+	 * @var string
+	 */
 	var $Repo = null;
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $Repo
+	 * @param string $args
+	 * @return void
+	 */
 	function initialize(&$Repo, $args = array()) {
 		$this->Repo =& $Repo;
 
@@ -72,12 +73,12 @@ class Source extends Object {
  		}
 		return array($args, $path, $current);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function branches() {
 		if ($this->Repo->type != 'git') {
 			return array();
@@ -98,12 +99,12 @@ class Source extends Object {
 		$this->Repo->config($config);
 		return $branches;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function rebase() {
 		if ($this->Repo->working) {
 			$path = dirname($this->Repo->working);
@@ -114,12 +115,13 @@ class Source extends Object {
 		}
 		return $this->Repo->pull();
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $path
+	 * @return void
+	 */
 	function read($path = null) {
 		$data = null;
 
@@ -191,12 +193,15 @@ class Source extends Object {
 
 		return array('Folder' => $dir, 'File' => $file);
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $file
+	 * @param string $ext
+	 * @param string $size
+	 * @return void
+	 */
 	function __size($file = null, $ext = 'B', $size = '0') {
 		$size_ext = array('','K','M','G','T');
 
@@ -214,12 +219,13 @@ class Source extends Object {
 			return array('num' => 0,'ext' => '');
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @param string $file
+	 * @return void
+	 */
 	function __icon($file) {
 		$array = explode('.', $file);
 		$ext = '';
@@ -231,35 +237,37 @@ class Source extends Object {
 			$ext = array_pop($array);
 		}
 
-		$exts = array("bin" => "/icons/binary.gif",
-					"hqx" => "/icons/binhex.gif",
-					"tar" => "/icons/tar.gif",
-					"wrl" => "/icons/world2.gif",
-					"Z" => "/icons/compressed.gif",
-					"gz" => "/icons/compressed.gif",
-					"zip" => "/icons/compressed.gif",
-					"bz2" => "/icons/compressed.gif",
-					"rar" => "/icons/compressed.gif",
-					"ace" => "/icons/compressed.gif",
-					"ps" => "/icons/ps.gif",
-					"pdf" => "/icons/ps.gif",
-					"html" => "/icons/layout.gif",
-					"txt" => "/icons/text.gif",
-					"c" => "/icons/c.gif",
-					"cpp" => "/icons/small/c.gif",
-					"pl" => "/icons/p.gif",
-					"php" => "/icons/p.gif",
-					"php3" => "/icons/p.gif",
-					"php4" => "/icons/p.gif",
-					"php5" => "/icons/p.gif",
-					"for" => "/icons/f.gif",
-					"dvi" => "/icons/dvi.gif",
-					"uu" => "/icons/uuencoded.gif",
-					"conf" => "/icons/script.gif",
-					"tex" => "/icons/tex.gif",
-					"core" => "/icons/bomb.gif",
-					"^^BLANKICON^^" => "/icons/blank.gif",
-					"^^UNKOWN^^" => "/icons/unknown.gif");
+		$exts = array(
+			"bin" => "/icons/binary.gif",
+			"hqx" => "/icons/binhex.gif",
+			"tar" => "/icons/tar.gif",
+			"wrl" => "/icons/world2.gif",
+			"Z" => "/icons/compressed.gif",
+			"gz" => "/icons/compressed.gif",
+			"zip" => "/icons/compressed.gif",
+			"bz2" => "/icons/compressed.gif",
+			"rar" => "/icons/compressed.gif",
+			"ace" => "/icons/compressed.gif",
+			"ps" => "/icons/ps.gif",
+			"pdf" => "/icons/ps.gif",
+			"html" => "/icons/layout.gif",
+			"txt" => "/icons/text.gif",
+			"c" => "/icons/c.gif",
+			"cpp" => "/icons/small/c.gif",
+			"pl" => "/icons/p.gif",
+			"php" => "/icons/p.gif",
+			"php3" => "/icons/p.gif",
+			"php4" => "/icons/p.gif",
+			"php5" => "/icons/p.gif",
+			"for" => "/icons/f.gif",
+			"dvi" => "/icons/dvi.gif",
+			"uu" => "/icons/uuencoded.gif",
+			"conf" => "/icons/script.gif",
+			"tex" => "/icons/tex.gif",
+			"core" => "/icons/bomb.gif",
+			"^^BLANKICON^^" => "/icons/blank.gif",
+			"^^UNKOWN^^" => "/icons/unknown.gif"
+		);
 
 		if (isset($exts[$ext])) {
 			return $exts[ $ext ];

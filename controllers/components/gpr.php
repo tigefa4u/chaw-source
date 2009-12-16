@@ -1,25 +1,39 @@
 <?php
 /**
- * GprComponent
+ * Chaw : source code and project management
  *
- * Get, Post, Redirect component for CakePHP
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers.components
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class GprComponent extends Object {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $keys = array();
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $actions = array();
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $controller
+	 * @param string $options
+	 * @return void
+	 */
 	function initialize($controller, $options) {
 		$this->params = $_GET;
 		unset($this->params['url']);
@@ -55,6 +69,12 @@ class GprComponent extends Object {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $controller
+	 * @return void
+	 */
 	function startup($controller) {
 		if (in_array($controller->action, $this->allowedActions)) {
 			foreach ($this->keys as $key) {
@@ -70,6 +90,12 @@ class GprComponent extends Object {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $keys
+	 * @return void
+	 */
 	function keys($keys) {
 		$this->keys = array_merge($this->keys, $keys);
 	}

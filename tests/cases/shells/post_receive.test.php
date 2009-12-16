@@ -1,4 +1,12 @@
 <?php
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 require_once(CONSOLE_LIBS . 'shell.php');
 require_once(APP . 'vendors' . DS . 'shells' . DS . 'post_receive.php');
 class TestShellDispatcher extends Object {

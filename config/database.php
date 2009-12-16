@@ -8,12 +8,12 @@ class DATABASE_CONFIG {
 		'port' => '',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'chaw_workflow',
+		'database' => 'chaw',
 		'schema' => '',
 		'prefix' => '',
 		'encoding' => ''
 	);
-	
+
 	var $test = array(
 		'driver' => 'mysql',
 		'persistent' => false,

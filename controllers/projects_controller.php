@@ -1,27 +1,39 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
+ */
+/**
+ * undocumented class
  *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers
- * @since			Chaw 0.1
- * @license			commercial
- *
+ * @package default
  */
 class ProjectsController extends AppController {
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $name = 'Projects';
 
+	/**
+	 * undocumented variable
+	 *
+	 * @var string
+	 */
 	var $paginate = array(
 		'order' => 'Project.users_count DESC, Project.created ASC'
 	);
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->mapActions(array('fork' => 'create'));
@@ -29,6 +41,11 @@ class ProjectsController extends AppController {
 		$this->Access->allow('index', 'start');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function index() {
 		Router::connectNamed(array('type', 'page'));
 
@@ -73,6 +90,11 @@ class ProjectsController extends AppController {
 		$this->set('rssFeed', array('controller' => 'projects'));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function forks() {
 		$this->paginate['conditions'] = array(
 			'Project.fork !=' => null, 'Project.project_id' =>  $this->Project->id
@@ -84,6 +106,12 @@ class ProjectsController extends AppController {
 		$this->render('index');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $url
+	 * @return void
+	 */
 	function view($url  = null) {
 		$project = array('Project' => $this->Project->current);
 		if (empty($this->params['project']) && $url == null && $project['id'] != 1) {
@@ -93,6 +121,12 @@ class ProjectsController extends AppController {
 		$this->set('project', $project);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $type
+	 * @return void
+	 */
 	function start($type = null) {
 		$this->set('title_for_layout', 'Projects/Start');
 		if ($type || !empty($this->data)) {
@@ -101,6 +135,11 @@ class ProjectsController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function add() {
 		if (!empty($this->data)) {
 			$this->Project->create(array(
@@ -147,6 +186,11 @@ class ProjectsController extends AppController {
 		$this->render('add');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function edit() {
 		if ($this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
@@ -175,6 +219,12 @@ class ProjectsController extends AppController {
 		$this->render('edit');
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function remove($id) {
 		$project = $this->Project->findById($id);
 		if (empty($project)) {
@@ -188,6 +238,11 @@ class ProjectsController extends AppController {
 		$this->redirect($this->referer());
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function delete() {
 		if (!empty($this->params['form']['cancel'])) {
 			$this->redirect(array('controller' => 'source'));
@@ -220,6 +275,11 @@ class ProjectsController extends AppController {
 		}
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function admin_index() {
 		if ($this->Project->id != 1 || $this->params['isAdmin'] === false) {
 			$this->redirect($this->referer());
@@ -248,6 +308,11 @@ class ProjectsController extends AppController {
 		$this->set('projects', $this->paginate());
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 */
 	function admin_add() {
 
 		$this->set('title_for_layout', 'Project Setup');
@@ -286,6 +351,12 @@ class ProjectsController extends AppController {
 		$this->set('messages', $this->Project->messages);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	function admin_edit($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('The project was invalid',true));
@@ -317,12 +388,24 @@ class ProjectsController extends AppController {
 		$this->set('messages', $this->Project->messages);
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @return void
+	 */
 	function admin_approve($project = null) {
 		$this->_toggle($project, array(
 			'field' => 'approved', 'value' => 1, 'action' => 'approved'
 		));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @return void
+	 */
 	function admin_reject($project = null) {
 		$this->_toggle($project, array(
 			'field' => 'approved', 'value' => 0, 'action' => 'rejected'
@@ -330,18 +413,37 @@ class ProjectsController extends AppController {
 
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @return void
+	 */
 	function admin_activate($project = null) {
 		$this->_toggle($project, array(
 			'field' => 'active', 'value' => 1, 'action' => 'activated'
 		));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @return void
+	 */
 	function admin_deactivate($project = null) {
 		$this->_toggle($project, array(
 			'field' => 'active', 'value' => 0, 'action' => 'deactivated'
 		));
 	}
 
+	/**
+	 * undocumented function
+	 *
+	 * @param string $project
+	 * @param string $options
+	 * @return void
+	 */
 	function _toggle($project, $options = array()) {
 		$options = array_merge(array('field' => null, 'value' => null, 'action' => null), $options);
 
@@ -387,6 +489,10 @@ class ProjectsController extends AppController {
 		$this->redirect(array('project' => false, 'fork' => false, 'action' => 'index'));
 	}
 
+	/**
+	 * undocumented
+	 *
+	 */
 	function &_loadEmail() {
 		App::import('Component', 'Email');
 		$Email = new EmailComponent();

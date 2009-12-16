@@ -1,62 +1,66 @@
 <?php
 /**
- * Short description
+ * Chaw : source code and project management
  *
- * Long description
- *
- * Copyright 2008, Garrett J. Woodworth <gwoo@cakephp.org>
- * Redistributions not permitted
- *
- * @copyright		Copyright 2008, Garrett J. Woodworth
- * @package			chaw
- * @subpackage		chaw.controllers.components
- * @since			Chaw 0.1
- * @license			commercial
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
  */
+/**
+ * undocumented class
+ *
+ * @package default
+ */
 class AccessComponent extends Object {
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $access = 'r';
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $user = array();
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $url = false;
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $isPublic = true;
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $isAllowed = false;
-/**
- * undocumented class variable
- *
- * @var string
- **/
+
+	/**
+	 * undocumented class variable
+	 *
+	 * @var string
+	 */
 	var $allowedActions = array();
-/**
- * initialize
- *
- * @return void
- *
- **/
+
+	/**
+	 * initialize
+	 *
+	 * @return void
+	 *
+	 */
 	function initialize(&$C) {
 		$C->params['isAdmin'] = false;
 
@@ -128,12 +132,13 @@ class AccessComponent extends Object {
 			return true;
 		}
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function startup(&$C) {
 		if (!empty($_COOKIE['Chaw']['User']) && empty($this->user) && $C->action !== 'login' && $C->action !== 'logout') {
 			$C->Session->write('Access.redirect', '/' . ltrim($this->url, '/'));
@@ -201,14 +206,15 @@ class AccessComponent extends Object {
 		}
 		return false;
 	}
-/**
- * Check access against permissions
- *
- * @param array options
- *  username, action, access, admin, default
- * @return void
- *
- **/
+
+	/**
+	 * Check access against permissions
+	 *
+	 * @param array options
+	 *  username, action, access, admin, default
+	 * @return void
+	 *
+	 */
 	function check(&$C, $options = array()) {
 		extract(array_merge(array(
 			'username' => $this->user('username'),
@@ -261,12 +267,13 @@ class AccessComponent extends Object {
 		}
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function user($key = null) {
 		if (empty($this->user)) {
 			return false;
@@ -293,12 +300,13 @@ class AccessComponent extends Object {
 
 		return false;
 	}
-/**
- * undocumented function
- *
- * @return void
- *
- **/
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 *
+	 */
 	function allow($actions = array()) {
 		if (!is_array($actions)) {
 			$actions = func_get_args();

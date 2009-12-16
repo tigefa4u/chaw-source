@@ -1,6 +1,12 @@
 <?php
-/* SVN FILE: $Id$ */
-/* Commit Test cases generated on: 2008-10-13 09:10:08 : 1223915168*/
+/**
+ * Chaw : source code and project management
+ *
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
+ *
+ */
+
 class CommitTestCase extends CakeTestCase {
 	var $Commit = null;
 	var $fixtures = array(
@@ -51,8 +57,8 @@ class CommitTestCase extends CakeTestCase {
 		)));
 
 	}
-	
-	
+
+
 	function testCommitSaveUnique() {
 		$data = array('Commit' => array(
 			//'id'  => 1,
@@ -86,7 +92,7 @@ class CommitTestCase extends CakeTestCase {
 			'event' => 'committed',
 			'data' => 0
 		)));
-	
+
 		$this->Commit->create($data);
 		$this->assertFalse($this->Commit->save($data));
 
@@ -103,7 +109,7 @@ class CommitTestCase extends CakeTestCase {
 			'event' => 'committed',
 			'data' => 0
 		)));
-		
+
 	}
 
 	function testCommitAggregate() {
