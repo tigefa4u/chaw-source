@@ -43,22 +43,19 @@
 		if (!empty($this->params['admin'])) {
 			echo $html->css(array('chaw.admin'));
 		}
+		echo $html->script('jquery-1.3.1.min');
 
-		if (!empty($javascript)) {
-			echo $html->script('jquery-1.3.1.min');
-
-			if (isset($showdown)):
-				echo $html->script('gshowdown.min');
-				echo $html->scriptBlock('
-					var converter = new Showdown.converter("' . $chaw->base() . '");
-					$(document).ready(function(){
-						$(".wiki-text").each(function () {
-							$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
-						});
+		if (isset($showdown)):
+			echo $html->script('gshowdown.min');
+			echo $html->scriptBlock('
+				var converter = new Showdown.converter("' . $chaw->base() . '");
+				$(document).ready(function(){
+					$(".wiki-text").each(function () {
+						$(this).html(converter.makeHtml(jQuery.trim($(this).text())))
 					});
-				');
-			endif;
-		}
+				});
+			');
+		endif;
 		echo $scripts_for_layout;
 	?>
 </head>

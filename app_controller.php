@@ -38,7 +38,7 @@ class AppController extends Controller {
 	 *
 	 * @var string
 	 */
-	var $helpers = array('Html', 'Form', 'Javascript', 'Chaw');
+	var $helpers = array('Html', 'Form', 'Chaw');
 
 	/**
 	 * undocumented variable
