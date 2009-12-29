@@ -9,14 +9,14 @@ visit, http://localhost/chaw/
 
 otherwise,
 cd /your/document_root
-git clone git@code.cakephp.org:cakephp.git
-cd cakephp
-git checkout -b 1.3-dev 1.3-dev
+git clone git://github.com/cakephp/cakephp1x.git
+cd cakephp1x
+git checkout -b 1.3 origin/1.3
 
 git clone git@thechaw.com:chaw.git
 cd chaw
-../cake/console/cake --app=chaw bake db_config
-../cake/console/cake  --app=chaw schema create
+../cake/console/cake -app chaw bake db_config
+../cake/console/cake  -app chaw schema create
 visit, http://localhost/chaw/
 
 
