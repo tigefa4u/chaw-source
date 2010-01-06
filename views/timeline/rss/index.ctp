@@ -38,30 +38,34 @@ foreach ($timeline as $data) {
 			$author = $data['User']['username'];
 		break;
 		case 'Ticket':
-			$status = " ({$data['Ticket']['status']})";
+			$status = $data['Ticket']['status'];
 			if (!empty($data['Comment']['reason'])) {
-				$status = " ({$data['Comment']['reason']})";
+				$status = $data['Comment']['reason'];
 			}
-			$title = "Ticket/#{$data['Ticket']['number']}{$status} {$data['Ticket']['title']}";
-			$link = array('controller' => 'tickets', 'action' => 'view', $data[$type]['number']);
-			$pubDate = $data[$type]['created'];
-			$description = $text->truncate(nl2br($data[$type]['content']), 200, array(
+			$status = Inflector::humanize($status);
+			$type = strtoupper(Inflector::humanize($data['Ticket']['type']));
+			$title = "{$status}/{$type}/{$data['Ticket']['title']}";
+			$link = array('controller' => 'tickets', 'action' => 'view', $data['Ticket']['number']);
+			$pubDate = $data['Ticket']['created'];
+			$description = $text->truncate(nl2br($data['Ticket']['description']), 200, array(
 				'exact' => true, 'html' => false
 			));
 			$author = $data['Reporter']['username'];
 		break;
 		case 'Comment':
-			$status = " ({$data['Ticket']['status']})";
+			$status = $data['Ticket']['status'];
 			if (!empty($data['Comment']['reason'])) {
-				$status = " ({$data['Comment']['reason']})";
+				$status = $data['Comment']['reason'];
 			}
-			$title = "Ticket/#{$data['Ticket']['number']}{$status} {$data['Ticket']['title']}";
+			$type = strtoupper(Inflector::humanize($data['Ticket']['type']));
+			$title = "{$status} > {$type} > {$data['Ticket']['title']}";
 			$link = array(
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
 				'#' => 'c'.$data['Comment']['id']
 			);
 			$pubDate = $data['Comment']['created'];
 			$description = null;
+
 			if (!empty($data['Comment']['changes'])) {
 				$description .= $chaw->changes($data['Comment']['changes']);
 			}
