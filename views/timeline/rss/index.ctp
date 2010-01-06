@@ -57,8 +57,9 @@ foreach ($timeline as $data) {
 			if (!empty($data['Comment']['reason'])) {
 				$status = $data['Comment']['reason'];
 			}
+			$status = Inflector::humanize($status);
 			$type = strtoupper(Inflector::humanize($data['Ticket']['type']));
-			$title = "{$status} > {$type} > {$data['Ticket']['title']}";
+			$title = "Comment/{$status}/{$type}/{$data['Ticket']['title']}";
 			$link = array(
 				'controller' => 'tickets', 'action' => 'view', $data['Ticket']['number'],
 				'#' => 'c'.$data['Comment']['id']
