@@ -26,7 +26,7 @@ class ProjectsController extends AppController {
 	 * @var string
 	 */
 	var $paginate = array(
-		'order' => 'Project.users_count DESC, Project.created ASC'
+		'order' => 'Project.users_count DESC, Project.url ASC'
 	);
 
 	/**
@@ -58,7 +58,7 @@ class ProjectsController extends AppController {
 				$this->Session->write('Auth.User.Permission', $projects);
 				$this->passedArgs['type'] = null;
 				$this->paginate['conditions'] = array('Project.id' => array_keys($projects));
-				$this->paginate['order'] = 'Project.private DESC, Project.id ASC';
+				$this->paginate['order'] = 'Project.private DESC, Project.url ASC';
 			}
 		}
 
@@ -70,19 +70,16 @@ class ProjectsController extends AppController {
 
 			if ($this->params['isAdmin'] === true && $this->Project->id == 1) {
 				unset($this->paginate['conditions']['Project.private']);
-				$this->paginate['order'] = 'Project.private ASC, Project.id ASC';
-			}
-
-			if(empty($this->passedArgs['type'])) {
-				$this->passedArgs['type'] = 'public';
+				$this->paginate['order'] = 'Project.private ASC, Project.url ASC';
 			}
 
 			if ($this->passedArgs['type'] == 'forks') {
 				$this->paginate['conditions']['Project.fork !='] = null;
+				$this->paginate['order'] = 'Project.url ASC';
 			} else if ($this->passedArgs['type'] == 'public') {
 				$this->paginate['conditions']['Project.fork ='] = null;
+				$this->paginate['order'] = 'Project.url ASC';
 			}
-
 		}
 
 		$this->Project->recursive = 0;
