@@ -22,7 +22,7 @@ class TestAccessProject extends Project {
 
 class TestAccessController extends Controller {
 
-	var $components = array('Access', 'Auth');
+	var $components = array('Session', 'Access', 'Auth');
 
 	var $testRedirect = null;
 

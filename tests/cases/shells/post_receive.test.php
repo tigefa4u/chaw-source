@@ -107,7 +107,7 @@ class PostReceiveTest extends CakeTestCase {
 		}
 	}
 
-	function igetTests() {
+	function getTests() {
 		return array('start', 'testPushNewBranch', 'end');
 	}
 
@@ -129,7 +129,7 @@ class PostReceiveTest extends CakeTestCase {
 
 		$result = $this->PostReceive->Commit->find('all');
 
-		$expected = 'Initial Project Commit';
+		$expected = 'Third Commit';
 		$this->assertEqual($expected, $result[0]['Commit']['message']);
 
 		$expected = 'Commit';
