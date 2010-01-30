@@ -31,14 +31,16 @@ class AppController extends Controller {
 	 *
 	 * @var string
 	 */
-	var $components = array('Access', 'Auth', 'RequestHandler', /*'DebugKit.Toolbar'*/);
+	var $components = array(
+		'Session', 'Access', 'Auth', 'RequestHandler', /*'DebugKit.Toolbar'*/
+	);
 
 	/**
 	 * undocumented variable
 	 *
 	 * @var string
 	 */
-	var $helpers = array('Html', 'Form', 'Chaw');
+	var $helpers = array('Session', 'Html', 'Form', 'Chaw');
 
 	/**
 	 * undocumented variable

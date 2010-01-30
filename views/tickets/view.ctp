@@ -36,8 +36,8 @@ $html->scriptBlock($script, array('inline' => false));
 
 $canEdit = !empty($canUpdate) || (!empty($CurrentUser->id) && $CurrentUser->id == $ticket['Reporter']['id']);
 
-if ($session->check('Ticket.back')) {
-	echo $html->tag('div', $html->link('back', $session->read('Ticket.back')), array('class' => 'page-navigation'));
+if ($this->Session->check('Ticket.back')) {
+	echo $html->tag('div', $html->link('back', $this->Session->read('Ticket.back')), array('class' => 'page-navigation'));
 }
 
 ?>

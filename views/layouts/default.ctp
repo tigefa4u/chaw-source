@@ -139,7 +139,7 @@
 		</div>
 		<div id="content">
 			<?php
-				$session->flash();
+				$this->Session->flash();
 			?>
 			<?php
 				if (!empty($this->params['admin'])):

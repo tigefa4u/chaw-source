@@ -1,5 +1,5 @@
 <?php
-	$session->flash('auth');
+	$this->Session->flash('auth');
 ?>
 <div class="users login form">
 <?php echo $form->create(array('action' => 'login'));?>
