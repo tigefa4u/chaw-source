@@ -260,10 +260,10 @@ class SshKey extends AppModel {
  * @return void
  */
 	function __strip($key) {
-		return preg_replace('/==(.+)$/', '==',
+		return preg_replace('/=\w(.+)$/', '=',
 			str_replace(
-				array("\n", "\r", "\t", " ", 'ssh-rsa', 'ssh-dss'), 
-				array("", "", "", "", 'ssh-rsa ', 'ssh-dss '), 
+				array("\n", "\r", "\t", " ", 'ssh-rsa', 'ssh-dss'),
+				array("", "", "", "", 'ssh-rsa ', 'ssh-dss '),
 				trim($key)
 			)
 		);

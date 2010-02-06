@@ -130,6 +130,23 @@ class SshKeyTestCase extends CakeTestCase {
 			'ssh-rsa thisisakey=='
 		);
 		$this->assertEqual($result, $expected);
+		
+		$SshKey->set(array(
+			'type' => 'Git',
+			'username' => 'gwoo',
+			'content' => 'ssh-rsa this is a key= something',
+		));
+
+		$this->assertTrue($SshKey->save());
+
+		$result = $SshKey->read(array(
+			'type' => 'Git', 'username' => 'gwoo',
+		));
+		$expected = array(
+			'ssh-rsa thisisakey==',
+			'ssh-rsa thisisakey='
+		);
+		$this->assertIdentical($result, $expected);
 
 		$path = Configure::read("Content.git") . 'repo' . DS . '.ssh' . DS . 'authorized_keys';
 		$Cleanup = new File($path);
