@@ -208,8 +208,9 @@ class TicketsController extends AppController {
 	function _ticketInfo($all = true) {
 		if ($all) {
 			$versions = $this->Ticket->Version->find('list', array(
-				'conditions' => array('Version.project_id' => $this->Project->id
-			)));
+				'conditions' => array('Version.project_id' => $this->Project->id),
+				'order' => array('id' => 'DESC')
+			));
 			$owners = $this->Project->users(array('Permission.group NOT' => 'user'));
 		}
 
