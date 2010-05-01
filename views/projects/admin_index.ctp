@@ -1,4 +1,4 @@
-<div class="nav tabs">
+<div id="sub-navigation">
 	<ul>
 		<li><?php echo $chaw->type('pending', array(
 			'controller' => 'projects', 'action' => 'index',
