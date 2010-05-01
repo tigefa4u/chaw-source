@@ -176,5 +176,6 @@
 			pageTracker._trackPageview();	} catch(err) {}
 	</script>
 <?php endif;?>
+<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>
