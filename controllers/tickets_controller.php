@@ -32,7 +32,7 @@ class TicketsController extends AppController {
 	 *
 	 * @var string
 	 */
-	var $paginate = array('order' => array('Ticket.number' => 'desc'));
+	var $paginate = array('order' => array('Ticket.type' => 'asc', 'Ticket.number' => 'desc'));
 
 	/**
 	 * undocumented variable
@@ -59,7 +59,10 @@ class TicketsController extends AppController {
 
 		if ($isDefault) {
 			$statuses = $this->Ticket->states();
-			$this->data['Ticket']['status'] = $this->passedArgs['status'] = $statuses['pending'];
+			$this->data['Ticket']['status'] = array(
+				$statuses['pending'], $statuses['approved'], $statuses['in progress']
+			);
+			$this->passedArgs['status'] = join(',', $this->data['Ticket']['status']);
 		}
 
 		$conditions = array(
