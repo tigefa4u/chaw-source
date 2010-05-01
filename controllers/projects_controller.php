@@ -47,6 +47,8 @@ class ProjectsController extends AppController {
 	 * @return void
 	 */
 	function index() {
+		$this->set('disableNav', true);
+
 		Router::connectNamed(array('type', 'page'));
 
 		if (empty($this->passedArgs['type'])) {
@@ -96,6 +98,8 @@ class ProjectsController extends AppController {
 	 * @return void
 	 */
 	function forks() {
+		$this->set('disableNav', true);
+		
 		$this->paginate['conditions'] = array(
 			'Project.fork !=' => null, 'Project.project_id' =>  $this->Project->id
 		);
@@ -128,6 +132,8 @@ class ProjectsController extends AppController {
 	 * @return void
 	 */
 	function start($type = null) {
+		$this->set('disableNav', true);
+		
 		$this->set('title_for_layout', 'Projects/Start');
 		if ($type || !empty($this->data)) {
 			$this->add();
@@ -141,6 +147,8 @@ class ProjectsController extends AppController {
 	 * @return void
 	 */
 	function add() {
+		$this->set('disableNav', true);
+		
 		if (!empty($this->data)) {
 			$this->Project->create(array(
 				'user_id' => $this->Auth->user('id'),

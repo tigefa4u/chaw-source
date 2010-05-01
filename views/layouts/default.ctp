@@ -67,7 +67,7 @@
 			<?php echo $this->element('current_user');?>
 
 				<div id="navigation">
-					<?php if ($this->name !== 'Projects'):?>
+					<?php if (!isset($disableNav)):?>
 					
 					<ul>
 						<li><?php
@@ -122,7 +122,7 @@
 		</div>
 		<div id="content">
 			<?php
-				$this->Session->flash();
+				echo $this->Session->flash();
 			?>
 			<?php
 				if (!empty($this->params['admin'])):
