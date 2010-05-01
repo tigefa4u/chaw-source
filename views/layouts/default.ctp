@@ -1,27 +1,10 @@
 <?php
-/* SVN FILE: $Id: default.ctp 6296 2008-01-01 22:18:17Z phpnut $ */
 /**
+ * Chaw : source code and project management
  *
- * PHP versions 4 and 5
+ * @copyright  Copyright 2009, Garrett J. Woodworth (gwoohoo@gmail.com)
+ * @license    GNU AFFERO GENERAL PUBLIC LICENSE v3 (http://opensource.org/licenses/agpl-v3.html)
  *
- * CakePHP(tm) :  Rapid Development Framework <http://www.cakephp.org/>
- * Copyright 2005-2008, Cake Software Foundation, Inc.
- *								1785 E. Sahara Avenue, Suite 490-204
- *								Las Vegas, Nevada 89104
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @filesource
- * @copyright		Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link				http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package			cake
- * @subpackage		cake.cake.console.libs.templates.skel.views.layouts
- * @since			CakePHP(tm) v 0.10.0.1076
- * @version			$Revision: 6296 $
- * @modifiedby		$LastChangedBy: phpnut $
- * @lastmodified	$Date: 2008-01-01 14:18:17 -0800 (Tue, 01 Jan 2008) $
- * @license			commercial
  */
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
