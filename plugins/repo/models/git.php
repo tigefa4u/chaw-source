@@ -315,14 +315,15 @@ class Git extends Repo {
 	function find($type = 'all', $options = array()) {
 		if ($type == 'branches') {
 			$result = $this->run('branch -a', null, 'capture');
+			
 			$branches = array();
 			foreach ($result as $branch) {
+				if (strpos($branch, 'remotes/') !== false || strpos($branch, 'origin/') !== false) {
+					continue;
+				}
 				if ($branch[0] == '*' || $branch[0] == ' ') {
 					$branches[] = trim(substr($branch, 1));
 					continue;
-				}
-				if (strpos($branch, 'origin/') !== false) {
-					$branches[] = trim(str_replace(array("remotes/", "origin/"), "", $branch));
 				}
 			}
 			return $branches;
