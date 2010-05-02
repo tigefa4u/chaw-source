@@ -243,7 +243,7 @@ class Git extends Repo {
 	 */
 	function update($remote = null, $branch = null, $params = array()) {
 		$this->cd();
- 		return $this->run('pull', array_merge($params, array($remote, $branch)), 'hide');
+ 		return $this->run('pull -q', array_merge($params, array($remote, $branch)), 'pass');
 	}
 
 	/**
@@ -258,8 +258,8 @@ class Git extends Repo {
 		if (!is_dir($this->path)) {
 			return false;
 		}
-
 		$this->branch($branch, true);
+
 		if (is_dir($this->working)) {
 			$this->update($remote, $branch);
 			return true;
@@ -468,7 +468,7 @@ class Git extends Repo {
 		} else {
 			$params = array("--pretty=format:'{$params}'", $branch);
 		}
-
+		$this->cd();
 		$out = $this->run('rev-list', $params, 'capture');
 
 		return $out;
@@ -539,6 +539,7 @@ class Git extends Repo {
 	function delete($delete = null) {
 		$branch = $delete ? $delete : $this->branch;
 		$working = $delete ? $this->working . DS . $delete : $this->working;
+
 		if ($branch !== 'master') {
 			$this->branch('master', true);
 			$this->run('branch -D', array($branch), 'hide');
@@ -546,6 +547,7 @@ class Git extends Repo {
 			$this->run('remote prune origin', array(), 'hide');
 		}
 		$this->execute("rm -rf {$working}");
+
 		if (!is_dir($working)) {
 			return true;
 		}

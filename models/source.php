@@ -71,9 +71,9 @@ class Source extends Object {
 		$branches = $this->Repo->find('branches');
 
 		foreach ($branches as $branch) {
-			if (is_dir(dirname($this->Repo->working) . DS . $branch)) {
-				continue;
-			}
+			// if (is_dir(dirname($this->Repo->working) . DS . $branch)) {
+			// 				continue;
+			// 			}
 			$this->Repo->branch($branch, true);
 			$this->Repo->update('origin', $branch);
 		}

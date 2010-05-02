@@ -43,7 +43,6 @@ class PostReceiveShell extends Shell {
 	 * @return void
 	 */
 	function commit() {
-
 		$project = str_replace('.git', '', trim(@$this->args[0], "'"));
 		$refname = @$this->args[1];
 		$oldrev = @$this->args[2];
@@ -59,7 +58,7 @@ class PostReceiveShell extends Shell {
 			return false;
 		}
 
-		$user = $this->Project->User->field('id', array('username' => $_SERVER['PHP_CHAWUSER']));
+		$user = $this->Project->User->field('id', array('username' => @$_SERVER['PHP_CHAWUSER']));
 
 		if (!isset($refname)) {
 			$refname = 'refs/heads/master';
@@ -88,7 +87,6 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Timeline->save();
-			usleep(100);
 			$this->Project->Repo->delete($data['Commit']['branch']);
 			//CakeLog::write(LOG_INFO, print_r($this->Project->Repo->debug, true));
 			return;
@@ -117,7 +115,6 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Timeline->save();
-			usleep(100);
 			$this->Project->Repo->branch($data['Commit']['branch'], true);
 			//CakeLog::write(LOG_INFO, print_r($data, true));
 			return;
@@ -160,11 +157,18 @@ class PostReceiveShell extends Shell {
 		));
 
 		$this->Timeline->save();
-		usleep(100);
-		$this->Project->Repo->pull('origin', $data['Commit']['branch']);
-		// CakeLog::write(LOG_INFO, print_r($data, true));
-		// CakeLog::write(LOG_INFO, print_r($this->Project->Repo->debug, true));
+		//$this->branch = $data['Commit']['branch'];
+		//CakeLog::write(LOG_INFO, print_r($data, true));
 		return;
 	}
-
+	// 
+	// public function __destruct() {
+	// 	$this->Project->Repo->branch($this->branch, true);
+	// 	$this->Project->Repo->cd();
+	// 	$result = $this->Project->Repo->run('status');
+	// 	CakeLog::write(LOG_INFO, print_r($result, true));
+	// 	
+	// 	$this->Project->Repo->pull('origin', $this->branch);
+	// 	CakeLog::write(LOG_INFO, print_r($this->Project->Repo->debug, true));
+	// }
 }
