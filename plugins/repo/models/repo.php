@@ -11,7 +11,7 @@
  *
  */
 class Repo extends Overloadable {
-	
+
 	/**
 	 * configuration
 	 *
@@ -21,7 +21,7 @@ class Repo extends Overloadable {
 		'class' => 'Git', 'type' => 'git', 'path' => null, 'working' => null,
 		'username' => '', 'password' => '', 'chmod' => 0755, 'chawuser' => 'chawbacca'
 	);
-	
+
 	/**
 	 * undocumented variable
 	 *
@@ -35,14 +35,14 @@ class Repo extends Overloadable {
 	 * @var string
 	 */
 	var $type = 'git';
-	
+
 	/**
 	 * undocumented variable
 	 *
 	 * @var string
 	 */
 	var $path = null;
-	
+
 	/**
 	 * undocumented variable
 	 *
@@ -119,21 +119,21 @@ class Repo extends Overloadable {
 	 * @var string
 	 */
 	var $chawuser = 'chawbacca';
-	
+
 	/**
 	 * undocumented function
 	 *
-	 * @param string $config 
+	 * @param string $config
 	 */
 	function __construct($config = array()) {
 		$this->config($config);
 		$this->alias = ucwords($this->type);
 	}
-	
+
 	/**
 	 * undocumented function
 	 *
-	 * @param string $config 
+	 * @param string $config
 	 * @return void
 	 */
 	function config($config = array()) {
@@ -258,18 +258,21 @@ class Repo extends Overloadable {
 			case 'passthru':
 				passthru($c, $response);
 			break;
+			case 'hide':
+				$response = shell_exec($c . ' > /dev/null 2>&1');
+			break;
 			default:
 				$response = shell_exec($c);
 			break;
 		}
 		return $response;
 	}
-	
+
 	/**
 	 * undocumented function
 	 *
-	 * @param string $data 
-	 * @param string $query 
+	 * @param string $data
+	 * @param string $query
 	 * @return void
 	 */
 	function _findAll($data, $query = array()) {
@@ -329,7 +332,7 @@ class Repo extends Overloadable {
 
 		return false;
 	}
-	
+
 	/**
 	 * Deletes branch are resets
 	 *
@@ -383,7 +386,7 @@ class Repo extends Overloadable {
 
 		return false;
 	}
-	
+
 	/**
 	 * undocumented function
 	 *

@@ -88,7 +88,7 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Timeline->save();
-
+			usleep(100);
 			$this->Project->Repo->delete($data['Commit']['branch']);
 			//CakeLog::write(LOG_INFO, print_r($this->Project->Repo->debug, true));
 			return;
@@ -117,7 +117,7 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Timeline->save();
-
+			usleep(100);
 			$this->Project->Repo->branch($data['Commit']['branch'], true);
 			//CakeLog::write(LOG_INFO, print_r($data, true));
 			return;
@@ -160,8 +160,10 @@ class PostReceiveShell extends Shell {
 		));
 
 		$this->Timeline->save();
-		$this->Project->Repo->branch($data['Commit']['branch'], true);
-		$this->Project->Repo->pull();
+		usleep(100);
+		$this->Project->Repo->pull('origin', $data['Commit']['branch']);
+		// CakeLog::write(LOG_INFO, print_r($data, true));
+		// CakeLog::write(LOG_INFO, print_r($this->Project->Repo->debug, true));
 		return;
 	}
 

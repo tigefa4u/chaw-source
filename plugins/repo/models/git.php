@@ -243,7 +243,7 @@ class Git extends Repo {
 	 */
 	function update($remote = null, $branch = null, $params = array()) {
 		$this->cd();
- 		return $this->run('pull', array_merge($params, array($remote, $branch)), 'capture');
+ 		return $this->run('pull', array_merge($params, array($remote, $branch)), 'hide');
 	}
 
 	/**
@@ -565,11 +565,7 @@ class Git extends Repo {
 		if (empty($this->_before) && empty($this->gitDir)) {
 			$gitDir = "--git-dir={$this->path} ";
 		}
-		$dev = null;
-		if ($return === 'hide') {
-			$dev = " > /dev/null 2>&1";
-		}
-		return parent::run("{$gitDir}{$command}{$dev}", $args, $return);
+		return parent::run("{$gitDir}{$command}", $args, $return);
 	}
 }
 ?>
