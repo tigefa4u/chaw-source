@@ -24,10 +24,10 @@
 			</span>
 			<strong>
 				<?php
-				$newbranch = false;
+				 $deletebranch = $newbranch = false;
 				if ($CurrentProject->repo->type == 'git' && !empty($data['Timeline']['event'])) {
 					if ($data['Timeline']['event'] == 'pushed') {
-					 	if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
+						if (strpos(strtolower($data['Commit']['message']), 'merge') !== false) {
 							__("merged");
 						} else {
 							__("pushed");
@@ -44,6 +44,9 @@
 					} else if ($data['Timeline']['event'] == 'created') {
 						__("created");
 						$newbranch = true;
+					} else if ($data['Timeline']['event'] == 'removed') {
+						__("removed");
+						$deletebranch = true;
 					}
 				} else {
 					__('committed');
@@ -56,13 +59,16 @@
 				}
 
 				if (!empty($data['Commit']['branch'])) {
-					if (!$newbranch) {
+					if (!$newbranch && !$deletebranch) {
 						echo  " " . __('to', true);
 					}
-					echo " " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
-							'controller' => 'source', 'action' => 'branches',
-							$data['Commit']['branch']
-					)));
+					if (!$deletebranch) {
+						echo " " . $html->link($data['Commit']['branch'], $chaw->url($data['Project'], array(
+							'controller' => 'source', 'action' => 'branches', $data['Commit']['branch']
+						)));
+					} else {
+						echo " " . $data['Commit']['branch'];
+					}
 				}
 
 				if (!empty($data['Project']) && $data['Project']['id'] !== $CurrentProject->id) {

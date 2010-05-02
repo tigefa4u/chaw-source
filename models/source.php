@@ -43,28 +43,10 @@ class Source extends Object {
 				$this->branches();
 				$this->Repo->branch = null;
 			}
-
-			if (!empty($args)) {
-				$branch = $args[0];
-				$branches = $this->Repo->find('branches');
-				if (in_array($branch, $branches)) {
-					$branch = array_shift($args);
-					$path = join(DS, $args);
-					if (in_array($branch, $branches)) {
-						$this->Repo->branch($branch, true);
-						$this->Repo->pull('origin', $branch);
-					}
-				}
-			}
-
 			if ($this->Repo->branch) {
 				array_unshift($args, $this->Repo->branch);
 			}
 			array_unshift($args, 'branches');
-
-			if (empty($path) && $this->Repo->branch) {
-				$this->Repo->update('origin', $this->Repo->branch);
-			}
 		}
 
 		$current = null;
@@ -86,11 +68,10 @@ class Source extends Object {
 		$this->Repo->logReponse = true;
 		$config = $this->Repo->config;
 		$this->Repo->branch('master', true);
-		$this->Repo->cd();
-		$this->Repo->run('pull');
 		$branches = $this->Repo->find('branches');
+
 		foreach ($branches as $branch) {
-			if ($branch == 'master') {
+			if (is_dir(dirname($this->Repo->working) . DS . $branch)) {
 				continue;
 			}
 			$this->Repo->branch($branch, true);

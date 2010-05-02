@@ -13,21 +13,21 @@
  * @package default
  */
 class PostReceiveShell extends Shell {
-	
+
 	/**
 	 * undocumented variable
 	 *
 	 * @var string
 	 */
 	var $uses = array( 'Project', 'Commit', 'Timeline');
-	
+
 	/**
 	 * undocumented function
 	 *
 	 * @return void
 	 */
 	function _welcome() {}
-	
+
 	/**
 	 * undocumented function
 	 *
@@ -36,7 +36,7 @@ class PostReceiveShell extends Shell {
 	function main() {
 		return $this->commit();
 	}
-	
+
 	/**
 	 * undocumented function
 	 *
@@ -50,7 +50,7 @@ class PostReceiveShell extends Shell {
 		$newrev = @$this->args[3];
 
 		//$this->args[] = 'post-receive';
- 		//CakeLog::write(LOG_INFO, $this->args);
+ 		//CakeLog::write(LOG_INFO, print_r($this->args, true));
 
 		$fork = (!empty($this->params['fork']) && $this->params['fork'] != 1) ? $this->params['fork'] : null;
 
@@ -72,10 +72,11 @@ class PostReceiveShell extends Shell {
 				'project_id' =>  $this->Project->id,
 				'branch' => $refname,
 				'message' => "{$refname} removed",
-				'chawuser' => $user
+				'chawuser' => $user,
+				'user_id' => $user
 			));
 
-			$this->Commit->save();
+			$data = $this->Commit->save();
 
 			$this->Timeline->create(array(
 				'project_id' =>  $this->Project->id,
@@ -83,21 +84,13 @@ class PostReceiveShell extends Shell {
 				'data' => $refname,
 				'model' => 'Commit',
 				'foreign_key' => $this->Commit->id,
-				'message' => "{$refname} removed",
 				'user_id' => $user
 			));
 
 			$this->Timeline->save();
-			return;
-		}
 
-		$commit = $this->Project->Repo->find('first', array(
-			'hash' => $newrev
-		));
-
-		//CakeLog::write(LOG_INFO, $commit);
-
-		if (empty($commit)) {
+			$this->Project->Repo->delete($data['Commit']['branch']);
+			//CakeLog::write(LOG_INFO, print_r($this->Project->Repo->debug, true));
 			return;
 		}
 
@@ -107,9 +100,12 @@ class PostReceiveShell extends Shell {
 			$this->Commit->create(array(
 				'project_id' =>  $this->Project->id,
 				'branch' => $refname,
+				'message' => "{$refname} added",
+				'chawuser' => $user,
+				'user_id' => $user
 			));
 
-			$this->Commit->save($commit);
+			$data = $this->Commit->save();
 
 			$this->Timeline->create(array(
 				'project_id' =>  $this->Project->id,
@@ -121,6 +117,19 @@ class PostReceiveShell extends Shell {
 			));
 
 			$this->Timeline->save();
+
+			$this->Project->Repo->branch($data['Commit']['branch'], true);
+			//CakeLog::write(LOG_INFO, print_r($data, true));
+			return;
+		}
+
+		$commit = $this->Project->Repo->find('first', array(
+			'hash' => $newrev
+		));
+
+		//CakeLog::write(LOG_INFO, $commit);
+
+		if (empty($commit)) {
 			return;
 		}
 
@@ -135,10 +144,11 @@ class PostReceiveShell extends Shell {
 		$this->Commit->create(array(
 			'project_id' =>  $this->Project->id,
 			'branch' => $refname,
-			'changes' => $oldrev . ".." . $newrev
+			'changes' => $oldrev . ".." . $newrev,
+			'user_id' => $user
 		));
 
-		$this->Commit->save($commit);
+		$data = $this->Commit->save($commit);
 
 		$this->Timeline->create(array(
 			'project_id' =>  $this->Project->id,
@@ -150,7 +160,8 @@ class PostReceiveShell extends Shell {
 		));
 
 		$this->Timeline->save();
-
+		$this->Project->Repo->branch($data['Commit']['branch'], true);
+		$this->Project->Repo->pull();
 		return;
 	}
 

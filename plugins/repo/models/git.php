@@ -185,19 +185,8 @@ class Git extends Repo {
 			if (!is_dir($base)) {
 				$clone = new Folder($base, true, $chmod);
 			}
-			$this->run('clone', array('-n', $this->path, $path));
+			$this->run('clone', array('-b', $name, $this->path, $path));
 			@chmod($path, $chmod);
-			$this->cd($path);
-			$this->run("config branch.{$name}.remote origin");
-			$this->cd($path);
-			$this->run("config branch.{$name}.merge refs/heads/{$name}");
-			$this->cd($path);
-			if ($name !== 'master') {
-				$this->checkout(array("-b", $name, "origin/{$name}"));
-			}
-		} else {
-			$this->cd($path);
-			$this->checkout(array($name));
 		}
 		if ($switch === true) {
 			$this->config(array('working' => $path));
@@ -325,17 +314,16 @@ class Git extends Repo {
 	 */
 	function find($type = 'all', $options = array()) {
 		if ($type == 'branches') {
-			if (empty($this->branch)) {
-				$this->branch('master', true);
-			}
-			$this->cd();
 			$result = $this->run('branch -a', null, 'capture');
 			$branches = array();
 			foreach ($result as $branch) {
-				if (strpos($branch, 'origin/') === false || strpos($branch, 'HEAD') !== false) {
+				if ($branch[0] == '*' || $branch[0] == ' ') {
+					$branches[] = trim(substr($branch, 1));
 					continue;
 				}
-				$branches[] = trim(str_replace(array("remotes/", "origin/"), "", $branch));
+				if (strpos($branch, 'origin/') !== false) {
+					$branches[] = trim(str_replace(array("remotes/", "origin/"), "", $branch));
+				}
 			}
 			return $branches;
 		}
@@ -373,9 +361,6 @@ class Git extends Repo {
 		$branch = null;
 		if (!empty($options['branch'])) {
 			$branch = $options['branch'] . ' ';
-		//	$this->branch($options['branch'], true);
-		//	unset($options['branch']);
-		//	$this->cd();
 		}
 
 		$data = $this->__data;
@@ -551,14 +536,14 @@ class Git extends Repo {
 	 *
 	 * @return void
 	 */
-	function delete() {
-		$branch = $this->branch;
-		$working = $this->working;
+	function delete($delete = null) {
+		$branch = $delete ? $delete : $this->branch;
+		$working = $delete ? $this->working . DS . $delete : $this->working;
 		if ($branch !== 'master') {
 			$this->branch('master', true);
-			$this->run('branch -D', array($branch));
+			$this->run('branch -D', array($branch), 'hide');
 			$this->cd();
-			$this->run('remote prune origin');
+			$this->run('remote prune origin', array(), 'hide');
 		}
 		$this->execute("rm -rf {$working}");
 		if (!is_dir($working)) {
@@ -580,8 +565,11 @@ class Git extends Repo {
 		if (empty($this->_before) && empty($this->gitDir)) {
 			$gitDir = "--git-dir={$this->path} ";
 		}
-
-		return parent::run("{$gitDir}{$command}", $args, $return);
+		$dev = null;
+		if ($return === 'hide') {
+			$dev = " > /dev/null 2>&1";
+		}
+		return parent::run("{$gitDir}{$command}{$dev}", $args, $return);
 	}
 }
 ?>
