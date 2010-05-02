@@ -17,6 +17,9 @@
 		?>
 	</title>
 	<?php
+		if ($this->name == 'Source') {
+			echo '<meta name="ROBOTS" content="INDEX, NOFOLLOW">';
+		}
 		echo $html->meta('icon');
 		if (isset($rssFeed)) {
 			echo $html->meta('rss', $html->url($rssFeed, true));
