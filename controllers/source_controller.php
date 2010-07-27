@@ -29,8 +29,7 @@ class SourceController extends AppController {
 	function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->mapActions(array(
-			'branches' => 'read',
-			'rebase' => 'update'
+			'branches' => 'read', 'rebase' => 'update'
 		));
 	}
 
@@ -47,18 +46,14 @@ class SourceController extends AppController {
 		} else {
 			$this->Project->Repo->update();
 		}
-
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
 		$title = $current;
-
 		if (!empty($args)) {
 			$title = join('/', $args) . '/' . $current;
 		}
 		$this->set('title_for_layout', $title);
-		
 		$data = $this->Source->read($path);
-
 		$this->set(compact('data', 'path', 'args', 'current'));
 	}
 
@@ -75,14 +70,12 @@ class SourceController extends AppController {
 		}
 		list($args, $path, $current) = $this->Source->initialize($this->Project->Repo, $args);
 
-		$data = $this->Source->read($path);
 		$title = $current;
-		
 		if (!empty($args)) {
 			$title = join('/', $args) . '/' . $current;
 		}
 		$this->set('title_for_layout', $title);
-		
+		$data = $this->Source->read($path);
 		$branch = $this->Project->Repo->branch;
 		$this->set(compact('data', 'path', 'args', 'current', 'branch'));
 		$this->render('index');

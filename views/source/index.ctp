@@ -15,7 +15,7 @@
 			$path .= $part . '/';
 			echo '/' . $html->link(' ' . $part . ' ', array('action' => 'index', $path));
 		endforeach;
-		echo '/ ' . $current;
+		echo '/ ' . h($current);
 	?>
 </h2>
 
@@ -43,7 +43,8 @@
 			}
 	?>
 			<tr<?php echo $class?>>
-				<td nowrap><?php echo $html->link($item['name'], array('action' => 'index', $item['path']), array('class' => 'folder'));?></td>
+				<td nowrap><?php echo $html->link($item['name'], 
+					array('action' => 'index', $item['path']), array('class' => 'folder'));?></td>
 				<td nowrap><?php echo $item['info']['author'];?></td>
 				<td class="message"><?php echo $item['info']['message'];?></td>
 				<td nowrap class="date"><?php echo (!empty($item['info']['date'])) ? date("F d Y", strtotime($item['info']['date'])) : null;?></td>

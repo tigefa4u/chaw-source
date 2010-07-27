@@ -183,6 +183,13 @@ class Ticket extends AppModel {
 			unset($this->data['Ticket']['version_id']);
 		}
 
+		if (empty($this->data['Ticket']['user_id'])) {
+			$this->data['Ticket']['user_id'] = null;
+			if (!empty($this->data['Ticket']['reporter'])) {
+				$this->data['Ticket']['user_id'] = $this->data['Ticket']['reporter'];
+			}
+		}
+
 		if ($this->id) {
 			$changes = array();
 			if (isset($this->data['Ticket']['previous'])) {
@@ -243,6 +250,7 @@ class Ticket extends AppModel {
 		if ($created && $this->addToTimeline) {
 			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
+				'user_id' => $this->data['Ticket']['user_id'],
 				'project_id' => $this->data['Ticket']['project_id'],
 				'model' => 'Ticket',
 				'foreign_key' => $this->id,

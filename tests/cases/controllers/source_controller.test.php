@@ -41,9 +41,9 @@ class SourceControllerTest extends CakeTestCase {
 		$this->Source->constructClasses();
 
 		Configure::write('Content.git', TMP . 'tests/git/');
-		
+
 		App::import('Model', 'Repo.Git', false);
-		
+
 		$this->Git =& new Git(array(
 			'class' => 'Repo.Git',
 			'type' => 'git',

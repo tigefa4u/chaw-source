@@ -156,7 +156,9 @@ class Wiki extends AppModel {
 				'Wiki.project_id' => $this->data['Wiki']['project_id'],
 			));
 		}
-
+		if (empty($this->data['Wiki']['user_id'])) {
+			$this->data['Wiki']['user_id'] = null;
+		}
 		return true;
 	}
 
@@ -170,6 +172,7 @@ class Wiki extends AppModel {
 		if ($created && $this->addToTimeline && !empty($this->data['Wiki']['active'])) {
 			$Timeline = ClassRegistry::init('Timeline');
 			$timeline = array('Timeline' => array(
+				'user_id' => $this->data['Wiki']['user_id'],
 				'project_id' => $this->data['Wiki']['project_id'],
 				'model' => 'Wiki',
 				'foreign_key' => $this->id,

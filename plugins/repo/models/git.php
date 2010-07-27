@@ -243,7 +243,7 @@ class Git extends Repo {
 	 */
 	function update($remote = null, $branch = null, $params = array()) {
 		$this->cd();
- 		return $this->run('pull -q', array_merge($params, array($remote, $branch)), 'pass');
+ 		return $this->run('pull -q', array_merge($params, array($remote, $branch)), 'hide');
 	}
 
 	/**

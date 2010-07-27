@@ -38,16 +38,25 @@ class Source extends Object {
 		$this->Repo =& $Repo;
 
 		$path = join(DS, $args);
+
 		if ($this->Repo->type == 'git') {
 			if(empty($args) && !$this->Repo->branch) {
 				$this->branches();
 				$this->Repo->branch = null;
+			} elseif (isset($args[0])) {
+				$branches = $this->Repo->find('branches');
+
+				if (in_array($args[0], $branches)) {
+					$this->Repo->branch(array_shift($args), true);
+					$path = join(DS, $args);
+				}
 			}
 			if ($this->Repo->branch) {
 				array_unshift($args, $this->Repo->branch);
 			}
 			array_unshift($args, 'branches');
 		}
+		$args = array_filter($args);
 
 		$current = null;
 		if (count($args) > 0) {
@@ -114,25 +123,21 @@ class Source extends Object {
 			$File = new File($this->Repo->working . DS .$path);
 			return array('Content' => $File->read());
 		}
-
 		$isRoot = false;
-
 		$wwwPath = $base = null;
+
 		if ($path) {
 			$wwwPath = $base = join('/', explode(DS, $path)) . '/';
 		}
 
-		$Folder = new Folder($this->Repo->working . DS . $path);
+		$Folder = new Folder($this->Repo->working . '/' . $path);
 		$path = Folder::slashTerm($Folder->pwd());
 
 		if ($this->Repo->type == 'git') {
 			if ($this->Repo->branch == null) {
 				$isRoot = true;
-			} else {
-				$branch = basename($this->Repo->working);
-				if ($branch != 'master') {
-					$wwwPath = 'branches/' . $branch . '/' . $base;
-				}
+			} elseif ($this->Repo->branch != 'master') {
+				$wwwPath = 'branches/' . $this->Repo->branch . '/' . $base;
 			}
 		}
 
@@ -145,6 +150,7 @@ class Source extends Object {
 			$dir[$i]['name'] = $dirs[$i];
 			$lookup = $path . $dirs[$i];
 			$here = $wwwPath . $dirs[$i];
+
 			if ($dirs[$i] == 'master') {
 				$isRoot = true;
 			}
