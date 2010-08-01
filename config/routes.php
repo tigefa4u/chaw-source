@@ -52,8 +52,8 @@ Router::connect('/:controller/*',
 
 /* Genral Fork Routes */
 Router::connect(
-	'/forks/:fork/:project/',
-	array('controller' => 'source', 'action' => 'index'),
+	'/forks/:fork/:project',
+	array('controller' => 'wiki', 'action' => 'index'),
 	array('fork' => '[\-_\.a-zA-Z0-9]{3,}')
 );
 
