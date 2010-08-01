@@ -315,9 +315,19 @@ class UsersController extends AppController {
 		if (empty($token)) {
 			if ($data = $this->User->setToken($this->Auth->user())) {
 				$from = $this->Project->from();
-				$this->Email->to = $data['User']['email'];
-				$this->Email->from = 'Chaw Activation ' . $from;
-				$this->Email->replyTo = 'Chaw Activation ' . $from;
+				/*
+				$this->Email->delivery = 'smtp';
+				$this->Email->smtpOptions = array(
+					'port' => 465,
+					'timeout' => 30,
+					'host' => 'ssl://smtp.gmail.com',
+					'username' => '',
+					'password' => ''
+				);
+				*/
+				$this->Email->to = "{$data['User']['username']} <{$data['User']['email']}>";
+				$this->Email->from = "Chaw Activation {$from}";
+				$this->Email->replyTo = "Chaw Activation {$from}";
 				$this->Email->return = $from;
 				$this->Email->subject = 'Activate your Chaw account';
 
@@ -358,9 +368,19 @@ class UsersController extends AppController {
 		if (!empty($this->data)) {
 			if ($token = $this->User->setToken($this->data)) {
 				$from = $this->Project->from();
-				$this->Email->to = $token['User']['email'];
-				$this->Email->from = 'Chaw Password Recovery ' . $from;
-				$this->Email->replyTo = 'Chaw Password Recovery ' . $from;
+				/*
+				$this->Email->delivery = 'smtp';
+				$this->Email->smtpOptions = array(
+					'port' => 465,
+					'timeout' => 30,
+					'host' => 'ssl://smtp.gmail.com',
+					'username' => '',
+					'password' => ''
+				);
+				*/
+				$this->Email->to = "{$token['User']['username']} <{$token['User']['email']}>";
+				$this->Email->from = "Chaw Password Recovery {$from}";
+				$this->Email->replyTo = "Chaw Password Recovery {$from}";
 				$this->Email->return = $from;
 				$this->Email->subject = 'Password Recovery URL';
 
@@ -387,9 +407,19 @@ class UsersController extends AppController {
 		if (!empty($token)) {
 			if ($data = $this->User->setTempPassword(compact('token'))) {
 				$from = $this->Project->from();
-				$this->Email->to = $data['User']['email'];
-				$this->Email->from = 'Chaw New Password ' . $from;
-				$this->Email->replyTo = 'Chaw New Password ' . $from;
+				/*
+				$this->Email->delivery = 'smtp';
+				$this->Email->smtpOptions = array(
+					'port' => 465,
+					'timeout' => 30,
+					'host' => 'ssl://smtp.gmail.com',
+					'username' => '',
+					'password' => ''
+				);
+				*/
+				$this->Email->to = "{$data['User']['username']} <{$data['User']['email']}>";
+				$this->Email->from = "Chaw New Password {$from}";
+				$this->Email->replyTo = "Chaw New Password {$from}";
 				$this->Email->return = $from;
 				$this->Email->subject = 'New Password';
 
