@@ -189,7 +189,7 @@ class Project extends AppModel {
 
 		$this->id = $this->current['id'];
 		Configure::write('Project', $this->current);
-		
+
 		App::import('Model', $this->current['repo']['class'], false);
 		$this->Repo = new $this->current['repo_type']($this->current['repo']);
 		return true;
@@ -319,6 +319,10 @@ class Project extends AppModel {
 				'group' => 'admin',
 				'count' => 1
 			));
+
+			if ($this->Repo->type == 'git' && $this->data['Project']['private'] == '0') {
+				touch($this->Repo->path . '/git-daemon-export-ok');
+			}
 		}
 
 		if (!empty($this->current['url'])) {
@@ -375,8 +379,8 @@ class Project extends AppModel {
 	/**
 	 * undocumented function
 	 *
-	 * @param string $fields 
-	 * @param string $id 
+	 * @param string $fields
+	 * @param string $id
 	 * @return void
 	 */
 	function read($fields = null, $id = null) {

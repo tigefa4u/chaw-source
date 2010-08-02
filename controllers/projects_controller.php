@@ -115,7 +115,7 @@ class ProjectsController extends AppController {
 	 */
 	function view($url  = null) {
 		$project = array('Project' => $this->Project->current);
-		if (empty($this->params['project']) && $url == null && $project['id'] != 1) {
+		if (empty($this->params['project']) && $url == null && $project['Project']['id'] != 1) {
 			$project = $this->Project->findByUrl($url);
 		}
 
@@ -211,7 +211,6 @@ class ProjectsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('Project was NOT updated',true));
 			}
-			$this->redirect();
 		}
 
 		$this->data = array('Project' => $this->Project->current);
