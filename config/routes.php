@@ -20,12 +20,6 @@ Router::connect('/feed', array('controller' => 'dashboard', 'action' => 'feed'))
 Router::connect('/admin/:controller', array('admin'=> true));
 Router::connect('/admin/:controller/:action/*', array('admin'=> true));
 
-Router::connect('/forks/:fork/:project/admin/:controller', array('admin'=> true), array('fork' => '[\-_\.a-zA-Z0-9]{3,}'));
-Router::connect('/forks/:fork/:project/admin/:controller/:action/*', array('admin'=> true), array('fork' => '[\-_\.a-zA-Z0-9]{3,}'));
-
-Router::connect('/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
-Router::connect('/:project/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
-
 /* Specific Routes */
 Router::connect('/fork/it', array('controller' => 'repo', 'action' => 'fork_it'), array('action' => 'fork_it'));
 Router::connect('/:project/fork/it', array('controller' => 'repo', 'action' => 'fork_it'), array('action' => 'fork_it'));
@@ -88,3 +82,9 @@ Router::connect('/:project/:controller/*', array('action' => 'index'), array(
 	'controller' => 'source|wiki|commits|tickets|comments|timeline|versions|users|projects',
 	)
 );
+
+Router::connect('/forks/:fork/:project/admin/:controller', array('admin'=> true), array('fork' => '[\-_\.a-zA-Z0-9]{3,}'));
+Router::connect('/forks/:fork/:project/admin/:controller/:action/*', array('admin'=> true), array('fork' => '[\-_\.a-zA-Z0-9]{3,}'));
+
+Router::connect('/:project/admin/:controller', array('admin'=> true, 'controller' => 'dashboard'));
+Router::connect('/:project/admin/:controller/:action/*', array('admin'=> true, 'controller' => 'dashboard'));
