@@ -101,7 +101,9 @@ $html->scriptBlock($script, array('inline' => false));
 	<div class="wiki-content">
 
 		<?php foreach($wiki as $content):
-			$data = h($text->truncate($content['Wiki']['content'], 420, '...', false, true));
+			$data = h($text->truncate($content['Wiki']['content'], 420, array(
+				'exact' => true, 'html' => false
+			)));
 		?>
 			<?php if (strpos($data, '##') === false):?>
 				<h3><?php
