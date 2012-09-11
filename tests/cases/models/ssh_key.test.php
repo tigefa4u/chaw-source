@@ -111,7 +111,7 @@ class SshKeyTestCase extends CakeTestCase {
 		$Cleanup = new File($path);
 		$Cleanup->delete();
 	}
-	
+
 	public function testStripStuffAfter() {
 		$SshKey = new SshKey();
 
@@ -130,7 +130,7 @@ class SshKeyTestCase extends CakeTestCase {
 			'ssh-rsa thisisakey=='
 		);
 		$this->assertEqual($result, $expected);
-		
+
 		$SshKey->set(array(
 			'type' => 'Git',
 			'username' => 'gwoo',
@@ -145,6 +145,24 @@ class SshKeyTestCase extends CakeTestCase {
 		$expected = array(
 			'ssh-rsa thisisakey==',
 			'ssh-rsa thisisakey='
+		);
+		$this->assertIdentical($result, $expected);
+
+		$SshKey->set(array(
+			'type' => 'Git',
+			'username' => 'gwoo',
+			'content' => 'ssh-rsa this is a key something',
+		));
+
+		$this->assertTrue($SshKey->save());
+
+		$result = $SshKey->read(array(
+			'type' => 'Git', 'username' => 'gwoo',
+		));
+		$expected = array(
+			'ssh-rsa thisisakey==',
+			'ssh-rsa thisisakey=',
+			'ssh-rsa thisisakey'
 		);
 		$this->assertIdentical($result, $expected);
 
